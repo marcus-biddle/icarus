@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import OAuth2Client from '@react-oauth/google';
 
 const app = express();
 
@@ -9,6 +10,12 @@ const app = express();
 app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(morgan('combined')); // Request logging (use 'dev' for concise logs)
+
+const oAuth2Client = new OAuth2Client(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  'postmessage',
+);
 
 // Routes
 // const userRoutes = require('./routes/userRoutes');

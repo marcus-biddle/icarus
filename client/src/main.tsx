@@ -14,11 +14,11 @@ const router = createBrowserRouter([
     element: <App />,
   },
 ]);
-
+// TODO Env variables && vite
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="<your_client_id>">
+    <GoogleOAuthProvider clientId={'505006994945-636h437bsivgmdpqbae88urbgje1o0bu.apps.googleusercontent.com'}>
       <RouterProvider router={router} />
-    </GoogleOAuthProvider>;
+    </GoogleOAuthProvider>
   </React.StrictMode>,
 )

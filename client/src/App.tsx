@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import './App.css'
 
 import * as tf from '@tensorflow/tfjs';
@@ -21,7 +21,7 @@ function App() {
       webcamRef.current.video.height = videoHeight;
 
       const pose = await instance.estimatePoses(video);
-      console.log('pose', pose);
+      console.log('pose', pose[0]);
 
       drawCanvas(pose, video, videoWidth, videoHeight, canvasRef);
     }
@@ -38,8 +38,9 @@ function App() {
 
       // const poseId = Math.floor(Math.random() * 21); // Generate a unique pose ID for each pose
       const renderer = new RendererCanvas2d(canvas.current);
-      console.log('rend', renderer);
+      // console.log('rend', await renderer);
 
+      renderer.drawResult(pose[0])
       // renderer.drawKeypoints(pose[0].keypoints); // Use the generated poseId
       // renderer.drawSkeleton(pose[0].keypoints, poseId);  // Use the generated poseId
 
@@ -48,51 +49,38 @@ function App() {
   }
 // https://codesandbox.io/s/posedetection-demo-fxy4h?file=/src/renderer_canvas2d.js
   const runPoseDetection = async () => {
-    await tf.ready();
-    await tf.setBackend('webgl');
-    const model = poseDetection.SupportedModels.PoseNet;
+    
+    await tf.setBackend('webgpu');
+
+
+    // console.log(await tf.sequential(), await tf.setBackend('webgl'));
+    const model = poseDetection.SupportedModels.BlazePose;
     const detector = await poseDetection.createDetector(model, { runtime: 'tfjs' });
 
     setInterval(() => {
       detect(detector);
-    }, 5000);
+    }, 10000);
   };
 
   runPoseDetection();
 
-  useEffect(() => {
-    const canvasElement = canvasRef.current;
-
-    if (canvasElement) {
-      const handleContextLost = (event) => {
-        event.preventDefault();
-        // Handle context loss gracefully.
-      };
-    
-      const handleContextRestored = () => {
-        // Re-create WebGL resources and state.
-        // setupWebGLStateAndResources();
-      };
-    
-      canvasElement.addEventListener("webglcontextlost", handleContextLost, false);
-      canvasElement.addEventListener("webglcontextrestored", handleContextRestored, false);
-    
-      // Return a cleanup function to remove the event listeners when the component unmounts.
-      return () => {
-        canvasElement.removeEventListener("webglcontextlost", handleContextLost);
-        canvasElement.removeEventListener("webglcontextrestored", handleContextRestored);
-      };
-    }
-  
-    
-  }, []);
-
   return (
     <>
-      <Webcam ref={webcamRef}/>
-      <div id="scatter-gl-container">
-        <canvas ref={canvasRef} width="500" height="500"/>
-      </div>
+      <canvas ref={canvasRef} width={500} height={500} style={{ 
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: 10
+        }}/>
+      <Webcam ref={webcamRef} style={{ 
+        position: "absolute",
+        width: '500',
+        height: '500',
+        top: 0,
+        left: 0,
+        zIndex: 9
+        }}/>
+      <div id="scatter-gl-container"/>
       
     </>
   )

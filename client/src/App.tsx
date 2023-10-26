@@ -12,7 +12,7 @@ function App() {
     onSuccess: async (codeResponse) => {
         console.log(codeResponse);
         const tokens = await axios.post(
-            'http://localhost:3001/auth/google', {
+            'http://localhost:3000/auth/google', {
                 code: codeResponse.code,
             });
 

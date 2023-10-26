@@ -111,36 +111,69 @@ export class RendererCanvas2d {
    * @param pose A pose with keypoints to render.
    */
   drawResult(pose) {
+    try {
+      const landmarks = [];
+
+      for (const keypoint of pose.keypoints) {
+        landmarks.push(keypoint.name);
+      }
+
+      console.log(landmarks);
+      
+      // We can start building the angles for pushups
+      // options for successful pushup
+      // 1) left side view - left arm, left ankle
+      // 2) right side view - right arm, right ankle
+      // 3) front view - right arm, left arm
+      const rightArmAngle = this.calculateAngleFor(pose, 'right_shoulder', 'right_elbow', 'right_wrist');
+      const leftArmAngle = this.calculateAngleFor(pose, 'left_shoulder', 'left_elbow', 'left_wrist');
+
+      if (rightArmAngle < 90 && leftArmAngle < 90) {
+        console.log('ANGLE LESS THAN 90 DEGREES');
+      }
+
+    } catch (err) {
+      console.log('low visibility', err);
+    }
+
     if (pose.keypoints != null) {
       this.drawKeypoints(pose.keypoints);
       this.drawSkeleton(pose);
     }
     
-    const landmarks = [];
-
-    for (const keypoint of pose.keypoints) {
-      landmarks.push(keypoint.name);
-    }
-
-    console.log(landmarks);
-    const leftShoulder = pose.keypoints.find(obj => obj.name === 'left_shoulder' && obj.score >= .80);
-    const leftElbow = pose.keypoints.find(obj => obj.name === 'left_elbow' && obj.score >= .80);
-    const leftWrist = pose.keypoints.find(obj => obj.name === 'left_wrist' && obj.score >= .80);
-
-    try {
-      const a = [leftShoulder.x, leftShoulder.y];
-      const b = [leftElbow.x, leftShoulder.y];
-      const c = [leftWrist.x, leftWrist.y];
-      
-      const angle = this.calculateAngle(a, b, c);
-      console.log(a, b, c);
-      console.log(angle);
-    } catch (err) {
-      console.log('low visibility', err);
-    }
-    
     //https://github.com/nicknochnack/MediaPipePoseEstimation/blob/main/.ipynb_checkpoints/Media%20Pipe%20Pose%20Tutorial-checkpoint.ipynb
 
+  }
+
+  calculateAngleFor(pose, x, y, z) {
+    const first = pose.keypoints.find(obj => obj.name === x && obj.score >= .80);
+    const second = pose.keypoints.find(obj => obj.name === y && obj.score >= .80);
+    const third = pose.keypoints.find(obj => obj.name === z && obj.score >= .80);
+
+    const a = [first.x, first.y];
+    const b = [second.x, second.y];
+    const c = [third.x, third.y];
+    
+    const angle = this.calculateAngle(a, b, c);
+    this.drawText(angle, b[0], b[1]);
+
+    return angle;
+  }
+
+  drawText(angle, x, y) {
+    const angleStr = angle.toString();
+    console.log(angleStr);
+
+    this.ctx.font = '12px Arial';
+
+    this.ctx.fillStyle = 'white'; 
+    this.ctx.strokeStyle = 'white'; 
+    this.ctx.lineWidth = 2;
+
+    this.ctx.fillText(angleStr, x, y);
+    this.ctx.strokeText(angleStr, x, y);
+
+    console.log('VISIBLE', angleStr, x, y)
   }
 
   /**

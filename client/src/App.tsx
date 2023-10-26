@@ -28,38 +28,24 @@ function App() {
   }
 
   const drawCanvas = (pose: poseDetection.Pose[], video: HTMLVideoElement, videoWidth: number, videoHeight: number, canvas: React.RefObject<HTMLCanvasElement>) => {
-    // const poseId = Math.floor(Math.random() * 21);
-    // if (canvas.current) {
       const canvasElement = canvas.current as HTMLCanvasElement;
       canvasElement.width = videoWidth;
       canvasElement.height = videoHeight;
-    // }
 
-
-      // const poseId = Math.floor(Math.random() * 21); // Generate a unique pose ID for each pose
       const renderer = new RendererCanvas2d(canvas.current);
-      // console.log('rend', await renderer);
 
       renderer.drawResult(pose[0])
-      // renderer.drawKeypoints(pose[0].keypoints); // Use the generated poseId
-      // renderer.drawSkeleton(pose[0].keypoints, poseId);  // Use the generated poseId
-
-    // drawKeypoints(pose.keypoints, poseId);
-    // drawSkeleton(pose["keypoints"], poseId);
   }
 // https://codesandbox.io/s/posedetection-demo-fxy4h?file=/src/renderer_canvas2d.js
   const runPoseDetection = async () => {
-    
     await tf.setBackend('webgpu');
 
-
-    // console.log(await tf.sequential(), await tf.setBackend('webgl'));
     const model = poseDetection.SupportedModels.BlazePose;
     const detector = await poseDetection.createDetector(model, { runtime: 'tfjs' });
 
     setInterval(() => {
       detect(detector);
-    }, 10000);
+    }, 1000);
   };
 
   runPoseDetection();
@@ -68,6 +54,7 @@ function App() {
     <>
       <canvas ref={canvasRef} width={500} height={500} style={{ 
         position: "absolute",
+        backgroundColor: 'grey',
         top: 0,
         left: 0,
         zIndex: 10
@@ -81,7 +68,6 @@ function App() {
         zIndex: 9
         }}/>
       <div id="scatter-gl-container"/>
-      
     </>
   )
 }

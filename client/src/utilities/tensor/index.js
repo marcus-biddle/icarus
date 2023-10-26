@@ -139,7 +139,7 @@ export class RendererCanvas2d {
       console.log('low visibility', err);
     }
     
-    
+    //https://github.com/nicknochnack/MediaPipePoseEstimation/blob/main/.ipynb_checkpoints/Media%20Pipe%20Pose%20Tutorial-checkpoint.ipynb
 
   }
 

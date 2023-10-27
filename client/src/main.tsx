@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google'; //https://github.com/MomenSherif/react-oauth#usegooglelogin-both-implicit--authorization-code-flow
 import HomeLayout from './layouts/HomeLayout';
-import UserNameLayout from './layouts/UserNameLayout';
+import {usernameAction, UserNameLayout} from './layouts/UserNameLayout';
 import { userActions } from './api/users';
 
 const router = createBrowserRouter([
@@ -25,8 +25,9 @@ const router = createBrowserRouter([
         }
       },
       {
-        path: '/create',
+        path: 'create',
         element: <UserNameLayout />,
+        action: usernameAction
       }
     ]
   },

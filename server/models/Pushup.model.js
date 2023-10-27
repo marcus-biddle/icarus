@@ -13,6 +13,10 @@ const pushupSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  verified: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 const Pushup = mongoose.model('Pushup', pushupSchema);

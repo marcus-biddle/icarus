@@ -8,6 +8,7 @@ const findOrCreateUser = async (req, res) => {
   
       // Assuming you have the user's Google ID available in the request:
       const googleId = req.googleId;
+      const username = req.username; // build an input so user can create name
   
       // Check if the user with this Google ID already exists in your database.
       const user = await User.findOne({ googleId });
@@ -18,7 +19,8 @@ const findOrCreateUser = async (req, res) => {
       } else {
         // User doesn't exist, create a new user profile.
         const newUser = new User({
-          googleId,
+          username: username,
+          googleId: googleId,
           // Other user profile information here...
         });
         await newUser.save();
@@ -45,7 +47,9 @@ const findOrCreateUser = async (req, res) => {
     }
   }
 
-  export default UserControllers = {
+  const UserControllers = {
     findOrCreateUser,
     findUser
   }
+
+  export default UserControllers;

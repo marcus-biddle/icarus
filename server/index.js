@@ -36,7 +36,7 @@ app.use(morgan('combined')); // Request logging (use 'dev' for concise logs)
 // });
 
 app.post('/auth/google', async (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5173');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
   res.header('Referrer-Policy', 'no-referrer-when-downgrade');
   const oAuth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
@@ -44,12 +44,17 @@ app.post('/auth/google', async (req, res) => {
     'postmessage',
   );
 
-  const { tokens } = await oAuth2Client.getToken(req.body.code); // exchange code for tokens
-  await oAuth2Client.setCredentials(tokens);
-  const user = oAuth2Client.credentials;
-console.log(user)
+  try {
+    const { tokens } = await oAuth2Client.getToken(req.body.code); // exchange code for tokens
+    await oAuth2Client.setCredentials(tokens);
+    const user = oAuth2Client.credentials;
+    console.log(user)
+    
+    return res.json(user);
+  } catch (err) {
+    console.log('Could not sign in', err)
+  }
   
-  return res.json(user);
 });
 
 app.use('/', usersRouter);

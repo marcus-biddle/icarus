@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { createAxiosInstance } from '../../api/config/axios'
 // import { redirect } from 'react-router-dom';
 // import { userActions } from '../../api/users';
 
 export const GoogleAuth = () => {
     const navigate = useNavigate();
+    const axiosInstance = createAxiosInstance();
 //   const [user, setUser] = useState({
 //       access_token: 'ya29.a0AfB_byCJ--iXgMp5CBEeN5AJbdaeUT6qoES0cb1cb0OwkPJeeDQniTvWfO4EAuDiF8AyBDwYJb5oWLE83cGJ4VAh6PgqC52sJX3U5MZ87WdU0XN031-Qq6Vo1ICCaZjh3uhfKzby2liyuqWz-d2Az-fUHDCPkEqmcW5KaCgYKATISARISFQGOcNnCqhvTIno5_1lXxt6_DYVdlA0171',
 //       refresh_token: '1//06DgZv91KXp3QCgYIARAAGAYSNwF-L9IrNwuza3mvVY5yKiKpUD8YA34DtlKBdFYB7OoeG7zfYhZG2JA0Oh8Z-wf_reQwhZppqUs',
@@ -44,7 +45,7 @@ export const GoogleAuth = () => {
     // https://react-oauth.vercel.app/
     flow: 'auth-code',
     onSuccess: async (codeResponse) => {
-        const response = await axios.post(
+        const response = await axiosInstance.post(
             'http://localhost:3000/auth/google', {
                 code: codeResponse.code,
             });
@@ -55,7 +56,7 @@ export const GoogleAuth = () => {
 });
   return (
     <>
-      {token && 'successful'}
+      {/* {token && 'successful'} */}
       {token ? 
         <button onClick={() => handleSignOut()}>Sign Out</button>
         :

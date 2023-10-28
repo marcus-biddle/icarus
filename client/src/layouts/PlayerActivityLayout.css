@@ -1,0 +1,20 @@
+.calendar-btn-container {
+    display: flex;
+    margin: 0 56px;
+}
+
+.calendar-btn-container button {
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 1.08px;
+    padding-bottom: 8px;
+    border-bottom: solid 4px transparent;
+    transition: border .15s ease-out;
+    color: #FFFFFF;
+    margin-bottom: 1px;
+}
+
+.calendar-btn-container .active-filter {
+    border-bottom: solid 4px green;
+    border-radius: 4px;
+}

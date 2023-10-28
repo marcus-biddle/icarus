@@ -11,22 +11,33 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
 
-.calendar-btn-container {
-    display: flex;
-    margin: 0 56px;
-}
+  .chart-container {
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    padding: 12px;
+    margin: 24px 56px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
 
-.calendar-btn-container button {
-    background-color: transparent;
-    font-size: 12px;
-    padding-bottom: 8px;
-    border-bottom: solid 2px transparent;
-    transition: border .15s ease-out;
-    color: #FFFFFF;
-    margin-bottom: 1px;
-}
+  .changes-container {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    max-height: 60vh;
+    padding: 12px;
+    margin: 24px 56px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    background-color: rgb(251, 221, 156);
+    overflow: auto;
+  }
 
-.calendar-btn-container .active-filter {
-    border-bottom: solid 2px green;
-    border-radius: 4px;
-}
+  .changes-container::-webkit-scrollbar {
+    width: 0.5rem; /* Width of the scrollbar track */
+  }
+  
+  .changes-container::-webkit-scrollbar-thumb {
+    background: transparent; /* Color of the scrollbar thumb (the part you drag) */
+  }

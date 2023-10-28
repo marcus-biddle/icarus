@@ -10,6 +10,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'; //https://github.com/
 import HomeLayout from './layouts/HomeLayout';
 import {usernameAction, UserNameLayout} from './layouts/UserNameLayout';
 import { userActions } from './api/users';
+import PlayerActivityLayout from './layouts/PlayerActivityLayout';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,12 @@ const router = createBrowserRouter([
         path: 'create',
         element: <UserNameLayout />,
         action: usernameAction
-      }
+      },
+      {
+        path: 'players',
+        element: <PlayerActivityLayout />,
+        
+      },
     ]
   },
 ]);

@@ -12,7 +12,7 @@
   }
   
   td {
-    padding: 12px;
+    padding: 12px 56px;
     text-align: left;
   }
 
@@ -23,7 +23,7 @@
     text-transform: uppercase;
     font-weight: 300;
     font-size: 12px;
-    padding: 4px 12px;
+    padding: 4px 56px;
   }
   
   tr:nth-child(even) {

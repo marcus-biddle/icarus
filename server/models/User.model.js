@@ -12,10 +12,22 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   // Commonly accessed pushup data
-  totalPushups: {
-    type: Number,
-    default: 0,
-  },
+  totalPushups: [
+    {
+      month: {
+        type: Number,
+        default: new Date().getMonth() + 1, // Default to the current month
+      },
+      total: {
+        type: Number,
+        default: 0, // Default to 0 for total pushups
+      },
+      year: {
+        type: Number,
+        default: new Date().getFullYear(), // Default to the current year
+      },
+    },
+  ],
   lastPushupDate: {
     type: Date,
   },

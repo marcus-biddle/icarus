@@ -21,4 +21,4 @@ const pushupSchema = new mongoose.Schema({
 
 const Pushup = mongoose.model('Pushup', pushupSchema);
 
-module.exports = Pushup;
+export default Pushup;

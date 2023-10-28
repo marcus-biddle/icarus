@@ -1,14 +1,15 @@
 import React from 'react'
 import { Camera } from './components/Camera'
 import './App.css'
-import { GoogleAuth } from './components/GoogleLogin/GoogleLogin';
 import { Outlet } from 'react-router-dom';
+import DesktopNavbar from './components/Navbar/DesktopNavbar';
 
 function App() {
   return (
     <div>
       {false && <Camera />}
-      <GoogleAuth />
+      <DesktopNavbar />
+      
       <Outlet />
     </div>
   )

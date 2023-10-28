@@ -6,7 +6,7 @@ const PlayerTable = ({ data }) => {
     <table>
       <thead>
         <tr>
-          <th></th>
+          <th>Ranking</th>
           <th>Name</th>
           <th>Count</th>
           <th>Actions</th>

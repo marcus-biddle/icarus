@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const createAxiosInstance = () => {
+export const createAxiosInstance = () => {
   // Create an instance of Axios with custom configuration
   const instance = axios.create({
     baseURL: 'http://localhost:3000/api',
@@ -10,5 +10,3 @@ const createAxiosInstance = () => {
   });
   return instance;
 };
-
-export default createAxiosInstance;

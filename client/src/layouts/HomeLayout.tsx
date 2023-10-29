@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 // import PlayerCards from '../components/PlayerCards/PlayerCards';
 import './HomeLayout.css'
-// import { getCurrentMonth } from '../helpers/date';
-import PlayerTable from '../components/PlayerTable/PlayerTable';
-import { PushupTracker } from '../components/PushupTracker.tsx/PushupTracker';
 import { DropdownMenu } from '../components/Dropdown/ChartDropdown';
-import {RecentChanges} from '../components/Boards/RecentChanges';
 import { getCurrentMonth } from '../helpers/date';
+import { RecentChanges } from '../components/Boards/RecentChanges';
+import { PushupTracker } from '../components/PushupTracker/PushupTracker';
+// import { getCurrentMonth } from '../helpers/date';
 
 const HomeLayout = () => {
   const [dropdownOption, setDropdownOption] = useState([`${getCurrentMonth()} ${new Date().getDate()}`]);
-  
   return (
     <div>
       <div style={{ backgroundColor: '#141414'}}>

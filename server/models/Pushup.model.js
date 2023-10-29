@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const pushupSchema = new mongoose.Schema({
   user: {
@@ -7,16 +7,12 @@ const pushupSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   count: {
     type: Number,
     required: true,
   },
-  verified: {
-    type: Boolean,
-    required: true,
-  }
 });
 
 const Pushup = mongoose.model('Pushup', pushupSchema);

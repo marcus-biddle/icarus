@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
-import { createAxiosInstance } from '../../api/config/axios'
+import { redirect, useNavigate } from 'react-router-dom';
+import { createAxiosInstance } from '../../api/config/axios';
+import './style.css'
+import { userActions } from '../../api/users';
 // import { redirect } from 'react-router-dom';
 // import { userActions } from '../../api/users';
 
@@ -21,7 +23,13 @@ export const GoogleAuth = () => {
   const handleGoogleSignIn = async (googleId: string) => {
     localStorage.setItem('idToken', googleId); // Store the token in localStorage
     setToken(googleId);
+    const response = await userActions.createUser(googleId);
+    console.log('handleGsignIN', response)
     navigate('/home');
+    // const decodedToken = jwt.verify(googleId, 'googleId');
+    // console.log(decodedToken);
+    // const user = await userActions.findByGoogleId(googleId);
+    // user ? navigate('/home') : navigate('/register');
     // We can shove all of this in router dom loader
     // const res = await userActions.findByGoogleId(googleId);
     // console.log(res);
@@ -37,7 +45,7 @@ export const GoogleAuth = () => {
   const handleSignOut = () => {
     localStorage.removeItem('idToken'); // Remove the token from localStorage
     setToken(null);
-    navigate('/');
+    navigate('/login');
   };
 
   // First things should be a sign in/up page using google chrome
@@ -46,21 +54,32 @@ export const GoogleAuth = () => {
     flow: 'auth-code',
     onSuccess: async (codeResponse) => {
         const response = await axiosInstance.post(
-            'http://localhost:3000/auth/google', {
+            'http://localhost:3001/auth/google', {
                 code: codeResponse.code,
             });
+
+            console.log('RESPONSE', response)
 
         handleGoogleSignIn(await response.data.id_token);
     },
     onError: errorResponse => console.log(errorResponse),
 });
+
+useEffect(() => {
+
+}, [token])
   return (
     <>
       {/* {token && 'successful'} */}
       {token ? 
-        <button onClick={() => handleSignOut()}>Sign Out</button>
+        <div style={{ width: '100%', maxWidth: '100px', position: 'relative' }}>
+          <button className='google-logout' onClick={() => handleSignOut()}>Logout</button>
+        </div>
         :
-        <button onClick={() => googleLogin()}>Google sign in</button>
+        <div style={{ width: '100%', maxWidth: '200px', position: 'relative'}}>
+          <button className='google-signin' onClick={() => googleLogin()}>Login with Google</button>
+        </div>
+        
       }
       
     </>

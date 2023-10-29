@@ -13,11 +13,11 @@ const PlayerTable = ({ data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => (
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.age}</td>
+        {data.map((player, index) => (
+          <tr key={player._id}>
+            <td>{index + 1}</td>
+            <td>{player.username}</td>
+            <td>{player.totalPushups.length}</td>
             <td>View</td>
           </tr>
         ))}

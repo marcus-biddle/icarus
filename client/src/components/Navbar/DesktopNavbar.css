@@ -16,3 +16,12 @@ a:hover {
 .active {
     color: gold;
 }
+
+.navlink-container {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+}

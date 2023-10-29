@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import PlayerTable from '../components/PlayerTable/PlayerTable';
 import './PlayerActivityLayout.css';
+import { useLoaderData } from 'react-router';
 
 const PlayerActivityLayout = () => {
-    const data = [
-        { id: 1, name: 'Alice', age: 25 },
-        { id: 2, name: 'Bob', age: 30 },
-        { id: 3, name: 'Charlie', age: 22 },
-      ];
+    const data = useLoaderData();
+    console.log(data);
   
     const [activeFilter, setActiveFilter] = useState(0);
   return (

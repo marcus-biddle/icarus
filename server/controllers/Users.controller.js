@@ -1,33 +1,29 @@
+import RecentChanges from '../models/RecentChanges.js';
 import User from '../models/User.model.js';
+import jwt from 'jsonwebtoken';
 
 // POST to retreive user or create a new user
 const findOrCreateUser = async (req, res) => {
-    try {
-      // The user has successfully signed in with Google.
-      // You can now create a user profile or retrieve an existing one.
-  
-      // Assuming you have the user's Google ID available in the request:
-      const googleId = req.googleId;
-      const username = req.username; // build an input so user can create name
+    const googleId = req.body.googleId;
+    if (!googleId) return res.status(400).json({ error: 'googleId is required' });
+    
+    const decodedToken = await jwt.decode(googleId);
+    console.log(decodedToken);
 
-      return res.json({ googleId: googleId, username: username})
-  
-      // Check if the user with this Google ID already exists in your database.
-      // const user = await User.findOne({ googleId });
-  
-      // if (user) {
-      //   // User exists, return the user's profile.
-      //   return res.status(200).json(user);
-      // } else {
-      //   // User doesn't exist, create a new user profile.
-      //   const newUser = new User({
-      //     username: username,
-      //     googleId: googleId,
-      //     // Other user profile information here...
-      //   });
-      //   await newUser.save();
-      //   return res.status(201).json(newUser);
-      // }
+    const duplicate = await User.findOne({ email: decodedToken.email }).lean().exec();
+    if (duplicate) return res.status(200).json(duplicate);
+
+    try {
+        const user = await User.create({
+          username: decodedToken.name,
+          email: decodedToken.email,
+        });
+
+        await RecentChanges.create({
+          action: `${decodedToken.name} joined the group.`,
+        });
+
+        return res.status(201).json(user);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -36,15 +32,27 @@ const findOrCreateUser = async (req, res) => {
   // GET user's profile
   const findUser = async (req, res) => {
     try {
-      // Assuming you have a middleware that authenticates the user and attaches their profile to the request.
-      const user = req.user; // Retrieve the user's profile from the request.
+      console.log('FINDUSER STARTING')
+      const { googleId } = req.params;
+      const foundUser = await User.findOne({ googleId: googleId });
   
-      if (user) {
-        console.log(user)
-        return res.status(200).json(user);
+      if (foundUser) {
+        console.log('FOUND',foundUser)
+        return res.status(200).json(foundUser);
       } else {
-        return res.status(404).json({ error: 'User not found' });
+        console.log('NOT FOUND',foundUser)
+        return res.status(404).json({ error: 'User not found.' });
       }
+    } catch (error) {
+      console.log('ERR FINDING')
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  const findAllUsers = async (req, res) => {
+    try {
+      const users = await User.find({});
+      return res.json(users);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -52,7 +60,8 @@ const findOrCreateUser = async (req, res) => {
 
   const UserControllers = {
     findOrCreateUser,
-    findUser
+    findUser,
+    findAllUsers
   }
 
   export default UserControllers;

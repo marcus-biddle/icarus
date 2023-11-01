@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PlayerTable from '../components/PlayerTable/PlayerTable';
 import './PlayerActivityLayout.css';
 import { useLoaderData } from 'react-router';
+import Header from '../components/Header/Header';
+import { useActiveButton } from '../utilities/hooks/useActiveButton'
 
 const PlayerActivityLayout = () => {
     const data = useLoaderData();
-    console.log(data);
-  
-    const [activeFilter, setActiveFilter] = useState(0);
+    // Can directly sort data inside hook
+    const { activeButton, activateButton } = useActiveButton('defaultButton');
   return (
     <div>
-        <div style={{ backgroundColor: '#141414'}}>
-          <h2 style={{ textAlign: 'left', color: 'gold', margin: '0 56px', padding: '24px 0', fontSize: '40px'}}>Player Activity</h2>
-          <div className='calendar-btn-container'>
-            <button className={`${activeFilter === 0 ? 'active-filter' : ''}`} onClick={() => setActiveFilter(0)}>Day</button>
-            <button className={`${activeFilter === 1 ? 'active-filter' : ''}`} onClick={() => setActiveFilter(1)}>Week</button>
-            <button className={`${activeFilter === 2 ? 'active-filter' : ''}`} onClick={() => setActiveFilter(2)}>Month</button>
+        <Header title={'Activity'} />
+        <div className='calendar-btn-container'>
+            <button className={`${activeButton === 'day' ? 'active-filter' : ''}`} onClick={() => activateButton('day')}>Day</button>
+            <button className={`${activeButton === 'week' ? 'active-filter' : ''}`} onClick={() => activateButton('week')}>Week</button>
+            <button className={`${activeButton === 'month' ? 'active-filter' : ''}`} onClick={() => activateButton('month')}>Month</button>
           </div>
-        </div>
         {/* <p>Top 3 competitors for {getCurrentMonth()}</p> */}
         {/* <div className='card-container'>
           <PlayerCards />

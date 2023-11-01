@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './TopMobileNavbar.css';
-import { Show } from '../../helpers/functional';
+import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
 import { recentChangesActions } from '../../api/recentChanges';
 
 const TopMobileNavbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [data, setData] = useState([]);
+  const emptyDataMsg = 'No activity in the last week.'
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -25,21 +26,18 @@ const TopMobileNavbar = () => {
   return (
     <div className="top-navbar">
       <div className="navbar-icon">Icon</div>
-      <button className="navbar-button" onClick={toggleDropdown}>Recent Changes</button>
+      <button className="navbar-button" onClick={toggleDropdown}>Icon</button>
       <Show when={isDropdownOpen}>
         <div className="dropdown">
-        {data.length === 0 ? (
-        <p>No activity in the last week.</p>
-      ) : (
-        <ul>
-          {data.map((item: { action: string }, index) => (
-            <li key={index}>
-              {item.action} 
-            </li>
-          ))}
-          
-        </ul>
-      )}
+            {showIfOrElse(isArrayEmpty(data))(<p>{emptyDataMsg}</p>)(
+                <ul>
+                    {data.map((item: { action: string }, index) => (
+                        <li key={index}>
+                        {item.action} 
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
       </Show>
     </div>

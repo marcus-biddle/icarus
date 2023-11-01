@@ -1,8 +1,12 @@
 import React from 'react';
 import './MobileNavbar.css';
 import { NavLink } from 'react-router-dom';
+import { PushupModal } from '../Modals/PushupModal';
+import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
 
 const MobileNavbar = () => {
+  const { openModal, isModalOpen } = usePushupCounter();
+  
   return (
     <nav>
       <div className="bottom-nav-container">
@@ -16,13 +20,13 @@ const MobileNavbar = () => {
             <div className="nav-item">User</div>
             <div className="nav-item">Settings</div>
           </div>
-          
         </div>
       </div>
       {/* Floating Button */}
       <div className="floating-button-container">
-        <div className="floating-button">+</div>
+        <div className="floating-button" onClick={openModal}>+</div>
       </div>
+      <PushupModal isOpen={isModalOpen} />
     </nav>
     
   )

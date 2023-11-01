@@ -9,3 +9,7 @@ interface ShowProps {
 export const Show = ({ when = true, children }: ShowProps) => (when ? children : null);
 
 export const showIfOrElse = (x: boolean) => (content: any) => (fallbackContent: any) => (x ? content : fallbackContent);
+
+export const isArrayEmpty = (array: any[]) => array.length === 0;
+
+export const isUserLoggedIn = () => (localStorage.getItem('idToken') ? true : false)

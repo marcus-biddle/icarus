@@ -1,29 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GoogleAuth } from '../GoogleLogin/GoogleLogin';
 import './DesktopNavbar.css';
-import { NavLink, useLoaderData, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { PushupModal } from '../Modals/PushupModal';
-import { pushupActions } from '../../api/pushups'
+import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
+import { Show, isUserLoggedIn } from '../../helpers/functional';
 
 const DesktopNavbar = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-
-    const data = localStorage.getItem('idToken');
-
-  const handleAddPushups = async (pushupCount: string) => {
-    // Implement your logic to send pushup data to the database here
-    setIsLoading(true);
-    let count = parseInt(pushupCount);
-    if (isNaN(count)) count = 0;
-    await pushupActions.addPushups(count).then(response => {
-      if (response) {
-        setIsLoading(false);
-        setIsModalOpen(false);
-      }
-    })
-    console.log(`Adding ${pushupCount} pushups to the database`);
-  };
+    const { isModalOpen, openModal } = usePushupCounter();
+  // const handleAddPushups = async (pushupCount: string) => {
+  //   // Implement your logic to send pushup data to the database here
+  //   setIsLoading(true);
+  //   let count = parseInt(pushupCount);
+  //   if (isNaN(count)) count = 0;
+  //   await pushupActions.addPushups(count).then(response => {
+  //     if (response) {
+  //       setIsLoading(false);
+  //       setIsModalOpen(false);
+  //     }
+  //   })
+  //   console.log(`Adding ${pushupCount} pushups to the database`);
+  // };
 
 
   return (
@@ -34,15 +31,12 @@ const DesktopNavbar = () => {
         <div className='navlink-container'>
             <NavLink to={'/home'}>Home</NavLink>
             <NavLink to={'/players'}>Player Activity</NavLink>
-            <button onClick={() => setIsModalOpen(true)}>Add +</button>
-            {data && <GoogleAuth />}
+            <button onClick={openModal}>Add +</button>
+            <Show when={isUserLoggedIn()}>
+              <GoogleAuth />
+            </Show>
         </div>
-        <PushupModal
-        isOpen={isModalOpen}
-        isLoading={isLoading}
-        onClose={() => setIsModalOpen(false)}
-        onAddPushups={handleAddPushups}
-      />
+        <PushupModal isOpen={isModalOpen} />
     </nav>
   )
 }

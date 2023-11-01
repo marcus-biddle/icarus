@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from 'react';
 
 interface ShowProps {
@@ -6,3 +7,5 @@ interface ShowProps {
 }
 
 export const Show = ({ when = true, children }: ShowProps) => (when ? children : null);
+
+export const showIfOrElse = (x: boolean) => (content: any) => (fallbackContent: any) => (x ? content : fallbackContent);

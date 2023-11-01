@@ -13,6 +13,7 @@ import { userActions } from './api/users';
 import { recentChangesActions } from './api/recentChanges'
 import PlayerActivityLayout from './layouts/PlayerActivityLayout';
 import { LoginLayout } from './layouts/LoginLayout';
+import LandingPageLayout from './layouts/LandingPageLayout';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       return { token: token }
     },
     children: [
+      {
+        path: '/',
+        element: <LandingPageLayout />,
+      },
       {
         path: 'home',
         element: <HomeLayout />,

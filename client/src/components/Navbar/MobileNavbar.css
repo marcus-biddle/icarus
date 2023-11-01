@@ -1,0 +1,59 @@
+.bottom-nav-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+    background-color: transparent;
+  }
+  
+  .bottom-nav-bar {
+    background-color: #191427;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 10px 20px;
+    position: relative; /* Add relative positioning to the nav bar */
+  }
+  
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  
+  .floating-button-container {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Position the button absolutely within the nav bar */
+    left: 50%; /* Position the button in the horizontal center */
+    transform: translateX(-50%); /* Adjust the horizontal centering */
+    bottom: 45px; /* Vertically position the button */
+    z-index: 2;
+  }
+  
+  .floating-button {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #0eb168;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .floating-button:hover {
+    background-color: #f44336;
+  }
+  

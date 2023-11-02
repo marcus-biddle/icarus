@@ -2,7 +2,7 @@ import React from 'react'
 
 const LandingPageLayout = () => {
   return (
-    <div>LandingPageLayout</div>
+    <div >LandingPageLayout</div>
   )
 }
 

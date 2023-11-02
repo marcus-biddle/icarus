@@ -10,7 +10,6 @@ const TopMobileNavbar = () => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
-    console.log(isDropdownOpen);
   };
 
   useEffect(() => {
@@ -24,23 +23,29 @@ const TopMobileNavbar = () => {
   }, [])
 
   return (
-    <div className="top-navbar">
-      <div className="navbar-icon">Icon</div>
-      <button className="navbar-button" onClick={toggleDropdown}>Icon</button>
-      <Show when={isDropdownOpen}>
-        <div className="dropdown">
-            {showIfOrElse(isArrayEmpty(data))(<p>{emptyDataMsg}</p>)(
-                <ul>
-                    {data.map((item: { action: string }, index) => (
-                        <li key={index}>
-                        {item.action} 
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-      </Show>
-    </div>
+
+      <div className="top-navbar">
+        <div className="navbar-icon">Icon</div>
+        <button className="navbar-button" onClick={toggleDropdown}>Icon</button>
+        <Show when={isDropdownOpen}>
+          <div className="dropdown">
+              {showIfOrElse(isArrayEmpty(data))(<p>{emptyDataMsg}</p>)(
+                  <>
+                  <h3>Recent Events</h3>
+                    <ul>
+                        {data.map((item: { action: string }, index) => (
+                            <li key={index}>
+                            {item.action} 
+                            </li>
+                        ))}
+                    </ul>
+                  </>
+              )}
+          </div>
+        </Show>
+      </div>
+      
+    
   );
 };
 

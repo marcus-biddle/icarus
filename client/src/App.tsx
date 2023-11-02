@@ -22,7 +22,7 @@ function App() {
     }, [navigate, user.token])
   
   return (
-    <div>
+    <div style={{ position: 'relative', maxHeight: '100vh' }}>
       {false && <Camera />}
       <Show when={!isMobile}>
         <DesktopNavbar />
@@ -31,7 +31,7 @@ function App() {
         <TopMobileNavbar />
       </Show>
       
-      <div style={{ zIndex: '1'}}>
+      <div style={{ zIndex: '1', height: '94vh', backgroundColor: 'grey', position: 'relative'}}>
       <Outlet />
       </div>
       

@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from 'react-router-dom';
 import './style.css';
 import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
 
 interface PushupModalProps {
   isOpen: boolean;
+  onClose: () => void;
 }
 
-export const PushupModal= ({ isOpen }: PushupModalProps) => {
+export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
   const [pushupCount, setPushupCount] = useState<string>('');
-  const { increasePushupCount, isLoading, closeModal } = usePushupCounter();
+  const { increasePushupCount, isLoading, closeModal, openModal, isModalOpen } = usePushupCounter();
 
   // Could create react router action
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     increasePushupCount(pushupCount);
     setPushupCount('');
+    onClose();
   };
 
   return (
     <div className={`modal ${isOpen ? 'block' : ''}`}>
       <div className="modal-content">
-        <span className="close" onClick={closeModal}>&times;</span>
+        <span className="close" onClick={onClose}>&times;</span>
         <h2>Add Pushups</h2>
         <Form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <label htmlFor="pushupCount">Number of Pushups:</label>

@@ -4,9 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #007bff; /* Example background color */
+    background-color: #0D1117; /* Example background color */
     color: #fff; /* Text color */
     padding: 10px;
+    position: relative;
   }
   
   .navbar-icon {
@@ -23,19 +24,19 @@
   }
   
   .dropdown {
-    background-color: black;
+    background-color: #0D1117;
     color: #333;
     border: 1px solid #ccc;
     position: absolute;
-    bottom: calc(100% - 195px);
+    top: 55px;
     left: 0;
     width: 100%;
-    max-width: 368px;
     padding: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     z-index: 101;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    border: 1px solid #0D1117;
   }
   
   .dropdown p {
@@ -53,3 +54,24 @@
     display: block;
   }
   
+  .dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .dropdown li {
+    display: inline-block; /* Display list items in a line */
+    background-color: transparent;
+    padding: 10px;
+    margin: 0 10px; /* Add horizontal spacing between list items */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    text-align: left; /* Left-align text within list items */
+  }
+  
+  .dropdown li :hover {
+    background-color: #e0e0e0; /* Background color on hover */
+  }

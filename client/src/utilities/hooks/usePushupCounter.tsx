@@ -7,6 +7,7 @@ export const usePushupCounter = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
+    console.log('openModal', isModalOpen)
   };
 
   const closeModal = () => {

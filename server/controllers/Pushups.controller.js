@@ -26,7 +26,7 @@ import jwt from 'jsonwebtoken';
         });
 
         await RecentChanges.create({
-          action: `${decodedToken.name} completed ${pushupCount} pushups.`,
+          action: `${decodedToken.name} completed ${pushupCount} pushup(s).`,
         });
 
         const updatedUser = await User.updateTotalPushups(userId, pushupCount);

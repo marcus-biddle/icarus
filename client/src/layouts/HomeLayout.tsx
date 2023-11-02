@@ -12,8 +12,9 @@ const HomeLayout = () => {
   const [dropdownOption, setDropdownOption] = useState([`${getCurrentMonth()} ${new Date().getDate()}`]);
   return (
     <div>
-      <div style={{ backgroundColor: '#141414'}}>
-        <h2 style={{ textAlign: 'left', color: 'gold', margin: '0 56px', padding: '24px 0', fontSize: '40px'}}>
+      <div style={{ backgroundColor: '#141414', padding: '0'}}>
+        
+        <h2 style={{ textAlign: 'left', color: 'gold', margin: '0 56px', paddingBottom: '32px', fontSize: '40px'}}>
           Overview
         </h2>
       </div>

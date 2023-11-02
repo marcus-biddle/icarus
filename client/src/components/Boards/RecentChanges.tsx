@@ -3,9 +3,7 @@ import axios from 'axios';
 import { useLoaderData } from 'react-router';
 
 export const RecentChanges = () => {
-  const [recentChanges, setRecentChanges] = useState([0]);
   const data: any = useLoaderData();
-  console.log(data);
 
   return (
     <>
@@ -19,7 +17,6 @@ export const RecentChanges = () => {
               {item.action} 
             </li>
           ))}
-          
         </ul>
       )}
     </>

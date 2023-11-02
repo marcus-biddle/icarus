@@ -28,7 +28,15 @@ const router = createBrowserRouter([
         element: <HomeLayout />,
         loader: async () => {
           const response = await recentChangesActions.getAllRecentChanges();
-          return response;
+          const sortedResponse = [...response].sort((a, b) => {
+            const dateA = new Date(a.timestamp).getTime();
+            const dateB = new Date(b.timestamp).getTime();
+        
+            // Sort in descending order (most recent first)
+            return dateB - dateA;
+          });
+        
+          return sortedResponse;
         },
       },
       {

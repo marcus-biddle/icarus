@@ -6,33 +6,29 @@ import { DropdownMenu } from '../components/Dropdown/ChartDropdown';
 import { getCurrentMonth } from '../helpers/date';
 import { RecentChanges } from '../components/Boards/RecentChanges';
 import { PushupTracker } from '../components/PushupTracker/PushupTracker';
+import Header from '../components/Header/Header';
 // import { getCurrentMonth } from '../helpers/date';
 
 const HomeLayout = () => {
   const [dropdownOption, setDropdownOption] = useState([`${getCurrentMonth()} ${new Date().getDate()}`]);
   return (
     <div>
-      <div style={{ backgroundColor: '#141414', padding: '0'}}>
-        
-        <h2 style={{ textAlign: 'left', color: 'gold', margin: '0 56px', paddingBottom: '32px', fontSize: '40px'}}>
-          Overview
-        </h2>
-      </div>
+      <Header title={'Overview'} />
       
       <div style={{ display: 'flex'}}>
-      <div className='chart-container'>
-        <DropdownMenu getDropdownOption={setDropdownOption} />
-        <div>
-          <PushupTracker months={dropdownOption}/>
+        <div className='chart-container'>
+          <DropdownMenu getDropdownOption={setDropdownOption} />
+          <div>
+            <PushupTracker months={dropdownOption}/>
+          </div>
+        </div>
+        
+        <div className='changes-container'>
+          {/* Make loader to grab info */}
+          <RecentChanges />
         </div>
       </div>
-      
-      <div className='changes-container'>
-        {/* Make loader to grab info */}
-        <RecentChanges />
-      </div>
-      
-    </div>
+
     </div>
     
   )

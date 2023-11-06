@@ -1,5 +1,6 @@
 import React from 'react'
 import './style.css'
+import { CiMedal } from "react-icons/ci";
 
 const PlayerTable = ({ data }) => {
   return (
@@ -19,7 +20,7 @@ const PlayerTable = ({ data }) => {
 
           return (
           <tr key={player._id}>
-            <td>{index + 1}</td>
+            <td>{index + 1 === 1 ? <CiMedal style={{ color: 'gold', width: '25px', height: '25px'}} /> : index + 1 === 2 ? <CiMedal style={{ color: 'silver', width: '25px', height: '25px'}} /> : index + 1 === 3 ? <CiMedal style={{ color: 'bronze', width: '25px', height: '25px'}} /> : index + 1}</td>
             <td>{player.username}</td>
             <td>{total.length > 0 ? total[0].total : 0}</td>
             <td>View</td>

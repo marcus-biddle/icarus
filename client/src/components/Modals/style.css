@@ -13,13 +13,14 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    color: white;
     z-index: 1;
   }
   
   /* Modal content */
   .modal-content {
     position: relative;
-    background-color: #FFFFFF;
+    background-color: #23272F;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     padding: 20px;
@@ -35,7 +36,7 @@
     right: 15px;
     font-size: 24px;
     cursor: pointer;
-    color: red;
+    color: white;
     min-width: 200px;
     text-align: right;
   }
@@ -44,7 +45,7 @@
   .modal h2 {
     margin-top: 0;
     font-size: 1.5rem;
-    color: #000000;
+    color: white;
   }
   
   /* Form label */
@@ -52,12 +53,12 @@
     display: block;
     font-weight: 500;
     margin-bottom: 8px;
-    color: #000000;
+    color: white;
   }
   
   /* Form input */
   .modal input {
-    width: 80%;
+    width: 20%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;

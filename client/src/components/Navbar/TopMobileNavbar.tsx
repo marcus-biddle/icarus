@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './TopMobileNavbar.css';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
 import { recentChangesActions } from '../../api/recentChanges';
+import { CiViewTimeline } from "react-icons/ci";
 
 const TopMobileNavbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -26,7 +27,9 @@ const TopMobileNavbar = () => {
 
       <div className="top-navbar">
         <div className="navbar-icon">Icon</div>
-        <button className="navbar-button" onClick={toggleDropdown}>Icon</button>
+        <button className={`${isDropdownOpen ? 'navbar-button-active' : "navbar-button"}`} onClick={toggleDropdown}>
+          <CiViewTimeline style={{ width: '100%', height: '100%'}}/>
+        </button>
         <Show when={isDropdownOpen}>
           <div className="dropdown">
               {showIfOrElse(isArrayEmpty(data))(<p>{emptyDataMsg}</p>)(

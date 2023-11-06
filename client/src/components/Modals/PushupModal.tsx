@@ -25,16 +25,20 @@ export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
         <h2>Add Pushups</h2>
+        <p>This will be recorded for {'[insert date]'}</p>
         <Form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <label htmlFor="pushupCount">Number of Pushups:</label>
-          <input
-            type="number"
-            id="pushupCount"
-            name="pushupCount"
-            value={pushupCount}
-            onChange={(e) => setPushupCount(e.target.value)}
-            required
-          />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <label htmlFor="pushupCount">Number of Pushups:</label>
+            <input
+              type="number"
+              id="pushupCount"
+              name="pushupCount"
+              value={pushupCount}
+              onChange={(e) => setPushupCount(e.target.value)}
+              required
+            />
+          </div>
+          
           <button type="submit">{isLoading ? 'Loading...' : 'Add Pushups'}</button>
         </Form>
       </div>

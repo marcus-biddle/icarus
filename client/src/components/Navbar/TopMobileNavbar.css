@@ -21,6 +21,21 @@
     cursor: pointer;
     font-size: 16px; /* Adjust the size as needed */
     text-decoration: underline;
+    height: 45px;
+    width: 45px;
+    transition: all .05 ease;
+  }
+
+  .navbar-button-active {
+    background: none;
+    border: 1px solid white;
+    background-color: #343A46;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px; /* Adjust the size as needed */
+    text-decoration: underline;
+    height: 45px;
+    width: 45px;
   }
   
   .dropdown {

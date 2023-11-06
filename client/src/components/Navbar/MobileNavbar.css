@@ -19,12 +19,12 @@
   }
   
   .nav-item {
-    flex: 1;
-    text-align: center;
-    color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 50px;
+    height: 50px;
+    align-items: center;
   }
   
   .floating-button-container {
@@ -34,9 +34,9 @@
     justify-content: center;
     align-items: center;
     position: absolute; /* Position the button absolutely within the nav bar */
-    left: 52%; /* Position the button in the horizontal center */
+    left: 49%; /* Position the button in the horizontal center */
     transform: translateX(-50%); /* Adjust the horizontal centering */
-    bottom: 6px;
+    bottom: 12px;
     z-index: 102;
   }
   

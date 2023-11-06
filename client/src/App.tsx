@@ -31,7 +31,7 @@ function App() {
         <TopMobileNavbar />
       </Show>
       
-      <div style={{ zIndex: '1', height: '94vh', backgroundColor: 'grey', position: 'relative'}}>
+      <div style={{ zIndex: '1', height: '94vh', position: 'relative'}}>
       <Outlet />
       </div>
       

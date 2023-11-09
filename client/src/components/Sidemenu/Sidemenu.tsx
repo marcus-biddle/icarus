@@ -1,9 +1,10 @@
 // Sidemenu.js
 
-import React from 'react';
+import React, { useRef } from 'react';
 import './Sidemenu.css';
 import { CiCircleRemove } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
+import { useOutsideClick } from '../../utilities/hooks/useOutsideClick';
 
 const Sidemenu = ({ isOpen, setIsOpen }) => {
 
@@ -11,8 +12,12 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
     setIsOpen(!isOpen);
   };
 
+  const wrapperRef = useRef(null);
+    useOutsideClick(wrapperRef, () => setIsOpen(false));
+
+
   return (
-    <div className={`sidemenu ${isOpen ? 'open' : ''}`}>
+    <div className={`sidemenu ${isOpen ? 'open' : ''}`} ref={wrapperRef}>
       <div className="header">
         <p>Menu</p>
         <CiCircleRemove onClick={() => toggleMenu()} className='close-sidemenu' />

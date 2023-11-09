@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Form } from 'react-router-dom';
 import './style.css';
 import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
+import { useOutsideClick } from '../../utilities/hooks/useOutsideClick';
 
 interface PushupModalProps {
   isOpen: boolean;
@@ -20,9 +21,12 @@ export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
     onClose();
   };
 
+  const wrapperRef = useRef(null);
+  useOutsideClick(wrapperRef, onClose);
+
   return (
-    <div className={`modal ${isOpen ? 'block' : ''}`}>
-      <div className="modal-content">
+    <div className={`modal ${isOpen ? 'block' : ''}`} >
+      <div className="modal-content" ref={wrapperRef}>
         <span className="close" onClick={onClose}>&times;</span>
         <h2>Add Pushups</h2>
         <p>This will be recorded for {'[insert date]'}</p>

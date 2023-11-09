@@ -1,0 +1,14 @@
+.filter-popup {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #01040a;
+    border: 1px solid #0057a4;
+    border-radius: 6px;
+    padding: 8px;
+    z-index: 1;
+    min-width: 100px;
+    min-height: 50px;
+    text-align: left;
+  }

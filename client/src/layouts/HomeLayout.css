@@ -39,9 +39,9 @@
     width: 0.5rem; /* Width of the scrollbar track */
   }
   
-  .changes-container::-webkit-scrollbar-thumb {
-    background: transparent; /* Color of the scrollbar thumb (the part you drag) */
-  }
+.changes-container::-webkit-scrollbar-thumb {
+  background: transparent; 
+}
 
 .display-container {
   background-color: #01040a;
@@ -49,6 +49,8 @@
   padding: 16px 32px;
   text-align: left;
   min-width: 150px;
+  border: 1px solid;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .display-title {

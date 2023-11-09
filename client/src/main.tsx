@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         action: usernameAction
       },
       {
-        path: 'players',
+        path: 'leader-board',
         element: <PlayerActivityLayout />,
         loader: async () => {
           const response = await userActions.getAllUsers();

@@ -19,7 +19,7 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
       </div>
       <div className='navigation-list'>
         <NavLink to='/home'>Home</NavLink>
-        <NavLink to='/some-link'>Leader Board</NavLink>
+        <NavLink to='/leader-board'>Leader Board</NavLink>
         <NavLink to='/some-link'>Discussion</NavLink>
         <NavLink to='/some-link'>Some Other Link</NavLink>
       </div>

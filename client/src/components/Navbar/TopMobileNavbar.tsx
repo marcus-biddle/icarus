@@ -14,7 +14,7 @@ const TopMobileNavbar = () => {
   const location = useLocation();
   const { openModal, isModalOpen, closeModal } = usePushupCounter();
 
-  const pageName = location.pathname === '/home' ? 'Dashboard' : location.pathname;
+  const pageName = location.pathname === '/home' ? 'Dashboard' : location.pathname === '/leader-board' ? 'Leader Board' : location.pathname;
   // const emptyDataMsg = 'No activity in the last week.'
 
   // const toggleDropdown = () => {

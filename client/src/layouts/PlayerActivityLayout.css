@@ -18,3 +18,50 @@
     border-bottom: solid 4px green;
     border-radius: 4px;
 }
+
+.container {
+    display: flex;
+    margin: 0 24px;
+    border: 1px solid;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .filtersSection {
+    background-color: #21262d;
+    width: 100px;
+    padding: 4px;
+  }
+  
+  .activeFiltersSection {
+    display: flex;
+    background-color: #01040a;
+    width: 100%;
+    transition: width 0.3s;
+    padding: 4px;
+  }
+  
+  .icon {
+    width: 25px;
+    height: 25px;
+    color: white;
+  }
+
+  .clearButtonContainer {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+  }
+  
+  .clearButton {
+    background-color: transparent;
+    border: 1px solid #0057a4;
+    border-radius: 6px;
+    height: 25px;
+    width: 30px;
+  }
+  
+  .clearButtonText {
+    padding: 0 8px;
+  }
+  

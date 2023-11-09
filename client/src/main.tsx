@@ -33,6 +33,7 @@ const router = createBrowserRouter([
         element: <HomeLayout />,
         loader: async () => {
           const response = await recentChangesActions.getAllRecentChanges();
+          if (response === null) return null;
           const sortedResponse = [...response].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
             const dateB = new Date(b.timestamp).getTime();

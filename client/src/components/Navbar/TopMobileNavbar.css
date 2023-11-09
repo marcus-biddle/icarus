@@ -10,19 +10,20 @@
     position: relative;
   }
   
-  .navbar-icon {
-    font-size: 24px; /* Adjust the size as needed */
+  .navbar-menu-icon {
+    font-size: 24px;
+    padding: 4px;
+    background-color: transparent;
+    border: 1px solid #575f68;
+    cursor: pointer;
   }
   
   .navbar-button {
     background: none;
     border: none;
-    color: inherit;
     cursor: pointer;
-    font-size: 16px; /* Adjust the size as needed */
-    text-decoration: underline;
     height: 45px;
-    width: 45px;
+    width: 50px;
     transition: all .05 ease;
   }
 

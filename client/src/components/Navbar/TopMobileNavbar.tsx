@@ -1,42 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './TopMobileNavbar.css';
-import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
-import { recentChangesActions } from '../../api/recentChanges';
-import { CiViewTimeline } from "react-icons/ci";
+// import { recentChangesActions } from '../../api/recentChanges';
+import { CiMenuBurger, CiCirclePlus } from "react-icons/ci";
+import { useLocation } from 'react-router-dom';
+import Sidemenu from '../Sidemenu/Sidemenu';
+import { PushupModal } from '../Modals/PushupModal';
+import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
 
 const TopMobileNavbar = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [data, setData] = useState([]);
-  const emptyDataMsg = 'No activity in the last week.'
+  // const [isDropdownOpen, setDropdownOpen] = useState(false);
+  // const [data, setData] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const { openModal, isModalOpen, closeModal } = usePushupCounter();
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
+  const pageName = location.pathname === '/home' ? 'Dashboard' : location.pathname;
+  // const emptyDataMsg = 'No activity in the last week.'
 
-  useEffect(() => {
-    const fetchData = async () => {
-        const response = await recentChangesActions.getAllRecentChanges();
-        setData(response);
-    }
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!isDropdownOpen);
+  // };
 
-    fetchData();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //       const response = await recentChangesActions.getAllRecentChanges();
+  //       setData(response);
+  //   }
+
+  //   fetchData();
     
-  }, [])
+  // }, [])
 
   return (
-
-      <div className="top-navbar">
-        <div className="navbar-icon">Icon</div>
-        <button className={`${isDropdownOpen ? 'navbar-button-active' : "navbar-button"}`} onClick={toggleDropdown}>
-          <CiViewTimeline style={{ width: '100%', height: '100%'}}/>
+    <>
+    <div className="top-navbar">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
+            <CiMenuBurger style={{ width: '75%', height: '75%', color: '#575f68'}} />
+          </button>
+          <p style={{ padding: '0 24px', fontWeight: '700', letterSpacing: '.25px'}}>{pageName}</p>
+        </div>
+        <button className="navbar-button" onClick={openModal}>
+          <CiCirclePlus style={{ width: '100%', height: '100%', color: '#575f68'}}/>
         </button>
-        <Show when={isDropdownOpen}>
+        {/* <Show when={isDropdownOpen}>
           <div className="dropdown">
               {showIfOrElse(isArrayEmpty(data))(<p>{emptyDataMsg}</p>)(
                   <>
                   <h3>Recent Events</h3>
                     <ul>
-                        {data.map((item: { action: string }, index) => (
+                        {data && data.map((item: { action: string }, index) => (
                             <li key={index}>
                             {item.action} 
                             </li>
@@ -45,10 +58,11 @@ const TopMobileNavbar = () => {
                   </>
               )}
           </div>
-        </Show>
+        </Show> */}
       </div>
-      
-    
+      <Sidemenu isOpen={isOpen} setIsOpen={setIsOpen} />
+      <PushupModal isOpen={isModalOpen} onClose={closeModal} />
+    </>
   );
 };
 

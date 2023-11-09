@@ -5,7 +5,6 @@ import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import { useIsMobile } from './utilities/hooks/useIsMobile'
 import DesktopNavbar from './components/Navbar/DesktopNavbar';
 import { Show } from './helpers/functional';
-import MobileNavbar from './components/Navbar/MobileNavbar';
 import TopMobileNavbar from './components/Navbar/TopMobileNavbar';
 
 function App() {
@@ -31,13 +30,13 @@ function App() {
         <TopMobileNavbar />
       </Show>
       
-      <div style={{ zIndex: '1', height: '94vh', position: 'relative'}}>
+      <div style={{ zIndex: '1', minHeight: '94vh', position: 'relative', backgroundColor: '#0d1118'}}>
       <Outlet />
       </div>
       
-      <Show when={isMobile}>
+      {/* <Show when={isMobile}>
         <MobileNavbar />
-      </Show>
+      </Show> */}
     </div>
   )
 }

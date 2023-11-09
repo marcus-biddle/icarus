@@ -42,3 +42,39 @@
   .changes-container::-webkit-scrollbar-thumb {
     background: transparent; /* Color of the scrollbar thumb (the part you drag) */
   }
+
+.display-container {
+  background-color: #01040a;
+  border-radius: 8px;
+  padding: 16px 32px;
+  text-align: left;
+  min-width: 150px;
+}
+
+.display-title {
+  font-size: 12px;
+  border-left: 1px solid grey;
+  padding-left: 8px;
+  margin-bottom: 4px;
+}
+
+.display-number {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 32px 0;
+}
+
+.add-more-btn {
+  background-color: transparent;
+  color: #0057a4;
+  border: 1px solid #0057a4;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 8px 0;
+  margin-top: 16px;
+}

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useLoaderData } from 'react-router';
+import { isArrayEmpty, showIfOrElse } from '../../helpers/functional';
 
 export const RecentChanges = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = useLoaderData();
+  const noDataMsg = (<p>When a competitor updates their score this week, we'll display it here.</p>);
 
+  if (data === null) return noDataMsg;
   return (
     <>
       <h2>Recent Changes</h2>
-      {data.length === 0 ? (
-        <p>No activity in the last week.</p>
-      ) : (
+      {showIfOrElse(isArrayEmpty(data))(noDataMsg)(
         <ul>
           {data.map((item, index) => (
             <li key={index}>

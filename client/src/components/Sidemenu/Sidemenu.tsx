@@ -23,10 +23,10 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
         <CiCircleRemove onClick={() => toggleMenu()} className='close-sidemenu' />
       </div>
       <div className='navigation-list'>
-        <NavLink to='/home'>Home</NavLink>
-        <NavLink to='/leader-board'>Leader Board</NavLink>
-        <NavLink to='/some-link'>Discussion</NavLink>
-        <NavLink to='/some-link'>Some Other Link</NavLink>
+        <NavLink to='/home' onClick={() => toggleMenu()}>Home</NavLink>
+        <NavLink to='/leader-board' onClick={() => toggleMenu()}>Leader Board</NavLink>
+        <NavLink to='/some-link' onClick={() => toggleMenu()}>Discussion</NavLink>
+        <NavLink to='/some-link' onClick={() => toggleMenu()}>Some Other Link</NavLink>
       </div>
       <hr style={{ borderStyle: 'solid', borderWidth: '.5px'}} />
       <div style={{ textAlign: 'left'}}>

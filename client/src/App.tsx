@@ -2,16 +2,12 @@ import React, { useEffect } from 'react'
 import { Camera } from './components/Camera'
 import './App.css'
 import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
-import { useIsMobile } from './utilities/hooks/useIsMobile'
-import DesktopNavbar from './components/Navbar/DesktopNavbar';
-import { Show } from './helpers/functional';
 import TopMobileNavbar from './components/Navbar/TopMobileNavbar';
 
 function App() {
     const navigate = useNavigate();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const user: any = useLoaderData();
-    const isMobile = useIsMobile();
 
     useEffect(() => {
       // if (user.token === null) {
@@ -23,12 +19,7 @@ function App() {
   return (
     <div style={{ position: 'relative', maxHeight: '100vh' }}>
       {false && <Camera />}
-      <Show when={!isMobile}>
-        <DesktopNavbar />
-      </Show>
-      <Show when={isMobile}>
-        <TopMobileNavbar />
-      </Show>
+      <TopMobileNavbar />
       
       <div style={{ zIndex: '1', minHeight: '94vh', position: 'relative', backgroundColor: '#0d1118'}}>
       <Outlet />

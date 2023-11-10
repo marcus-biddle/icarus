@@ -1,7 +1,8 @@
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
+    padding: 32px 0;
   }
 
   .table-container {
@@ -48,27 +49,23 @@
   border-radius: 8px;
   padding: 16px 32px;
   text-align: left;
-  min-width: 150px;
+  min-width: 300px;
   border: 1px solid;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .display-title {
   font-size: 12px;
-  border-left: 1px solid grey;
+  border-left: 1px solid #0057a4;
   padding-left: 8px;
   margin-bottom: 4px;
+  color: #575f68
 }
 
 .display-number {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
-}
-
-.card-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 32px 0;
+  color: white;
 }
 
 .add-more-btn {

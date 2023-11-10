@@ -31,16 +31,15 @@ const findOrCreateUser = async (req, res) => {
 
   // GET user's profile
   const findUser = async (req, res) => {
+    const { googleId } = req.query;
+    const decodedToken = await jwt.decode(googleId);
     try {
-      console.log('FINDUSER STARTING')
-      const { googleId } = req.params;
-      const foundUser = await User.findOne({ googleId: googleId });
-  
+      const foundUser = await User.findOne({ email: decodedToken.email });
+
+      console.log(googleId, foundUser)
       if (foundUser) {
-        console.log('FOUND',foundUser)
         return res.status(200).json(foundUser);
       } else {
-        console.log('NOT FOUND',foundUser)
         return res.status(404).json({ error: 'User not found.' });
       }
     } catch (error) {

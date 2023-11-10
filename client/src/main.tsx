@@ -32,8 +32,10 @@ const router = createBrowserRouter([
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
+          const token = localStorage.getItem('idToken') || '';
           const response = await recentChangesActions.getAllRecentChanges();
-          if (response === null) return null;
+          const userRes = await userActions.getCurrentUser(token);
+          if (response === null || userRes === null) return null;
           const sortedResponse = [...response].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
             const dateB = new Date(b.timestamp).getTime();
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
             return dateB - dateA;
           });
         
-          return sortedResponse;
+          return {recentChanges: sortedResponse, user: userRes};
         },
       },
       {

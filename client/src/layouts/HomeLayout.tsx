@@ -5,34 +5,45 @@ import { DropdownMenu } from '../components/Dropdown/ChartDropdown';
 import { getCurrentMonth } from '../helpers/date';
 import { RecentChanges } from '../components/Boards/RecentChanges';
 import { PushupTracker } from '../components/PushupTracker/PushupTracker';
+import { usePushupCounter } from '../utilities/hooks/usePushupCounter';
+import { PushupModal } from '../components/Modals/PushupModal';
+import { useLoaderData } from 'react-router';
 // import { getCurrentMonth } from '../helpers/date';
 
 const HomeLayout = () => {
   const [dropdownOption, setDropdownOption] = useState([`${getCurrentMonth()} ${new Date().getDate()}`]);
+  const { openModal, isModalOpen, closeModal } = usePushupCounter();
+  const data: any = useLoaderData();
+
+  console.log(data.user);
+  const totalPushups = data.user.totalPushups.reduce((tot, month) => tot + month.total, 0);
+  const pushupsThisMonth = data.user.totalPushups.filter(obj => obj.month === new Date().getMonth() + 1)[0].total;
+  console.log(data.user.totalPushups.filter(obj => obj.month === new Date().getMonth()))
+
   return (
     <div>
       <div className='card-container'>
         {/* Total pushups, total for the month, total for the day */}
         <div className='display-container'>
           <p className='display-title'>Since joining</p>
-          <span className='display-number'>2,000</span> <span style={{ fontSize: '14px'}}>pushups</span>
+          <span className='display-number'>{totalPushups}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
         </div>
         <div className='display-container'>
           <p className='display-title'>This month</p>
-          <span className='display-number'>500</span> <span style={{ fontSize: '14px'}}>pushups</span>
+          <span className='display-number'>{pushupsThisMonth}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
         </div>
         <div className='display-container'>
           <p className='display-title'>Today</p>
-          <span className='display-number'>50</span> <span style={{ fontSize: '14px'}}>pushups</span>
+          <span className='display-number'>50</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
         </div>
       </div>
 
       <div style={{ margin: '0 16px'}}>
         <div className='display-container'>
-          <p style={{ fontSize: '12px'}}>Trying to be the David Goggins of the group?</p>
-          <p style={{ fontSize: '18px'}}>Complete 145 pushups to take the leaderboard.</p>
+          <p style={{ fontSize: '12px', color: '#575f68'}}>Trying to be the David Goggins of the group?</p>
+          <p style={{ fontSize: '18px',  color: 'white'}}>Complete <strong style={{ textDecoration: 'underline'}}>145</strong> pushups to take {getCurrentMonth()}'s leader board.</p>
           {/* Add pushup modal */}
-          <button className='add-more-btn'>Add more pushups</button>
+          <button className='add-more-btn' onClick={openModal}>Add more pushups</button>
         </div>
       </div>
 
@@ -52,7 +63,7 @@ const HomeLayout = () => {
           </div>
         </div>
       </div>
-
+      <PushupModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   )
 }

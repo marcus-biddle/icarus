@@ -43,8 +43,20 @@ const getAllUsers = async () => {
     }
 }
 
+const getCurrentUser = async (googleId: string) => {
+    try {
+        const response = await axiosInstance.get(`/user-list/user?googleId=${googleId}`);
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const userActions = {
     findByGoogleId,
     createUser,
     getAllUsers,
+    getCurrentUser
 }

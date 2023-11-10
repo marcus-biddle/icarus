@@ -13,7 +13,7 @@ export const RecentChanges = () => {
       <h2>Recent Changes</h2>
       {showIfOrElse(isArrayEmpty(data))(noDataMsg)(
         <ul>
-          {data.map((item, index) => (
+          {data.recentChanges.map((item, index) => (
             <li key={index}>
               {item.action} 
             </li>

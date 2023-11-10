@@ -11,6 +11,7 @@ import { useLoaderData } from 'react-router';
 const HomeLayout = () => {
   const [dropdownOption, setDropdownOption] = useState([`${getCurrentMonth()} ${new Date().getDate()}`]);
   const { openModal, isModalOpen, closeModal } = usePushupCounter();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = useLoaderData();
 
   if (data === null) return (

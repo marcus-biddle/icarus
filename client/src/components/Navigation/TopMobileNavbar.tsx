@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import Sidemenu from './Sidemenu/Sidemenu';
 import { PushupModal } from '../Modals/PushupModal';
 import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
-import logo from '../../assets/logo.png'
+import { LOGO } from '../../assets/index'
 
 const TopMobileNavbar = () => {
   // const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -39,7 +39,7 @@ const TopMobileNavbar = () => {
           <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
             <CiMenuBurger style={{ width: '75%', height: '75%', color: '#575f68'}} />
           </button>
-          <img src={logo} alt='logo' style={{ width: '90px', height: '100%' }} />
+          <img src={LOGO} alt='logo' style={{ width: '90px', height: '100%' }} />
           <p style={{ padding: '0 8px', fontWeight: '700', letterSpacing: '.25px'}}>{pageName}</p>
         </div>
         <button className="navbar-button" onClick={openModal}>

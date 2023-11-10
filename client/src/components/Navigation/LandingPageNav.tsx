@@ -1,14 +1,14 @@
 import React from 'react';
 import './LandingPageNav.css';
 import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
-import logo from '../../assets/logo.png'
+import { LOGO } from '../../assets/index'
 
 export const LandingPageNav = () => {
   const { handleSignin } = useGoogleAuth();
 
   return (
     <nav className='top-navbar'>
-        <img src={logo} alt='logo' style={{ width: '100px', height: '100%' }} />
+        <img src={LOGO} alt='logo' style={{ width: '100px', height: '100%' }} />
 
         
         <button  

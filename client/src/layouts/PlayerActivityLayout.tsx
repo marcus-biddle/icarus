@@ -1,12 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PlayerTable from '../components/Table/PlayerTable';
 import './PlayerActivityLayout.css';
 import { useLoaderData } from 'react-router';
-import Header from '../components/Header/Header';
-import { useActiveButton } from '../utilities/hooks/useActiveButton'
-import { getCurrentMonth } from '../helpers/date';
 import { sortByRank } from '../helpers/data';
-import { CiSliderHorizontal, CiUndo, CiMenuKebab, CiPlay1 } from "react-icons/ci";
+import { CiSliderHorizontal, CiUndo } from "react-icons/ci";
 import PillFilter from '../components/PillFilter/PillFilter';
 
 const PlayerActivityLayout = () => {

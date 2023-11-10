@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Form } from 'react-router-dom';
 import './style.css';
 import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
 import { useOutsideClick } from '../../utilities/hooks/useOutsideClick';
+import { getCurrentDate } from '../../helpers/date';
 
 interface PushupModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface PushupModalProps {
 
 export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
   const [pushupCount, setPushupCount] = useState<string>('');
-  const { increasePushupCount, isLoading, closeModal, openModal, isModalOpen } = usePushupCounter();
+  const { increasePushupCount, isLoading } = usePushupCounter();
 
   // Could create react router action
   const handleFormSubmit = (event: React.FormEvent) => {
@@ -29,10 +30,10 @@ export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
       <div className="modal-content" ref={wrapperRef}>
         <span className="close" onClick={onClose}>&times;</span>
         <h2>Add Pushups</h2>
-        <p>This will be recorded for {'[insert date]'}</p>
-        <Form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-            <label htmlFor="pushupCount">Number of Pushups:</label>
+        <p>This will be recorded for <strong>{getCurrentDate()}</strong></p>
+        <Form reloadDocument onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 32px'}}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
+            <label htmlFor="pushupCount"># of Pushups:</label>
             <input
               type="number"
               id="pushupCount"

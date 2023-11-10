@@ -12,7 +12,7 @@ export function getCurrentMonth() {
   }
 
   export function getMonthsInCurrentYear() {
-    const currentYear = new Date().getFullYear();
+    // const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1; // Adding 1 to get the month in the 1-12 range
     const monthNames = [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -46,5 +46,21 @@ export function getCurrentMonth() {
     }
   
     return sundays;
+  }
+
+  export function getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = today.getMonth() + 1; // Months are zero-based
+    let day = today.getDate();
+  
+    // Add leading zero for single-digit months and days
+    month = month < 10 ? `0${month}` : month;
+    day = day < 10 ? `0${day}` : day;
+  
+    // Format: YYYY-MM-DD
+    const formattedDate = `${year}-${month}-${day}`;
+  
+    return formattedDate;
   }
   

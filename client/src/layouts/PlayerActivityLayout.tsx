@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PlayerTable from '../components/PlayerTable/PlayerTable';
+import PlayerTable from '../components/Table/PlayerTable';
 import './PlayerActivityLayout.css';
 import { useLoaderData } from 'react-router';
 import Header from '../components/Header/Header';

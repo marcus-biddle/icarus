@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import PlayerCards from '../components/PlayerCards/PlayerCards';
 import './HomeLayout.css'
 import { DropdownMenu } from '../components/Dropdown/ChartDropdown';
 import { getCurrentMonth } from '../helpers/date';
@@ -8,7 +7,6 @@ import { PushupTracker } from '../components/PushupTracker/PushupTracker';
 import { usePushupCounter } from '../utilities/hooks/usePushupCounter';
 import { PushupModal } from '../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
-// import { getCurrentMonth } from '../helpers/date';
 
 const HomeLayout = () => {
   const [dropdownOption, setDropdownOption] = useState([`${getCurrentMonth()} ${new Date().getDate()}`]);

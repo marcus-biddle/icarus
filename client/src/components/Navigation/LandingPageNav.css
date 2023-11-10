@@ -1,0 +1,9 @@
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0D1117; /* Example background color */
+    color: #fff; /* Text color */
+    padding: 10px;
+    position: relative;
+  }

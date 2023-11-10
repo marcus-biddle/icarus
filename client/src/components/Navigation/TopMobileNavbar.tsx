@@ -33,7 +33,7 @@ const TopMobileNavbar = () => {
 
   return (
     <>
-    <div className="top-navbar">
+    <nav className="top-navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
             <CiMenuBurger style={{ width: '75%', height: '75%', color: '#575f68'}} />
@@ -59,7 +59,7 @@ const TopMobileNavbar = () => {
               )}
           </div>
         </Show> */}
-      </div>
+      </nav>
       <Sidemenu isOpen={isOpen} setIsOpen={setIsOpen} />
       <PushupModal isOpen={isModalOpen} onClose={closeModal} />
     </>

@@ -15,6 +15,10 @@ const HomeLayout = () => {
   const { openModal, isModalOpen, closeModal } = usePushupCounter();
   const data: any = useLoaderData();
 
+  if (data === null) return (
+    <p>data is null</p>
+  )
+
   console.log(data.user);
   const totalPushups = data.user.totalPushups.reduce((tot, month) => tot + month.total, 0);
   const pushupsThisMonth = data.user.totalPushups.filter(obj => obj.month === new Date().getMonth() + 1)[0].total;

@@ -8,6 +8,7 @@ import { isUserLoggedIn, showIfOrElse } from '../../helpers/functional';
 // import { redirect } from 'react-router-dom';
 // import { userActions } from '../../api/users';
 
+// DEPRECATED
 export const GoogleAuth = () => {
     const navigate = useNavigate();
     const axiosInstance = createAxiosInstance();

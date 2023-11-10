@@ -3,7 +3,7 @@ import './TopMobileNavbar.css';
 // import { recentChangesActions } from '../../api/recentChanges';
 import { CiMenuBurger, CiCirclePlus } from "react-icons/ci";
 import { useLocation } from 'react-router-dom';
-import Sidemenu from '../Sidemenu/Sidemenu';
+import Sidemenu from './Sidemenu/Sidemenu';
 import { PushupModal } from '../Modals/PushupModal';
 import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
 import logo from '../../assets/logo.png'

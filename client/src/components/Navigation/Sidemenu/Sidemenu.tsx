@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import './Sidemenu.css';
 import { CiCircleRemove } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
-import { useOutsideClick } from '../../utilities/hooks/useOutsideClick';
+import { useOutsideClick } from '../../../utilities/hooks/useOutsideClick';
 
 const Sidemenu = ({ isOpen, setIsOpen }) => {
 

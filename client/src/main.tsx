@@ -14,6 +14,7 @@ import { recentChangesActions } from './api/recentChanges'
 import PlayerActivityLayout from './layouts/PlayerActivityLayout';
 import { LoginLayout } from './layouts/LoginLayout';
 import LandingPageLayout from './layouts/LandingPageLayout';
+import { FilterProvider } from './utilities/providers/FilterProvider';
 
 const router = createBrowserRouter([
   {
@@ -54,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'leader-board',
-        element: <PlayerActivityLayout />,
+        element: (
+          <FilterProvider>
+            <PlayerActivityLayout />
+          </FilterProvider>
+        ),
         loader: async () => {
           const response = await userActions.getAllUsers();
           return response;

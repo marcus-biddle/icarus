@@ -17,17 +17,17 @@
   }
 
   th {
-    background-color: #373737;
+    background-color: #21262d;
     color: #FFFFFF;
     text-align: left;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 12px;
-    padding: 4px 56px;
+    padding: 8px 56px;
   }
   
   tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #01040a;
   }
   
   @media (max-width: 600px) {

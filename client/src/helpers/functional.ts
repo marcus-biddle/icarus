@@ -10,6 +10,6 @@ export const Show = ({ when = true, children }: ShowProps) => (when ? children :
 
 export const showIfOrElse = (x: boolean) => (content: any) => (fallbackContent: any) => (x ? content : fallbackContent);
 
-export const isArrayEmpty = (array: any[]) => array === null || array.length === 0;
+export const isArrayEmpty = (array: any[] | undefined) => array === null || array === undefined || array.length === 0;
 
 export const isUserLoggedIn = () => (localStorage.getItem('idToken') ? true : false)

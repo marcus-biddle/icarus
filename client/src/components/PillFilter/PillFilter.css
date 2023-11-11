@@ -1,5 +1,6 @@
 .filter-popup {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 100%;
     left: 0;
@@ -8,7 +9,27 @@
     border-radius: 6px;
     padding: 8px;
     z-index: 1;
-    min-width: 100px;
-    min-height: 50px;
+    min-width: 110px;
+    max-height: 150px;
+    overflow-y: auto;
     text-align: left;
   }
+
+.filter-popup label {
+  width: 100%;
+  display: flex;
+  white-space: nowrap;
+}
+
+.filter-popup::-webkit-scrollbar {
+  width: 0.5rem; /* Width of the scrollbar track */
+}
+
+.filter-popup::-webkit-scrollbar-thumb {
+  background-color: #0057a4;
+  border-radius: 6px;
+}
+
+.filter-popup::-webkit-scrollbar-track {
+  background-color: transparent;
+}

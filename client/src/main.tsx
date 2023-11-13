@@ -18,11 +18,16 @@ import { FilterProvider } from './utilities/providers/FilterProvider';
 import UserProfile from './layouts/UserProfile';
 import ChartLayout from './layouts/ChartLayout';
 import { pushupActions } from './api/pushups';
+import { ThemeProvider } from './utilities/providers/ThemeProvider';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    ),
     loader: async () => {
       const token = localStorage.getItem('idToken');
       return { token: token }

@@ -1,9 +1,7 @@
-// Sidemenu.js
-
 import React, { useRef, useState, useEffect } from 'react';
 import './Sidemenu.css';
 import { CiCircleRemove, CiUser, CiGrid41, CiHome, CiViewList } from "react-icons/ci";
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useOutsideClick } from '../../../utilities/hooks/useOutsideClick';
 import { userActions } from '../../../api/users';
 import { useGoogleAuth } from '../../../utilities/hooks/useGoogleAuth';

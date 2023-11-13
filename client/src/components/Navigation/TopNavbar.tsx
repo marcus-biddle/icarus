@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './TopNavbar.css';
 // import { recentChangesActions } from '../../api/recentChanges';
-import { CiMenuBurger, CiCirclePlus, CiUser } from "react-icons/ci";
-import { NavLink, redirect, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { CiMenuBurger, CiCirclePlus, CiDark, CiLight } from "react-icons/ci";
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Sidemenu from './Sidemenu/Sidemenu';
 import { PushupModal } from '../Modals/PushupModal';
 import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
+import { useThemeContext } from '../../utilities/hooks/useThemeContext';
 import { LOGO } from '../../assets/index'
 import { Show } from '../../helpers/functional';
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
@@ -19,23 +20,8 @@ const TopNavbar = () => {
   const navigate = useNavigate();
   const { openModal, isModalOpen, closeModal } = usePushupCounter();
   const isMobile = useIsMobile();
-  const data = useLoaderData();
+  const { theme, toggleTheme } = useThemeContext();
   const pageName = location.pathname === '/home' ? 'Dashboard' : formatAndCapitalize(location.pathname);
-  // const emptyDataMsg = 'No activity in the last week.'
-
-  // const toggleDropdown = () => {
-  //   setDropdownOpen(!isDropdownOpen);
-  // };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //       const response = await recentChangesActions.getAllRecentChanges();
-  //       setData(response);
-  //   }
-
-  //   fetchData();
-    
-  // }, [])
 
   return (
     <>
@@ -49,16 +35,21 @@ const TopNavbar = () => {
           </Show>
           <p style={{ padding: '0 8px', fontWeight: '700', letterSpacing: '.25px'}}>{pageName}</p>
         </div>
-        {/* <div style={{ display: 'flex', justifyContent: 'space-between', width: '120px'}}> */}
-          {/* <NavLink to={`/user/`}>
-            <button className="navbar-button">
-              <CiUser style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '120px'}}>
+          <NavLink to={`/user/`}>
+            <button className="navbar-button" onClick={toggleTheme}>
+              <Show when={theme === 'light'}>
+                <CiLight style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
+              </Show>
+              <Show when={theme === 'dark'}>
+                <CiDark style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
+              </Show>
             </button>
-          </NavLink> */}
+          </NavLink>
           <button className="navbar-button" onClick={openModal}>
             <CiCirclePlus style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
           </button>
-        {/* </div> */}
+        </div>
       </nav>
       <Sidemenu isOpen={isOpen} setIsOpen={setIsOpen} />
       <PushupModal isOpen={isModalOpen} onClose={closeModal} />

@@ -26,11 +26,11 @@
     padding: 8px 56px;
   }
   
-  tr:nth-child(even) {
+  /* tr:nth-child(even) {
     background-color: #01040a;
-  }
+  } */
   
-  @media (max-width: 600px) {
+  @media (max-width: 946px) {
     .table-container {
       margin: 0;
     }

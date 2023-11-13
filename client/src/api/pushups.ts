@@ -17,6 +17,18 @@ const addPushups = async (pushupCount: number) => {
     }
 }
 
+const getPushupStats = async () => {
+    try {
+        const response = await axiosInstance.get('/pushups/all');
+        return response.data;
+        
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const pushupActions = {
-    addPushups
+    addPushups,
+    getPushupStats
 }

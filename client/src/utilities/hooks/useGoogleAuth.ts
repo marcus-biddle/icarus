@@ -17,13 +17,13 @@ export const useGoogleAuth = () => {
             console.log('handleGsignIN', response)
         } 
         
-        redirect('/home');
+        navigate('/home');
     };
 
     const handleSignOut = () => {
         localStorage.removeItem('idToken'); // Remove the token from localStorage
         setToken(null);
-        navigate('/login');
+        navigate('/');
     };
 
     const handleSignin = useGoogleLogin({

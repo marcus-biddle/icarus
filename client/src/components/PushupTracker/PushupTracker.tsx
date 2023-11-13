@@ -1,12 +1,19 @@
 import { Chart as ChartJS, Tooltip, Legend, Title, BarElement, LinearScale, CategoryScale } from "chart.js";
 import React from "react";
 import { Chart } from "react-chartjs-2";
+import { useLoaderData } from "react-router";
+import { formatDatasets } from "../../helpers/data";
 
 interface PushupTrackerProps {
-    months: string[];
+    dates: string[];
 }
 
-export const PushupTracker = ({ months }: PushupTrackerProps) => {
+export const PushupTracker = ({ dates }: PushupTrackerProps) => {
+  const {users, pushups}: any = useLoaderData();
+  const yearData = formatDatasets(users, 'year');
+  const todaysData = formatDatasets(pushups, 'today');
+  const chartData = dates.length === 1 ? todaysData : yearData;
+
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -25,27 +32,16 @@ export const PushupTracker = ({ months }: PushupTrackerProps) => {
           },
           title: {
             display: true,
-            text: 'Total Pushups Chart',
+            text: 'Pushups Chart',
           },
         },
       };
       
-      const labels = months;
+      const labels = dates;
       
       const data = {
         labels,
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data: [100, 200, 50],
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-          },
-          {
-            label: 'Dataset 2',
-            data: [100, 200, 50],
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
+        datasets: chartData
       };
       
     

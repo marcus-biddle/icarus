@@ -1,4 +1,4 @@
-/* TopMobileNavbar.css */
+/* TopNavbar.css */
 
 .top-navbar {
     display: flex;
@@ -6,16 +6,27 @@
     justify-content: space-between;
     background-color: #0D1117; /* Example background color */
     color: #fff; /* Text color */
-    padding: 10px;
+    padding: 10px 32px;
     position: relative;
   }
   
   .navbar-menu-icon {
     font-size: 24px;
-    padding: 4px;
+    height: 45px;
+    width: 50px;
     background-color: transparent;
-    border: 1px solid #575f68;
+    /* border: 1px solid #0057a4; */
     cursor: pointer;
+    position: relative;
+    padding: 0 20px;
+  }
+
+  .navbar-menu-icon:hover {
+    background-color:#212734;
+  }
+
+  .navbar-menu-icon:active {
+    background-color: #212734;
   }
   
   .navbar-button {
@@ -25,6 +36,10 @@
     height: 45px;
     width: 50px;
     transition: all .05 ease;
+  }
+
+  .navbar-button:hover {
+    background-color:#212734;
   }
 
   .navbar-button-active {

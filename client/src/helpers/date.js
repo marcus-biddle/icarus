@@ -1,10 +1,7 @@
+export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+export const todaysDate = [`${getCurrentMonth()} ${new Date().getDate()}`];
+
 export function getCurrentMonth() {
-    const months = [
-      'January', 'February', 'March', 'April',
-      'May', 'June', 'July', 'August',
-      'September', 'October', 'November', 'December'
-    ];
-  
     const currentDate = new Date();
     const currentMonth = months[currentDate.getMonth()];
   
@@ -14,15 +11,11 @@ export function getCurrentMonth() {
   export function getMonthsInCurrentYear() {
     // const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1; // Adding 1 to get the month in the 1-12 range
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
     
     const monthsArray = [];
     
     for (let month = 0; month < currentMonth; month++) {
-      monthsArray.push(monthNames[month]);
+      monthsArray.push(months[month]);
     }
     
     return monthsArray;
@@ -64,3 +57,17 @@ export function getCurrentMonth() {
     return formattedDate;
   }
   
+  export function formatDateString(dateString) {
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+    };
+  
+    const formattedDate = new Date(dateString).toLocaleString('en-US', options);
+    return formattedDate;
+  }

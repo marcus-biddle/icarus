@@ -38,7 +38,6 @@ const filterReducer = (state: FilterConsumerProp, action: { type: string, filter
 
 export const FilterProvider = ({ children }) => {
     const [state, dispatch] = useReducer(filterReducer, initialState);
-    console.log('filter provider', state)
   
     const setFilter = (filterName: string, filterValue: any) => {
         console.log('setFilter', filterName, filterValue)

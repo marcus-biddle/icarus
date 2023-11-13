@@ -13,14 +13,13 @@ interface PillFilterProps {
 }
 
 const PillFilter = ({ filterName, options, filterData, singleValue }: PillFilterProps) => {
-    const { competitors, labels, date, sort, setFilter, removeFilter, resetFilters } = useFilterContext();
+    const { setFilter, removeFilter } = useFilterContext();
     const [thisfilterOpen, setThisFilterOpen] = useState(false);
 
     const wrapperRef = useRef(null);
     useOutsideClick(wrapperRef, () => setThisFilterOpen(false));
 
     const handleCompetitorChange = (option: string) => {
-        console.log(option, filterData, singleValue)
         if (filterData?.includes(option)) {
             removeFilter(filterName, option);
         } else if (singleValue && filterData?.length === 0) {
@@ -30,12 +29,11 @@ const PillFilter = ({ filterName, options, filterData, singleValue }: PillFilter
         }
       };
 
-  return (
+  return ( 
+    // #343c46
     <div style={{ position: 'relative', padding: '0 8px'}}>
-        <button 
-            onClick={() => setThisFilterOpen(true)}
-            style={{ display: 'flex', backgroundColor: 'transparent', alignItems: 'baseline', padding: '8px'}}>
-                <span style={{ fontSize: '14px', paddingRight: '4px', color: 'white', textTransform: 'capitalize'}}>{filterName}</span>
+        <button onClick={() => setThisFilterOpen(true)} className='button-container'>
+                <span className='button-text'>{filterName}</span>
                 <CiPlay1 style={{ backgroundColor: 'transparent', color: 'white', transform: 'rotate(90deg)', height: '13px', width: '13px'}}/>
         </button>
 

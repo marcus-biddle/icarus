@@ -8,9 +8,10 @@ interface DropdownOption {
 }
 
 const options: DropdownOption[] = [
-    { value: 'day', label: 'Day' },
-    { value: 'week', label: 'Week' },
     { value: 'year', label: 'Year' },
+    { value: 'day', label: 'Day' },
+    // { value: 'week', label: 'Week' },
+    
 ];
 
 export const DropdownMenu= ({ getDropdownOption }: { getDropdownOption: Dispatch<SetStateAction<string[]>>}) => {
@@ -19,7 +20,7 @@ export const DropdownMenu= ({ getDropdownOption }: { getDropdownOption: Dispatch
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
     const option = [{ 
-        'week': getCurrentMonthSundays(),
+        // 'week': getCurrentMonthSundays(),
         'year': getMonthsInCurrentYear(),
         'day': [`${getCurrentMonth()} ${new Date().getDate()}`] 
     }]

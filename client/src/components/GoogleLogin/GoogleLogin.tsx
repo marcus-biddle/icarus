@@ -46,11 +46,6 @@ export const GoogleAuth = () => {
     onError: errorResponse => console.log(errorResponse),
 });
 
-// remove?
-useEffect(() => {
-
-}, [token])
-
 const logoutButton = (
   <div style={{ width: '100%', maxWidth: '100px', position: 'relative' }}>
     <button className='google-logout' onClick={() => handleSignOut()}>Logout</button>

@@ -21,6 +21,7 @@
   .sidemenu-content {
     padding: 20px;
     color: white;
+    position: relative;
   }
 
   .close-sidemenu {
@@ -35,14 +36,17 @@
     color: white;
   }
 
-  .header {
+  .sidemenu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 16px 0;
+  }
+
+  .header {
     color: white;
     font-weight: 700;
     letter-spacing: .25px;
-    padding: 16px 0;
   }
 
   .navigation-list {
@@ -50,7 +54,81 @@
     flex-direction: column;
     text-align: left;
   }
+
+  .sidemenu a {
+    text-decoration: none;
+    color: white;
+    font-weight: 400;
+    background-color: transparent;
+    border-radius: 6px;
+    padding: 8px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidemenu a:hover {
+    background-color: #212734;
+  }
+
+  .navigation-list .active {
+    color: #0057a4;
+    background-color: #212734;
+  }
+
+  /* .player-list .active {
+    color: #0057a4;
+    background-color: #212734;
+  } */
+
+  .navigation-list .active:hover {
+    color: #0057a4;
+    background-color: #212734;
+  }
   
 .player-list {
     text-align: left;
+    max-height: 100px;
+    width: 100%;
+}
+
+.players-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: x mandatory;
+  min-height: 350px;
+}
+
+.players-container::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+}
+
+.players-container::-webkit-scrollbar-thumb {
+  background-color: #0057a4;
+  border-radius: 8px;
+}
+
+.players-container::-webkit-scrollbar-track {
+  background-color: #212734;
+  border-radius: 8px;
+}
+
+.divider {
+  border: 1px solid #212734;
+}
+
+.footer {
+  position: absolute;
+  bottom: 32px;
+  width: 80%;
+  text-align: left;
+}
+
+.signout-btn {
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid #0057a4;
+  color: white;
+  margin-top: 16px;
 }

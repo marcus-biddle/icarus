@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
 import { isArrayEmpty, showIfOrElse } from '../../helpers/functional';
+import './RecentChanges.css';
+import { formatDateString } from '../../helpers/date';
 
 export const RecentChanges = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,11 +12,11 @@ export const RecentChanges = () => {
   if (data === null) return noDataMsg;
   return (
     <>
-      <h2>Recent Changes</h2>
       {showIfOrElse(isArrayEmpty(data))(noDataMsg)(
-        <ul>
+        <ul className='recent-list'>
           {data.recentChanges.map((item, index) => (
             <li key={index}>
+              <p>{formatDateString(item.timestamp)}</p>
               {item.action} 
             </li>
           ))}

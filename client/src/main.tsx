@@ -15,6 +15,9 @@ import PlayerActivityLayout from './layouts/PlayerActivityLayout';
 import { LoginLayout } from './layouts/LoginLayout';
 import LandingPageLayout from './layouts/LandingPageLayout';
 import { FilterProvider } from './utilities/providers/FilterProvider';
+import UserProfile from './layouts/UserProfile';
+import ChartLayout from './layouts/ChartLayout';
+import { pushupActions } from './api/pushups';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +39,7 @@ const router = createBrowserRouter([
           const token = localStorage.getItem('idToken') || '';
           const response = await recentChangesActions.getAllRecentChanges();
           const userRes = await userActions.getCurrentUser(token);
+          const pushups = await pushupActions.getPushupStats();
           if (response === null || userRes === null) return null;
           const sortedResponse = [...response].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
@@ -45,7 +49,7 @@ const router = createBrowserRouter([
             return dateB - dateA;
           });
         
-          return {recentChanges: sortedResponse, user: userRes};
+          return {recentChanges: sortedResponse, user: userRes, pushups: pushups };
         },
       },
       {
@@ -61,8 +65,21 @@ const router = createBrowserRouter([
           </FilterProvider>
         ),
         loader: async () => {
-          const response = await userActions.getAllUsers();
+          const response = await pushupActions.getPushupStats();
           return response;
+        },
+      },
+      {
+        path: 'user/:userId',
+        element: <UserProfile />,
+      },
+      {
+        path: 'charts',
+        element: <ChartLayout />,
+        loader: async () => {
+          const users = await userActions.getAllUsers();
+          const pushups = await pushupActions.getPushupStats();
+          return { users,  pushups };
         },
       },
       {

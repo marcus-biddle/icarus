@@ -1,8 +1,10 @@
 .card-container {
     display: flex;
     flex-wrap: wrap;
+    gap: 32px;
     justify-content: space-around;
-    padding: 32px 0;
+    max-width: 100%;
+    padding: 24px;
   }
 
   .table-container {
@@ -10,16 +12,6 @@
     background-color: #f7f7f7;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .chart-container {
-    width: 100%;
-    max-width: 800px;
-    height: 200px;
-    padding: 12px;
-    margin: 24px 56px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   }
 
   .changes-container {
@@ -32,7 +24,6 @@
     margin: 24px 56px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-    background-color: rgb(251, 221, 156);
     overflow: auto;
   }
 
@@ -45,12 +36,13 @@
 }
 
 .display-container {
-  background-color: #01040a;
+  background-color: transparent;
   border-radius: 8px;
   padding: 16px 32px;
   text-align: left;
-  min-width: 300px;
-  border: 1px solid;
+  min-width: 25%;
+  max-width: 100%;
+  border: 1px solid #21262D;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -76,4 +68,34 @@
   padding: 8px;
   margin: 8px 0;
   margin-top: 16px;
+}
+
+.display-container-2 {
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 16px 32px;
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid #21262D;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-header {
+  margin: 0;
+  text-align: left;
+  padding: 16px 32px;
+}
+
+@media screen and (max-width: 1106px) {
+  .display-container {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 16px 32px;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #21262D;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
 }

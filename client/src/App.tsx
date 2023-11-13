@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Camera } from './components/Camera'
 import './App.css'
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import TopMobileNavbar from './components/Navigation/TopMobileNavbar';
+import TopNavbar from './components/Navigation/TopNavbar';
 import { Show } from './helpers/functional';
 import { LandingPageNav } from './components/Navigation/LandingPageNav';
 
@@ -14,9 +14,9 @@ function App() {
     const user: any = useLoaderData();
 
     useEffect(() => {
-      // if (user.token === null) {
-      //   navigate('/login');
-      // } 
+      if (user.token === null && location.pathname !== '/') {
+        navigate('/');
+      } 
       
     }, [navigate, user.token])
   
@@ -25,7 +25,7 @@ function App() {
       {false && <Camera />}
       
       <Show when={!isLandingPage}>
-        <TopMobileNavbar />
+        <TopNavbar />
       </Show>
 
       <Show when={isLandingPage}>

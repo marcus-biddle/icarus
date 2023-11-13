@@ -1,15 +1,59 @@
 import React from 'react';
-import { LOGO } from '../assets/index'
+import { JOGGING } from '../assets/index'
+import { useGoogleAuth } from '../utilities/hooks/useGoogleAuth';
+import './LandingPageLayout.css';
+import { Show } from '../helpers/functional';
+import { useIsMobile } from '../utilities/hooks/useIsMobile';
 
 const LandingPageLayout = () => {
+  const { handleSignin } = useGoogleAuth();
+  const isMobile = useIsMobile();
+
   return (
-    <div style={{ position: 'relative'}}>
-      <img src={LOGO} alt='' style={{ backgroundSize: 'cover', backgroundPosition: 'center', width: '100%', height: '100%', zIndex: '1'}} />
-      <div style={{ backgroundColor: 'rgb(13, 17, 23, .65)', width: '100%', height: '100%', position: 'absolute', zIndex: '10', top: '0'}}>testing</div>
-      <div style={{ zIndex: '11', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: '#fff'}}>
-        Test landing page
-      </div>
+    <>
+    <div className="lp-container">
+      <img src={JOGGING} alt='' className="background-image" />
+      <div className="overlay"></div>
+      <Show when={!isMobile}>
+        <div className="content-container">
+          <div className="login-inner-content">
+            <p className="disclaimer">Currently only supports one activity - pushups.</p>
+            <h3 className="login-title">Let's F* Go</h3>
+            <p className="login-description">An app to compete against friends and family.</p>
+            <div style={{ margin: '42px'}}>
+              <p className="sign-in-message">Please sign in through Google to begin.</p>
+              <button
+                className="sign-in-button"
+                onClick={() => handleSignin()}
+              >
+                Login with Google
+              </button>
+            </div>
+          </div>
+        </div>
+      </Show>
+      
     </div>
+    <Show when={isMobile}>
+      <div className="content-container-mobile">
+        <div className="login-inner-content">
+          <p className="disclaimer">Currently only supports one activity - pushups.</p>
+          <h3 className="login-title">Let's F* Go</h3>
+          <p className="login-description">An app to compete against friends and family.</p>
+          <div style={{ margin: '42px'}}>
+            <p className="sign-in-message">Please sign in through Google to begin.</p>
+            <button
+              className="sign-in-button"
+              onClick={() => handleSignin()}
+            >
+              Login with Google
+            </button>
+          </div>
+        </div>
+      </div>
+      </Show>
+    </>
+    
   )
 }
 

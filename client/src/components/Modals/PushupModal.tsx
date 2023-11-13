@@ -20,10 +20,11 @@ export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
     increasePushupCount(pushupCount);
     setPushupCount('');
     onClose();
+    window.location.reload();
   };
 
   const wrapperRef = useRef(null);
-  useOutsideClick(wrapperRef, onClose);
+  useOutsideClick(wrapperRef, () => onClose());
 
   return (
     <div className={`modal ${isOpen ? 'block' : ''}`} >

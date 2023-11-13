@@ -25,6 +25,7 @@
     border: 1px solid;
     border-radius: 6px;
     overflow: hidden;
+    border: 1px solid grey
   }
   
   .filtersSection {

@@ -33,3 +33,31 @@
 .filter-popup::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
+/* ButtonStyles.css */
+
+.button-container {
+  display: flex;
+  background-color: transparent;
+  align-items: baseline;
+  padding: 8px;
+}
+
+.button-container:hover {
+  background-color: #343c46;
+}
+
+.button-text {
+  font-size: 14px;
+  padding-right: 4px;
+  color: white;
+  text-transform: capitalize;
+}
+
+/* .play-icon {
+  background-color: transparent;
+  color: white;
+  transform: rotate(90deg);
+  height: 13px;
+  width: 13px;
+} */

@@ -17,11 +17,10 @@ import jwt from 'jsonwebtoken';
         return res.status(404).json({ error: 'User not found' });
         }
 
-        // Assuming you have a `userId` retrieved from the user document
         const userId = user._id;
 
         const result = await Pushup.create({
-        user: userId, // Use the ObjectId of the user
+        user: userId, 
         count: pushupCount,
         });
 
@@ -39,8 +38,50 @@ import jwt from 'jsonwebtoken';
     }
   }
 
+  const getAllPushups = async (req, res) => {
+    try {
+      const pushups = await Pushup.aggregate([
+        {
+          $group: {
+            _id: "$user",
+            totalPushups: { $sum: "$count" },
+            totalPushupsToday: { $sum: { $cond: { if: { $eq: [{ $dateToString: { format: "%Y-%m-%d", date: "$date" } }, { $dateToString: { format: "%Y-%m-%d", date: new Date() } }] }, then: "$count", else: 0 } } },
+            pushupsThisWeek: { $sum: { $cond: { if: { $gte: ["$date", new Date(new Date() - 7 * 24 * 60 * 60 * 1000)] }, then: "$count", else: 0 } } },
+            pushupsThisMonth: { $sum: { $cond: { if: { $gte: ["$date", new Date(new Date().getFullYear(), new Date().getMonth(), 1)] }, then: "$count", else: 0 } } },
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id",
+            foreignField: "_id",
+            as: "userData",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            userName: { $arrayElemAt: ["$userData.username", 0] },
+            totalPushups: 1,
+            totalPushupsToday: 1,
+            pushupsThisWeek: 1,
+            pushupsThisMonth: 1,
+          },
+        },
+      ]);
+      
+      
+      return res.json(pushups);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
+
   const PushupsController = {
-    addPushups
+    addPushups,
+    getAllPushups
   }
 
   export default PushupsController;

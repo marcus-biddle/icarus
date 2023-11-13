@@ -10,33 +10,38 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  // Commonly accessed pushup data
-  totalPushups: [
-    {
-      month: {
-        type: Number,
-        default: new Date().getMonth() + 1, // Default to the current month
-      },
-      total: {
-        type: Number,
-        default: 0, // Default to 0 for total pushups
-      },
-      year: {
-        type: Number,
-        default: new Date().getFullYear(), // Default to the current year
-      },
-    },
-  ],
-  lastPushupDate: {
-    date: {
-      type: Date,
-      default: null, // You can set a default value
-    },
-    count: {
-      type: Number,
-      default: 0,
-    },
+  experiencePoints: {
+    type: Number,
+    required: true,
+    default: 0
   }
+  // Commonly accessed pushup data
+  // totalPushups: [
+  //   {
+  //     month: {
+  //       type: Number,
+  //       default: new Date().getMonth() + 1, // Default to the current month
+  //     },
+  //     total: {
+  //       type: Number,
+  //       default: 0, // Default to 0 for total pushups
+  //     },
+  //     year: {
+  //       type: Number,
+  //       default: new Date().getFullYear(), // Default to the current year
+  //     },
+  //   },
+  // ],
+  // lastPushupDate: {
+  //   date: {
+  //     type: Date,
+  //     default: null, // You can set a default value
+  //   },
+  //   count: {
+  //     type: Number,
+  //     default: 0,
+  //   },
+  // }
 });
 
 userSchema.statics.updateTotalPushups = async function (userId, pushupCount) {

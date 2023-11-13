@@ -5,14 +5,28 @@ const pushupSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  count: {
+  total: {
     type: Number,
     required: true,
+    default: 0
   },
+  entries: [
+    {
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      count: {
+        type: Number,
+        required: true,
+      },
+    }
+  ],
+  experiencePointConversion: {
+    type: Number,
+    required: true,
+    default: 0.1
+  }
 });
 
 const Pushup = mongoose.model('Pushup', pushupSchema);

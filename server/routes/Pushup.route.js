@@ -4,8 +4,10 @@ import PushupsController from '../controllers/Pushups.controller.js';
 
 const router = express.Router();
 
-router.post('/api/pushups/add', PushupsController.addPushups);
+router.post('/api/pushups/create', PushupsController.createPushupSchema);
 
-router.get('/api/pushups/all', PushupsController.getAllPushups);
+router.patch('/api/pushups/update/add', PushupsController.patchAddPushups);
+
+router.get('/api/pushups/get/all', PushupsController.getEveryUsersPushupTotals);
 
 export default router;

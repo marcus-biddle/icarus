@@ -3,35 +3,32 @@ import Pushup from '../models/Pushup.model.js';
 import User from '../models/User.model.js';
 import jwt from 'jsonwebtoken';
 
-const getPushupSchema = async (res, req) => {
+const createPushupSchema = async (req, res) => {
   // When user logs in for the first time, if pushup entry exists do nothing else create it
   // log that the user joined.
-  const googleId = req.body.googleId;
+  const { googleId } = req.body;
 
   if (!googleId) return res.status(400).json({ error: 'googleId and pushup Count is required' });
   const decodedToken = await jwt.decode(googleId);
 
+  // return res.json(decodedToken);
+
   try {
     const user = await User.findOne({ email: decodedToken.email });
     if (!user) return res.status(404).json({ error: 'User not found' });
+    
+    const foundPushupSchema = await Pushup.findOne({ user: user._id });
 
-    const foundPushupSchema = await Pushup.find({ user: user._id });
+    if (foundPushupSchema) return res.status(200).json(foundPushupSchema);
 
-    if (foundPushupSchema) return res.status(200);
-
-    const result = await Pushup.create({
+    const newPushup = await Pushup.create({
       user: user._id,
       total: 0,
       entries: [],
       experiencePointConversion: 0.1
     })
 
-
-    await RecentChanges.create({
-      action: `${decodedToken.name} joined the site.`,
-    });
-
-    return res.status(201);
+    return res.status(201).json(newPushup);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -47,20 +44,15 @@ const getPushupSchema = async (res, req) => {
 
     try {
         const user = await User.findOne({ email: decodedToken.email });
-
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        const existingPushupSchema = await Pushup.findOne({ user: userId });
-
+        const existingPushupSchema = await Pushup.findOne({ user: user._id });
         if (!existingPushupSchema) return res.status(404).json({ error: 'PushupSchema error.' });
 
-        const newEntry = { count };
+        const newEntry = { count: pushupCount };
 
         // Push the new entry to the entries array
         existingPushupSchema.entries.push(newEntry);
-
-        // // Update the total field based on the sum of counts
-        // existingPushupSchema.total = existingPushupSchema.entries.reduce((sum, entry) => sum + entry.count, 0);
 
         // Save the updated document
         await existingPushupSchema.save();
@@ -69,23 +61,67 @@ const getPushupSchema = async (res, req) => {
           action: `${decodedToken.name} completed ${pushupCount} pushup(s).`,
         });
 
-        return res.status(201);
+        return res.status(201).json(existingPushupSchema);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   }
 
-  const getAllPushups = async (req, res) => {
+  const getEveryUsersPushupTotals = async (req, res) => {
     // This might be entirely incorrect now
     try {
-      const pushups = await Pushup.aggregate([
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const pushupsAggregate = await Pushup.aggregate([
+        {
+          $match: {
+            $or: [
+              { "entries.date": { $gte: todayStart } },
+              { "entries.date": { $gte: startOfMonth } },
+            ],
+          },
+        },
+        {
+          $unwind: "$entries",
+        },
+        {
+          $match: {
+            $or: [
+              { "entries.date": { $gte: todayStart } },
+              { "entries.date": { $gte: startOfMonth } },
+            ],
+          },
+        },
         {
           $group: {
             _id: "$user",
-            totalPushups: { $sum: "$count" },
-            totalPushupsToday: { $sum: { $cond: { if: { $eq: [{ $dateToString: { format: "%Y-%m-%d", date: "$date" } }, { $dateToString: { format: "%Y-%m-%d", date: new Date() } }] }, then: "$count", else: 0 } } },
-            pushupsThisWeek: { $sum: { $cond: { if: { $gte: ["$date", new Date(new Date() - 7 * 24 * 60 * 60 * 1000)] }, then: "$count", else: 0 } } },
-            pushupsThisMonth: { $sum: { $cond: { if: { $gte: ["$date", new Date(new Date().getFullYear(), new Date().getMonth(), 1)] }, then: "$count", else: 0 } } },
+            totalPushupsToday: {
+              $sum: {
+                $cond: {
+                  if: {
+                    $gte: ["$entries.date", todayStart],
+                  },
+                  then: "$entries.count",
+                  else: 0,
+                },
+              },
+            },
+            totalPushupsThisMonth: {
+              $sum: {
+                $cond: {
+                  if: {
+                    $gte: ["$entries.date", startOfMonth],
+                  },
+                  then: "$entries.count",
+                  else: 0,
+                },
+              },
+            },
           },
         },
         {
@@ -100,16 +136,47 @@ const getPushupSchema = async (res, req) => {
           $project: {
             _id: 1,
             userName: { $arrayElemAt: ["$userData.username", 0] },
-            totalPushups: 1,
             totalPushupsToday: 1,
-            pushupsThisWeek: 1,
-            pushupsThisMonth: 1,
+            totalPushupsThisMonth: 1,
           },
         },
       ]);
+
+// console.log(pushupsAggregate);
+
+//       const pushups = await Pushup.aggregate([
+//         {
+//           $group: {
+//             _id: "$user",
+//             totalPushups: { $sum: "$count" },
+//             totalPushupsToday: { $sum: { $cond: { if: { $eq: [{ $dateToString: { format: "%Y-%m-%d", date: "$date" } }, { $dateToString: { format: "%Y-%m-%d", date: new Date() } }] }, then: "$count", else: 0 } } },
+//             pushupsThisWeek: { $sum: { $cond: { if: { $gte: ["$date", new Date(new Date() - 7 * 24 * 60 * 60 * 1000)] }, then: "$count", else: 0 } } },
+//             pushupsThisMonth: { $sum: { $cond: { if: { $gte: ["$date", new Date(new Date().getFullYear(), new Date().getMonth(), 1)] }, then: "$count", else: 0 } } },
+//           },
+//         },
+//         {
+//           $lookup: {
+//             from: "users",
+//             localField: "_id",
+//             foreignField: "_id",
+//             as: "userData",
+//           },
+//         },
+//         {
+//           $project: {
+//             _id: 1,
+//             userName: { $arrayElemAt: ["$userData.username", 0] },
+//             totalPushups: 1,
+//             totalPushupsToday: 1,
+//             pushupsThisWeek: 1,
+//             pushupsThisMonth: 1,
+//           },
+//         },
+//       ]);
+
+//       console.log(pushupsAggregate);
       
-      
-      return res.json(pushups);
+      return res.json(pushupsAggregate);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });
@@ -118,8 +185,9 @@ const getPushupSchema = async (res, req) => {
   
 
   const PushupsController = {
-    addPushups,
-    getAllPushups
+    patchAddPushups,
+    getEveryUsersPushupTotals,
+    createPushupSchema
   }
 
   export default PushupsController;

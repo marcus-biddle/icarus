@@ -29,11 +29,12 @@ const HomeLayout = () => {
 
   return (
     <div style={{ position: 'relative'}}>
-      {/* <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <h2 className='welcome-header'>Welcome, {data.user.username}</h2>
-        <h2 className='welcome-header'>Ranked: #{userRank !== -1 ? userRank + 1: 'Unranked'}</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+        {/* this might turn an array actually... */}
+        {/* <h2 className='welcome-header'>Welcome, {data.pushups.userName}</h2> */}
+        {/* <h2 className='welcome-header'>Exp Points: {data.expPoints.total}</h2> */}
       </div>
-      <div className='card-container'>
+      {/* <div className='card-container'>
         <div className='display-container'>
           <p className='display-title'>Since joining</p>
           <span className='display-number'>{pushups.totalPushups}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>

@@ -19,6 +19,7 @@ import UserProfile from './layouts/UserProfile';
 import ChartLayout from './layouts/ChartLayout';
 import { pushupActions } from './api/pushups';
 import { ThemeProvider } from './utilities/providers/ThemeProvider';
+import { pointsActions } from './api/points';
 
 const router = createBrowserRouter([
   {
@@ -41,11 +42,11 @@ const router = createBrowserRouter([
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
-          // const token = localStorage.getItem('idToken') || '';
-          const response = await logsActions.getLogs();
-          const pushups = await pushupActions.getPushupStats();
-          if (response === null || !pushups) return null;
-          const sortedResponse = [...response].sort((a, b) => {
+          const logRes = await logsActions.getLogs();
+          const pushupRes = await pushupActions.getPushupStats();
+          const userExpRes = await pointsActions.getUserPoints();
+          // if (!logRes || !pushupRes || !userExpRes) return null;
+          const sortedResponse = [...logRes].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
             const dateB = new Date(b.timestamp).getTime();
         
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
             return dateB - dateA;
           });
         
-          return {recentChanges: sortedResponse, pushups: pushups };
+          return {logs: sortedResponse, pushups: pushupRes, expPoints: userExpRes };
         },
       },
       {

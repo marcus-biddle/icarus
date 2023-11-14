@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.put('/api/points/create', ExperiencePointController.addPoints);
 
-router.get('/api/points/get', ExperiencePointController.getUserPoints);
+router.post('/api/points/get', ExperiencePointController.getUserPoints);
 
 export default router;

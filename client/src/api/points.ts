@@ -19,8 +19,9 @@ const addPoints = async (points: number) => {
 }
 
 const getUserPoints = async () => {
-    const googleId = localStorage.getItem('idToken');
+    const googleId = localStorage.getItem('idToken') || '';
     try {
+        // look into making this a GET request
         const response = await axiosInstance.post('/points/get', {
             googleId: googleId,
         });

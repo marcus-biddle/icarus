@@ -14,7 +14,7 @@ export const RecentChanges = () => {
     <>
       {showIfOrElse(isArrayEmpty(data))(noDataMsg)(
         <ul className='recent-list'>
-          {data.recentChanges.map((item, index) => (
+          {data.logs.map((item, index) => (
             <li key={index}>
               <p>{formatDateString(item.timestamp)}</p>
               {item.action} 

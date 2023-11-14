@@ -6,8 +6,9 @@ import {OAuth2Client} from 'google-auth-library';
 import dotenv from 'dotenv';
 
 import usersRouter from './routes/User.route.js';
-import recentChangesRouter from './routes/RecentChanges.route.js';
+import logsRouter from './routes/Log.route.js';
 import pushupsRouter from './routes/Pushup.route.js';
+import pointsRouter from './routes/ExperiencePoint.route.js';
 import { connectMongoDb } from './config/mongoDB.config.js';
 import { credentials } from './middleware/credentials.js';
 import { corsOptions } from './config/corsOptions.js';
@@ -52,8 +53,9 @@ app.post('/auth/google', async (req, res) => {
 });
 
 app.use('/', usersRouter);
-app.use('/', recentChangesRouter);
+app.use('/', logsRouter);
 app.use('/', pushupsRouter);
+app.use('/', pointsRouter);
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB')

@@ -20,7 +20,6 @@ export const PushupModal= ({ isOpen, onClose }: PushupModalProps) => {
     increasePushupCount(pushupCount);
     setPushupCount('');
     onClose();
-    window.location.reload();
   };
 
   const wrapperRef = useRef(null);

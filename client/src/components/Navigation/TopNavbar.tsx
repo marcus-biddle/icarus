@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './TopNavbar.css';
-// import { recentChangesActions } from '../../api/recentChanges';
+// import { logsActions } from '../../api/recentChanges';
 import { CiMenuBurger, CiCirclePlus, CiDark, CiLight } from "react-icons/ci";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Sidemenu from './Sidemenu/Sidemenu';

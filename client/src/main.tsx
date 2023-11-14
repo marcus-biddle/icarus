@@ -10,7 +10,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'; //https://github.com/
 import HomeLayout from './layouts/HomeLayout';
 import {usernameAction, RegisterLayout} from './layouts/RegisterLayout';
 import { userActions } from './api/users';
-import { recentChangesActions } from './api/recentChanges'
+import { logsActions } from './api/recentChanges'
 import PlayerActivityLayout from './layouts/PlayerActivityLayout';
 import { LoginLayout } from './layouts/LoginLayout';
 import LandingPageLayout from './layouts/LandingPageLayout';
@@ -41,11 +41,10 @@ const router = createBrowserRouter([
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
-          const token = localStorage.getItem('idToken') || '';
-          const response = await recentChangesActions.getAllRecentChanges();
-          const userRes = await userActions.getCurrentUser(token);
+          // const token = localStorage.getItem('idToken') || '';
+          const response = await logsActions.getLogs();
           const pushups = await pushupActions.getPushupStats();
-          if (response === null || userRes === null) return null;
+          if (response === null || !pushups) return null;
           const sortedResponse = [...response].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
             const dateB = new Date(b.timestamp).getTime();
@@ -54,7 +53,7 @@ const router = createBrowserRouter([
             return dateB - dateA;
           });
         
-          return {recentChanges: sortedResponse, user: userRes, pushups: pushups };
+          return {recentChanges: sortedResponse, pushups: pushups };
         },
       },
       {

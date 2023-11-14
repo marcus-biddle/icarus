@@ -1,10 +1,10 @@
-import {createAxiosInstance} from "./config/axios";
+import { createAxiosInstance } from "./config/axios";
 
 const axiosInstance = createAxiosInstance();
 
-const getAllRecentChanges = async () => {
+const getLogs = async () => {
     try {
-        const response = await axiosInstance.get(`/changes`);
+        const response = await axiosInstance.get(`/logs`);
         return response.data;
         
     } catch (err) {
@@ -13,6 +13,6 @@ const getAllRecentChanges = async () => {
     }
 }
 
-export const recentChangesActions = {
-    getAllRecentChanges
+export const logsActions = {
+    getLogs
 }

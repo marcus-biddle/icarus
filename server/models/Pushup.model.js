@@ -29,6 +29,10 @@ const pushupSchema = new mongoose.Schema({
   }
 });
 
+pushupSchema.statics.getDefaultExperiencePointConversion = function () {
+  return this.schema.paths.experiencePointConversion.default;
+};
+
 // Define a pre-save middleware to update the total before saving
 pushupSchema.pre('save', function (next) {
   // Sum the counts from all entries and update the total

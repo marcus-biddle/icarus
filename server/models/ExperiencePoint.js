@@ -12,6 +12,6 @@ const expPointsSchema = new mongoose.Schema({
   },
 });
 
-const ExperiencePoints = mongoose.model('ExperiencePoints', expPointsSchema);
+const ExperiencePoint = mongoose.model('ExperiencePoints', expPointsSchema);
 
-export default ExperiencePoints;
+export default ExperiencePoint;

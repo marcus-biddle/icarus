@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './HomeLayout.css'
-import { DropdownMenu } from '../components/Dropdown/ChartDropdown';
 import { getCurrentMonth } from '../helpers/date';
 import { RecentChanges } from '../components/Boards/RecentChanges';
-import { PushupTracker } from '../components/PushupTracker/PushupTracker';
 import { usePushupCounter } from '../utilities/hooks/usePushupCounter';
 import { PushupModal } from '../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
-import { isArrayEmpty, showIfOrElse } from '../helpers/functional';
+import { showIfOrElse } from '../helpers/functional';
 
 const HomeLayout = () => {
   const { openModal, isModalOpen, closeModal } = usePushupCounter();
@@ -19,24 +17,23 @@ const HomeLayout = () => {
     <p>data is null</p>
   )
 
-  const userId = data.user._id;
-  const pushups = data.pushups.filter(obj => obj._id === userId)[0];
+  // const userId = data.user._id;
+  // const pushups = data.pushups.filter(obj => obj._id === userId)[0];
 
-  const rankedPlayers = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth);
-  const userRank = rankedPlayers.findIndex(player => player._id === data.user._id);
-  const highestPushupCount = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth)[0].pushupsThisMonth;
-  const secondHighestPushupCount = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth)[1].pushupsThisMonth || 0;
-  const addMorePushupsNum = highestPushupCount - pushups.pushupsThisMonth;
-  const keepTheLeadNum = pushups.pushupsThisMonth - secondHighestPushupCount;
+  // const rankedPlayers = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth);
+  // const userRank = rankedPlayers.findIndex(player => player._id === data.user._id);
+  // const highestPushupCount = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth)[0].pushupsThisMonth;
+  // const secondHighestPushupCount = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth)[1].pushupsThisMonth || 0;
+  // const addMorePushupsNum = highestPushupCount - pushups.pushupsThisMonth;
+  // const keepTheLeadNum = pushups.pushupsThisMonth - secondHighestPushupCount;
 
   return (
     <div style={{ position: 'relative'}}>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+      {/* <div style={{ display: 'flex', justifyContent: 'space-between'}}>
         <h2 className='welcome-header'>Welcome, {data.user.username}</h2>
         <h2 className='welcome-header'>Ranked: #{userRank !== -1 ? userRank + 1: 'Unranked'}</h2>
       </div>
       <div className='card-container'>
-        {/* Total pushups, total for the month, total for the day */}
         <div className='display-container'>
           <p className='display-title'>Since joining</p>
           <span className='display-number'>{pushups.totalPushups}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
@@ -66,7 +63,7 @@ const HomeLayout = () => {
           )}
           <button className='add-more-btn' onClick={openModal}>Add more pushups</button>
         </div>
-      </div>
+      </div> */}
 
       <div style={{ paddingBottom: '56px'}} className='card-container'>
         <h4 style={{ textAlign: 'left', fontSize: '16px', letterSpacing: '.5px', width: '100%'}}>Recent Activity</h4>

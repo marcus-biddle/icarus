@@ -1,14 +1,13 @@
-import RecentChanges from '../models/RecentChanges.js';
+import RecentChanges from '../models/Log.js';
 import User from '../models/User.model.js';
 import jwt from 'jsonwebtoken';
 
 // POST to retreive user or create a new user
-const findOrCreateUser = async (req, res) => {
+const createUser = async (req, res) => {
     const googleId = req.body.googleId;
     if (!googleId) return res.status(400).json({ error: 'googleId is required' });
     
     const decodedToken = await jwt.decode(googleId);
-    console.log(decodedToken);
 
     const duplicate = await User.findOne({ email: decodedToken.email }).lean().exec();
     if (duplicate) return res.status(200).json(duplicate);
@@ -34,9 +33,8 @@ const findOrCreateUser = async (req, res) => {
     const { googleId } = req.query;
     const decodedToken = await jwt.decode(googleId);
     try {
-      const foundUser = await User.findOne({ email: decodedToken.email });
+      const foundUser = await User.findOne({ email: decodedToken.email }).lean().exec();;
 
-      console.log(googleId, foundUser)
       if (foundUser) {
         return res.status(200).json(foundUser);
       } else {
@@ -58,7 +56,7 @@ const findOrCreateUser = async (req, res) => {
   }
 
   const UserControllers = {
-    findOrCreateUser,
+    createUser,
     findUser,
     findAllUsers
   }

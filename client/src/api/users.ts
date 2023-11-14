@@ -2,25 +2,10 @@ import {createAxiosInstance} from "./config/axios";
 
 const axiosInstance = createAxiosInstance();
 
-const findByGoogleId = async (googleId: string) => {
+const createUser = async () => {
+    const googleId = localStorage.getItem('idToken');
     try {
-        // backend not built
-        const response = await axiosInstance.get(`/users/${googleId}`);
-        if (response.status === 200 || response.status === 201) {
-            return response.data;
-        } 
-        return null;
-        
-    } catch (err) {
-        console.log('err', err);
-        return null;
-    }
-}
-
-const createUser = async (googleId: string) => {
-
-    try {
-        const response = await axiosInstance.post('/create/user', {
+        const response = await axiosInstance.post('/users/create', {
             googleId: googleId
         });
 
@@ -34,7 +19,7 @@ const createUser = async (googleId: string) => {
 
 const getAllUsers = async () => {
     try {
-        const response = await axiosInstance.get('/user-list')
+        const response = await axiosInstance.get('/users/all')
         return response.data;
 
     } catch (err) {
@@ -43,20 +28,18 @@ const getAllUsers = async () => {
     }
 }
 
-const getCurrentUser = async (googleId: string) => {
-    try {
-        const response = await axiosInstance.get(`/user-list/user?googleId=${googleId}`);
-        return response.data;
+// const getCurrentUser = async (googleId: string) => {
+//     try {
+//         const response = await axiosInstance.get(`/user-list/user?googleId=${googleId}`);
+//         return response.data;
 
-    } catch (err) {
-        console.log('err', err);
-        return null;
-    }
-}
+//     } catch (err) {
+//         console.log('err', err);
+//         return null;
+//     }
+// }
 
 export const userActions = {
-    findByGoogleId,
     createUser,
     getAllUsers,
-    getCurrentUser
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { pushupActions } from '../../api/pushups';
+import { pointsActions } from '../../api/points';
 
 export const usePushupCounter = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,10 +21,12 @@ export const usePushupCounter = () => {
     if (isNaN(count)) count = 0;
 
     try {
-      const response = await pushupActions.addPushups(count);
-      if (response) {
+      const pushupRes = await pushupActions.addPushups(count);
+      const expRes = await pointsActions.addPoints(count);
+      if (pushupRes && expRes) {
         setIsLoading(false);
         closeModal();
+        window.location.reload();
         return true;
       }
     } catch (error) {

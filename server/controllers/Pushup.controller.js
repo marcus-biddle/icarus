@@ -1,4 +1,4 @@
-import RecentChanges from '../models/RecentChanges.js';
+import RecentChanges from '../models/Log.js';
 import Pushup from '../models/Pushup.model.js';
 import User from '../models/User.model.js';
 import jwt from 'jsonwebtoken';
@@ -14,10 +14,10 @@ const createPushupSchema = async (req, res) => {
   // return res.json(decodedToken);
 
   try {
-    const user = await User.findOne({ email: decodedToken.email });
+    const user = await User.findOne({ email: decodedToken.email }).lean().exec();
     if (!user) return res.status(404).json({ error: 'User not found' });
     
-    const foundPushupSchema = await Pushup.findOne({ user: user._id });
+    const foundPushupSchema = await Pushup.findOne({ user: user._id })
 
     if (foundPushupSchema) return res.status(200).json(foundPushupSchema);
 
@@ -43,23 +43,29 @@ const createPushupSchema = async (req, res) => {
     const decodedToken = await jwt.decode(googleId);
 
     try {
-        const user = await User.findOne({ email: decodedToken.email });
+        const user = await User.findOne({ email: decodedToken.email }).lean().exec();
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        const existingPushupSchema = await Pushup.findOne({ user: user._id });
+        const existingPushupSchema = await Pushup.findOneAndUpdate(
+          { user: user._id },
+          {
+            $push: {
+              entries: {
+                date: new Date(),
+                count: pushupCount,
+              },
+            },
+          },
+          { new: true } // This option returns the modified document
+        );
+
         if (!existingPushupSchema) return res.status(404).json({ error: 'PushupSchema error.' });
-
-        const newEntry = { count: pushupCount };
-
-        // Push the new entry to the entries array
-        existingPushupSchema.entries.push(newEntry);
-
-        // Save the updated document
-        await existingPushupSchema.save();
 
         await RecentChanges.create({
           action: `${decodedToken.name} completed ${pushupCount} pushup(s).`,
         });
+
+        await existingPushupSchema.save();
 
         return res.status(201).json(existingPushupSchema);
     } catch (error) {
@@ -68,7 +74,7 @@ const createPushupSchema = async (req, res) => {
   }
 
   const getEveryUsersPushupTotals = async (req, res) => {
-    // This might be entirely incorrect now
+    // Need to update this to include total somehow
     try {
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
@@ -183,11 +189,16 @@ const createPushupSchema = async (req, res) => {
     }
   };
   
+  const getPointConversion = async (req, res) => {
+    const defaultConversion = await Pushup.getDefaultExperiencePointConversion();
+    return res.status(200).json(defaultConversion);
+  }
 
   const PushupsController = {
     patchAddPushups,
     getEveryUsersPushupTotals,
-    createPushupSchema
+    createPushupSchema,
+    getPointConversion
   }
 
   export default PushupsController;

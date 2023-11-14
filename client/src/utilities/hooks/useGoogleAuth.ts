@@ -1,8 +1,9 @@
 import { useState} from 'react'
 import { useGoogleLogin } from '@react-oauth/google';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createAxiosInstance } from '../../api/config/axios';
 import { userActions } from '../../api/users';
+import { pushupActions } from '../../api/pushups';
 
 export const useGoogleAuth = () => {
     const navigate = useNavigate();
@@ -13,8 +14,8 @@ export const useGoogleAuth = () => {
         if (token === null) {
             localStorage.setItem('idToken', googleId); // Store the token in localStorage
             setToken(googleId);
-            const response = await userActions.createUser(googleId);
-            console.log('handleGsignIN', response)
+            await userActions.createUser();
+            await pushupActions.createPushupLog();
         } 
         
         navigate('/home');

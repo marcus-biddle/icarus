@@ -14,7 +14,7 @@ const challengeSchema = new mongoose.Schema({
     required: true,
     default: 3600 // In seconds for time
   },
-  date: {
+  startedDate: {
     type: Date,
     default: Date.now,
   },
@@ -28,6 +28,9 @@ const challengeSchema = new mongoose.Schema({
     type: Number,
     required: true,
     default: 0
+  },
+  completedDate: {
+    type: Date,
   }
 });
 

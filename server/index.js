@@ -9,6 +9,7 @@ import usersRouter from './routes/User.route.js';
 import logsRouter from './routes/Log.route.js';
 import pushupsRouter from './routes/Pushup.route.js';
 import pointsRouter from './routes/ExperiencePoint.route.js';
+import messageRouter from './routes/Message.route.js';
 import { connectMongoDb } from './config/mongoDB.config.js';
 import { credentials } from './middleware/credentials.js';
 import { corsOptions } from './config/corsOptions.js';
@@ -56,6 +57,7 @@ app.use('/', usersRouter);
 app.use('/', logsRouter);
 app.use('/', pushupsRouter);
 app.use('/', pointsRouter);
+app.use('/', messageRouter);
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB')

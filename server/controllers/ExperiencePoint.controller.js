@@ -1,8 +1,8 @@
-import ExperiencePoint from '../models/ExperiencePoint.js';
+import ExperiencePoint from '../models/ExperiencePoint.model.js';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.model.js';
 import Pushup from '../models/Pushup.model.js';
-import Logs from '../models/Log.js';
+import Logs from '../models/Log.model.js';
 
   const addPoints = async (req, res) => {
     const { googleId, points } = req.body;

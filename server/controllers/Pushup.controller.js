@@ -1,4 +1,4 @@
-import RecentChanges from '../models/Log.js';
+import Logs from '../models/Log.model.js';
 import Pushup from '../models/Pushup.model.js';
 import User from '../models/User.model.js';
 import jwt from 'jsonwebtoken';
@@ -61,7 +61,7 @@ const createPushupSchema = async (req, res) => {
 
         if (!existingPushupSchema) return res.status(404).json({ error: 'PushupSchema error.' });
 
-        await RecentChanges.create({
+        await Logs.create({
           action: `${decodedToken.name} completed ${pushupCount} pushup(s).`,
         });
 

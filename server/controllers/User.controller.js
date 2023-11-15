@@ -1,4 +1,4 @@
-import RecentChanges from '../models/Log.js';
+import Logs from '../models/Log.model.js';
 import User from '../models/User.model.js';
 import jwt from 'jsonwebtoken';
 
@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
           email: decodedToken.email,
         });
 
-        await RecentChanges.create({
+        await Logs.create({
           action: `${decodedToken.name} joined the group.`,
         });
 

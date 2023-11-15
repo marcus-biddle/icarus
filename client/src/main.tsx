@@ -20,6 +20,7 @@ import ChartLayout from './layouts/ChartLayout';
 import { pushupActions } from './api/pushups';
 import { ThemeProvider } from './utilities/providers/ThemeProvider';
 import { pointsActions } from './api/points';
+import { ChatLayout } from './layouts/ChatLayout';
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <LoginLayout />,
+      },
+      {
+        path: 'chat',
+        element: <ChatLayout />,
       },
     ]
   },

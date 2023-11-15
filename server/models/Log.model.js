@@ -11,6 +11,6 @@ const loggerSchema = new mongoose.Schema({
   },
 });
 
-const Logs = mongoose.model('RecentChanges', loggerSchema);
+const Logs = mongoose.model('Logs', loggerSchema);
 
 export default Logs;

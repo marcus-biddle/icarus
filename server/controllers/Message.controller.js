@@ -30,7 +30,8 @@ const pusher = new Pusher({
 
         pusher.trigger("chat", "message", {
           message: content,
-          username: decodedToken.name
+          username: decodedToken.name,
+          timestamp: Date.now()
         });
 
         return res.status(201).json(newMessage);

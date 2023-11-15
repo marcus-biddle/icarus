@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Pusher, { Channel } from 'pusher-js';
+import Pusher from 'pusher-js';
 import { createAxiosInstance } from "../api/config/axios";
 import { googleId } from '../helpers/data';
 import './ChatLayout.css'
 
-export const ChatLayout: React.FC = () => {
+export const ChatLayout = () => {
   const [ messages, setMessages ] = useState<{ username: '', message: ''}[]>([]);
   const [ message, setMessage ] = useState('');
 
@@ -13,8 +13,6 @@ export const ChatLayout: React.FC = () => {
   const axiosInstance = createAxiosInstance();
 
   useEffect(() => {
-    Pusher.logToConsole = true;
-
     const pusher = new Pusher('f8dcf3aa8d196d37cba1', {
       cluster: 'us2'
     });

@@ -29,7 +29,8 @@ import Logs from '../models/Log.model.js';
 
         const userPoints = await ExperiencePoint.findOne({ user: user._id })
         // Add points to the total
-        const updatedPoints = (isNaN(points) ? 0 : points) * (isNaN(defaultConversion) ? 0 : defaultConversion) + (!userPoints ? 0 : userPoints.total);
+        const conversionNum = (isNaN(points) ? 0 : points) * (isNaN(defaultConversion) ? 0 : defaultConversion);
+        const updatedPoints =  conversionNum + (!userPoints ? 0 : userPoints.total);
         // expPoints.total += updatedPoints;
 
         const expPoints = await ExperiencePoint.findOneAndUpdate({ user: user._id}, { total: updatedPoints})
@@ -38,14 +39,14 @@ import Logs from '../models/Log.model.js';
           const result = await ExperiencePoint.create({ user: user._id, total: updatedPoints });
           
           await Logs.create({
-            action: `${decodedToken.name} recieved ${updatedPoints} point(s).`,
+            action: `${decodedToken.name} recieved ${conversionNum} point(s).`,
           });
           
           return res.status(200).json(result);
         }
 
         await Logs.create({
-          action: `${decodedToken.name} recieved ${updatedPoints} point(s).`,
+          action: `${decodedToken.name} recieved ${conversionNum} point(s).`,
         });
 
         return res.status(200).json(expPoints);

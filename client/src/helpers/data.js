@@ -78,3 +78,5 @@ export const formatDatasets = (array, option) => {
 
   return datasets;
 }
+
+export const googleId = localStorage.getItem('idToken') || '';

@@ -1,9 +1,18 @@
+
+.form-container {    
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 80px;
+}
+
 .input-group {
     font-size: 1.25rem;
     position: relative;
     --primary: #2196f3;
     text-align: left;
-    width: 90%;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -36,4 +45,22 @@
     background-color: #0d1118;
     padding-inline: 0.3rem;
     color: var(--primary);
+}
+
+.send-btn {
+    position: absolute;
+    right: 1rem;
+    top: .6rem;
+    padding: 8px 16px;
+    background-color: transparent;
+}
+
+.input-group input:is(:focus, :valid) ~ .send-btn {
+    background-color: #1e629a;
+}
+
+.send-icon {
+    color: #d4d4d4;
+    width: 25px;
+    height: 25px;
 }

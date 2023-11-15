@@ -25,7 +25,7 @@ const pusher = new Pusher({
     const decodedToken = await jwt.decode(googleId);
 
     try {
-        const newMessage = await Message.create({ content: content, username: decodedToken.name });
+        const newMessage = await Message.create({ message: content, username: decodedToken.name });
         await newMessage.save();
 
         pusher.trigger("chat", "message", {

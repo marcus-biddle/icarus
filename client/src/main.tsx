@@ -21,6 +21,7 @@ import { pushupActions } from './api/pushups';
 import { ThemeProvider } from './utilities/providers/ThemeProvider';
 import { pointsActions } from './api/points';
 import { ChatLayout } from './layouts/ChatLayout';
+import { messageActions } from './api/messages';
 
 const router = createBrowserRouter([
   {
@@ -95,15 +96,17 @@ const router = createBrowserRouter([
       {
         path: 'chat',
         element: <ChatLayout />,
+        loader: async () => {
+          const messagesRes = await messageActions.getAllMessages();
+          return { messages: messagesRes };
+        },
       },
     ]
   },
 ]);
 // TODO Env variables && vite
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
     <GoogleOAuthProvider clientId={'505006994945-636h437bsivgmdpqbae88urbgje1o0bu.apps.googleusercontent.com'}>
       <RouterProvider router={router} />
     </GoogleOAuthProvider>
-  </React.StrictMode>,
 )

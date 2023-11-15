@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
-  content: {
+  message: {
     type: String,
   },
   timestamp: {

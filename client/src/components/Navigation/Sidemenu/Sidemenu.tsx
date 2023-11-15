@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './Sidemenu.css';
-import { CiCircleRemove, CiUser, CiGrid41, CiHome, CiViewList } from "react-icons/ci";
+import { CiCircleRemove, CiUser, CiGrid41, CiHome, CiViewList, CiChat1, CiLogout } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
 import { useOutsideClick } from '../../../utilities/hooks/useOutsideClick';
 import { userActions } from '../../../api/users';
@@ -47,7 +47,10 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
           <CiViewList />
           <span style={{ padding: '0 8px'}}>Leader Board</span>
         </NavLink>
-        {/* <NavLink to='/groupchat' onClick={() => toggleMenu()}>Discussion</NavLink> */}
+        <NavLink to='/chat' onClick={() => toggleMenu()}>
+          <CiChat1 />
+          <span style={{ padding: '0 8px'}}>Chat Room</span>
+        </NavLink>
         {/* <NavLink to='/some-link' onClick={() => toggleMenu()}>Some Other Link</NavLink> */}
       </div>
       <hr className='divider' />
@@ -76,6 +79,10 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
       <div className='footer'>
         <hr className='divider' />
         <button className='signout-btn' onClick={() => terminateAcess()}>Sign Out</button>
+        <NavLink to={`/`} onClick={() => toggleMenu()}>
+          <CiLogout/>
+          <span style={{ padding: '0 8px'}}>Logout</span>
+        </NavLink>
       </div>
     </div>
   );

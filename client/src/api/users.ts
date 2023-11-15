@@ -28,7 +28,7 @@ const getAllUsers = async () => {
     }
 }
 
-// const getCurrentUser = async (googleId: string) => {
+// const getUser = async (googleId: string) => {
 //     try {
 //         const response = await axiosInstance.get(`/user-list/user?googleId=${googleId}`);
 //         return response.data;

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/api/users/create', UserControllers.createUser);
 
 // Route to get a user's profile
-router.get('/api/users/find', UserControllers.findUser);
+// router.get('/api/users/find', UserControllers.findUser);
 
 router.get('/api/users/all', UserControllers.findAllUsers);
 

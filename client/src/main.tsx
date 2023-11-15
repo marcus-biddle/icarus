@@ -98,7 +98,12 @@ const router = createBrowserRouter([
         element: <ChatLayout />,
         loader: async () => {
           const messagesRes = await messageActions.getAllMessages();
-          return { messages: messagesRes };
+          const userRes = await userActions.createUser();
+          return { messages: messagesRes.sort((a, b) => {
+            const timestampA = new Date(a.timestamp).getTime();
+            const timestampB = new Date(b.timestamp).getTime();
+            return timestampA - timestampB;
+          }), user: userRes };
         },
       },
     ]

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Pusher from 'pusher-js';
 import './ChatLayout.css'
 import { useLoaderData } from 'react-router-dom';
@@ -12,12 +12,13 @@ export const ChatLayout = () => {
   const [ messages, setMessages ] = useState<{ username: '', message: '', timestamp: ''}[]>(data.messages);
   const [ message, setMessage ] = useState('');
 
-  useEffect(() => {
-    const pusher = new Pusher('f8dcf3aa8d196d37cba1', {
-      cluster: 'us2'
-    });
+  const pusher = new Pusher('f8dcf3aa8d196d37cba1', {
+    cluster: 'us2'
+  });
 
-    const channel = pusher.subscribe('chat');
+  const channel = pusher.subscribe('chat');
+
+  useEffect(() => {
     channel.bind('message', (data: { message: '', username: '', timestamp: '' }) => {
       console.log('Recieved data:', data);
       if (!messages.some((msg) => msg.timestamp === data.timestamp)) {
@@ -43,13 +44,13 @@ export const ChatLayout = () => {
     }
   }, [messages]);
 
-  const submit = async (e) => {
+  const submit = useCallback(async (e) => {
     e.preventDefault();
 
     await messageActions.addMessage(message);
 
     setMessage('');
-  }
+  }, [message]) 
 
   return (
     <div className='chat-container'>

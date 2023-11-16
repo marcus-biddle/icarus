@@ -13,11 +13,11 @@ export const RecentChanges = () => {
   return (
     <>
       {showIfOrElse(isArrayEmpty(data))(noDataMsg)(
-        <ul className='recent-list'>
+        <ul className='scrollbar'>
           {data.logs.map((item, index) => (
             <li key={index}>
               <p>{formatDateString(item.timestamp)}</p>
-              {item.action} 
+              <span>{item.action} </span>
             </li>
           ))}
         </ul>

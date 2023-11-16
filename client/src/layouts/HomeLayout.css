@@ -1,7 +1,7 @@
 .card-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 32px;
+    gap: 8px;
     justify-content: space-around;
     max-width: 100%;
     padding: 24px;
@@ -14,7 +14,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
 
-  .changes-container {
+  /* .changes-container {
     width: 100%;
     max-width: 500px;
     height: 100%;
@@ -29,11 +29,11 @@
 
   .changes-container::-webkit-scrollbar {
     width: 0.5rem; /* Width of the scrollbar track */
-  }
+  /* } */
   
 .changes-container::-webkit-scrollbar-thumb {
   background: transparent; 
-}
+} */
 
 .display-container {
   background-color: transparent;
@@ -73,10 +73,10 @@
 .display-container-2 {
   background-color: transparent;
   border-radius: 8px;
-  padding: 16px 32px;
+  /* padding: 16px 32px; */
   text-align: left;
   width: 100%;
-  max-width: 100%;
+  /* max-width: 100%; */
   border: 1px solid #21262D;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -97,5 +97,37 @@
     max-width: 100%;
     border: 1px solid #21262D;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between; /* Adjust as needed */
+  flex-wrap: wrap;
+  border: 1px solid #21262D;
+  border-radius: 4px;
+}
+
+.box {
+  width: calc(33.33% - 20px); /* Adjust as needed */
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+/* Media query for smaller screens */
+/* @media (max-width: 768px) {
+  .container {
+    justify-content: center; 
+  }
+
+  .box {
+    width: calc(50% - 20px); 
+  }
+} */
+
+/* Media query for even smaller screens */
+@media (max-width: 480px) {
+  .box {
+    width: 100%; /* Stack items on top of each other */
   }
 }

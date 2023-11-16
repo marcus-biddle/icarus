@@ -33,7 +33,7 @@ const TopNavbar = () => {
           <Show when={!isMobile}>
             <CiCloudSun style={{ width: '38px', height: '40px', color: '#0057a4', padding: '0 16px'}} />
           </Show>
-          <p style={{ padding: '0 8px', fontWeight: '700', letterSpacing: '.25px'}}>{pageName}</p>
+          <h2 style={{ padding: '0 8px' }}>{pageName}</h2>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '120px'}}>
           <NavLink to={`/user/`}>

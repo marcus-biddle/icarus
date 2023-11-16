@@ -35,9 +35,21 @@ const addPushups = async (pushupCount: number) => {
     }
 }
 
-const getPushupStats = async () => {
+const getAllPushupStats = async () => {
     try {
         const response = await axiosInstance.get('/pushups/get/all');
+        return response.data;
+        
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const getUserPushupStats = async () => {
+    const googleId = localStorage.getItem('idToken');
+    try {
+        const response = await axiosInstance.get(`/pushups/get/user/${googleId}`);
         return response.data;
         
     } catch (err) {
@@ -59,7 +71,8 @@ const getConversion = async () => {
 
 export const pushupActions = {
     addPushups,
-    getPushupStats,
+    getAllPushupStats,
+    getUserPushupStats,
     createPushupLog,
     getConversion
 }

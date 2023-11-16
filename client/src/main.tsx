@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <HomeLayout />,
         loader: async () => {
           const logRes = await logsActions.getLogs();
-          const pushupRes = await pushupActions.getPushupStats();
+          const pushupRes = await pushupActions.getUserPushupStats();
           const userExpRes = await pointsActions.getUserPoints();
           // if (!logRes || !pushupRes || !userExpRes) return null;
           const sortedResponse = [...logRes].sort((a, b) => {
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
             return dateB - dateA;
           });
         
-          return {logs: sortedResponse, pushups: pushupRes, expPoints: userExpRes };
+          return {logs: sortedResponse, pushups: pushupRes[0], expPoints: userExpRes };
         },
       },
       {
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
           </FilterProvider>
         ),
         loader: async () => {
-          const response = await pushupActions.getPushupStats();
+          const response = await pushupActions.getAllPushupStats();
           return response;
         },
       },
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         element: <ChartLayout />,
         loader: async () => {
           const users = await userActions.getAllUsers();
-          const pushups = await pushupActions.getPushupStats();
+          const pushups = await pushupActions.getAllPushupStats();
           return { users,  pushups };
         },
       },

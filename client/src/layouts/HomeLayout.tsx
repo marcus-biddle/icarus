@@ -29,11 +29,31 @@ const HomeLayout = () => {
 
   return (
     <div style={{ position: 'relative'}}>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        {/* this might turn an array actually... */}
-        {/* <h2 className='welcome-header'>Welcome, {data.pushups.userName}</h2> */}
-        {/* <h2 className='welcome-header'>Exp Points: {data.expPoints.total}</h2> */}
+      {/* <div>
+        <h5>this is <em>italic</em></h5>
+        <h4>this is <em>italic</em></h4>
+        <h3>this is <em>italic</em></h3>
+        <h2>this is <em>italic</em></h2>
+        <h1>this is <em>italic</em></h1>
+      </div> */}
+      <div style={{ textAlign: 'left', padding: '0 24px', marginBottom: '48px' }}>
+        <h4>Welcome, {data.pushups.userName}</h4>
+        <h3>Experience Points: <em>{data.expPoints.total} pts</em></h3>
       </div>
+
+      <section style={{ padding: '0 24px'}}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px'}}>
+        <h3>Top Players</h3>
+        <h5><em>in November</em></h5>
+        </div>
+        
+        <div className='container'>
+          <div className='box' style={{ backgroundColor: 'grey'}}>test</div>
+          <div className='box'>test</div>
+          <div className='box'>test</div>
+        </div>
+      </section>
+      
       {/* <div className='card-container'>
         <div className='display-container'>
           <p className='display-title'>Since joining</p>
@@ -67,9 +87,9 @@ const HomeLayout = () => {
       </div> */}
 
       <div style={{ paddingBottom: '56px'}} className='card-container'>
-        <h4 style={{ textAlign: 'left', fontSize: '16px', letterSpacing: '.5px', width: '100%'}}>Recent Activity</h4>
+        <h3 style={{ textAlign: 'left', width: '100%'}}>Recent Activity</h3>
         <div className='display-container-2'>
-        <RecentChanges />
+          <RecentChanges />
         </div>
       </div>
       

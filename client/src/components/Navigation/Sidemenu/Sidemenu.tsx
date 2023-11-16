@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './Sidemenu.css';
-import { CiCircleRemove, CiUser, CiGrid41, CiHome, CiViewList, CiChat1, CiLogout } from "react-icons/ci";
+import { CiCloudSun, CiBookmark, CiGrid41, CiHome, CiViewList, CiChat1, CiLogout, CiGlobe } from "react-icons/ci";
 import { NavLink } from 'react-router-dom';
 import { useOutsideClick } from '../../../utilities/hooks/useOutsideClick';
 import { userActions } from '../../../api/users';
@@ -34,56 +34,103 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
 
   return (
     <div className={`sidemenu ${isOpen ? 'open' : ''}`} ref={wrapperRef}>
-      <div className="sidemenu-header">
-        <p className='header'>Menu</p>
-        <CiCircleRemove onClick={() => toggleMenu()} className='close-sidemenu' />
+      <section className="sidemenu-header">
+        <h2 className='header'>Icarus2.0</h2>
+        <CiCloudSun onClick={() => toggleMenu()} className='menu-icon' />
+      </section>
+
+      <div style={{ position: 'relative'}}>
+        <div className='section-title'>
+          <span>Directory</span>
+        </div>
+        <hr className='divider' />
       </div>
-      <div className='navigation-list'>
+
+      <section className='menu-group'>
         <NavLink to='/home' onClick={() => toggleMenu()}>
-          <CiHome />
+          <CiHome className='menu-icon'/>
           <span style={{ padding: '0 8px'}}>Home</span>
         </NavLink>
         <NavLink to='/leader-board' onClick={() => toggleMenu()}>
-          <CiViewList />
+          <CiViewList className='menu-icon'/>
           <span style={{ padding: '0 8px'}}>Leader Board</span>
         </NavLink>
         <NavLink to='/chat' onClick={() => toggleMenu()}>
-          <CiChat1 />
+          <CiChat1 className='menu-icon'/>
           <span style={{ padding: '0 8px'}}>Chat Room</span>
         </NavLink>
-        {/* <NavLink to='/some-link' onClick={() => toggleMenu()}>Some Other Link</NavLink> */}
-      </div>
-      <hr className='divider' />
-      <div className='navigation-list'>
-        <h4 className='header'>History</h4>
-        <div style={{ display: 'flex', flexDirection: 'column'}}>
-            <NavLink to={'/charts'} onClick={() => toggleMenu()} >
-                <CiGrid41 />
-                <span style={{ padding: '0 8px'}}>Charts</span>
-            </NavLink>
+        <NavLink to={'/charts'} onClick={() => toggleMenu()} >
+            <CiGrid41 className='menu-icon'/>
+            <span style={{ padding: '0 8px'}}>Charts</span>
+        </NavLink>
+        <NavLink to={'/charts'} onClick={() => toggleMenu()} >
+            <CiGlobe className='menu-icon'/>
+            <span style={{ padding: '0 8px'}}>Arena</span>
+        </NavLink>
+       </section>
+      
+       <div style={{ position: 'relative'}}>
+        <div className='section-title'>
+          <span>Stats</span>
         </div>
+        <hr className='divider' />
       </div>
-      <hr className='divider' />
-      <div className='player-list'>
-        <h4 className='header'>Players</h4>
-        {/* add last active */}
-        <div className='players-container'>
+      
+      <section className='menu-group-2'>
+        {/* <h4 className='header'>History</h4> */}
+        <div>
+          <span>Experience Points:</span>
+          <span>100</span>
+        </div>
+        <div>
+          <span>Challenges Won:</span>
+          <span>100</span>
+        </div>
+        <div>
+          <span>Monthly Rank:</span>
+          <span>1st</span>
+        </div>
+        
+          
+      </section>
+      
+      <div style={{ position: 'relative'}}>
+        <div className='section-title'>
+          <span>Following</span>
+        </div>
+        <hr className='divider' />
+      </div>
+
+       <section className='menu-group'>
           {data && data.map((user) => (
             <NavLink to={`/leader-board`} onClick={() => toggleMenu()} key={user.email}>
-                <CiUser />
+                <CiBookmark className='menu-icon' />
                 <span style={{ padding: '0 8px'}}>{user.username}</span>
             </NavLink>
           ))}
+      </section>
+
+      <div style={{ position: 'relative'}}>
+        <div className='section-title'>
+          <span>Exit</span>
         </div>
+        <hr className='divider' />
       </div>
-      <div className='footer'>
+
+       <section className='menu-group'>
+        <NavLink to={`/`} onClick={() => toggleMenu()}>
+            <CiLogout className='menu-icon' />
+            <span style={{ padding: '0 8px'}}>Logout</span>
+          </NavLink>
+      </section>
+      {/*<div className='footer'>
         <hr className='divider' />
         <button className='signout-btn' onClick={() => terminateAcess()}>Sign Out</button>
         <NavLink to={`/`} onClick={() => toggleMenu()}>
           <CiLogout/>
           <span style={{ padding: '0 8px'}}>Logout</span>
         </NavLink>
-      </div>
+      </div> */}
     </div>
   );
 };

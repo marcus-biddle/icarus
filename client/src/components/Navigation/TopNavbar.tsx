@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './TopNavbar.css';
 // import { logsActions } from '../../api/recentChanges';
-import { CiMenuBurger, CiCirclePlus, CiDark, CiLight } from "react-icons/ci";
+import { CiMenuBurger, CiCirclePlus, CiDark, CiLight, CiCloudSun } from "react-icons/ci";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Sidemenu from './Sidemenu/Sidemenu';
 import { PushupModal } from '../Modals/PushupModal';
@@ -31,7 +31,7 @@ const TopNavbar = () => {
             <CiMenuBurger style={{ width: '66%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '17%'}} />
           </button>
           <Show when={!isMobile}>
-            <img src={LOGO} alt='logo' style={{ width: '90px', height: '100%', cursor: 'pointer' }} onClick={() => navigate('/home')}/>
+            <CiCloudSun style={{ width: '38px', height: '40px', color: '#0057a4', padding: '0 16px'}} />
           </Show>
           <p style={{ padding: '0 8px', fontWeight: '700', letterSpacing: '.25px'}}>{pageName}</p>
         </div>

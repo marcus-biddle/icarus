@@ -1,0 +1,96 @@
+/* Modal container */
+.modal {
+    display: none;
+  }
+
+  .modal.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    z-index: 999;
+  }
+  
+  /* Modal content */
+  .modal-content {
+    position: relative;
+    background-color: #23272F;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  /* Close button (X) */
+  .close {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    min-width: 200px;
+    text-align: right;
+  }
+  
+  /* Modal title */
+  .modal h2 {
+    margin-top: 0;
+    padding: 0 32px;
+    line-height: 0;
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  .modal p {
+    padding: 0 32px;
+    padding-bottom: 24px;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgb(171, 171, 171)
+  }
+  
+  /* Form label */
+  .modal label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: white;
+  }
+  
+  /* Form input */
+  .modal input {
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+  
+  /* Submit button */
+  .modal button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #0165bc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  /* Submit button hover effect */
+  .modal button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  

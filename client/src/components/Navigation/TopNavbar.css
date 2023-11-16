@@ -1,0 +1,108 @@
+/* TopNavbar.css */
+
+.top-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0D1117; /* Example background color */
+    color: #fff; /* Text color */
+    padding: 10px 32px;
+    position: relative;
+  }
+  
+  .navbar-menu-icon {
+    font-size: 24px;
+    height: 45px;
+    width: 50px;
+    background-color: transparent;
+    /* border: 1px solid #0057a4; */
+    cursor: pointer;
+    position: relative;
+    padding: 0 20px;
+  }
+
+  .navbar-menu-icon:hover {
+    background-color:#212734;
+  }
+
+  .navbar-menu-icon:active {
+    background-color: #212734;
+  }
+  
+  .navbar-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    height: 45px;
+    width: 50px;
+    transition: all .05 ease;
+  }
+
+  .navbar-button:hover {
+    background-color:#212734;
+  }
+
+  .navbar-button-active {
+    background: none;
+    border: 1px solid white;
+    background-color: #343A46;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px; /* Adjust the size as needed */
+    text-decoration: underline;
+    height: 45px;
+    width: 45px;
+  }
+  
+  .dropdown {
+    background-color: #0D1117;
+    color: #333;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 101;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #0D1117;
+  }
+  
+  .dropdown p {
+    margin: 0;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .dropdown p:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .navbar-button:hover + .dropdown {
+    display: block;
+  }
+  
+  .dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .dropdown li {
+    display: inline-block; /* Display list items in a line */
+    background-color: transparent;
+    padding: 10px;
+    margin: 0 10px; /* Add horizontal spacing between list items */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    text-align: left; /* Left-align text within list items */
+  }
+  
+  .dropdown li :hover {
+    background-color: #e0e0e0; /* Background color on hover */
+  }

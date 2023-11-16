@@ -1,0 +1,31 @@
+/* .recent-list {
+    list-style: none;
+    max-height: 400px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+} */
+
+.scrollbar li {
+    padding: 8px 0;
+    color: rgb(207, 207, 207);
+}
+
+/* .recent-list p {
+    font-size: 11px;
+    color: #575f68
+} */
+
+/* .recent-list::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 8px;
+  }
+  
+.recent-list::-webkit-scrollbar-thumb {
+    background-color: #0057a4;
+    border-radius: 8px;
+}
+
+.recent-list::-webkit-scrollbar-track {
+    background-color: #212734;
+    border-radius: 8px;
+} */

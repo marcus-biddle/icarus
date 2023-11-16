@@ -1,0 +1,74 @@
+.calendar-btn-container {
+    display: flex;
+    margin: 0 56px;
+}
+
+.calendar-btn-container button {
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 1.08px;
+    padding-bottom: 8px;
+    border-bottom: solid 4px transparent;
+    transition: border .15s ease-out;
+    color: #FFFFFF;
+    margin-bottom: 1px;
+}
+
+.calendar-btn-container .active-filter {
+    border-bottom: solid 4px green;
+    border-radius: 4px;
+}
+
+/* .container {
+    display: flex;
+    margin: 0 24px;
+    border: 1px solid;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid grey
+  } */
+  
+  .filtersSection {
+    background-color: #21262d;
+    width: 100px;
+    padding: 4px;
+  }
+  
+  .activeFiltersSection {
+    display: flex;
+    background-color: #01040a;
+    width: 100%;
+    transition: width 0.3s;
+    padding: 4px;
+  }
+  
+  .icon {
+    width: 25px;
+    height: 25px;
+    color: white;
+  }
+
+  .clearButtonContainer {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    min-height: 50px;
+  }
+  
+  .clearButton {
+    background-color: transparent;
+    border: 1px solid #0057a4;
+    border-radius: 6px;
+    height: 25px;
+    width: 30px;
+  }
+  
+  .clearButtonText {
+    padding: 0 8px;
+  }
+
+  .table-container {
+   border-radius: 0;
+   background-color: transparent;
+  }
+  

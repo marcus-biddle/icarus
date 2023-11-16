@@ -5,7 +5,7 @@ export const useOutsideClick = (ref: MutableRefObject<null | Element>, callback:
     if (ref.current && !ref.current.contains(event.target as Node)) {
       callback();
     }
-  }, [callback, ref]) ;
+  }, [ref]) ;
   
   useEffect(() => {
     console.log('useOutsideClick')

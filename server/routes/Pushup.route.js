@@ -10,6 +10,8 @@ router.patch('/api/pushups/update/add', PushupsController.patchAddPushups);
 
 router.get('/api/pushups/get/all', PushupsController.getEveryUsersPushupTotals);
 
+router.get('/api/pushups/get/user/:googleId', PushupsController.getUserPushupTotals);
+
 router.get('/api/pushups/point-value', PushupsController.getPointConversion);
 
 export default router;

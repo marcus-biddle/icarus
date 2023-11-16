@@ -33,7 +33,7 @@ const TopNavbar = () => {
           <Show when={!isMobile}>
             <img src={LOGO} alt='logo' style={{ width: '90px', height: '100%', cursor: 'pointer' }} onClick={() => navigate('/home')}/>
           </Show>
-          <p style={{ padding: '0 8px', fontWeight: '700', letterSpacing: '.25px'}}>{pageName}</p>
+          <h2 style={{ padding: '0 8px' }}>{pageName}</h2>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '120px'}}>
           <NavLink to={`/user/`}>

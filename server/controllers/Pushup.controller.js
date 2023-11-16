@@ -188,6 +188,97 @@ const createPushupSchema = async (req, res) => {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+  const getUserPushupTotals = async (req, res) => {
+    // Need to update this to include total somehow
+    const { googleId } = req.params;
+
+    if (!googleId) return res.status(400).json({ error: 'googleId is required' });
+    const decodedToken = await jwt.decode(googleId);
+
+    try {
+      const user = await User.findOne({ email: decodedToken.email }).lean().exec();
+      if (!user) return res.status(404).json({ error: 'User not found' });
+
+      const todayStart = new Date();
+      todayStart.setHours(0, 0, 0, 0);
+
+      const startOfMonth = new Date();
+      startOfMonth.setDate(1);
+      startOfMonth.setHours(0, 0, 0, 0);
+
+      const pushupsAggregate = await Pushup.aggregate([
+        {
+          $match: {
+            user: user._id, // Filter by user
+            $or: [
+              { "entries.date": { $gte: todayStart } },
+              { "entries.date": { $gte: startOfMonth } },
+            ],
+          },
+        },
+        {
+          $unwind: "$entries",
+        },
+        {
+          $match: {
+            $or: [
+              { "entries.date": { $gte: todayStart } },
+              { "entries.date": { $gte: startOfMonth } },
+            ],
+          },
+        },
+        {
+          $group: {
+            _id: "$user",
+            totalPushupsToday: {
+              $sum: {
+                $cond: {
+                  if: {
+                    $gte: ["$entries.date", todayStart],
+                  },
+                  then: "$entries.count",
+                  else: 0,
+                },
+              },
+            },
+            totalPushupsThisMonth: {
+              $sum: {
+                $cond: {
+                  if: {
+                    $gte: ["$entries.date", startOfMonth],
+                  },
+                  then: "$entries.count",
+                  else: 0,
+                },
+              },
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id",
+            foreignField: "_id",
+            as: "userData",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            userName: { $arrayElemAt: ["$userData.username", 0] },
+            totalPushupsToday: 1,
+            totalPushupsThisMonth: 1,
+          },
+        },
+      ]);
+      
+      return res.json(pushupsAggregate);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
   
   const getPointConversion = async (req, res) => {
     const defaultConversion = await Pushup.getDefaultExperiencePointConversion();
@@ -197,6 +288,7 @@ const createPushupSchema = async (req, res) => {
   const PushupsController = {
     patchAddPushups,
     getEveryUsersPushupTotals,
+    getUserPushupTotals,
     createPushupSchema,
     getPointConversion
   }

@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -19,10 +19,124 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+/* Addeed Roboto thin100, thin100italic, light300, light300italic, reg400, med500, bold700 */
 
-p {
-  margin: 0;
+/* Heading Styles */
+h1 {
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: .55px;
+  color: #ffffff; /* White */
 }
+
+h2 {
+  font-size: 1.5em;
+  font-weight: 500;
+  letter-spacing: .55px;
+  color: #f0f0f0; /* Slightly off-white */
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.17em;
+  font-weight: 400;
+  letter-spacing: .55px;
+  color: #e0e0e0; /* Light gray */
+}
+
+h4 {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 300; /* has italic option*/
+  letter-spacing: .55px;
+  color: #d0d0d0; /* Gray */
+}
+
+h5 {
+  margin: 0;
+  font-size: 0.83em;
+  font-weight: 100; /* has italic option*/
+  letter-spacing: .55px;
+  color: #c0c0c0; /* Dark gray */
+} 
+
+em {
+  font-style: italic;
+  letter-spacing: .55px;
+}
+
+/* h6 {
+  font-size: 0.67em;
+  font-weight: bold;
+} */
+
+/* Paragraph Styles */
+p {
+  font-size: 0.688em;
+  color: #575f68
+}
+
+/* Span Styles */
+span {
+  font-size: 1em;
+  letter-spacing: .55px;
+  font-style: italic;
+}
+
+/* Italic Styles */
+em {
+  font-style: italic;
+}
+
+/* Font Weight Styles */
+.bold {
+  font-weight: bold;
+}
+
+/* Mobile View */
+@media only screen and (max-width: 767px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 14px; }
+}
+
+/* Desktop view */
+@media only screen and (min-width: 768px) {
+  h1 { font-size: 36px; }
+  h2 { font-size: 32px; }
+  h3 { font-size: 28px; }
+  h4 { font-size: 24px; }
+  h5 { font-size: 20px; }
+  h6 { font-size: 18px; }
+}
+
+/* Scrollbar */
+
+.scrollbar {
+  list-style: none;
+  max-height: 400px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #0057a4;
+  border-radius: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: #212734;
+  border-radius: 8px;
+}
+
 
 
 /* h1 {

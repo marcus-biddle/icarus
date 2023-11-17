@@ -28,18 +28,20 @@ const getAllUsers = async () => {
     }
 }
 
-// const getUser = async (googleId: string) => {
-//     try {
-//         const response = await axiosInstance.get(`/user-list/user?googleId=${googleId}`);
-//         return response.data;
+const getUser = async () => {
+    const googleId = localStorage.getItem('idToken');
+    try {
+        const response = await axiosInstance.get(`/users/find?googleId=${googleId}`);
+        return response.data;
 
-//     } catch (err) {
-//         console.log('err', err);
-//         return null;
-//     }
-// }
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
 
 export const userActions = {
     createUser,
     getAllUsers,
+    getUser
 }

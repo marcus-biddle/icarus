@@ -80,7 +80,8 @@ p {
 span {
   font-size: 1em;
   letter-spacing: .55px;
-  font-style: italic;
+  font-weight: 300;
+  /* font-style: italic; */
 }
 
 /* Italic Styles */

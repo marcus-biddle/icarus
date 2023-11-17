@@ -5,7 +5,7 @@ import { RecentChanges } from '../components/Boards/RecentChanges';
 import { usePushupCounter } from '../utilities/hooks/usePushupCounter';
 import { PushupModal } from '../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
-import { showIfOrElse } from '../helpers/functional';
+import { Show, isArrayEmpty, showIfOrElse } from '../helpers/functional';
 
 const HomeLayout = () => {
   const { openModal, isModalOpen, closeModal } = usePushupCounter();
@@ -13,9 +13,9 @@ const HomeLayout = () => {
   const data: any = useLoaderData();
   console.log('home', data)
 
-  if (data === null) return (
-    <p>data is null</p>
-  )
+  // if (data === null) return (
+  //   <p>data is null</p>
+  // )
 
   // const userId = data.user._id;
   // const pushups = data.pushups.filter(obj => obj._id === userId)[0];
@@ -37,29 +37,40 @@ const HomeLayout = () => {
         <h1>this is <em>italic</em></h1>
       </div> */}
       <div className='header'>
-        <h4>Welcome, {data.pushups.userName}</h4>
-        <h4>Experience Points: <em>{data.expPoints.total} pts</em></h4>
+        <h4>Welcome, {data.user.username}</h4>
+        <h4>Experience Points: <em>{isArrayEmpty(data.expPoints) ? 0 : data.expPoints.total} pts</em></h4>
       </div>
 
       <section style={{ padding: '0 24px'}}>
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px'}}>
         <h3>Top Players</h3>
-        <h5><em>in November</em></h5>
+        <h5><em>in {getCurrentMonth()}</em></h5>
         </div>
         
         <div className='container'>
-          <div className='box'>
-            <h5>Player Name</h5>
-            <span>1100 pushups</span>
-          </div>
-          <div className='box'>
-            <h5>Player Name</h5>
-            <span>900 pushups</span>
-          </div>
-          <div className='box'>
-            <h5>Player Name</h5>
-            <span>100 pushups</span>
-          </div>
+          <Show when={!isArrayEmpty(data.users)}>
+            {data.users.map((user, index) => {
+              return (
+                <div className='box' key={index}>
+                  <h5><span>{index + 1}{') '}</span>{user.userName}</h5>
+                  <span>{user.totalPushupsThisMonth} pushups</span>
+                </div>
+              )
+            })}
+            {/* <div className='box'>
+              <h5>Player Name</h5>
+              <span>900 pushups</span>
+            </div>
+            <div className='box'>
+              <h5>Player Name</h5>
+              <span>100 pushups</span>
+            </div> */}
+          </Show>
+          <Show when={isArrayEmpty(data.users)}>
+            <p>No records are stored. Input your workout to be a top player.</p>
+          </Show>
+          
+          
         </div>
       </section>
       

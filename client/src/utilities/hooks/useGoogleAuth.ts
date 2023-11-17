@@ -17,8 +17,10 @@ export const useGoogleAuth = () => {
             await userActions.createUser();
             await pushupActions.createPushupLog();
         } 
-        
-        navigate('/home');
+        const user = await userActions.getUser();
+        if (user) {
+            navigate('/home');
+        }
     };
 
     const handleSignOut = () => {

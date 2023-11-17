@@ -31,12 +31,11 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
   const wrapperRef = useRef(null);
     useOutsideClick(wrapperRef, () => setIsOpen(false));
 
-
   return (
     <div className={`sidemenu ${isOpen ? 'open' : ''}`} ref={wrapperRef}>
       <section className="sidemenu-header">
-        <h2 className='header'>Icarus2.0</h2>
-        <CiCloudSun onClick={() => toggleMenu()} className='menu-icon' />
+        <h2>Icarus2.0</h2>
+        <CiCloudSun onClick={() => toggleMenu()} style={{ width: '40px', height: '40px' }} />
       </section>
 
       <div style={{ position: 'relative'}}>
@@ -119,7 +118,7 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
       </div>
 
        <section className='menu-group'>
-        <NavLink to={`/`} onClick={() => toggleMenu()}>
+        <NavLink to={`/`} onClick={() => terminateAcess()}>
             <CiLogout className='menu-icon' />
             <span style={{ padding: '0 8px'}}>Logout</span>
           </NavLink>

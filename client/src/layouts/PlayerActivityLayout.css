@@ -72,3 +72,135 @@
    background-color: transparent;
   }
   
+
+  /*  ------------------------- */
+
+  .tabs {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: .65px;
+    display: flex;
+    background-color: #01040a;
+    border-radius: 1000px;
+    box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.05), 0 6px 12px 0 rgba(24, 94, 224, 0.05);
+    list-style: none;
+    position: relative;
+    color: white;
+    border: none;
+    max-width: 600px;
+  }
+
+  .tabs input[type="radio"] {
+    display: none;
+  }
+
+  .tab {
+    width: 150px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: inherit;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .tabs .slider {
+    width: 150px;
+    height: 35px;
+    position: absolute;
+    border-radius: inherit;
+    background-color: hsla(216, 81%, 49%, 0.1);
+    z-index: 0;
+    transition: 0.25s ease;
+  }
+
+  .tabs input[type="radio"]:checked + label {
+    color: #0057a4;
+  }
+
+  .tabs input[id="players"]:checked ~ .slider {
+    transform: translateX(0);
+  }
+
+  .tabs input[id="wins"]:checked ~ .slider {
+    transform: translateX(100%);
+  }
+
+  .tabs input[id="activities"]:checked ~ .slider {
+    transform: translateX(200%);
+  }
+
+  .tabs input[id="challenges"]:checked ~ .slider {
+    transform: translateX(300%);
+  }
+
+  @media only screen and (max-width: 609px) {
+    .tabs {
+      max-width: 100%;
+    }
+
+    .tab {
+      width: 100px;
+    }
+
+    .tabs .slider {
+      width: 100px;
+    }
+  }
+
+  /* table ----------------------- */
+
+  table, th, td {
+    padding: 1rem;
+    border-collapse: collapse;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  /* .tablee {
+    width: 82vw;
+    height: 90vh;
+    background-color: #fff5;
+
+    backdrop-filter: blur(7px);
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
+
+    overflow: hidden;
+  } */
+
+  .table__body {
+    width: 95%;
+    max-height: calc(89% - .8rem);
+    background-color: rgba(142, 137, 137, 0.733);
+    margin: .8rem auto;
+    border-radius: .6rem;
+    overflow: auto;
+  }
+
+  /* th:nth-child(1) {
+    width: 20px;
+  } */
+
+  thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #0057a456;
+    /* width: 100%; */
+  }
+
+  th:first-child {
+    width: 10px;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #0000000b;
+  }
+
+  tbody tr:hover {
+    background-color: #fff6;
+  }

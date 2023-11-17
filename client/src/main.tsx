@@ -44,19 +44,21 @@ const router = createBrowserRouter([
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
-          const logRes = await logsActions.getLogs();
-          const pushupRes = await pushupActions.getUserPushupStats();
-          const userExpRes = await pointsActions.getUserPoints();
-          // if (!logRes || !pushupRes || !userExpRes) return null;
-          const sortedResponse = [...logRes].sort((a, b) => {
+          const logRes = await logsActions.getLogs() || null;
+          const pushupRes = await pushupActions.getUserPushupStats() || null;
+          const pushupListRes = await pushupActions.getAllPushupStats() || null;
+          const userExpRes = await pointsActions.getUserPoints() || null;
+          const userInfoRes = await userActions.getUser() || null;
+          // if (!logRes || !pushupRes || !userExpRes || pushupListRes) return null;
+          const sortedResponse = logRes !== null && [...logRes].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
             const dateB = new Date(b.timestamp).getTime();
         
             // Sort in descending order (most recent first)
             return dateB - dateA;
-          });
+          }) || null;
         
-          return {logs: sortedResponse, pushups: pushupRes[0], expPoints: userExpRes };
+          return {user: userInfoRes, logs: sortedResponse, pushups: pushupRes[0], expPoints: userExpRes, users: pushupListRes.sort((a, b) => a.totalPushupsThisMonth - b.totalPushupsThisMonth ) };
         },
       },
       {
@@ -73,7 +75,7 @@ const router = createBrowserRouter([
         ),
         loader: async () => {
           const response = await pushupActions.getAllPushupStats();
-          return response;
+          return { players: null, wins: null, activities: null, challenges: null};
         },
       },
       {

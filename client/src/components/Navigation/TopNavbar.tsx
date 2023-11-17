@@ -30,8 +30,10 @@ const TopNavbar = () => {
           <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
             <CiMenuBurger style={{ width: '66%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '17%'}} />
           </button>
-          <Show when={!isMobile}>
-            <CiCloudSun style={{ width: '38px', height: '40px', color: '#0057a4', padding: '0 16px'}} />
+          <Show when={isMobile || !isMobile}>
+            <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden'}}>
+              <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} />
+            </div>
           </Show>
           <h2 style={{ padding: '0 8px' }}>{pageName}</h2>
         </div>

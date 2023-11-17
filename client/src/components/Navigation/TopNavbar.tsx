@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './TopNavbar.css';
 // import { logsActions } from '../../api/recentChanges';
-import { CiMenuBurger, CiCirclePlus, CiDark, CiLight, CiCloudSun } from "react-icons/ci";
+import { CiMenuBurger, CiCirclePlus, CiDark, CiLight, CiCloudSun, CiChat2 } from "react-icons/ci";
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Sidemenu from './Sidemenu/Sidemenu';
 import { PushupModal } from '../Modals/PushupModal';
@@ -11,6 +11,7 @@ import { LOGO } from '../../assets/index'
 import { Show } from '../../helpers/functional';
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { formatAndCapitalize } from '../../helpers/text';
+import { IconButton } from '../Buttons/IconButton';
 
 const TopNavbar = () => {
   // const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -26,19 +27,23 @@ const TopNavbar = () => {
   return (
     <>
     <nav className="top-navbar">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '24px'}}>
+          <IconButton size='medium' onClick={() => setIsOpen(true)}>
             <CiMenuBurger style={{ width: '66%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '17%'}} />
-          </button>
-          <Show when={isMobile || !isMobile}>
-            <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden'}}>
-              <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} />
-            </div>
+          </IconButton>
+          {/* <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
+            <CiMenuBurger style={{ width: '66%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '17%'}} />
+          </button> */}
+          <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden'}}>
+            <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} onClick={() => navigate('/home')} />
+          </div>
+          <Show when={!isMobile}>
+            <h3>{pageName}</h3>
           </Show>
-          <h2 style={{ padding: '0 8px' }}>{pageName}</h2>
+          
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '120px'}}>
-          <NavLink to={`/user/`}>
+        <div style={{ display: 'flex', gap: '32px', alignItems: 'center'}}>
+          {/* <NavLink to={`/user/`}>
             <button className="navbar-button" onClick={toggleTheme}>
               <Show when={theme === 'light'}>
                 <CiLight style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
@@ -47,10 +52,16 @@ const TopNavbar = () => {
                 <CiDark style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
               </Show>
             </button>
-          </NavLink>
-          <button className="navbar-button" onClick={openModal}>
+          </NavLink> */}
+          <IconButton size='medium' onClick={openModal}>
+            <CiChat2 style={{ width: '75%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '12%'}}/>
+          </IconButton>
+          <IconButton size='medium' onClick={openModal}>
+            <CiCirclePlus style={{ width: '77%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '12%'}}/>
+          </IconButton>
+          {/* <button className="navbar-button" onClick={openModal}>
             <CiCirclePlus style={{ width: '100%', height: '100%', color: '#0057a4'}}/>
-          </button>
+          </button> */}
         </div>
       </nav>
       <Sidemenu isOpen={isOpen} setIsOpen={setIsOpen} />

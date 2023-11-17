@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useOutsideClick } from '../../../utilities/hooks/useOutsideClick';
 import { userActions } from '../../../api/users';
 import { useGoogleAuth } from '../../../utilities/hooks/useGoogleAuth';
+import { LOGO } from '../../../assets/index'
 
 const Sidemenu = ({ isOpen, setIsOpen }) => {
   const [ data, setData ] = useState<any>([]);
@@ -35,7 +36,9 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
     <div className={`sidemenu ${isOpen ? 'open' : ''}`} ref={wrapperRef}>
       <section className="sidemenu-header">
         <h2>Icarus2.0</h2>
-        <CiCloudSun onClick={() => toggleMenu()} style={{ width: '40px', height: '40px' }} />
+        <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden'}}>
+            <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} onClick={() => navigate('/home')} />
+        </div>
       </section>
 
       <div style={{ position: 'relative'}}>

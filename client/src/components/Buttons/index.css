@@ -6,9 +6,22 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
+  .icon-button {
+    position: relative;
+    /* background-color: #000101da; */
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.05), 0 6px 12px 0 rgba(24, 94, 224, 0.05);
+    width: 48px;
+    height: 48px;
+  }
   
-  .dynamic-button:hover {
-    background-color: #2980b9;
+  .icon-button:hover {
+    background-color: #212734;
   }
   
   .dynamic-button.small {

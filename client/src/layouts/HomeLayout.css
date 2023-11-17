@@ -102,7 +102,7 @@
 
 .container {
   display: flex;
-  justify-content: space-between; /* Adjust as needed */
+  justify-content: center;
   flex-wrap: wrap;
   border: 1px solid #21262D;
   border-radius: 4px;
@@ -112,6 +112,16 @@
   width: calc(33.33% - 20px); /* Adjust as needed */
   margin: 10px;
   box-sizing: border-box;
+  display: block;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 24px;
+  padding-bottom: 32px;
 }
 
 /* Media query for smaller screens */

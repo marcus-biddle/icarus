@@ -7,6 +7,11 @@ import PillFilter from '../components/PillFilter/PillFilter';
 import { useFilterContext } from '../utilities/hooks/useFilterContext';
 import { Show, isArrayEmpty } from '../helpers/functional';
 
+// Players - totals -> wins, exp, pushups, running, pullups
+// Players - month -> ^
+// Wins -> players, pushups, running, pullups
+// Challenges -> each battle
+// Activities -> participation count, combined total
 const PlayerActivityLayout = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any = useLoaderData();

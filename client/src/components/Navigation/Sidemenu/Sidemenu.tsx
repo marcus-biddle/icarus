@@ -94,9 +94,10 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
           
       </section>
       
+      {/* Add functionality to Join groups, might  want to creat a function to create your own group too. */}
       <div style={{ position: 'relative'}}>
         <div className='section-title'>
-          <span>Following</span>
+          <span>Groups</span>
         </div>
         <hr className='divider' />
       </div>

@@ -36,9 +36,9 @@ const HomeLayout = () => {
         <h2>this is <em>italic</em></h2>
         <h1>this is <em>italic</em></h1>
       </div> */}
-      <div style={{ textAlign: 'left', padding: '0 24px', marginBottom: '48px' }}>
+      <div className='header'>
         <h4>Welcome, {data.pushups.userName}</h4>
-        <h3>Experience Points: <em>{data.expPoints.total} pts</em></h3>
+        <h4>Experience Points: <em>{data.expPoints.total} pts</em></h4>
       </div>
 
       <section style={{ padding: '0 24px'}}>
@@ -48,9 +48,18 @@ const HomeLayout = () => {
         </div>
         
         <div className='container'>
-          <div className='box' style={{ backgroundColor: 'grey'}}>test</div>
-          <div className='box'>test</div>
-          <div className='box'>test</div>
+          <div className='box'>
+            <h5>Player Name</h5>
+            <span>1100 pushups</span>
+          </div>
+          <div className='box'>
+            <h5>Player Name</h5>
+            <span>900 pushups</span>
+          </div>
+          <div className='box'>
+            <h5>Player Name</h5>
+            <span>100 pushups</span>
+          </div>
         </div>
       </section>
       

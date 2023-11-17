@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  joined: {
+    type: Date,
+    default: Date.now,
   }
 });
 

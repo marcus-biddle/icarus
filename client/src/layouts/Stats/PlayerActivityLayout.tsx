@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import PlayerTable from '../components/Table/PlayerTable';
+import PlayerTable from '../../components/Table/PlayerTable';
 import './PlayerActivityLayout.css';
 import { useLoaderData } from 'react-router';
 import { CiSliderHorizontal, CiUndo } from "react-icons/ci";
-import PillFilter from '../components/PillFilter/PillFilter';
-import { useFilterContext } from '../utilities/hooks/useFilterContext';
-import { Show, isArrayEmpty } from '../helpers/functional';
+import PillFilter from '../../components/PillFilter/PillFilter';
+import { useFilterContext } from '../../utilities/hooks/useFilterContext';
+import { Show, isArrayEmpty } from '../../helpers/functional';
 
 // Players - totals -> wins, exp, pushups, running, pullups
 // Players - month -> ^ tesr

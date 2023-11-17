@@ -1,0 +1,25 @@
+.dynamic-button {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dynamic-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .dynamic-button.small {
+    /* Add styles for small size */
+  }
+  
+  .dynamic-button.medium {
+    /* Add styles for medium size */
+  }
+  
+  .dynamic-button.large {
+    /* Add styles for large size */
+  }
+  

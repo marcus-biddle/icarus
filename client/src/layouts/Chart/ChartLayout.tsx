@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { DropdownMenu } from '../components/Dropdown/ChartDropdown'
-import { PushupTracker } from '../components/PushupTracker/PushupTracker'
-import { getCurrentMonth, months } from '../helpers/date';
+import { DropdownMenu } from '../../components/Dropdown/ChartDropdown'
+import { PushupTracker } from '../../components/PushupTracker/PushupTracker'
+import { getCurrentMonth, months } from '../../helpers/date';
 import './ChartLayout.css'
 import { useLoaderData } from 'react-router';
 

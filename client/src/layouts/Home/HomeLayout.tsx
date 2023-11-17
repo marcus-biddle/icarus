@@ -1,11 +1,11 @@
 import React from 'react'
 import './HomeLayout.css'
-import { getCurrentMonth } from '../helpers/date';
-import { RecentChanges } from '../components/Boards/RecentChanges';
-import { usePushupCounter } from '../utilities/hooks/usePushupCounter';
-import { PushupModal } from '../components/Modals/PushupModal';
+import { getCurrentMonth } from '../../helpers/date';
+import { RecentChanges } from '../../components/Boards/RecentChanges';
+import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
+import { PushupModal } from '../../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
-import { Show, isArrayEmpty, showIfOrElse } from '../helpers/functional';
+import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
 
 const HomeLayout = () => {
   const { openModal, isModalOpen, closeModal } = usePushupCounter();

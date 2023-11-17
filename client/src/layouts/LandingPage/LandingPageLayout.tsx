@@ -1,9 +1,9 @@
 import React from 'react';
-import { JOGGING } from '../assets/index'
-import { useGoogleAuth } from '../utilities/hooks/useGoogleAuth';
+import { JOGGING } from '../../assets/index'
+import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
 import './LandingPageLayout.css';
-import { Show } from '../helpers/functional';
-import { useIsMobile } from '../utilities/hooks/useIsMobile';
+import { Show } from '../../helpers/functional';
+import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 
 const LandingPageLayout = () => {
   const { handleSignin } = useGoogleAuth();

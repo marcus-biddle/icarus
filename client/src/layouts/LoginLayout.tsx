@@ -3,6 +3,8 @@ import { GoogleAuth } from '../components/GoogleLogin/GoogleLogin';
 import { redirect, useLoaderData, useNavigate } from 'react-router';
 import { Show, isUserLoggedIn } from '../helpers/functional';
 
+
+// POssibly deprecate this. Move to Landing page as a form
 export const LoginLayout = () => {
     const navigate = useNavigate();
 

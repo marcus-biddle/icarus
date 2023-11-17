@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Pusher from 'pusher-js';
 import './ChatLayout.css'
 import { useLoaderData } from 'react-router-dom';
-import { messageActions } from '../api/messages';
+import { messageActions } from '../../api/messages';
 import { CiPaperplane } from "react-icons/ci";
-import { formatTimestamp } from '../helpers/date';
-import { Show } from '../helpers/functional';
+import { formatTimestamp } from '../../helpers/date';
+import { Show } from '../../helpers/functional';
 
 export const ChatLayout = () => {
   const data: any = useLoaderData();

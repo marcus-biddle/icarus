@@ -7,20 +7,19 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google'; //https://github.com/MomenSherif/react-oauth#usegooglelogin-both-implicit--authorization-code-flow
-import HomeLayout from './layouts/HomeLayout';
-import {usernameAction, RegisterLayout} from './layouts/RegisterLayout';
+import HomeLayout from './layouts/Home/HomeLayout';
 import { userActions } from './api/users';
 import { logsActions } from './api/recentChanges'
-import PlayerActivityLayout from './layouts/PlayerActivityLayout';
+import PlayerActivityLayout from './layouts/Stats/PlayerActivityLayout';
 import { LoginLayout } from './layouts/LoginLayout';
-import LandingPageLayout from './layouts/LandingPageLayout';
+import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
 import { FilterProvider } from './utilities/providers/FilterProvider';
 import UserProfile from './layouts/UserProfile';
-import ChartLayout from './layouts/ChartLayout';
+import ChartLayout from './layouts/Chart/ChartLayout';
 import { pushupActions } from './api/pushups';
 import { ThemeProvider } from './utilities/providers/ThemeProvider';
 import { pointsActions } from './api/points';
-import { ChatLayout } from './layouts/ChatLayout';
+import { ChatLayout } from './layouts/Chat/ChatLayout';
 import { messageActions } from './api/messages';
 
 const router = createBrowserRouter([
@@ -60,11 +59,6 @@ const router = createBrowserRouter([
         
           return {user: userInfoRes, logs: sortedResponse, pushups: pushupRes[0], expPoints: userExpRes, users: pushupListRes.sort((a, b) => a.totalPushupsThisMonth - b.totalPushupsThisMonth ) };
         },
-      },
-      {
-        path: 'create',
-        element: <RegisterLayout />,
-        action: usernameAction
       },
       {
         path: 'leader-board',

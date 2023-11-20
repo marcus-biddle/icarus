@@ -73,7 +73,8 @@ em {
 /* Paragraph Styles */
 p {
   font-size: 0.688em;
-  color: #575f68
+  color: #575f68;
+  margin: 0;
 }
 
 /* Span Styles */
@@ -119,8 +120,9 @@ em {
 .scrollbar {
   list-style: none;
   max-height: 400px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  overflow-x: hidden;
+  scroll-snap-type: y mandatory;
+
 }
 
 .scrollbar::-webkit-scrollbar {

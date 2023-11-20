@@ -57,24 +57,30 @@ export const ChatLayout = () => {
       <div className='scroll-container' ref={scrollContainerRef}>
         {messages.map((message, index) => {
           return (
-            <div key={index}>
+            <div key={index} style={{ width: '95%'}}>
               <Show when={message.username !== data.user.username}>
-                <div style={{ textAlign: 'left', width: '100%', padding: '12px 0' }}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px'}}>
-                    <p style={{ fontSize: '16px', color: '#2196f3', paddingBottom: '16px'}}>{message.username}</p>
-                    <p style={{ fontSize: '10px', color: 'grey', }}>{formatTimestamp(message.timestamp)}</p>
+              <div style={{ textAlign: 'left', padding: '8px 0'}}>
+                <p>{message.timestamp}</p>
+                <div style={{ textAlign: 'left', width: '100%' }}>
+                  <div style={{ display: 'flex', textAlign: 'left', justifyContent: 'left', alignItems: 'center'}}>
+                    <p style={{ paddingRight: '10px' }}>You</p>
+                    <p style={{ wordWrap: 'break-word', color: 'white', backgroundColor: '#212734', width: '100%', padding: '8px', borderRadius: '8px' }}>{message.message}</p>  
                   </div>
-                  <p style={{ padding: '0 32px', minWidth: '90%', fontSize: '1.25rem'}}>{message.message}</p>
+                </div>
               </div>
+                
               </Show>
               <Show when={message.username === data.user.username}>
-              <div style={{ textAlign: 'right', width: '100%', padding: '12px 0' }}>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', justifyContent: 'right'}}>
-                  <p style={{ fontSize: '10px', color: 'grey', }}>{formatTimestamp(message.timestamp)}</p>
-                  <p style={{ fontSize: '16px', color: '#2196f3', paddingBottom: '16px', paddingRight: '16px'}}>You</p>
+                <div style={{ textAlign: 'left', padding: '8px 0'}}>
+                  <p>{message.timestamp}</p>
+                  <div style={{ textAlign: 'right', width: '100%' }}>
+                      <div style={{ display: 'flex', textAlign: 'right', justifyContent: 'right', alignItems: 'center'}}>
+                        <p style={{ wordWrap: 'break-word', color: 'white', backgroundColor: '#212734', width: '100%', padding: '8px', borderRadius: '8px' }}>{message.message}</p>
+                        <p style={{ paddingLeft: '10px' }}>You</p>
+                      </div>
                   </div>
-                  <p style={{ padding: '0 32px', minWidth: '90%', fontSize: '1.25rem'}}>{message.message}</p>
-              </div>
+                </div>
+                
               </Show>
             </div>
             

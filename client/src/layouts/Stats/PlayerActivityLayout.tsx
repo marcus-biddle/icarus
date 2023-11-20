@@ -66,6 +66,52 @@ const PlayerActivityLayout = () => {
             </table>
           </section>
       </Show>
+
+      <Show when={selectedTab === 'wins'}>
+          <section className='table__body'>
+            <table>
+              <thead>
+                <tr>
+                  <th>Players</th>
+                  <th>Pushup WInner</th>
+                  <th>Pullup Winner</th>
+                  <th>Running Winner</th>
+                  <th>Overall Winner</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>Marcus Biddle</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>10</td>
+                    <td>0</td>
+                  </tr>
+              </tbody>
+            </table>
+          </section>
+      </Show>
+
+      <Show when={selectedTab === 'activities'}>
+          <section className='table__body'>
+            <table>
+              <thead>
+                <tr>
+                  <th>Pushup Entries</th>
+                  <th>Pullup Entries</th>
+                  <th>Running Entries</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>210</td>
+                    <td>10</td>
+                    <td>30</td>
+                  </tr>
+              </tbody>
+            </table>
+          </section>
+      </Show>
       
       {/* <div className="container">
         <div className="filtersSection">

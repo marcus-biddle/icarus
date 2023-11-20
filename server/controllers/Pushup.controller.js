@@ -279,6 +279,57 @@ const createPushupSchema = async (req, res) => {
       return res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+  const getMonthlyPushupCounts = async (req, res) => {
+    try {
+      const result = await Pushup.aggregate([
+        {
+          $unwind: '$entries',
+        },
+        {
+          $group: {
+            _id: {
+              user: "$user",
+              year: { $year: "$entries.date" },
+              month: { $month: "$entries.date" }
+            },
+            totalPushups: { $sum: "$entries.count" }
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "_id.user",
+            foreignField: "_id",
+            as: "userData"
+          }
+        },
+        {
+          $unwind: "$userData"
+        },
+        {
+          $project: {
+            _id: 0,
+            username: "$userData.username",
+            year: "$_id.year",
+            month: "$_id.month",
+            totalPushups: 1
+          }
+        },
+        {
+          $group: {
+            _id: "$username",
+            monthlyCounts: { $push: { year: "$year", month: "$month", count: "$totalPushups" } }
+          }
+        }
+      ]);
+  
+      return res.json(result);
+    } catch (error) {
+      console.error('Error retrieving monthly pushup counts:', error);
+      throw error;
+    }
+  };
   
   const getPointConversion = async (req, res) => {
     const defaultConversion = await Pushup.getDefaultExperiencePointConversion();
@@ -290,6 +341,7 @@ const createPushupSchema = async (req, res) => {
     getEveryUsersPushupTotals,
     getUserPushupTotals,
     createPushupSchema,
+    getMonthlyPushupCounts,
     getPointConversion
   }
 

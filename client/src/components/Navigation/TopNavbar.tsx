@@ -34,11 +34,12 @@ const TopNavbar = () => {
           {/* <button className="navbar-menu-icon" onClick={() => setIsOpen(true)}>
             <CiMenuBurger style={{ width: '66%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '17%'}} />
           </button> */}
-          <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden'}}>
-            <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} onClick={() => navigate('/home')} />
-          </div>
+          
+          <h4>{pageName}</h4>
           <Show when={!isMobile}>
-            <h3>{pageName}</h3>
+            <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden', cursor: 'pointer'}}>
+              <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} onClick={() => navigate('/home')} />
+            </div>
           </Show>
           
         </div>
@@ -53,7 +54,7 @@ const TopNavbar = () => {
               </Show>
             </button>
           </NavLink> */}
-          <IconButton size='medium' onClick={openModal}>
+          <IconButton size='medium' onClick={() => navigate('/chat')}>
             <CiChat2 style={{ width: '75%', height: '100%', color: '#0057a4', position: 'absolute', top: '0', left: '12%'}}/>
           </IconButton>
           <IconButton size='medium' onClick={openModal}>

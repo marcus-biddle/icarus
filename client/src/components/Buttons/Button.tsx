@@ -3,14 +3,15 @@ import './index.css';
 
 interface DynamicButtonProps {
   size?: 'small' | 'medium' | 'large';
+  type?: 'button' | 'submit'
   onClick?: () => void;
   children?: ReactNode;
 }
 
-export const Button= ({ size = 'medium', onClick, children }: DynamicButtonProps) => {
+export const Button= ({ size = 'medium', type = 'button', onClick, children }: DynamicButtonProps) => {
   const buttonStyle = {
-    fontSize: size === 'large' ? '20px' : size === 'small' ? '14px' : '16px',
-    padding: size === 'large' ? '12px 20px' : size === 'small' ? '8px 12px' : '10px 16px',
+    fontSize: size === 'large' ? '18px' : size === 'small' ? '14px' : '16px',
+    padding: size === 'large' ? '6px 24px' : size === 'small' ? '8px 12px' : '10px 16px',
   };
 
   return (

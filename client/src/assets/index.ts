@@ -1,6 +1,6 @@
 import logo from './icarus.png';
-import jogging from './jogging.jpg'
+import pic from './mountain.jpg'
 
 export const LOGO = logo;
 
-export const JOGGING = jogging;
+export const PIC = pic;

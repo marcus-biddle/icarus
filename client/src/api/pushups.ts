@@ -24,7 +24,7 @@ const addPushups = async (pushupCount: number) => {
     try {
         const response = await axiosInstance.patch('/pushups/update/add', {
             googleId: googleId,
-            pushupCount: pushupCount
+            pushupCount: pushupCount,
         });
         //might not need to return anything
         return response.data;
@@ -38,6 +38,17 @@ const addPushups = async (pushupCount: number) => {
 const getAllPushupStats = async () => {
     try {
         const response = await axiosInstance.get('/pushups/get/all');
+        return response.data;
+        
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const getMonthlyCount = async () => {
+    try {
+        const response = await axiosInstance.get('/pushups/get/monthly');
         return response.data;
         
     } catch (err) {
@@ -74,5 +85,6 @@ export const pushupActions = {
     getAllPushupStats,
     getUserPushupStats,
     createPushupLog,
-    getConversion
+    getConversion,
+    getMonthlyCount
 }

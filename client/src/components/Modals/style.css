@@ -20,13 +20,11 @@
   /* Modal content */
   .modal-content {
     position: relative;
-    background-color: #23272F;
+    background-color: #161c22;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    padding: 20px;
     max-width: 400px;
     width: 100%;
-    text-align: left;
   }
   
   /* Close button (X) */
@@ -42,42 +40,42 @@
   }
   
   /* Modal title */
-  .modal h2 {
+  /* .modal h2 {
     margin-top: 0;
     padding: 0 32px;
     line-height: 0;
     font-size: 1.5rem;
     color: white;
-  }
+  } */
 
-  .modal p {
+  /* .modal p {
     padding: 0 32px;
     padding-bottom: 24px;
     font-size: 14px;
     font-weight: 300;
     color: rgb(171, 171, 171)
-  }
+  } */
   
   /* Form label */
-  .modal label {
+  /* .modal label {
     display: block;
     font-weight: 500;
     margin-bottom: 8px;
     color: white;
-  }
+  } */
   
   /* Form input */
-  .modal input {
+  /* .modal input {
     width: 40%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 20px;
     font-size: 1rem;
-  }
+  } */
   
   /* Submit button */
-  .modal button[type="submit"] {
+  /* .modal button[type="submit"] {
     display: block;
     width: 100%;
     padding: 10px;
@@ -87,10 +85,45 @@
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
-  }
+  } */
   
   /* Submit button hover effect */
-  .modal button[type="submit"]:hover {
+  /* .modal button[type="submit"]:hover {
     background-color: #0056b3;
-  }
+  } */
   
+  .modal-form input, select {
+    width: 87%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .modal-form label {
+    display: block;
+    text-align: left;
+    padding: 0 40px;
+    margin: 0;
+    letter-spacing: .55px;
+    color: #c0c0c0;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  /* .modal-form select {
+    text-align: left;
+    padding: 0 32px;
+    margin: 0;
+    letter-spacing: .55px;
+    color: #c0c0c0;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 300;
+  } */
+
+  .modal-form div {
+    padding: 10px 0;
+  }

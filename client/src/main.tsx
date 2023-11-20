@@ -43,12 +43,13 @@ const router = createBrowserRouter([
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
-          const logRes = await logsActions.getLogs() || null;
-          const pushupRes = await pushupActions.getUserPushupStats() || null;
-          const pushupListRes = await pushupActions.getAllPushupStats() || null;
-          const userExpRes = await pointsActions.getUserPoints() || null;
-          const userInfoRes = await userActions.getUser() || null;
-          // if (!logRes || !pushupRes || !userExpRes || pushupListRes) return null;
+          const [logRes, pushupRes, pushupListRes, userExpRes, userInfoRes] = await Promise.all([
+            logsActions.getLogs(), 
+            pushupActions.getUserPushupStats(),
+            pushupActions.getAllPushupStats(),
+            pointsActions.getUserPoints(),
+            userActions.getUser()
+          ]);
           const sortedResponse = logRes !== null && [...logRes].sort((a, b) => {
             const dateA = new Date(a.timestamp).getTime();
             const dateB = new Date(b.timestamp).getTime();

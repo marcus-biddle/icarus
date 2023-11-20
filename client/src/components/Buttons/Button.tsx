@@ -15,7 +15,7 @@ export const Button= ({ size = 'medium', type = 'button', onClick, children }: D
   };
 
   return (
-    <button className={`dynamic-button ${size}`} style={buttonStyle} onClick={onClick}>
+    <button type={type} className={`dynamic-button ${size}`} style={buttonStyle} onClick={onClick}>
       {children}
     </button>
   );

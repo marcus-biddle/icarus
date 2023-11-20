@@ -83,7 +83,6 @@ export const ChatLayout = () => {
                 
               </Show>
             </div>
-            
           )
         })}
       </div>

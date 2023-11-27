@@ -8,11 +8,11 @@ import { Button } from '../../components/Buttons/Button';
 
 const LandingPageLayout = () => {
   const { handleSignin } = useGoogleAuth();
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
 
   return (
-    <div style={{ position: 'relative', height: '100vh'}}>
-      <img src={PIC} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', objectFit: 'cover', height: '100vh', zIndex: '1'}} />
+    <div style={{ position: 'relative', height: '100vh', backgroundColor: '#191620'}}>
+      {/* <img src={PIC} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', objectFit: 'cover', height: '100vh', zIndex: '1'}} /> */}
       <div className='block-container'>
         <div>
           <h1>Log in to Icarus2.0</h1>

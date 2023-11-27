@@ -16,6 +16,7 @@
 
 body {
   margin: 0;
+
   min-width: 320px;
   min-height: 100vh;
 }
@@ -55,7 +56,7 @@ h4 {
 h5 {
   margin: 0;
   font-size: 0.83em;
-  font-weight: 100; /* has italic option*/
+  font-weight: 700; /* has italic option*/
   letter-spacing: .55px;
   color: #c0c0c0; /* Dark gray */
 } 

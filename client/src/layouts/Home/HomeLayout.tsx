@@ -41,7 +41,11 @@ const HomeLayout = () => {
         <h4>Experience Points: <em>{isArrayEmpty(data.expPoints) ? 0 : data.expPoints.total} pts</em></h4>
       </div>
 
-      <section style={{ padding: '0 24px'}}>
+      <section>
+        
+      </section>
+
+      {/* <section style={{ padding: '0 24px'}}>
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px'}}>
         <h3>Top Players</h3>
         <h5><em>in {getCurrentMonth()}</em></h5>
@@ -57,14 +61,6 @@ const HomeLayout = () => {
                 </div>
               )
             })}
-            {/* <div className='box'>
-              <h5>Player Name</h5>
-              <span>900 pushups</span>
-            </div>
-            <div className='box'>
-              <h5>Player Name</h5>
-              <span>100 pushups</span>
-            </div> */}
           </Show>
           <Show when={isArrayEmpty(data.users)}>
             <p>No records are stored. Input your workout to be a top player.</p>
@@ -72,7 +68,7 @@ const HomeLayout = () => {
           
           
         </div>
-      </section>
+      </section> */}
       
       {/* <div className='card-container'>
         <div className='display-container'>

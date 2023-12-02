@@ -43,17 +43,11 @@ export function getCurrentMonth() {
 
   export function getCurrentDate() {
     const today = new Date();
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1; // Months are zero-based
-    let day = today.getDate();
-  
-    // Add leading zero for single-digit months and days
-    month = month < 10 ? `0${month}` : month;
-    day = day < 10 ? `0${day}` : day;
-  
-    // Format: YYYY-MM-DD
-    const formattedDate = `${year}-${month}-${day}`;
-  
+    const monthName = months[today.getMonth()];
+    const dayNumber = today.getDate();
+    const yearNumber = today.getFullYear();
+
+    const formattedDate = `${monthName} ${dayNumber}, ${yearNumber}`;
     return formattedDate;
   }
   

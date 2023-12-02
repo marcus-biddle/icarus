@@ -6,9 +6,11 @@ import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
 import { PushupModal } from '../../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
+import DailyTracker from '../../components/Tracker/DailyTracker';
+
 
 const HomeLayout = () => {
-  const { openModal, isModalOpen, closeModal } = usePushupCounter();
+  // const { openModal, isModalOpen, closeModal } = usePushupCounter();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = useLoaderData();
   console.log('home', data)
@@ -30,7 +32,7 @@ const HomeLayout = () => {
   return (
     <div style={{ position: 'relative'}}>
       {/* <div>
-        <h5>this is <em>italic</em></h5>
+        <h5>this is <em>it   alic</em></h5>
         <h4>this is <em>italic</em></h4>
         <h3>this is <em>italic</em></h3>
         <h2>this is <em>italic</em></h2>
@@ -41,9 +43,7 @@ const HomeLayout = () => {
         <h4>Experience Points: <em>{isArrayEmpty(data.expPoints) ? 0 : data.expPoints.total} pts</em></h4>
       </div>
 
-      <section>
-        
-      </section>
+      <DailyTracker />
 
       {/* <section style={{ padding: '0 24px'}}>
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px'}}>
@@ -110,7 +110,7 @@ const HomeLayout = () => {
       </div>
       
       
-      <PushupModal isOpen={isModalOpen} onClose={closeModal} />
+      {/* <PushupModal isOpen={isModalOpen} onClose={closeModal} /> */}
     </div>
   )
 }

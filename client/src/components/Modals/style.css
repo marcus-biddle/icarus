@@ -92,7 +92,7 @@
     background-color: #0056b3;
   } */
   
-  .modal-form input, select {
+  .modal-form input, .modal-form select {
     width: 87%;
     padding: 10px;
     border: 1px solid #ccc;

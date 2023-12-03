@@ -7,6 +7,7 @@ import { PushupModal } from '../../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
 import DailyTracker from '../../components/Tracker/DailyTracker';
+import RankingTracker from '../../components/Tracker/RankingTracker';
 
 
 const HomeLayout = () => {
@@ -40,10 +41,18 @@ const HomeLayout = () => {
       </div> */}
       <div className='header'>
         <h4>Welcome, {data.user.username}</h4>
-        <h4>Experience Points: <em>{isArrayEmpty(data.expPoints) ? 0 : data.expPoints.total} pts</em></h4>
+        <div style={{ width: '200px'}}>
+        <RankingTracker />
+        </div>
+        
+        {/* <h4>Ranking: Beginner <em>{isArrayEmpty(data.expPoints) ? 0 : Math.round(data.expPoints.total)} pts</em></h4> */}
       </div>
 
-      <DailyTracker />
+      <div style={{ paddingBottom: '56px'}}>
+        <h4 style={{ textAlign: 'left', padding: '24px 32px'}}>Daily Progress</h4>
+        <DailyTracker />
+      </div>
+      
 
       {/* <section style={{ padding: '0 24px'}}>
         <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px'}}>

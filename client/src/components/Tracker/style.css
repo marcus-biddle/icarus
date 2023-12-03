@@ -3,7 +3,12 @@
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
-    gap: 56px;
+    gap: 200px;
+    margin: 0 120px;
+    border: 1px solid #21262D;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    height: 300px;
 }
 
 /* Reset default list styles */
@@ -64,3 +69,76 @@
   /* .mini-table tbody tr:hover {
     background-color: #e5e5e5;
   } */
+
+  .tracker-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tracker-form input, .tracker-form select {
+    width: 87%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .tracker-form label {
+    display: block;
+    text-align: left;
+    padding: 0 40px;
+    margin: 0;
+    letter-spacing: .55px;
+    color: #c0c0c0;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+.tracker-btn {
+  padding: 18px;
+  margin: 24px 8px;
+  width: 125px;
+  height: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .555px;
+  border-radius: 2px;
+}
+
+#addEvent-btn {
+  background-color: transparent;
+  border: 1px solid #0057a4;
+  color: rgb(160, 157, 157);
+}
+
+#addEvent-btn:hover {
+  background-color: rgba(128, 128, 128, 0.13);
+  /* font-size: 15px;
+  transition: font-size 0.25s ease-in; */
+  border-radius: 12px;
+  transition: border-radius .25s ease-in-out;
+}
+
+#track-btn {
+  background-color: rgb(27, 152, 27);
+}
+
+#track-btn:hover {
+  background-color: rgba(27, 152, 27, 0.701);
+  /* font-size: 15px;
+  transition: font-size 0.25s ease-in; */
+  border-radius: 12px;
+  transition: border-radius .25s ease-in-out;
+}
+
+@media only screen and (max-width: 975px) {
+  .tracker-container {
+
+    gap: 56px;
+    margin: 0 24px;
+    min-height: 500px;
+}
+}

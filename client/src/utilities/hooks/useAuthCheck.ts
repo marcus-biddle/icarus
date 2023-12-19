@@ -10,11 +10,15 @@ export const useAuthCheck = () => {
 
   useEffect(() => {
     console.log(location.pathname !== '/' && token === null)
+    if (token !== null) {
+      setAuth(true);
+    }
+    
     if (location.pathname !== '/' && token === null) {
       navigate('/')
-      setAuth(true)
+      setAuth(false)
     };
-    console.log('useAuthCheck')
+    console.log('useAuthCheck', auth)
   }, [location.pathname, token])
 
   return auth;

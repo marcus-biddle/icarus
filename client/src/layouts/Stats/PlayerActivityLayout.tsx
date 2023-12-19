@@ -104,11 +104,15 @@ const PlayerActivityLayout = () => {
               </button>
             </div>
           </div>
-          
+          {filteredAndSortedData.length === 0 && (
+            <div style={{ border: '1px solid #1E293B', padding: '8px 12px', borderRadius: '10px', margin: '8px 0', backgroundColor: "#131B2B"}}>
+              <p>No players participated this month.</p>
+            </div>
+          )}
           {filteredAndSortedData.map((player, index) => {
             const total = type === 'pullup' ? player.pullup : type === 'running' ? player.running : type === 'pushup' ? player.pushup : null;
             return (
-              <div style={{ border: '1px solid #1E293B', padding: '8px 12px', borderRadius: '10px', margin: '8px 0', backgroundColor: "#131B2B"}}>
+              <div key={index} style={{ border: '1px solid #1E293B', padding: '8px 12px', borderRadius: '10px', margin: '8px 0', backgroundColor: "#131B2B"}}>
                 <p style={{ textAlign: 'left'}}>#{index + 1}</p>
                 <div style={{ display: 'flex', justifyContent: 'space-between'}}>
                   <span>{player.userName}</span>
@@ -121,6 +125,11 @@ const PlayerActivityLayout = () => {
 
         <div className='chart-container-large'>
           <h4 style={{ paddingBottom: '24px'}}>Daily Activity</h4>
+          {data.todayActivity.length === 0 && (
+            <div className='daily-activity-container'>
+              <p style={{ padding: '16px 0'}}>No players have worked out today. Once a player records an event today, this page will update.</p>
+            </div>
+          )}
           {data.todayActivity.map((player, index) => {
             const pushups = player.events.find(event => event.eventName === 'pushup');
             const pullups = player.events.find(event => event.eventName === 'pullup');
@@ -135,15 +144,15 @@ const PlayerActivityLayout = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingBottom: '8px'}}>
                   <div>
                     <span style={{ color: 'grey'}}>Push-ups:{' '}</span>
-                    <span style={{ color: '#eb3f89'}}><BsFire />{pushups.total}</span>
+                    <span>{pushups ? <><BsFire style={{ color: '#eb3f89'}} />{pushups.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
                   </div>
                   <div>
                     <span style={{ color: 'grey'}}>Pull-ups:{' '}</span>
-                    <span style={{ color: '#eb3f89'}}><BsFire />{pullups.total}</span>
+                    <span>{pullups ? <><BsFire style={{ color: '#eb3f89'}} />{pullups.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
                   </div>
                   <div>
                     <span style={{ color: 'grey'}}>Mileage:{' '}</span>
-                    <span style={{ color: '#eb3f89'}}>{false && <BsDropletFill style={{ color: '#2196f3'}} />}<BsFire />{running.total}</span>
+                    <span>{running ? <><BsFire style={{ color: '#eb3f89'}} />{running.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
                   </div>
                 </div>
               </div>

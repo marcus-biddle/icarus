@@ -10,14 +10,23 @@ const pusher = new Pusher({
   useTLS: true
 });
 
-  const getMessages = async (req, res) => {
-    try {
-        const messages = await Message.find().sort('-timestamp');
-        res.json(messages);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
+const getMessages = async (req, res) => {
+  try {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0); // Set to the beginning of the current day
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999); // Set to the end of the current day
+
+    const messages = await Message.find({
+      timestamp: { $gte: todayStart, $lte: todayEnd }
+    }).sort('-timestamp');
+
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
+};
 
   const createMessage = async (req, res) => {
     const { content, googleId } = req.body;

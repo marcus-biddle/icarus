@@ -11,16 +11,17 @@ const LandingPageLayout = () => {
   // const isMobile = useIsMobile();
 
   return (
-    <div style={{ position: 'relative', height: '100vh', backgroundColor: '#191620'}}>
-      {/* <img src={PIC} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', objectFit: 'cover', height: '100vh', zIndex: '1'}} /> */}
-      <div className='block-container'>
-        <div>
-          <h1>Log in to Icarus2.0</h1>
-          <Button onClick={() => handleSignin()}>
-            Sign in with Google
-          </Button>
-        </div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh'}}>
+      <div className='login-container'>
+        <h2 style={{ margin: '0' }}>Sign in.</h2>
+        <button className='signin-btn' onClick={() => handleSignin()}>Sign in with Google</button>
       </div>
+      {/* <div>
+        <h1>Log in to Icarus2.0</h1>
+        <Button onClick={() => handleSignin()}>
+          Sign in with Google
+        </Button>
+      </div> */}
     </div>    
   )
 }

@@ -4,11 +4,14 @@ import { getCurrentMonth, months } from '../../helpers/date';
 import { RecentChanges } from '../../components/Boards/RecentChanges';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
-import { BsSortDown, BsFire, BsSortNumericDown, BsArrowDownShort } from "react-icons/bs";
+import { BsSortDown, BsFire, BsSortNumericDown, BsArrowDownShort, BsDropletFill } from "react-icons/bs";
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useOutsideClick } from '../../utilities/hooks/useOutsideClick';
+import { useAuthCheck } from '../../utilities/hooks/useAuthCheck';
 
 const HomeLayout = () => {
+  
+
   const data: any = useLoaderData();
   
   const [ isSortDropdownOpen, setSortDropdownOpen ] = useState(false);
@@ -88,22 +91,22 @@ const HomeLayout = () => {
             const pullups = player.events.find(event => event.eventName === 'pullup');
             const running = player.events.find(event => event.eventName === 'running');
             return (
-              <li>
+              <li key={index}>
                 <p style={{ textAlign: 'left', padding: '6px 0', fontSize: '14px' }}>#{index + 1}</p>
                 <h3 style={{ textAlign: 'left'}}>{player.userName}</h3>
                 <hr style={{ width: '100%', border: '1px solid #212734'}} />
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingBottom: '8px'}}>
                   <div>
                     <span style={{ color: 'grey'}}>Pushups:{' '}</span>
-                    <div style={{ color: '#eb3f89',  }}><BsFire />{pushups.total}</div>
+                    <span>{pushups ? <><BsFire style={{ color: '#eb3f89'}} />{pushups.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
                   </div>
                   <div>
                     <span style={{ color: 'grey'}}>Pullups:{' '}</span>
-                    <div style={{ color: '#eb3f89'}}><BsFire />{pullups.total}</div>
+                    <span>{pullups ? <><BsFire style={{ color: '#eb3f89'}} />{pullups.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
                   </div>
                   <div>
                     <span style={{ color: 'grey'}}>Mileage:{' '}</span>
-                    <div style={{ color: '#eb3f89'}}><BsFire />{running.total}</div>
+                    <span>{running ? <><BsFire style={{ color: '#eb3f89'}} />{running.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
                   </div>
                 </div>
               </li>

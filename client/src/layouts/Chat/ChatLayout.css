@@ -1,15 +1,12 @@
 .form-container {    
     width: 100%;
-    max-width: 700px;
     box-sizing: border-box;
-    position: absolute;
-    bottom: 80px;
 }
 
 .input-group {
-    font-size: 1.25rem;
+    font-size: 1rem;
     position: relative;
-    --primary: #2196f3;
+    --primary: #ED1E79;
     text-align: left;
     width: 100%;
     box-sizing: border-box;
@@ -41,7 +38,7 @@
 
 .input-group input:is(:focus, :valid) ~ label {
     transform: translateY(-120%) scale(0.7);
-    background-color: #0d1118;
+    background-color: #131B2B;
     padding-inline: 0.3rem;
     color: var(--primary);
 }
@@ -49,13 +46,16 @@
 .send-btn {
     position: absolute;
     right: 1rem;
-    top: .6rem;
-    padding: 8px 16px;
+    top: .7rem;
+    padding: 4px 16px;
     background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-group input:is(:focus, :valid) ~ .send-btn {
-    background-color: #1e629a;
+    background-color: #ED1E79;
 }
 
 .send-icon {
@@ -70,13 +70,17 @@
     align-content: center;
     display: flex;
     flex-direction: column;
-    height: 500px;
+    height: 80vh;
+    border: 1px solid #1E293B;
+    border-radius: 10px;
+    background-color: #131B2B;
   }
 
 .scroll-container {
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    margin-bottom: 32px;
   }
 
 .scroll-container::-webkit-scrollbar {
@@ -96,7 +100,5 @@ border-radius: 8px;
 
 
 @media only screen and (max-width: 500px) {
-    .chat-container {
-        height: 550px;
-      }
+    
 }

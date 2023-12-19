@@ -22,6 +22,7 @@ import { ChatLayout } from './layouts/Chat/ChatLayout';
 import { messageActions } from './api/messages';
 import { CategoryLayout } from './layouts/Stats/CategoryLayout';
 import { eventActions } from './api/events';
+import { useAuthCheck } from './utilities/hooks/useAuthCheck';
 
 const router = createBrowserRouter([
   {
@@ -34,10 +35,10 @@ const router = createBrowserRouter([
       return { token: token }
     },
     children: [
-      // {
-      //   path: '/',
-      //   element: <LandingPageLayout />,
-      // },
+      {
+        path: '/',
+        element: <LandingPageLayout />,
+      },
       {
         path: 'home',
         element: <HomeLayout />,

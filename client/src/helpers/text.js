@@ -10,3 +10,14 @@ export function formatAndCapitalize(inputString) {
   
     return formattedString;
   }
+
+export function getInitials(name) {
+  // Split the name into words
+  const words = name.split(" ");
+
+  // Extract the first letter of each word
+  const initials = words.map(word => word[0]);
+
+  // Join the initials to form the result
+  return initials.join("").toUpperCase();
+}

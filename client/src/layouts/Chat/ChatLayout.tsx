@@ -4,8 +4,10 @@ import './ChatLayout.css'
 import { useLoaderData } from 'react-router-dom';
 import { messageActions } from '../../api/messages';
 import { CiPaperplane } from "react-icons/ci";
-import { formatTimestamp } from '../../helpers/date';
+import { formatDateString, formatTimestamp, get0100Timestamp } from '../../helpers/date';
 import { Show } from '../../helpers/functional';
+import { getInitials } from '../../helpers/text';
+import { useAuthCheck } from '../../utilities/hooks/useAuthCheck';
 
 export const ChatLayout = () => {
   const data: any = useLoaderData();
@@ -59,28 +61,26 @@ export const ChatLayout = () => {
           return (
             <div key={index} style={{ width: '95%'}}>
               <Show when={message.username !== data.user.username}>
-              <div style={{ textAlign: 'left', padding: '8px 0'}}>
-                <p>{message.timestamp}</p>
-                <div style={{ textAlign: 'left', width: '100%' }}>
-                  <div style={{ display: 'flex', textAlign: 'left', justifyContent: 'left', alignItems: 'center'}}>
-                    <p style={{ paddingRight: '10px' }}>You</p>
-                    <p style={{ wordWrap: 'break-word', color: 'white', backgroundColor: '#212734', width: '100%', padding: '8px', borderRadius: '8px' }}>{message.message}</p>  
+                <div style={{ textAlign: 'left', padding: '8px 0'}}>
+                  <p style={{ textAlign: 'right'}}>{formatDateString(message.timestamp)}</p>
+                  <div style={{ textAlign: 'left', width: '100%' }}>
+                    <div style={{ display: 'flex', textAlign: 'left', justifyContent: 'left', alignItems: 'center'}}>
+                      <p style={{ marginRight: '10px', border: '2px solid #eb498f', borderRadius: '50%', padding: '6px', backgroundColor: 'transparent', color: 'white' }}>{getInitials(message.username)}</p>
+                      <p style={{ wordWrap: 'break-word', color: 'white', width: '100%', padding: '8px', borderRadius: '8px', backgroundColor: '#1E293B', fontSize: '14px' }}>{message.message}</p>  
+                    </div>
                   </div>
                 </div>
-              </div>
-                
               </Show>
               <Show when={message.username === data.user.username}>
                 <div style={{ textAlign: 'left', padding: '8px 0'}}>
-                  <p>{message.timestamp}</p>
+                  <p>{formatDateString(message.timestamp)}</p>
                   <div style={{ textAlign: 'right', width: '100%' }}>
                       <div style={{ display: 'flex', textAlign: 'right', justifyContent: 'right', alignItems: 'center'}}>
-                        <p style={{ wordWrap: 'break-word', color: 'white', backgroundColor: '#212734', width: '100%', padding: '8px', borderRadius: '8px' }}>{message.message}</p>
-                        <p style={{ paddingLeft: '10px' }}>You</p>
+                        <p style={{ wordWrap: 'break-word', color: 'white', width: '100%', padding: '8px', borderRadius: '8px', backgroundColor: '#1E293B', fontSize: '14px' }}>{message.message}</p>
+                        <p style={{ marginLeft: '10px', border: '2px solid #eb498f', borderRadius: '50%', padding: '6px', backgroundColor: 'transparent', color: 'white' }}>{getInitials(message.username)}</p>
                       </div>
                   </div>
                 </div>
-                
               </Show>
             </div>
           )
@@ -94,7 +94,7 @@ export const ChatLayout = () => {
           id='message'
           value={message} 
           onChange={(e) => setMessage(e.target.value)}/>
-          <label htmlFor='message'>Message</label>
+          <label htmlFor='message'> Send Message</label>
           <button className='send-btn'>
             <CiPaperplane className='send-icon'/>
           </button>

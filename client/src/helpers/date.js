@@ -101,3 +101,12 @@ export function getCurrentMonth() {
   
     return formattedDate;
   }
+
+  export function get0100Timestamp() {
+    const today = new Date();
+    today.setHours(1, 0, 0, 0); // Set hours to 01:00:00.000
+
+    const timestampString = today.getTime();
+
+    return timestampString;
+  }

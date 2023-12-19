@@ -20,7 +20,7 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
 
-  color += '80';
+  color += '90';
 
   return color;
 }

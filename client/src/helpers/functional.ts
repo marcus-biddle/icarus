@@ -13,3 +13,5 @@ export const showIfOrElse = (x: boolean) => (content: any) => (fallbackContent: 
 export const isArrayEmpty = (array: any[] | undefined) => array === null || array === undefined || array.length === 0;
 
 export const isUserLoggedIn = () => (localStorage.getItem('idToken') ? true : false)
+
+export const getToken = () => localStorage.getItem('idToken');

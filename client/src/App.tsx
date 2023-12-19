@@ -3,40 +3,33 @@ import { Camera } from './components/Camera'
 import './App.css'
 import { Outlet, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import TopNavbar from './components/Navigation/TopNavbar';
-import { Show } from './helpers/functional';
-import { LandingPageNav } from './components/Navigation/LandingPageNav';
+import { useAuthCheck } from './utilities/hooks/useAuthCheck';
+import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
 
 function App() {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const isLandingPage = location.pathname === '/';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const user: any = useLoaderData();
+  const auth = useAuthCheck();
 
-    useEffect(() => {
-      if (user.token === null && location.pathname !== '/') {
-        navigate('/');
-      } 
-      
-    }, [navigate, user.token])
-  
   return (
-    <div className='body-format'>
-      {/* {false && <Camera />} */}
-      
-      <Show when={!isLandingPage}>
-        <TopNavbar />
-      </Show>
+    <>
+      <div className='body-format'>
+        {/* {false && <Camera />} */}
 
-      <Show when={isLandingPage}>
-        <LandingPageNav />
-      </Show>
-      
-      <div style={{ zIndex: '1', minHeight: '94vh', position: 'relative', }}>
-        <Outlet />
+          <TopNavbar />
+        
+        <div style={{ zIndex: '1', position: 'relative', minHeight: '120vh'}}>
+          {auth ? <Outlet /> : <LandingPageLayout />}
+        </div>
+        
+      </div>
+
+      <div style={{ backgroundColor: '#121827', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+        <footer className='footer-container'>
+          
+        </footer>
       </div>
       
-    </div>
+    </>
+    
   )
 }
 

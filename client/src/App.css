@@ -5,7 +5,7 @@
 
 .body-format {
   position: relative;
-  min-height: 100vh;
+  /* min-height: 60vh; */
   padding: 0 200px;
   background-color: #121827;
 }
@@ -13,7 +13,7 @@
 @media only screen and (max-width: 1100px) {
   .body-format {
     position: relative;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     padding: 0 100px;
     background-color: #121827;
   }
@@ -22,7 +22,7 @@
 @media only screen and (max-width: 850px) {
   .body-format {
     position: relative;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     padding: 0 50px;
     background-color: #121827;
   }
@@ -31,8 +31,22 @@
 @media only screen and (max-width: 500px) {
   .body-format {
     position: relative;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     padding: 0 20px;
     background-color: #121827;
   }
+}
+
+.footer-container {
+  background: linear-gradient(
+    to bottom,
+    #121827 10%,
+    #ed1e7859 45%,
+    #ED1E79 100%
+  );
+  min-height: 40vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

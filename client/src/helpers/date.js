@@ -8,6 +8,19 @@ export function getCurrentMonth() {
     return [currentMonth];
   }
 
+  export const getCurrentMonthNumber = () => {
+    const currentDate = new Date();
+    return currentDate.getMonth() + 1; // Adding 1 because months are zero-based (0-11)
+  };
+
+  export const getMonthName = (monthNumber) => {
+    if (monthNumber >= 1 && monthNumber <= 12) {
+      return months[monthNumber - 1]; // Adjusting for zero-based indexing
+    } else {
+      return 'Invalid month number';
+    }
+  };
+
   export function getMonthsInCurrentYear() {
     // const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1; // Adding 1 to get the month in the 1-12 range
@@ -64,6 +77,11 @@ export function getCurrentMonth() {
   
     const formattedDate = new Date(dateString).toLocaleString('en-US', options);
     return formattedDate;
+  }
+
+  export function getCurrentYear() {
+    const currentDate = new Date();
+    return currentDate.getFullYear();
   }
 
   export function formatTimestamp(timestamp) {

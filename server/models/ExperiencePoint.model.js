@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const expPointsSchema = new mongoose.Schema({
+const ExperiencePointSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -12,6 +12,6 @@ const expPointsSchema = new mongoose.Schema({
   },
 });
 
-const ExperiencePoint = mongoose.model('ExperiencePoints', expPointsSchema);
+const ExperiencePoint = mongoose.model('ExperiencePoint', ExperiencePointSchema);
 
 export default ExperiencePoint;

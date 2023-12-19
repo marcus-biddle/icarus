@@ -4,7 +4,8 @@ import { getCurrentMonth, months } from '../../helpers/date';
 import './ChartLayout.css'
 import { useLoaderData } from 'react-router';
 import { BarChart } from '../../components/Charts/Bar';
-import { pushupActions } from '../../api/pushups';
+import { pushupActions } from '../../api/events';
+import { LineChart } from '../../components/Charts/Line';
 
 const ChartLayout = () => {
   const [dropdownOption, setDropdownOption] = useState(months);
@@ -23,6 +24,7 @@ const ChartLayout = () => {
     
   return (
       <div className='template-container'>
+        <LineChart />
         <div className='chart-container'>
           {/* <DropdownMenu getDropdownOption={setDropdownOption} /> */}
             <BarChart title={'Pushup Competition'} datasets={allPushups}/>

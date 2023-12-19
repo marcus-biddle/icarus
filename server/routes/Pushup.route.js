@@ -2,6 +2,7 @@
 import express from 'express';
 import PushupsController from '../controllers/Pushup.controller.js';
 
+// DEPRECATED
 const router = express.Router();
 
 router.post('/api/pushups/create', PushupsController.createPushupSchema);

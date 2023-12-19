@@ -1,125 +1,130 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import './HomeLayout.css'
-import { getCurrentMonth } from '../../helpers/date';
+import { getCurrentMonth, months } from '../../helpers/date';
 import { RecentChanges } from '../../components/Boards/RecentChanges';
-import { usePushupCounter } from '../../utilities/hooks/usePushupCounter';
-import { PushupModal } from '../../components/Modals/PushupModal';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
-import DailyTracker from '../../components/Tracker/DailyTracker';
-import RankingTracker from '../../components/Tracker/RankingTracker';
-
+import { BsSortDown, BsFire, BsSortNumericDown, BsArrowDownShort } from "react-icons/bs";
+import { useIsMobile } from '../../utilities/hooks/useIsMobile';
+import { useOutsideClick } from '../../utilities/hooks/useOutsideClick';
 
 const HomeLayout = () => {
-  // const { openModal, isModalOpen, closeModal } = usePushupCounter();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = useLoaderData();
-  console.log('home', data)
+  
+  const [ isSortDropdownOpen, setSortDropdownOpen ] = useState(false);
+  const [ isRangeDropdownOpen, setRangeDropdownOpen ] = useState(false);
+  const [ rangeType, setRangeType ] = useState('total');
+  const [ sortOption, setSortOption ] = useState('pushup');
+  const isMobile = useIsMobile();
 
-  // if (data === null) return (
-  //   <p>data is null</p>
-  // )
+  const events = data.events.sort((a, b) => {
+    const eventNameA = a.events.find(event => event.eventName === sortOption);
+    const eventNameB = b.events.find(event => event.eventName === sortOption);
+  
+    // Check if eventNameA and eventNameB are defined to avoid errors
+    if (eventNameA && eventNameB) {
+      // Sort in descending order (highest total first)
+      return eventNameB.total - eventNameA.total;
+    } else {
+      // Handle the case where 'pushup' event is not present for both entries
+      return 0;
+    }
+  });
 
-  // const userId = data.user._id;
-  // const pushups = data.pushups.filter(obj => obj._id === userId)[0];
+  console.log('home', events)
 
-  // const rankedPlayers = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth);
-  // const userRank = rankedPlayers.findIndex(player => player._id === data.user._id);
-  // const highestPushupCount = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth)[0].pushupsThisMonth;
-  // const secondHighestPushupCount = data.pushups.sort((a,b) => b.pushupsThisMonth - a.pushupsThisMonth)[1].pushupsThisMonth || 0;
-  // const addMorePushupsNum = highestPushupCount - pushups.pushupsThisMonth;
-  // const keepTheLeadNum = pushups.pushupsThisMonth - secondHighestPushupCount;
+  const sortWrapperRef = useRef(null);
+  useOutsideClick(sortWrapperRef, () => setSortDropdownOpen(false));
+
+  const monthWrapperRef = useRef(null);
+  useOutsideClick(monthWrapperRef, () => setRangeDropdownOpen(false));
+
+  const itemsPerPageLimit = 5;
+  const [itemsPerPage, setItemsPerPage] = useState(itemsPerPageLimit);
+
+  const displayedEvents = events.slice(0, itemsPerPage + 1);
+
+  const handleLoadMore = () => {
+    setItemsPerPage(itemsPerPage + itemsPerPageLimit)
+  };
 
   return (
-    <div style={{ position: 'relative'}}>
-      {/* <div>
-        <h5>this is <em>it   alic</em></h5>
-        <h4>this is <em>italic</em></h4>
-        <h3>this is <em>italic</em></h3>
-        <h2>this is <em>italic</em></h2>
-        <h1>this is <em>italic</em></h1>
-      </div> */}
-      <div className='header'>
-        <h4>Welcome, {data.user.username}</h4>
-        <div style={{ width: '200px'}}>
-        <RankingTracker />
+    <div className={!isMobile ? 'home-layout' : 'home-layout-mobile'}>
+      <div style={{ maxWidth: '700px', width: '100%', boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', paddingBottom: '16px', gap: '16px' }}>
+          {/* <div style={{ position: 'relative'}}>
+            <button className='sort-btn' onClick={() => setRangeDropdownOpen(true)}>
+              <BsSortNumericDown style={{ width: '20px', height: '100%'}} />
+              <span style={{ fontSize: '16px'}}>Range</span>
+            </button>
+            <Show when={isRangeDropdownOpen}>
+                <ul className='sort-dropdown' ref={monthWrapperRef}>
+                  <li onClick={() => setRangeType('total')}>Total</li>
+                  <li onClick={() => setRangeType('today')}>Today</li>
+                  <li onClick={() => setRangeType('month')}>This Month</li>
+                </ul>
+            </Show>
+          </div> */}
+          
+          <div style={{ position: 'relative'}}>
+            <button className='sort-btn' onClick={() => setSortDropdownOpen(true)}>
+              <BsSortDown style={{ width: '20px', height: '100%'}} />
+              <span style={{ fontSize: '16px'}}>Sort</span>
+            </button>
+            <Show when={isSortDropdownOpen}>
+                <ul className='sort-dropdown' ref={sortWrapperRef}>
+                  {/* <li>Overall</li> */}
+                  <li onClick={() => setSortOption('pushup')}>Pushups</li>
+                  <li onClick={() => setSortOption('pullup')}>Pullups</li>
+                  <li onClick={() => setSortOption('running')}>Mileage</li>
+                </ul>
+            </Show>
+          </div>
         </div>
         
-        {/* <h4>Ranking: Beginner <em>{isArrayEmpty(data.expPoints) ? 0 : Math.round(data.expPoints.total)} pts</em></h4> */}
-      </div>
-
-      <div style={{ paddingBottom: '56px'}}>
-        <h4 style={{ textAlign: 'left', padding: '24px 32px'}}>Daily Progress</h4>
-        <DailyTracker />
-      </div>
-      
-
-      {/* <section style={{ padding: '0 24px'}}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px'}}>
-        <h3>Top Players</h3>
-        <h5><em>in {getCurrentMonth()}</em></h5>
-        </div>
-        
-        <div className='container'>
-          <Show when={!isArrayEmpty(data.users)}>
-            {data.users.map((user, index) => {
-              return (
-                <div className='box' key={index}>
-                  <h5><span>{index + 1}{') '}</span>{user.userName}</h5>
-                  <span>{user.totalPushupsThisMonth} pushups</span>
+        <ul className='player-list-container'>
+          {displayedEvents.map((player, index) => {
+            const pushups = player.events.find(event => event.eventName === 'pushup');
+            const pullups = player.events.find(event => event.eventName === 'pullup');
+            const running = player.events.find(event => event.eventName === 'running');
+            return (
+              <li>
+                <p style={{ textAlign: 'left', padding: '6px 0', fontSize: '14px' }}>#{index + 1}</p>
+                <h3 style={{ textAlign: 'left'}}>{player.userName}</h3>
+                <hr style={{ width: '100%', border: '1px solid #212734'}} />
+                <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingBottom: '8px'}}>
+                  <div>
+                    <span style={{ color: 'grey'}}>Pushups:{' '}</span>
+                    <div style={{ color: '#eb3f89',  }}><BsFire />{pushups.total}</div>
+                  </div>
+                  <div>
+                    <span style={{ color: 'grey'}}>Pullups:{' '}</span>
+                    <div style={{ color: '#eb3f89'}}><BsFire />{pullups.total}</div>
+                  </div>
+                  <div>
+                    <span style={{ color: 'grey'}}>Mileage:{' '}</span>
+                    <div style={{ color: '#eb3f89'}}><BsFire />{running.total}</div>
+                  </div>
                 </div>
-              )
-            })}
-          </Show>
-          <Show when={isArrayEmpty(data.users)}>
-            <p>No records are stored. Input your workout to be a top player.</p>
-          </Show>
-          
-          
-        </div>
-      </section> */}
-      
-      {/* <div className='card-container'>
-        <div className='display-container'>
-          <p className='display-title'>Since joining</p>
-          <span className='display-number'>{pushups.totalPushups}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
-        </div>
-        <div className='display-container'>
-          <p className='display-title'>This month</p>
-          <span className='display-number'>{pushups.pushupsThisMonth}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
-        </div>
-        <div className='display-container'>
-          <p className='display-title'>Today</p>
-          <span className='display-number'>{pushups.totalPushupsToday}</span> <span style={{ fontSize: '14px', color: 'white'}}>pushups</span>
-        </div>
-      </div>
-
-      <div className='card-container'>
-        <div className='display-container-2'>
-          {showIfOrElse(addMorePushupsNum > 0)(
-            <>
-            <p style={{ fontSize: '12px', color: '#575f68'}}>Trying to be the David Goggins of the group?</p>
-            <p style={{ fontSize: '18px',  color: 'white'}}>Complete <strong style={{ textDecoration: 'underline'}}>{addMorePushupsNum}</strong> pushups to take {getCurrentMonth()}'s leader board.</p>
-            </>
-          )(
-            <>
-          <p style={{ fontSize: '12px', color: '#575f68'}}>You're crushing the competition!</p>
-          <p style={{ fontSize: '18px',  color: 'white'}}>You're leading the pack by <strong style={{ textDecoration: 'underline'}}>{keepTheLeadNum}</strong> pushups in {getCurrentMonth()}'s leader board.</p>
-          </>
+              </li>
+            )
+          })}
+        </ul>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px 0' }}>
+          {itemsPerPage < events.length && (
+            <button className='load-btn' onClick={handleLoadMore}>
+              <BsArrowDownShort style={{ width: '20px', height: '100%'}} />
+              <span style={{ fontWeight: '400', fontSize: '14px' }}>Load More</span>
+            </button>
           )}
-          <button className='add-more-btn' onClick={openModal}>Add more pushups</button>
-        </div>
-      </div> */}
-
-      <div style={{ paddingBottom: '56px'}} className='card-container'>
-        <h3 style={{ textAlign: 'left', width: '100%'}}>Recent Activity</h3>
-        <div className='display-container-2'>
-          <RecentChanges />
         </div>
       </div>
+      <Show when={!isMobile}>
+        <div className='recent-container'>
+            <RecentChanges />
+        </div>
+      </Show>
       
-      
-      {/* <PushupModal isOpen={isModalOpen} onClose={closeModal} /> */}
     </div>
   )
 }

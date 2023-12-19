@@ -16,76 +16,75 @@ import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
 import { FilterProvider } from './utilities/providers/FilterProvider';
 import UserProfile from './layouts/UserProfile';
 import ChartLayout from './layouts/Chart/ChartLayout';
-import { pushupActions } from './api/pushups';
 import { ThemeProvider } from './utilities/providers/ThemeProvider';
 import { pointsActions } from './api/points';
 import { ChatLayout } from './layouts/Chat/ChatLayout';
 import { messageActions } from './api/messages';
+import { CategoryLayout } from './layouts/Stats/CategoryLayout';
+import { eventActions } from './api/events';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <ThemeProvider>
         <App />
-      </ThemeProvider>
     ),
     loader: async () => {
       const token = localStorage.getItem('idToken');
       return { token: token }
     },
     children: [
-      {
-        path: '/',
-        element: <LandingPageLayout />,
-      },
+      // {
+      //   path: '/',
+      //   element: <LandingPageLayout />,
+      // },
       {
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
-          const [logRes, pushupRes, pushupListRes, userExpRes, userInfoRes] = await Promise.all([
-            logsActions.getLogs(), 
-            pushupActions.getUserPushupStats(),
-            pushupActions.getAllPushupStats(),
-            pointsActions.getUserPoints(),
+          const [logRes, eventRes, pullRes, ] = await Promise.all([
+            logsActions.getLogs(),
+            eventActions.getEachEventForAllUsers(),
             userActions.getUser()
           ]);
-          const sortedResponse = logRes !== null && [...logRes].sort((a, b) => {
-            const dateA = new Date(a.timestamp).getTime();
-            const dateB = new Date(b.timestamp).getTime();
         
-            // Sort in descending order (most recent first)
-            return dateB - dateA;
-          }) || null;
-        
-          return {user: userInfoRes, logs: sortedResponse, pushups: pushupRes[0], expPoints: userExpRes, users: pushupListRes.sort((a, b) => a.totalPushupsThisMonth - b.totalPushupsThisMonth ) };
+          return {logs: logRes, events: eventRes};
         },
       },
       {
         path: 'leader-board',
         element: (
-          <FilterProvider>
             <PlayerActivityLayout />
-          </FilterProvider>
         ),
         loader: async () => {
-          const response = await pushupActions.getAllPushupStats();
-          return { players: null, wins: null, activities: null, challenges: null};
+          const response = await eventActions.getTodaysEventForEachUser();
+          const yearResponse = await eventActions.getYearEventForEachUser();
+          return { todayActivity: response, yearActivity: yearResponse };
         },
       },
-      {
-        path: 'user/:userId',
-        element: <UserProfile />,
-      },
-      {
-        path: 'charts',
-        element: <ChartLayout />,
-        loader: async () => {
-          const users = await userActions.getAllUsers();
-          const pushups = await pushupActions.getAllPushupStats();
-          return { users,  pushups };
-        },
-      },
+      // {
+      //   path: 'leader-board/:table',
+      //   element: (
+      //     <CategoryLayout />
+      //   ),
+      //   loader: async () => {
+      //     const response = await pushupActions.getAllPushupStats();
+      //     return { players: null, wins: null, activities: null, challenges: null};
+      //   },
+      // },
+      // {
+      //   path: 'user/:userId',
+      //   element: <UserProfile />,
+      // },
+      // {
+      //   path: 'charts',
+      //   element: <ChartLayout />,
+      //   loader: async () => {
+      //     const users = await userActions.getAllUsers();
+      //     const pushups = await pushupActions.getAllPushupStats();
+      //     return { users,  pushups };
+      //   },
+      // },
       {
         path: 'login',
         element: <LoginLayout />,

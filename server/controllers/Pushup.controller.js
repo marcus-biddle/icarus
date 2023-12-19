@@ -1,8 +1,9 @@
 import Logs from '../models/Log.model.js';
-import Pushup from '../models/Pushup.model.js';
+import Pushup from '../models/Event.model.js';
 import User from '../models/User.model.js';
 import jwt from 'jsonwebtoken';
 
+// DEPRECATED
 const createPushupSchema = async (req, res) => {
   // When user logs in for the first time, if pushup entry exists do nothing else create it
   // log that the user joined.
@@ -128,6 +129,9 @@ const createPushupSchema = async (req, res) => {
                 },
               },
             },
+            totalPushups: {
+              $sum: "$total"
+            }
           },
         },
         {
@@ -144,6 +148,7 @@ const createPushupSchema = async (req, res) => {
             userName: { $arrayElemAt: ["$userData.username", 0] },
             totalPushupsToday: 1,
             totalPushupsThisMonth: 1,
+            totalPushups: 1,
           },
         },
       ]);
@@ -253,6 +258,12 @@ const createPushupSchema = async (req, res) => {
                 },
               },
             },
+            totalPushups: {
+              $max: "$total",
+            },
+            consecutiveDays: {
+              $max: "$consecutiveDays", // Assumes count represents consecutive days
+            },
           },
         },
         {
@@ -269,6 +280,8 @@ const createPushupSchema = async (req, res) => {
             userName: { $arrayElemAt: ["$userData.username", 0] },
             totalPushupsToday: 1,
             totalPushupsThisMonth: 1,
+            totalPushups: 1,
+            consecutiveDays: 1
           },
         },
       ]);

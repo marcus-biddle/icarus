@@ -13,17 +13,17 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    color: #8E99B0;
     z-index: 999;
   }
   
   /* Modal content */
   .modal-content {
     position: relative;
-    background-color: #161c22;
+    background-color: #0F172A;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
   }
   
@@ -34,72 +34,38 @@
     right: 15px;
     font-size: 24px;
     cursor: pointer;
-    color: white;
+    color: #8E99B0;
     min-width: 200px;
     text-align: right;
   }
   
-  /* Modal title */
-  /* .modal h2 {
-    margin-top: 0;
-    padding: 0 32px;
-    line-height: 0;
-    font-size: 1.5rem;
-    color: white;
-  } */
-
-  /* .modal p {
-    padding: 0 32px;
-    padding-bottom: 24px;
-    font-size: 14px;
-    font-weight: 300;
-    color: rgb(171, 171, 171)
-  } */
-  
-  /* Form label */
-  /* .modal label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: white;
-  } */
-  
-  /* Form input */
-  /* .modal input {
-    width: 40%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    font-size: 1rem;
-  } */
-  
-  /* Submit button */
-  /* .modal button[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #0165bc;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-  } */
-  
-  /* Submit button hover effect */
-  /* .modal button[type="submit"]:hover {
-    background-color: #0056b3;
-  } */
-  
   .modal-form input, .modal-form select {
     width: 87%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #1E293B;
     border-radius: 4px;
     font-size: 1rem;
     box-sizing: border-box;
+    background-color: #1E293B;
+    color: #8E99B0;
   }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  /* Remove the default arrows for numeric input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
 
   .modal-form label {
     display: block;
@@ -107,23 +73,44 @@
     padding: 0 40px;
     margin: 0;
     letter-spacing: .55px;
-    color: #c0c0c0;
+    color: #8E99B0;
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 300;
   }
 
-  /* .modal-form select {
-    text-align: left;
-    padding: 0 32px;
-    margin: 0;
-    letter-spacing: .55px;
-    color: #c0c0c0;
-    text-transform: uppercase;
-    font-size: 12px;
-    font-weight: 300;
-  } */
-
   .modal-form div {
     padding: 10px 0;
+  }
+
+  .update-btn {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    background-color: #ED1E79;
+    align-items: center;
+    padding: 6px 12px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+  }
+  
+  .update-btn:hover {
+    background-color: #eb3f89;
+  }
+
+  .goBack-btn {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    background-color: transparent;
+    align-items: center;
+    padding: 6px 12px;
+    border: 1px solid white;
+    color: white;
+    transition: border 0.3s ease;
+    font-size: 16px;
+  }
+  
+  .goBack-btn:hover {
+    border: 1px solid #eb498f;
   }

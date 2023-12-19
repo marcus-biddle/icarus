@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { pushupActions } from '../../api/pushups';
 import { pointsActions } from '../../api/points';
+import { eventActions } from '../../api/events';
 
-export const usePushupCounter = () => {
+export const useEventModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -15,18 +15,19 @@ export const usePushupCounter = () => {
     setIsModalOpen(false);
   };
 
-  const increasePushupCount = async (pushupCount: string) => {
+  const updateEventCount = async ({ eventCount, eventName }: { eventCount: string, eventName: string }) => {
     setIsLoading(true);
-    let count = parseInt(pushupCount);
+    let count = parseInt(eventCount);
     if (isNaN(count)) count = 0;
 
     try {
-      const pushupRes = await pushupActions.addPushups(count);
-      const expRes = await pointsActions.addPoints(count);
-      if (pushupRes && expRes) {
+      const eventResponse = await eventActions.updateEvent({eventName: eventName, eventCount: count});
+      // const expRes = await pointsActions.addPoints(count);
+      if (eventResponse) {
         setIsLoading(false);
         closeModal();
-        window.location.reload();
+        console.log(eventResponse);
+        // window.location.reload();
         return true;
       }
     } catch (error) {
@@ -36,5 +37,5 @@ export const usePushupCounter = () => {
     return false;
   };
 
-  return { isLoading, isModalOpen, openModal, closeModal, increasePushupCount };
+  return { isLoading, isModalOpen, openModal, closeModal, updateEventCount };
 };

@@ -1,24 +1,26 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './Sidemenu.css';
 import { CiCloudSun, CiBookmark, CiGrid41, CiHome, CiViewList, CiChat1, CiLogout, CiGlobe } from "react-icons/ci";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useOutsideClick } from '../../../utilities/hooks/useOutsideClick';
 import { userActions } from '../../../api/users';
 import { useGoogleAuth } from '../../../utilities/hooks/useGoogleAuth';
-import { LOGO } from '../../../assets/index'
+import { MENU } from '../../../assets/index';
+import { BsChevronDoubleRight } from "react-icons/bs";
 
 const Sidemenu = ({ isOpen, setIsOpen }) => {
-  const [ data, setData ] = useState<any>([]);
+  // const [ data, setData ] = useState<any>([]);
   const { handleSignOut } = useGoogleAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await userActions.getAllUsers();
-      setData(response);
-    }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await userActions.getAllUsers();
+  //     setData(response);
+  //   }
 
-    fetchData();
-  }, [])
+  //   fetchData();
+  // }, [])
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -30,15 +32,23 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
   }
 
   const wrapperRef = useRef(null);
-    useOutsideClick(wrapperRef, () => setIsOpen(false));
+  useOutsideClick(wrapperRef, () => setIsOpen(false));
 
   return (
     <div className={`sidemenu ${isOpen ? 'open' : ''}`} ref={wrapperRef}>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '16px' }}>
+        <h3 style={{ fontWeight: '300', textTransform: 'uppercase', fontSize: '18px', letterSpacing: '5px', color: 'white' }}>Icarus</h3>
+      </div>
       <section className="sidemenu-header">
-        <h2>Icarus2.0</h2>
-        <div style={{ position: 'relative', width: '50px', height: '50px', borderRadius: '50%', overflow: 'hidden'}}>
-            <img src={LOGO} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} onClick={() => navigate('/home')} />
+        <div style={{ position: 'relative', width: '50px', height: '50px' }}>
+            <img src={MENU} alt='' style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }} onClick={() => navigate('/home')} />
         </div>
+        <p style={{ fontSize: '14px', fontStyle: 'italic', paddingLeft: '8px', display: 'flex', alignItems: 'flex-end'}}>“Let us see how high we can fly before <br /> the sun melts the wax in our wings.”</p>
+        
+      </section>
+
+      <section>
+       
       </section>
 
       <div style={{ position: 'relative'}}>
@@ -61,17 +71,17 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
           <CiChat1 className='menu-icon'/>
           <span style={{ padding: '0 8px'}}>Chat Room</span>
         </NavLink>
-        <NavLink to={'/charts'} onClick={() => toggleMenu()} >
+        {/* <NavLink to={'/charts'} onClick={() => toggleMenu()} >
             <CiGrid41 className='menu-icon'/>
             <span style={{ padding: '0 8px'}}>Charts</span>
-        </NavLink>
-        <NavLink to={'/charts'} onClick={() => toggleMenu()} >
+        </NavLink> */}
+        {/* <NavLink to={'/charts'} onClick={() => toggleMenu()} >
             <CiGlobe className='menu-icon'/>
             <span style={{ padding: '0 8px'}}>Arena</span>
-        </NavLink>
+        </NavLink> */}
        </section>
       
-       <div style={{ position: 'relative'}}>
+       {/* <div style={{ position: 'relative'}}>
         <div className='section-title'>
           <span>Stats</span>
         </div>
@@ -79,7 +89,6 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
       </div>
       
       <section className='menu-group-2'>
-        {/* <h4 className='header'>History</h4> */}
         <div>
           <span>Experience Points:</span>
           <span>100</span>
@@ -94,10 +103,10 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
         </div>
         
           
-      </section>
+      </section> */}
       
       {/* Add functionality to Join groups, might  want to creat a function to create your own group too. */}
-      <div style={{ position: 'relative'}}>
+      {/* <div style={{ position: 'relative'}}>
         <div className='section-title'>
           <span>Groups</span>
         </div>
@@ -111,29 +120,28 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
                 <span style={{ padding: '0 8px'}}>{user.username}</span>
             </NavLink>
           ))}
-      </section>
+      </section> */}
 
-      <div style={{ position: 'relative'}}>
-        <div className='section-title'>
-          <span>Exit</span>
+      <div style={{ position: 'absolute', bottom: '0', width: '100%'}}>
+        <div style={{ position: 'relative'}}>
+          <div className='section-title'>
+            <span>Exit</span>
+          </div>
+          <hr className='divider' />
         </div>
-        <hr className='divider' />
-      </div>
 
-       <section className='menu-group'>
-        <NavLink to={`/`} onClick={() => terminateAcess()}>
+        <section className='menu-group'>
+          <NavLink to={`/`} onClick={() => terminateAcess()}>
             <CiLogout className='menu-icon' />
             <span style={{ padding: '0 8px'}}>Logout</span>
           </NavLink>
-      </section>
-      {/*<div className='footer'>
-        <hr className='divider' />
-        <button className='signout-btn' onClick={() => terminateAcess()}>Sign Out</button>
-        <NavLink to={`/`} onClick={() => toggleMenu()}>
-          <CiLogout/>
-          <span style={{ padding: '0 8px'}}>Logout</span>
-        </NavLink>
-      </div> */}
+        </section>
+      </div>
+      
+      <div style={{ position: 'absolute', top: '12px', right: '16px', width: '100px', display: 'flex', justifyContent: 'right', height: '30px', cursor: 'pointer'}} onClick={() => setIsOpen(false)}>
+        <BsChevronDoubleRight style={{ width: '20px', height: '100%'}} />
+      </div>
+      
     </div>
   );
 };

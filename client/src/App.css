@@ -2,3 +2,37 @@
   margin: 0;
   text-align: center;
 }
+
+.body-format {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 200px;
+  background-color: #121827;
+}
+
+@media only screen and (max-width: 1100px) {
+  .body-format {
+    position: relative;
+    min-height: 100vh;
+    padding: 0 100px;
+    background-color: #121827;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .body-format {
+    position: relative;
+    min-height: 100vh;
+    padding: 0 50px;
+    background-color: #121827;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .body-format {
+    position: relative;
+    min-height: 100vh;
+    padding: 0 20px;
+    background-color: #121827;
+  }
+}

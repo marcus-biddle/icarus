@@ -3,12 +3,15 @@
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
-    gap: 200px;
-    margin: 0 120px;
-    border: 1px solid #21262D;
+    gap: 56px;
+    /* margin: 0 120px; */
+    padding: 0 32px;
+    border: 1px solid #1a212e;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    border-radius: 8px;
-    height: 300px;
+    border-radius: 12px;
+    min-height: 300px;
+    background-color: #1a212e;
+    
 }
 
 /* Reset default list styles */
@@ -38,7 +41,7 @@
   
   .mini-table {
     width: 100%;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
   }
   
   .mini-table th, .mini-table td {
@@ -57,18 +60,6 @@
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
   }
-  
-  /* .mini-table th {
-    background-color: #f2f2f2;
-  } */
-  
-  /* .mini-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  } */
-  
-  /* .mini-table tbody tr:hover {
-    background-color: #e5e5e5;
-  } */
 
   .tracker-form {
     display: flex;
@@ -138,7 +129,7 @@
   .tracker-container {
 
     gap: 56px;
-    margin: 0 24px;
+    /* margin: 0 24px; */
     min-height: 500px;
 }
 }

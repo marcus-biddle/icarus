@@ -1,4 +1,4 @@
-.chart-container {
+/* .chart-container {
     width: 300px;
     max-width: 100%;
     min-height: 400px;
@@ -11,10 +11,7 @@
   .chart-container-large {
     width: 300px;
     max-width: 100%;
-    min-height: 400px;
-    border: 1px solid #21262D;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     flex: 1 0 100%;
   }
 
@@ -22,7 +19,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 56px;
-}
+} */
 
 /* @media (max-width: 700px) {
     .template-container {

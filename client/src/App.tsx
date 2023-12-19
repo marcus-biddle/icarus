@@ -21,8 +21,8 @@ function App() {
     }, [navigate, user.token])
   
   return (
-    <div style={{ position: 'relative', maxHeight: '100vh' }}>
-      {false && <Camera />}
+    <div className='body-format'>
+      {/* {false && <Camera />} */}
       
       <Show when={!isLandingPage}>
         <TopNavbar />
@@ -32,13 +32,10 @@ function App() {
         <LandingPageNav />
       </Show>
       
-      <div style={{ zIndex: '1', minHeight: '94vh', position: 'relative', backgroundColor: '#0d1118'}}>
-      <Outlet />
+      <div style={{ zIndex: '1', minHeight: '94vh', position: 'relative', }}>
+        <Outlet />
       </div>
       
-      {/* <Show when={isMobile}>
-        <MobileNavbar />
-      </Show> */}
     </div>
   )
 }

@@ -1,8 +1,7 @@
-/* Table.css */
+/* Table.css
 
   
   table {
-    width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
   }
@@ -30,16 +29,10 @@
     background-color: #01040a;
   } */
   
-  @media (max-width: 946px) {
+  /* @media (max-width: 946px) {
     .table-container {
       margin: 0;
     }
   
     /* Adjust styles for mobile view */
-    td,
-    th {
-      padding: 8px; /* Adjust padding for mobile view */
-      font-size: 12px; /* Adjust font size for better mobile view */
-    }
-  }
-  
+    

@@ -3,7 +3,7 @@ import ExperiencePointController from '../controllers/ExperiencePoint.controller
 
 const router = express.Router();
 
-router.put('/api/points/create', ExperiencePointController.addPoints);
+// router.put('/api/points/create', ExperiencePointController.addPoints);
 
 router.post('/api/points/get', ExperiencePointController.getUserPoints);
 

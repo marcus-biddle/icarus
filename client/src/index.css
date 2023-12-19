@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --main-background-color: #121827;
 }
 
 body {
@@ -120,10 +121,8 @@ em {
 
 .scrollbar {
   list-style: none;
-  max-height: 400px;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
-
 }
 
 .scrollbar::-webkit-scrollbar {

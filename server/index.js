@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 
 import usersRouter from './routes/User.route.js';
 import logsRouter from './routes/Log.route.js';
+import EventRouter from './routes/Event.route.js';
 import pushupsRouter from './routes/Pushup.route.js';
 import pointsRouter from './routes/ExperiencePoint.route.js';
 import messageRouter from './routes/Message.route.js';
@@ -55,9 +56,10 @@ app.post('/auth/google', async (req, res) => {
 
 app.use('/', usersRouter);
 app.use('/', logsRouter);
-app.use('/', pushupsRouter);
+// app.use('/', pushupsRouter);
 app.use('/', pointsRouter);
 app.use('/', messageRouter);
+app.use('/', EventRouter);
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB')

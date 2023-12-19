@@ -64,13 +64,13 @@ const DailyTracker = () => {
       }
     }, []);
 
-    const progress = dailyTracker && (data.pushups.totalPushupsToday / dailyTracker?.count)*100;
-    console.log(progress)
+    const progress = dailyTracker && (data.pushups.totalPushupsToday / dailyTracker?.count)*100 || 0;
+    console.log('p',progress ?? null)
   return (
     <div className='tracker-container'>
         <Show when={!!dailyTracker}>
           <section style={{ display: 'flex'}}>
-              <CircularProgressWithLabel value={progress && progress <= 100 ? progress : 100} />
+              <CircularProgressWithLabel value={progress <= 100 ? progress : 100} />
           </section>
           <section style={{ display: 'flex', flexDirection: 'column', gap: '32px'}}>
               <span>{getCurrentDate()}</span>

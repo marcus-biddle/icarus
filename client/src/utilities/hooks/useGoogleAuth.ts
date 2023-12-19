@@ -3,7 +3,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { createAxiosInstance } from '../../api/config/axios';
 import { userActions } from '../../api/users';
-import { pushupActions } from '../../api/pushups';
 
 export const useGoogleAuth = () => {
     const navigate = useNavigate();
@@ -15,7 +14,7 @@ export const useGoogleAuth = () => {
             localStorage.setItem('idToken', googleId); // Store the token in localStorage
             setToken(googleId);
             await userActions.createUser();
-            await pushupActions.createPushupLog();
+            // await pushupActions.createPushupLog();
         } 
         const user = await userActions.getUser();
         if (user) {

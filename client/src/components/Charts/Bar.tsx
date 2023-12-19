@@ -1,32 +1,61 @@
 import { Chart as ChartJS, Tooltip, Legend, Title, BarElement, LinearScale, CategoryScale } from "chart.js";
-import React from "react";
-import { Chart } from "react-chartjs-2";
+import React, { useState } from "react";
+import { Chart, Line } from "react-chartjs-2";
 import { useLoaderData } from "react-router";
 import { formatDatasets } from "../../helpers/data";
 import { months } from "../../helpers/date";
 
 interface BarChartProps {
     title: String;
-    datasets: any[]
+    datasets: any[];
+    eventType: string
 }
 
-export const BarChart = ({ title, datasets }: BarChartProps) => {
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color: string = '#';
+
+  // Generate a random six-character hex color code
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  color += '80';
+
+  return color;
+}
+
+function getRandomColorsArray(size) {
+  const colorsArray: string[] = [];
+
+  for (let i = 0; i < size; i++) {
+    const color: string = getRandomColor();
+    colorsArray.push(color);
+  }
+
+  return colorsArray;
+}
+
+export const BarChart = ({ title, datasets, eventType }: BarChartProps) => {
+  const [randomColors, setRandomColors] = useState(getRandomColorsArray(datasets.length))
   const newDatasets: any[] = [];
   datasets.map((dataset) => {
     const counts = months.map((month, index) => {
-      const found = dataset.monthlyCounts.find(obj => obj.month === index +1);
+      const found = dataset.months.find(m => m.month === index +1 && m.eventType === eventType);
       if (found) {
-        return found.count
+        return found.total
       } else {
         return 0;
       }
     })
     newDatasets.push({
-      label: dataset._id,
+      label: dataset.userName,
       data: counts,
-      backgroundColor: 'rgba(255, 99, 132, 0.5)'
+      backgroundColor: randomColors
     })
   })
+
+  console.log('chart',newDatasets);
 
     ChartJS.register(
         CategoryScale,
@@ -56,18 +85,6 @@ export const BarChart = ({ title, datasets }: BarChartProps) => {
       const data = {
         labels,
         datasets: newDatasets
-        // datasets: [
-        //   {
-        //     label: 'Dataset 1',
-        //     data: labels.map(() => Math.floor(Math.random() * 1000) + 1),
-        //     backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        //   },
-        //   {
-        //     label: 'Dataset 2',
-        //     data: labels.map(() => Math.floor(Math.random() * 1000) + 1),
-        //     backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        //   },
-        // ]
       };
       
     

@@ -11,18 +11,10 @@ import HomeLayout from './layouts/Home/HomeLayout';
 import { userActions } from './api/users';
 import { logsActions } from './api/recentChanges'
 import PlayerActivityLayout from './layouts/Stats/PlayerActivityLayout';
-import { LoginLayout } from './layouts/LoginLayout';
 import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
-import { FilterProvider } from './utilities/providers/FilterProvider';
-import UserProfile from './layouts/UserProfile';
-import ChartLayout from './layouts/Chart/ChartLayout';
-import { ThemeProvider } from './utilities/providers/ThemeProvider';
-import { pointsActions } from './api/points';
 import { ChatLayout } from './layouts/Chat/ChatLayout';
 import { messageActions } from './api/messages';
-import { CategoryLayout } from './layouts/Stats/CategoryLayout';
 import { eventActions } from './api/events';
-import { useAuthCheck } from './utilities/hooks/useAuthCheck';
 
 const router = createBrowserRouter([
   {
@@ -62,33 +54,6 @@ const router = createBrowserRouter([
           const yearResponse = await eventActions.getYearEventForEachUser();
           return { todayActivity: response, yearActivity: yearResponse };
         },
-      },
-      // {
-      //   path: 'leader-board/:table',
-      //   element: (
-      //     <CategoryLayout />
-      //   ),
-      //   loader: async () => {
-      //     const response = await pushupActions.getAllPushupStats();
-      //     return { players: null, wins: null, activities: null, challenges: null};
-      //   },
-      // },
-      // {
-      //   path: 'user/:userId',
-      //   element: <UserProfile />,
-      // },
-      // {
-      //   path: 'charts',
-      //   element: <ChartLayout />,
-      //   loader: async () => {
-      //     const users = await userActions.getAllUsers();
-      //     const pushups = await pushupActions.getAllPushupStats();
-      //     return { users,  pushups };
-      //   },
-      // },
-      {
-        path: 'login',
-        element: <LoginLayout />,
       },
       {
         path: 'chat',

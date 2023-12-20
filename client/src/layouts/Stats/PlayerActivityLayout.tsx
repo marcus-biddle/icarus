@@ -131,18 +131,18 @@ const PlayerActivityLayout = () => {
                   <span></span>
                 </div>
                 <hr style={{ width: '95%', border: '1px solid #212734', boxSizing: 'border-box' }} />
-                <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingBottom: '8px'}}>
-                  <div>
-                    <span style={{ color: '#A0AEC0'}}>Push-ups:{' '}</span>
-                    <span>{pushups ? <><BsFire style={{ color: '#eb3f89'}} />{pushups.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingBottom: '10px'}}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap'}}>
+                    <span style={{ color: '#A0AEC0', paddingRight: '2px' }}>Push-ups:</span>
+                    <span>{pushups ? <div><BsFire style={{ color: '#eb3f89'}} />{pushups.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
                   </div>
-                  <div>
-                    <span style={{ color: '#A0AEC0'}}>Pull-ups:{' '}</span>
-                    <span>{pullups ? <><BsFire style={{ color: '#eb3f89'}} />{pullups.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap'}}>
+                    <span style={{ color: '#A0AEC0', padding: '0 8px' }}>Pull-ups:{' '}</span>
+                    <span>{pullups ? <div><BsFire style={{ color: '#eb3f89'}} />{pullups.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
                   </div>
-                  <div>
-                    <span style={{ color: '#A0AEC0'}}>Mileage:{' '}</span>
-                    <span>{running ? <><BsFire style={{ color: '#eb3f89'}} />{running.total}</> : <><BsDropletFill style={{ color: '#2196f3'}} />0</>}</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap'}}>
+                    <span style={{ color: '#A0AEC0', paddingRight: '8px' }}>Mileage:{' '}</span>
+                    <span>{running ? <div><BsFire style={{ color: '#eb3f89'}} />{running.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
                   </div>
                 </div>
               </div>

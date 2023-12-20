@@ -35,7 +35,7 @@ export const useGoogleAuth = () => {
         onSuccess: async (codeResponse) => {
         // MOve to api folder
             const response = await axiosInstance.post(
-                'http://localhost:3001/auth/google', {
+                'https://icarus-server.onrender.com/auth/google', {
                     code: codeResponse.code,
                 });
 

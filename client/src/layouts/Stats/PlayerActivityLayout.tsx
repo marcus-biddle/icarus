@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react'
 import './PlayerActivityLayout.css';
 import { useLoaderData } from 'react-router';
-import { useFilterContext } from '../../utilities/hooks/useFilterContext';
 import { Show, isArrayEmpty } from '../../helpers/functional';
 import { BarChart } from '../../components/Charts/Bar';
 import { getCurrentMonth, getCurrentMonthNumber, getMonthName, months } from '../../helpers/date';

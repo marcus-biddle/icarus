@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './HomeLayout.css'
-import { getCurrentMonth, months } from '../../helpers/date';
+import { formatDateString, getCurrentMonth, months } from '../../helpers/date';
 import { RecentChanges } from '../../components/Boards/RecentChanges';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
@@ -33,7 +33,7 @@ const HomeLayout = () => {
     }
   });
 
-  console.log('home', events)
+  console.log('home', data.logs)
 
   const sortWrapperRef = useRef(null);
   useOutsideClick(sortWrapperRef, () => setSortDropdownOpen(false));
@@ -126,7 +126,19 @@ const HomeLayout = () => {
       </div>
       <Show when={!isMobile}>
         <div className='recent-container'>
-            <RecentChanges />
+          <ul className='scrollbar'>
+            {data.logs.length === 0 && (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                <p style={{ color: '#A0AEC0'}}>When a competitor adds an event, it will be shown here.</p>
+              </div>
+            )}
+            {data.logs.map((item, index) => (
+              <li key={index}>
+                <p>{formatDateString(item.timestamp)}</p>
+                <span>{item.action} </span>
+              </li>
+            ))}
+          </ul>
         </div>
       </Show>
       

@@ -187,8 +187,17 @@
   background-color: #131B2B;
   border-radius: 10px;
   border: 1px solid #1E293B;
-  text-align: left;
   position: relative;
+}
+
+.scrollbar li {
+  padding: 10px;
+  color: #A0AEC0;
+  text-align: left;
+}
+
+.scrollbar {
+  height: 700px;
 }
 
 .home-layout {

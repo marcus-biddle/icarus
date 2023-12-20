@@ -62,7 +62,7 @@ const updateEventForUser = async (req, res) => {
       await existingEvent.save();
     
       await Logs.create({
-        action: `${decodedToken.name} updated the ${event} event: ${count} added.`,
+        action: `${decodedToken.name} completed ${count} ${event === 'running' ? count > 1 ? 'miles' : 'mile' : count > 1 ? `${event}s` : event}.`,
       });
 
       const collectedExp = count * exp;

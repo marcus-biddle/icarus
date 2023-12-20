@@ -80,7 +80,7 @@ const PlayerActivityLayout = () => {
       
       <div className='template-container'>
         <div className='chart-container'>
-            <BarChart title={`${type} Competition`} datasets={data.yearActivity} eventType={type}/>
+            <BarChart title={`${formatEventType(type)} Competition`} datasets={data.yearActivity} eventType={type}/>
         </div>
         <div className='topRank-container'>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px'}}>

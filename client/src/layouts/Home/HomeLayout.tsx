@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './HomeLayout.css'
 import { formatDateString, getCurrentMonth, months } from '../../helpers/date';
-import { RecentChanges } from '../../components/Boards/RecentChanges';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';
 import { BsSortDown, BsFire, BsSortNumericDown, BsArrowDownShort, BsDropletFill } from "react-icons/bs";

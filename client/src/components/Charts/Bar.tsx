@@ -1,4 +1,5 @@
 import { Chart as ChartJS, Tooltip, Legend, Title, BarElement, LinearScale, CategoryScale } from "chart.js";
+import { Bar } from 'react-chartjs-2';
 import React, { useState } from "react";
 import { Chart, Line } from "react-chartjs-2";
 import { useLoaderData } from "react-router";
@@ -90,9 +91,7 @@ export const BarChart = ({ title, datasets, eventType }: BarChartProps) => {
     
   return (
     <>
-      <Chart 
-      type={"bar"} 
-      datasetIdKey="pushups" 
+      <Bar
       options={options} data={data} />
     </>
     

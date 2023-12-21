@@ -22,7 +22,7 @@ function getRandomColor() {
   let color: string = '#';
 
   // Generate a random six-character hex color code
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
 

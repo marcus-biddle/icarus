@@ -136,15 +136,15 @@ const PlayerActivityLayout = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-evenly', paddingBottom: '10px'}}>
                   <div style={{ display: 'flex', flexWrap: 'wrap'}}>
                     <span style={{ color: '#A0AEC0', paddingRight: '2px' }}>Push-ups:</span>
-                    <span>{pushups ? <div><BsFire style={{ color: '#eb3f89'}} />{pushups.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
+                    <span style={{ minWidth: '50px'}}>{pushups ? <div><BsFire style={{ color: '#eb3f89'}} />{pushups.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap'}}>
                     <span style={{ color: '#A0AEC0', padding: '0 8px' }}>Pull-ups:{' '}</span>
-                    <span>{pullups ? <div><BsFire style={{ color: '#eb3f89'}} />{pullups.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
+                    <span style={{ minWidth: '50px'}}>{pullups ? <div><BsFire style={{ color: '#eb3f89'}} />{pullups.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap'}}>
                     <span style={{ color: '#A0AEC0', paddingRight: '8px' }}>Mileage:{' '}</span>
-                    <span>{running ? <div><BsFire style={{ color: '#eb3f89'}} />{running.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
+                    <span style={{ minWidth: '50px'}}>{running ? <div><BsFire style={{ color: '#eb3f89'}} />{running.total}</div> : <div><BsDropletFill style={{ color: '#2196f3'}} />0</div>}</span>
                   </div>
                 </div>
               </div>

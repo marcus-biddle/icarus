@@ -22,11 +22,11 @@ function getRandomColor() {
   let color: string = '#';
 
   // Generate a random six-character hex color code
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 8; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
 
-  color += '90';
+  color += '60'
 
   return color;
 }
@@ -39,13 +39,15 @@ function getRandomColorsArray(size) {
     colorsArray.push(color);
   }
 
+  
+
   return colorsArray;
 }
 
 export const BarChart = ({ title, datasets, eventType }: BarChartProps) => {
-  const [randomColors, setRandomColors] = useState(getRandomColorsArray(datasets.length))
+  const [randomColors, setRandomColors] = useState<string[]>(getRandomColorsArray(datasets.length))
   const newDatasets: any[] = [];
-  datasets.map((dataset) => {
+  datasets.map((dataset, index) => {
     const counts = months.map((month, index) => {
       const found = dataset.months.find(m => m.month === index +1 && m.eventType === eventType);
       if (found) {
@@ -57,7 +59,7 @@ export const BarChart = ({ title, datasets, eventType }: BarChartProps) => {
     newDatasets.push({
       label: dataset.userName,
       data: counts,
-      backgroundColor: randomColors
+      backgroundColor: randomColors[index]
     })
   })
 

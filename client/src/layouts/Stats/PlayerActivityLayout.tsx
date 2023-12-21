@@ -46,15 +46,17 @@ const PlayerActivityLayout = () => {
   const typeWrapperRef = useRef(null);
   useOutsideClick(typeWrapperRef, () => setDropdownOpen(false));
 
+  console.log(organizedData);
+
   const filteredAndSortedData = organizedData
   .filter(obj => obj.month === month)
   .sort((a, b) => {
     if (type === 'pullup') {
-      return a.pullup - b.pullup;
+      return b.pullup - a.pullup;
     } else if (type === 'running') {
-      return a.running - b.running;
-    } else if (type === 'pushups') {
-      return a.pushups - b.pushups;
+      return b.running - a.running;
+    } else if (type === 'pushup') {
+      return b.pushup - a.pushup;
     } else {
       return 0; // Default case, no sorting
     }

@@ -114,3 +114,13 @@ input[type="number"] {
   .goBack-btn:hover {
     border: 1px solid #eb498f;
   }
+
+  .updateModal-btn {
+    font-size: 11px;
+    padding-left: 24px;
+    cursor: pointer;
+  }
+
+  .updateModal-btn:hover {
+    text-decoration: underline;
+  }

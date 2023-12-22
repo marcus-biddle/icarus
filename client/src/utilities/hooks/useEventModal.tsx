@@ -8,7 +8,6 @@ export const useEventModal = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
-    console.log('openModal', isModalOpen)
   };
 
   const closeModal = () => {

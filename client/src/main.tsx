@@ -15,6 +15,7 @@ import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
 import { ChatLayout } from './layouts/Chat/ChatLayout';
 import { messageActions } from './api/messages';
 import { eventActions } from './api/events';
+import { UserLayout } from './layouts/User/UserLayout';
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,19 @@ const router = createBrowserRouter([
       {
         path: 'chat',
         element: <ChatLayout />,
+        loader: async () => {
+          const messagesRes = await messageActions.getAllMessages();
+          const userRes = await userActions.createUser();
+          return { messages: messagesRes.sort((a, b) => {
+            const timestampA = new Date(a.timestamp).getTime();
+            const timestampB = new Date(b.timestamp).getTime();
+            return timestampA - timestampB;
+          }), user: userRes };
+        },
+      },
+      {
+        path: 'user',
+        element: <UserLayout />,
         loader: async () => {
           const messagesRes = await messageActions.getAllMessages();
           const userRes = await userActions.createUser();

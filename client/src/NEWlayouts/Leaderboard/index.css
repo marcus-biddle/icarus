@@ -1,0 +1,12 @@
+.user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px 32px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+.user-card:hover {
+    background-color: rgb(200, 200, 200);
+}

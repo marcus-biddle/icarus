@@ -17,6 +17,8 @@ import { messageActions } from './api/messages';
 import { eventActions } from './api/events';
 import { UserLayout } from './layouts/User/UserLayout';
 import HomeLevel1 from './NEWlayouts/Sections/HomeLevel1';
+import Leaderboard from './NEWlayouts/Leaderboard/Leaderboard';
+import Details from './NEWlayouts/Sections/Details/Details';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,15 @@ const router = createBrowserRouter([
         path: '/duo/sections',
         element: <HomeLevel1 />,
       },
+      {
+        path: '/duo/sections/details/:sectionId',
+        element: <Details />,
+      },
+      {
+        path: '/duo/leaderboard',
+        element: <Leaderboard />,
+      },
+      
       {
         path: 'home',
         element: <HomeLayout />,

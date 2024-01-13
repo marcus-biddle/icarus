@@ -6,6 +6,7 @@ import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
 import { DynamicIcon } from '../../Icons/DynamicIcon';
 import { IconType } from 'react-icons/lib';
 
+
 interface PathItem {
     name: string;
     icon: IconType;
@@ -15,7 +16,7 @@ interface PathItem {
 export const PATHS: PathItem[] = [
     { name: 'Workout', icon: GoHome, link: 'duo/sections' },
     { name: 'Practice', icon: GoMortarBoard, link: '/test' },
-    { name: 'Leaderboards', icon: GoTrophy, link: '/test' },
+    { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard' },
     { name: 'Quests', icon: GoTelescope, link: '/test' },
     { name: 'Shop', icon: GoOrganization, link: '/test' },
     { name: 'Profile', icon: GoIssueDraft, link: '/test' },

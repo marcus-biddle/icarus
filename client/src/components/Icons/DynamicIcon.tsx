@@ -6,10 +6,11 @@ interface DynamicIconProps {
     width: string;
     height: string;
     color?: string;
+    padding?: string;
 }
 
-export const DynamicIcon = ({ icon: Icon, width, height, color }: DynamicIconProps) => {
+export const DynamicIcon = ({ icon: Icon, width, height, color, padding }: DynamicIconProps) => {
   return (
-    <Icon style={{ width: width, height: height, color: color }} />
+    <Icon style={{ width: width, height: height, color: color, padding: padding }} />
   )
 }

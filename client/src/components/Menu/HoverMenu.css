@@ -1,0 +1,26 @@
+/* HoverMenu.css */
+
+.hover-menu-container {
+    position: relative;
+  }
+  
+  .text-container {
+    padding: 6px 18px 2px 18px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+  }
+  
+  .text-container:hover {
+    background-color: rgba(198, 190, 190, 0.2); /* Change background color when hovered */
+  }
+  
+  .menu-container {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background-color: #fff;
+    border: 2px solid #97979770;
+    border-radius: 8px;
+    z-index: 1;
+  }
+  

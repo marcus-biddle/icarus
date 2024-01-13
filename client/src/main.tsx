@@ -16,6 +16,7 @@ import { ChatLayout } from './layouts/Chat/ChatLayout';
 import { messageActions } from './api/messages';
 import { eventActions } from './api/events';
 import { UserLayout } from './layouts/User/UserLayout';
+import HomeLevel1 from './NEWlayouts/Sections/HomeLevel1';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <LandingPageLayout />,
+      },
+      {
+        path: '/duo/sections',
+        element: <HomeLevel1 />,
       },
       {
         path: 'home',

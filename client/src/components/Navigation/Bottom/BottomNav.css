@@ -1,0 +1,28 @@
+.bottom-nav-container {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    bottom: 0;
+    color: white;
+    height: 100px;
+    z-index: 1;
+}
+
+.bottom-nav-container a {
+    text-decoration: none;
+    color: white;
+}
+
+.link-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 8px;
+}
+
+.link-container .active  {
+    background-color: #d0e7f3c8 !important;
+    border: 2px solid #62c1f5;
+    color: #27aef7;
+    border-radius: 12px;
+    transition: all 0.5s;
+}

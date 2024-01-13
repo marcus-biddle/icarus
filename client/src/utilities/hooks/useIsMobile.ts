@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const MOBILE_THRESHOLD = 768; // Adjust as needed
+interface MobileProps {
+  threshold?: number
+}
 
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= MOBILE_THRESHOLD);
+const MOBILE_THRESHOLD = 768;
+
+export const useIsMobile = ({ threshold = MOBILE_THRESHOLD }: MobileProps) => {
+  
+  const [isMobile, setIsMobile] = useState<boolean>(typeof window !== 'undefined' && window.innerWidth <= threshold);
 
   const handleResize = useCallback(() => {
-    const newIsMobile = window.innerWidth <= MOBILE_THRESHOLD;
+    const newIsMobile = window.innerWidth <= threshold;
     setIsMobile(newIsMobile);
     console.log('useIsMobile');
   }, []); // Empty dependency array means the callback will not change unless MOBILE_THRESHOLD changes
-
-
-  // Throttle or debounce handleResize if needed
   
   useEffect(() => {
-    
-
     window.addEventListener('resize', handleResize);
 
     return () => {

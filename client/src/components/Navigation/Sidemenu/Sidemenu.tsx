@@ -71,6 +71,10 @@ const Sidemenu = ({ isOpen, setIsOpen }) => {
           <CiChat1 className='menu-icon'/>
           <span style={{ padding: '0 8px'}}>Chat Room</span>
         </NavLink>
+        <NavLink to='/duo/home' onClick={() => toggleMenu()}>
+          <CiChat1 className='menu-icon'/>
+          <span style={{ padding: '0 8px'}}>Duo</span>
+        </NavLink>
         {/* <NavLink to={'/charts'} onClick={() => toggleMenu()} >
             <CiGrid41 className='menu-icon'/>
             <span style={{ padding: '0 8px'}}>Charts</span>

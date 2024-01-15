@@ -1,0 +1,24 @@
+.two-column-container {
+    display: flex;
+    width:80vw;
+    /* height: 100vh; */
+  }
+
+.two-row-container {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+}
+  
+  .left-column {
+    flex: 2; /* Larger left column */
+    /* padding: 20px; */
+  }
+  
+  .right-column {
+    flex: 1; /* Smaller right column */
+    padding: 20px;
+    /* max-height: 400px; */
+    transition: all .39s ease-in;
+    /* box-shadow: 0 4px 6px rgba(0,0,0,0.3); */
+  }

@@ -3,10 +3,12 @@ import { useIsMobile } from '../../utilities/hooks/useIsMobile'
 import StatsBar from '../../components/StatsBar/StatsBar';
 import { GoRuby, GoShieldLock, GoTrophy, GoIssueDraft } from "react-icons/go";
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
+import { GiShield } from "react-icons/gi";
 import './index.css';
+import TwoColumnGrid from '../../components/Grid/TwoColumnGrid';
 
 const LEAGUE_LEVELS = [
-    { name: 'Bronze', unlocked: true, color: 'bronze' },
+    { name: 'Bronze', unlocked: true, color: 'brown' },
     { name: 'Silver', unlocked: true, color: 'grey' },
     { name: 'Gold', unlocked: true, color: 'gold' },
     { name: 'Platinum', unlocked: false, color: 'blue' },
@@ -36,12 +38,10 @@ const FAKE_USERS = [
 const Leaderboard = () => {
     const isMobile = useIsMobile({});
     return (
-        <div className={"two-column-container"}>
-          <div className="left-column" style={{ padding: isMobile ? '0' : '20px', minHeight: isMobile ? '80vh' : '',}}>
-            {/* Content for the left column */}
+        <TwoColumnGrid>
             <div style={{ display: 'flex', justifyContent: isMobile ? 'space-around' : 'center', width: isMobile ? '100vw' : '', alignItems: 'center' }}>
                 {LEAGUE_LEVELS.map((level) => (
-                    level.name === 'Gold' ? <DynamicIcon icon={level.unlocked ? GoRuby : GoShieldLock} height={isMobile ? '60px' : '90px'} width={isMobile ? '60px' : '90px'} color={level.unlocked ? level.color : 'grey'} padding={isMobile ? '' : '0 16px'} /> : <DynamicIcon icon={level.unlocked ? GoRuby : GoShieldLock} height={isMobile ? '30px' : '50px'} width={isMobile ? '30px' : '50px'} color={level.unlocked ? level.color : 'grey'} padding={isMobile ? '' : '0 16px'} />
+                    level.name === 'Gold' ? <DynamicIcon icon={level.unlocked ? GiShield: GoShieldLock} height={isMobile ? '60px' : '90px'} width={isMobile ? '60px' : '90px'} color={level.unlocked ? level.color : 'grey'} padding={isMobile ? '' : '0 16px'} /> : <DynamicIcon icon={level.unlocked ? GiShield : GoShieldLock} height={isMobile ? '30px' : '50px'} width={isMobile ? '30px' : '50px'} color={level.unlocked ? level.color : 'grey'} padding={isMobile ? '' : '0 16px'} />
                 ))}
             </div>
             <div>
@@ -68,13 +68,7 @@ const Leaderboard = () => {
                     </div>
                 ))}
             </div>
-            
-          </div>
-          {!isMobile && <div className="right-column">
-            {/* Content for the right column */}
-            <StatsBar />
-          </div>}
-        </div>
+        </TwoColumnGrid>
       )
 }
 

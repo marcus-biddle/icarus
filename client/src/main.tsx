@@ -19,6 +19,7 @@ import { UserLayout } from './layouts/User/UserLayout';
 import HomeLevel1 from './NEWlayouts/Sections/HomeLevel1';
 import Leaderboard from './NEWlayouts/Leaderboard/Leaderboard';
 import Details from './NEWlayouts/Sections/Details/Details';
+import Workout from './NEWlayouts/Sections/Workouts/Workout';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/duo/sections',
         element: <HomeLevel1 />,
+      },
+      {
+        path: '/duo/workout',
+        element: <Workout />,
       },
       {
         path: '/duo/sections/details/:sectionId',

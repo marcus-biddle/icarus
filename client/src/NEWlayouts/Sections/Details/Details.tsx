@@ -4,13 +4,13 @@ import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
 import { GoArrowLeft, GoBroadcast } from "react-icons/go";
 import { DynamicIcon } from '../../../components/Icons/DynamicIcon';
 import { useNavigate } from 'react-router';
+import TwoColumnGrid from '../../../components/Grid/TwoColumnGrid';
 
 const Details = () => {
     const isMobile = useIsMobile({});
     const navigate = useNavigate();
     return (
-        <div className={"two-column-container"}>
-          <div className="left-column" style={{ padding: isMobile ? '0' : '20px', minHeight: isMobile ? '80vh' : '',}}>
+        <TwoColumnGrid>
             <div style={{ textAlign: 'left', borderBottom: '2px solid grey', display: 'flex', alignItems: 'center', paddingBottom: '8px', marginBottom: '16px', cursor: 'pointer'}} onClick={() => navigate(-1)}>
                 <DynamicIcon icon={GoArrowLeft} height='20px' width='20px' padding='0 10px 0 0' color='grey' />
                 <h4 style={{ fontWeight: '700', }}>Sections</h4>
@@ -34,12 +34,7 @@ const Details = () => {
                     <li>50 Sit ups</li>
                 </ul>
             </div>
-          </div>
-          {!isMobile && <div className="right-column">
-            {/* Content for the right column */}
-            <StatsBar />
-          </div>}
-        </div>
+        </TwoColumnGrid>
       )
 }
 

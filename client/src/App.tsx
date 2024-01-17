@@ -16,13 +16,13 @@ function App() {
 
   return (
     <>
-      <div style={{ display: 'flex', backgroundColor: 'white', color: 'black'}}>
+      <div style={{ display: 'flex', color: 'white', backgroundColor: '#121827'}}>
         {/* {false && <Camera />} */}
 
         {!location.pathname.includes('duo') && <TopNavbar />}
         {!isMobile && <SideNav />}
         
-        <div style={{ zIndex: '1', position: 'relative', minHeight: '100vh'}}>
+        <div style={{ zIndex: '1', position: 'relative', minHeight: '100vh', backgroundColor: '#121827'}}>
           {auth ? <Outlet /> : <LandingPageLayout />}
         </div>
         

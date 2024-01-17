@@ -1,46 +1,39 @@
 import React from 'react';
-import { GoHeart, GoStarFill, GoHeartFill, GoFlame, GoGoal } from "react-icons/go";
+import { GoHeart, GoStarFill, GoHeartFill, GoFlame, GoGoal, GoPlus } from "react-icons/go";
 import { DynamicIcon } from '../Icons/DynamicIcon';
 import HoverMenu from '../Menu/HoverMenu';
 import './index.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { NavLink } from 'react-router-dom';
+import { GiBodySwapping, GiFireBowl, GiWaterSplash } from "react-icons/gi";
 
 const StatsBar = () => {
   const isMobile = useIsMobile({});
   return (
-    <div className='stats-container' style={{ justifyContent: isMobile ? 'space-between' : 'space-around'}}>
-        <HoverMenu icon={<DynamicIcon icon={GoGoal} width='25px' height='25px' color='green'/>}>
-        <div style={{ minWidth: '200px'}}>
-          <h6 style={{ padding: '4px 16px', margin: '0', borderBottom: '2px solid grey', textAlign: 'left', textTransform: 'uppercase', fontSize: '14px', color: 'grey'}}>My Events</h6>
+    <div className='stats-container' style={{ justifyContent: isMobile ? 'space-between' : 'space-around', minWidth: '300px'}}>
+        <HoverMenu icon={<DynamicIcon icon={GiBodySwapping} width='25px' height='25px' color='green'/>}>
+        <div style={{ width: '225px'}} className='container'>
+          <h6 style={{ padding: '10px 16px', margin: '0', borderBottom: '1px solid #1E293B', textAlign: 'left', textTransform: 'uppercase', fontSize: '13px', color: 'white', letterSpacing: '1.12px'}}>Switch Events</h6>
           <ul className='stats-user-event-list'>
             <li>
-              <NavLink to=''>
                 <span>ICON</span>
-                <span>Calisthenics</span>
-              </NavLink>
+                <span>Push-ups</span>
             </li>
             <li>
-              <NavLink to=''>
                 <span>ICON</span>
-                <span>Running</span>
-              </NavLink>
+                <span>Pull-ups</span>
             </li>
           </ul>
-          <div className='add-event' style={{ borderTop: '1px solid grey'}}>
-            <div>+</div>
-            <h6 style={{ margin: '0', padding: '0', fontSize: '14px'}}>Add a new event</h6>
+          <div className='add-event' style={{ borderTop: '1px solid #1E293B' }}>
+            <NavLink to='' style={{ color: 'white', border: '1px solid white', borderRadius: '4px', display: 'flex'}}>
+              <DynamicIcon icon={GoPlus} width='20px' height='20px' />
+            </NavLink>
+            <h6 style={{ margin: '0', padding: '0', fontSize: '16px'}}>Add a new event</h6>
           </div>
         </div>
         </HoverMenu>
-        <HoverMenu icon={<DynamicIcon icon={GoFlame} width='25px' height='25px' color='red' />}>
-        <div>test</div>
-        </HoverMenu>
-        <HoverMenu icon={ <DynamicIcon icon={GoStarFill} width='25px' height='25px' color='yellow' />}>
-        <div>test</div>
-        </HoverMenu>
-        <HoverMenu icon={<DynamicIcon icon={GoHeartFill} width='25px' height='25px' color='red' />}>
-        <div>test</div>
+        <HoverMenu icon={<DynamicIcon icon={GiFireBowl} width='25px' height='25px' color='red' />}>
+        <div className='container'>test</div>
         </HoverMenu>
     </div>
   )

@@ -7,12 +7,12 @@
     padding: 24px;
   }
 
-  .table-container {
+  /* .table-container {
     margin: 0;
     background-color: #f7f7f7;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
+  } */
 
   /* .changes-container {
     width: 100%;
@@ -87,13 +87,13 @@
 }
 
 
-.container {
+/* .container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   border: 1px solid #21262D;
   border-radius: 4px;
-}
+} */
 
 .box {
   width: calc(33.33% - 20px); /* Adjust as needed */

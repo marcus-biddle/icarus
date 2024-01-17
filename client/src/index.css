@@ -178,3 +178,9 @@ button:focus-visible {
     background-color: #f9f9f9;
   } */
 }
+
+.container {
+  border: 1px solid #1E293B;
+  border-radius: 8px;
+  background-color: #131B2B;
+}

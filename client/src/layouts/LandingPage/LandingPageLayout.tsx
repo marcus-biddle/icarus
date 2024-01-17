@@ -4,7 +4,7 @@ import './LandingPageLayout.css';
 
 const LandingPageLayout = () => {
   const { handleSignin } = useGoogleAuth();
-  // const isMobile = useIsMobile();
+  // const isMobile = useIsMobile({});
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh'}}>

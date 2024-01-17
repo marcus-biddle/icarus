@@ -1,5 +1,5 @@
 .bottom-nav-container {
-    position: absolute;
+    position: sticky;
     background-color: white;
     width: 100%;
     bottom: 0;

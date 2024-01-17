@@ -1,0 +1,16 @@
+.date-btn {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease;
+}
+
+.date-btn:hover {
+    background-color: #131B2B;
+}
+
+.date-btn:active {
+    background-color: #182135;
+}

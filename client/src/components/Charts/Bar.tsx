@@ -14,7 +14,8 @@ import {
 interface BarChartProps {
     title: String;
     datasets: any[];
-    eventType: string
+    eventType: string;
+    length: any[];
 }
 
 function getRandomColor() {
@@ -44,24 +45,24 @@ function getRandomColorsArray(size) {
   return colorsArray;
 }
 
-export const BarChart = ({ title, datasets, eventType }: BarChartProps) => {
-  const [randomColors, setRandomColors] = useState<string[]>(getRandomColorsArray(datasets.length))
-  const newDatasets: any[] = [];
-  datasets.map((dataset, index) => {
-    const counts = months.map((month, index) => {
-      const found = dataset.months.find(m => m.month === index +1 && m.eventType === eventType);
-      if (found) {
-        return found.total
-      } else {
-        return 0;
-      }
-    })
-    newDatasets.push({
-      label: dataset.userName,
-      data: counts,
-      backgroundColor: randomColors[index]
-    })
-  })
+export const BarChart = ({ title, datasets, eventType, length }: BarChartProps) => {
+  // const [randomColors, setRandomColors] = useState<string[]>(getRandomColorsArray(datasets.length))
+  // const newDatasets: any[] = [];
+  // datasets.map((dataset, index) => {
+  //   const counts = months.map((month, index) => {
+  //     const found = dataset.months.find(m => m.month === index +1 && m.eventType === eventType);
+  //     if (found) {
+  //       return found.total
+  //     } else {
+  //       return 0;
+  //     }
+  //   })
+  //   newDatasets.push({
+  //     label: dataset.userName,
+  //     data: counts,
+  //     backgroundColor: randomColors[index]
+  //   })
+  // })
 
   ChartJS.register(
     CategoryScale,
@@ -86,11 +87,11 @@ export const BarChart = ({ title, datasets, eventType }: BarChartProps) => {
         },
       };
       
-      const labels = months;
+      const labels = length;
       
       const data = {
         labels,
-        datasets: newDatasets
+        datasets: datasets
       };
       
     

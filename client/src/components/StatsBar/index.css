@@ -2,20 +2,24 @@
     display: flex;
   }
 
-.stats-user-event-list, a {
+.stats-user-event-list, li {
   list-style: none;
   margin: 0;
   text-decoration: none;
   color: inherit;
 }
 
-.stats-user-event-list a, .add-event {
+.stats-user-event-list li, .add-event {
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px 24px;
   gap: 32px;
   transition: all .3s;
+}
+
+.stats-user-event-list li {
+  padding: 8px 32px;
 }
 
 .stats-user-event-list li:hover {

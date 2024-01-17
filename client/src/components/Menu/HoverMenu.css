@@ -18,8 +18,8 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #fff;
-    border: 2px solid #97979770;
+    /* background-color: #fff; */
+    /* border: 2px solid #97979770; */
     border-radius: 8px;
     z-index: 1;
   }

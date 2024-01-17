@@ -16,7 +16,7 @@ const HomeLayout = () => {
   const [ isRangeDropdownOpen, setRangeDropdownOpen ] = useState(false);
   const [ rangeType, setRangeType ] = useState('total');
   const [ sortOption, setSortOption ] = useState('pushup');
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile({});
 
   const events = data.events.sort((a, b) => {
     const eventNameA = a.events.find(event => event.eventName === sortOption);

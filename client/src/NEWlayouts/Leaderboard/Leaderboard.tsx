@@ -1,21 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile'
 import StatsBar from '../../components/StatsBar/StatsBar';
 import { GoRuby, GoShieldLock, GoTrophy, GoIssueDraft } from "react-icons/go";
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
 import { GiShield } from "react-icons/gi";
+import { GiLaurelsTrophy } from "react-icons/gi";
 import './index.css';
 import TwoColumnGrid from '../../components/Grid/TwoColumnGrid';
+import { NavLink } from 'react-router-dom';
+import { daysLeftInMonth } from '../../helpers/date';
 
-const LEAGUE_LEVELS = [
-    { name: 'Bronze', unlocked: true, color: 'brown' },
-    { name: 'Silver', unlocked: true, color: 'grey' },
-    { name: 'Gold', unlocked: true, color: 'gold' },
-    { name: 'Platinum', unlocked: false, color: 'blue' },
-    { name: 'Diamond', unlocked: false, color: 'aqua' },
-    { name: 'Master', unlocked: false, color: 'red' },
-    { name: 'Grandmaster', unlocked: false, color: 'black' },
-]
+export const LEAGUE_LEVELS = [
+    { name: 'Bronze', unlocked: true, color: '#cd7f32', description: 'Top 10 players advance.' }, // Bronze
+    { name: 'Silver', unlocked: true, color: '#c0c0c0', description: 'Top 10 players advance.' }, // Silver
+    { name: 'Gold', unlocked: true, color: '#ffd700', description: 'Top 10 players advance. Must have be participating in all events.' }, // Gold
+    { name: 'Platinum', unlocked: true, color: '#e5e4e2', description: 'Top 5 players advance. Lose points if your streak ends.' }, // Platinum
+    { name: 'Diamond', unlocked: true, color: '#b9f2ff', description: 'Top 5 players advance. Lose points if your streak ends.' }, // Diamond
+    { name: 'Master', unlocked: true, color: '#ff4500', description: 'Top player advances. Have the highest points in every category.' }, // Master (Red)
+    { name: 'Grandmaster', unlocked: true, color: '#9370db', description: 'Congrats! You beat everyone!' }, // Grandmaster (Black)
+  ];
 
 const FAKE_USERS = [
     { name: 'Marcus', exp: '254' },
@@ -36,22 +39,31 @@ const FAKE_USERS = [
   ];
 
 const Leaderboard = () => {
+    const [ activeTrophy, setActiveTrophy ] = useState(LEAGUE_LEVELS[2]);
     const isMobile = useIsMobile({});
     return (
-        <TwoColumnGrid>
-            <div style={{ display: 'flex', justifyContent: isMobile ? 'space-around' : 'center', width: isMobile ? '100vw' : '', alignItems: 'center' }}>
-                {LEAGUE_LEVELS.map((level) => (
-                    level.name === 'Gold' ? <DynamicIcon icon={level.unlocked ? GiShield: GoShieldLock} height={isMobile ? '60px' : '90px'} width={isMobile ? '60px' : '90px'} color={level.unlocked ? level.color : 'grey'} padding={isMobile ? '' : '0 16px'} /> : <DynamicIcon icon={level.unlocked ? GiShield : GoShieldLock} height={isMobile ? '30px' : '50px'} width={isMobile ? '30px' : '50px'} color={level.unlocked ? level.color : 'grey'} padding={isMobile ? '' : '0 16px'} />
-                ))}
+        <TwoColumnGrid showSecondColumnInMobile={false}>
+            <div style={{ display: 'flex', justifyContent: isMobile ? 'space-around' : 'center', width: isMobile ? '100vw' : '', alignItems: 'center', marginTop: isMobile ? '32px' : '' }}>
+                {LEAGUE_LEVELS.map((trophy) => {
+                    return (
+                        <div onClick={() => setActiveTrophy(trophy)} style={{ cursor: 'pointer'}}>
+                            <DynamicIcon icon={GiLaurelsTrophy} height={isMobile ? trophy.name === activeTrophy.name ? '70px' : '50px' : trophy.name === activeTrophy.name ? '90px' : '60px'} width={isMobile ? trophy.name === activeTrophy.name ? '70px' : '50px' : trophy.name === activeTrophy.name ? '90px' : '60px'} color={trophy.color} padding={isMobile ? '' : '0 16px'} />
+                        </div>
+                        
+                    )
+                })}
             </div>
-            <div>
-                <h4 style={{ fontWeight: '700', color: 'black', margin: '24px 0 16px 0'}}>Gold League</h4>
-                <h6 style={{ margin: '0', color: 'grey', fontWeight: '400'}}>Top 10 advance to the next league</h6>
-                <p style={{ fontSize: '14px', color: 'gold', fontWeight: '700', letterSpacing: '1.12px'}}>2 days</p>
+            <div style={{ marginBottom: '24px'}}>
+                <h4 style={{ fontWeight: '700', color: activeTrophy.color, margin: '24px 0 16px 0', transition: 'all .3s ease', fontSize: isMobile ? '24px' : '' }}>{activeTrophy.name} League</h4>
+                <h6 style={{ margin: '0', color: 'grey', fontWeight: '400', transition: 'all .3s ease', fontSize: isMobile ? '16px' : '', padding: isMobile ? '0 10px 16px' : '' }}>{activeTrophy.description}</h6>
+                <p style={{ color: 'white', fontWeight: '700', letterSpacing: '1.12px', transition: 'all .3s ease', fontSize: isMobile ? '18px' : '14px' }}>{daysLeftInMonth()} days</p>
             </div>
-            <div style={{ textAlign: 'center', borderTop: '1px solid grey', maxHeight: '70.5vh', overflowX: 'auto'}}>
+            <div style={{ textAlign: 'right' }}>
+                <button style={{ textTransform: 'uppercase', backgroundColor: 'transparent', letterSpacing: '1.12px', color: 'lightcyan', fontWeight: '700'}}>View Details</button>
+            </div>
+            <div className='container' style={{ textAlign: 'center', maxHeight: isMobile ? '57vh' : '70.5vh', overflowX: 'auto' }}>
                 {FAKE_USERS.map((user, index) => (
-                    <div className='user-card'>
+                    <NavLink to={''} className='user-card'>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px'}}>
                             <span>{index +1}</span>
                             <span>
@@ -64,8 +76,7 @@ const Leaderboard = () => {
                         <div>
                             <p style={{ fontSize: '16px', fontWeight: '300', letterSpacing: '1.12px'}}>{user.exp} XP</p>
                         </div>
-                        
-                    </div>
+                    </NavLink>
                 ))}
             </div>
         </TwoColumnGrid>

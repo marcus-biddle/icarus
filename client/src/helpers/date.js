@@ -110,3 +110,35 @@ export function getCurrentMonth() {
 
     return timestampString;
   }
+
+  export function daysLeftInMonth() {
+    const today = new Date();
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    
+    // Calculate the difference in days
+    const timeDifference = lastDayOfMonth.getTime() - today.getTime();
+    const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24));
+  
+    return daysLeft;
+  }
+
+  export function getWeekDates(inputDate) {
+    const currentDate = inputDate ? new Date(inputDate) : new Date();
+  
+    // Calculate the start date of the week (Sunday)
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - currentDate.getDay());
+  
+    // Calculate the end date of the week (Saturday)
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 6);
+  
+    // Format dates as strings (YYYY-MM-DD)
+    const formattedStartDate = startDate.toISOString().split('T')[0];
+    const formattedEndDate = endDate.toISOString().split('T')[0];
+  
+    return {
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+    };
+  }

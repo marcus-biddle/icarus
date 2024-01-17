@@ -26,7 +26,7 @@ const TopNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { openModal, isModalOpen, closeModal } = useEventModal();
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile({});
 
   const wrapperRef = useRef(null);
   useOutsideClick(wrapperRef, () => setDropdownOpen(false));

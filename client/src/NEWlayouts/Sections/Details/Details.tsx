@@ -10,7 +10,7 @@ const Details = () => {
     const isMobile = useIsMobile({});
     const navigate = useNavigate();
     return (
-        <TwoColumnGrid>
+        <TwoColumnGrid showSecondColumnInMobile={false}>
             <div style={{ textAlign: 'left', borderBottom: '2px solid grey', display: 'flex', alignItems: 'center', paddingBottom: '8px', marginBottom: '16px', cursor: 'pointer'}} onClick={() => navigate(-1)}>
                 <DynamicIcon icon={GoArrowLeft} height='20px' width='20px' padding='0 10px 0 0' color='grey' />
                 <h4 style={{ fontWeight: '700', }}>Sections</h4>

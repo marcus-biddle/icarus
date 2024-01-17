@@ -172,14 +172,14 @@
     overflow: hidden;
   } */
 
-  .table__body {
+  /* .table__body {
     width: 95%;
     max-height: calc(89% - .8rem);
     background-color: rgba(142, 137, 137, 0.733);
     margin: .8rem auto;
     border-radius: .6rem;
     overflow: auto;
-  }
+  } */
 
   /* th:nth-child(1) {
     width: 20px;

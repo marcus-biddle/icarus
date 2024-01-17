@@ -20,6 +20,9 @@ import HomeLevel1 from './NEWlayouts/Sections/HomeLevel1';
 import Leaderboard from './NEWlayouts/Leaderboard/Leaderboard';
 import Details from './NEWlayouts/Sections/Details/Details';
 import Workout from './NEWlayouts/Sections/Workouts/Workout';
+import History from './NEWlayouts/History/History';
+import HistoryWeek from './NEWlayouts/History/HistoryWeek';
+import Practice from './NEWlayouts/Practice/Practice';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +46,18 @@ const router = createBrowserRouter([
       {
         path: '/duo/workout',
         element: <Workout />,
+      },
+      {
+        path: '/duo/practice',
+        element: <Practice />,
+      },
+      {
+        path: '/duo/history',
+        element: <History />,
+      },
+      {
+        path: '/duo/history/week',
+        element: <HistoryWeek />,
       },
       {
         path: '/duo/sections/details/:sectionId',

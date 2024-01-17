@@ -11,6 +11,6 @@ interface DynamicIconProps {
 
 export const DynamicIcon = ({ icon: Icon, width, height, color, padding }: DynamicIconProps) => {
   return (
-    <Icon style={{ width: width, height: height, color: color, padding: padding }} />
+    <Icon style={{ width: width, height: height, color: color, padding: padding, transition: 'all .5s ease' }} />
   )
 }

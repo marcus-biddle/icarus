@@ -1,0 +1,94 @@
+.login-btn {
+    max-width: 350px;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 1.12px;
+    padding: 12px 24px;
+    border: 1px solid #525967;
+    border-bottom: 4px solid #525967;
+}
+
+.login-btn:active {
+    border-bottom: 1px solid #525967;
+}
+
+.login-btn:hover {
+    opacity: .85;
+}
+
+.fade-in-out {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  }
+  
+  .hidden {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  
+  .visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .form-container {    
+    width: 100%;
+    box-sizing: border-box;
+    
+}
+
+.input-group-signin {
+    font-size: 1rem;
+    position: relative;
+    --primary: #1DB954;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    
+}
+
+.input-group-signin input {
+    all: unset;
+    color: #fefefe;
+    padding: 1rem;
+    border: 1px solid #1E293B;
+    border-radius: 10px;
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.input-group-signin label {
+    position: absolute;
+    color: #a3a1a1;
+    pointer-events: none;
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.12px;
+}
+
+.input-group-signin input:focus {
+    border: 1px solid var(--primary);
+}
+
+.input-group-signin input:is(:focus, :valid) ~ label {
+    transform: translateY(-125%) scale(0.7);
+    background-color: #131B2B;
+    padding-inline: 0.3rem;
+    color: var(--primary);
+}
+
+.send-btn {
+    position: absolute;
+    right: 1rem;
+    top: .7rem;
+    padding: 4px 16px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-group-signin input:is(:focus, :valid) ~ .send-btn {
+    background-color: #1DB954;
+}

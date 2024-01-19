@@ -13,47 +13,91 @@
 
 
 .tile {
-    width: 60px;
-    height: 60px;
+    width: 500px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
 }
 
 .tile::before {
     content: '';
-    width: 60px;
+    width: 120px;
     height: 5px;
-    background-color: #081d9182;
+    background-color: rgb(181, 177, 177);
     position: absolute;
-    top: 70px;
-    left: 8px;
+    top: 225px;
+    left: 38%;
     border-radius: 50%;
-    animation: shade 1.5s linear infinite;
-}
-
-.tile-icon {
-    width: 60px;
-    height: 60px;
-    color: black;
-    animation: bounce 1.5s linear infinite;
-}
-
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(10px);
-    }
+    animation: shade 3s linear infinite;
 }
 
 @keyframes shade {
     0%, 100% {
         transform: scale(.85, 1);
+        background-color: rgb(255, 255, 255);
     }
     50% {
-        transform: scale(1, 1.2);
+        transform: scale(.65, 1.2);
+        background-color: rgba(255, 255, 255, 0.381);
     }
 }
+
+.tile-icon-flipped {
+    width: 120px;
+    height: 120px;
+    animation: bounce-flipped 3s linear infinite;
+}
+
+@keyframes bounce-flipped {
+    0%, 100% {
+        transform: translateY(0) scaleX(-1) rotate(0);
+        opacity: .6;
+    }
+    50% {
+        transform: translateY(20px) scaleX(-1.2) rotate(10deg);
+        opacity: 1;
+    }
+}
+
+.tile-icon-nonFlipped {
+    width: 120px;
+    height: 120px;
+    animation: bounce-nonFlipped 3s linear infinite;
+}
+
+@keyframes bounce-nonFlipped {
+    0%, 100% {
+        transform: translateY(0) scaleX(1) rotate(0);
+        opacity: .6;
+    }
+    50% {
+        transform: translateY(20px) scaleX(1.2) rotate(10deg);
+        opacity: 1;
+    }
+}
+
+.tile-icon-center {
+    width: 80px;
+    height: 80px;
+    transform: translateY(10px);
+    /* animation: bounce 1.7s linear infinite; */
+}
+
+.fly {
+    animation: bounce 3s linear infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(75px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
+
+
 
 .tile-locked {
     width: 60px;
@@ -100,5 +144,3 @@
     height: 40px;
     color: #23993782;
 }
-
-.tile-icon-completed

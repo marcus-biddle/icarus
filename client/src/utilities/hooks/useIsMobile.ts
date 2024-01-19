@@ -4,7 +4,7 @@ interface MobileProps {
   threshold?: number
 }
 
-const MOBILE_THRESHOLD = 768;
+const MOBILE_THRESHOLD = 800;
 
 export const useIsMobile = ({ threshold = MOBILE_THRESHOLD }: MobileProps) => {
   
@@ -13,8 +13,7 @@ export const useIsMobile = ({ threshold = MOBILE_THRESHOLD }: MobileProps) => {
   const handleResize = useCallback(() => {
     const newIsMobile = window.innerWidth <= threshold;
     setIsMobile(newIsMobile);
-    console.log('useIsMobile');
-  }, []); // Empty dependency array means the callback will not change unless MOBILE_THRESHOLD changes
+  }, []); 
   
   useEffect(() => {
     window.addEventListener('resize', handleResize);

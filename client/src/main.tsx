@@ -24,20 +24,29 @@ import History from './NEWlayouts/History/History';
 import HistoryWeek from './NEWlayouts/History/HistoryWeek';
 import Practice from './NEWlayouts/Practice/Practice';
 
+import { Provider } from 'react-redux';
+import { store, persistor } from './app/store'
+import { PersistGate } from 'redux-persist/integration/react';
+import NewLogin from './NEWlayouts/Login/New_Login';
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
         <App />
     ),
-    loader: async () => {
-      const token = localStorage.getItem('idToken');
-      return { token: token }
-    },
+    // loader: async () => {
+    //   const token = localStorage.getItem('idToken');
+    //   return { token: token }
+    // },
     children: [
       {
         path: '/',
         element: <LandingPageLayout />,
+      },
+      {
+        path: '/duo/login',
+        element: <NewLogin />,
       },
       {
         path: '/duo/sections',
@@ -123,7 +132,11 @@ const router = createBrowserRouter([
 ]);
 // TODO Env variables && vite
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <GoogleOAuthProvider clientId={'505006994945-636h437bsivgmdpqbae88urbgje1o0bu.apps.googleusercontent.com'}>
-      <RouterProvider router={router} />
-    </GoogleOAuthProvider>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <GoogleOAuthProvider clientId={'505006994945-636h437bsivgmdpqbae88urbgje1o0bu.apps.googleusercontent.com'}>
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
+    </PersistGate>
+  </Provider>
 )

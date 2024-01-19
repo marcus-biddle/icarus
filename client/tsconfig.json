@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.js", "src/**/**/*.js", "./*.d.ts", "src/components/Icons/DynamicIcon.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.js", "src/**/**/*.js", "./*.d.ts", "src/components/Icons/DynamicIcon.tsx", "src/utilities/hooks/useDelayedDisplay.tsx"],
   "exclude": ["./node_modules", "./dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

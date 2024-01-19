@@ -19,7 +19,7 @@ export const useGoogleAuth = () => {
         const user = await userActions.getUser();
         if (user) {
             console.log(user)
-            navigate('/home');
+            navigate('/duo/leaderboard');
         }
     };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GiGorilla, GiLaurelCrown, GiLibertyWing } from "react-icons/gi";
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
 import './Login.css'
@@ -8,6 +8,9 @@ import { Show } from '../../helpers/functional';
 import { useDelayedDisplay } from '../../utilities/hooks/useDelayedDisplay';
 import { MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md";
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { UserState } from '../../features/user/userSlice';
+// import { addEvent, updateUsername } from '../../features/user/userSlice';
 
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
@@ -18,8 +21,10 @@ const NewLogin = () => {
 
     const isMobile = useIsMobile({});
     const navigate = useNavigate();
-    const { handleSignin } = useGoogleAuth();
+    const dispatch = useDispatch();
+    const { handleSignin  } = useGoogleAuth({ selectedItems, username });
     const DelayedDisplay = useDelayedDisplay({ delay: 5000 });
+    const creationDate = useSelector((state: UserState) => state?.currentUser?.creationDate)
 
     const handlePositionChange = () => {
         setIsVisibile(false);
@@ -39,7 +44,6 @@ const NewLogin = () => {
 
     const handleUsernameChange = (event) => {
         const newUsername = event.target.value;
-        setUsername(newUsername);
     
         // Check for special characters in the username
         const specialCharacters = /[!@#$%^&*(),.?":{}|<>]/;
@@ -47,14 +51,38 @@ const NewLogin = () => {
           setErrorMessage('Username cannot contain special characters.');
         } else {
           setErrorMessage('');
+          setUsername(newUsername);
         }
       };
 
       const handleCreateAccount = () => {
         handleSignin();
+        // console.log('found!', userFound)
+        // dispatch(
+        //     updateUsername(username)
+        // )
         // add logic for the other data
-        navigate('/duo/leaderboard')
+        // navigate('/duo/leaderboard')
       }
+
+      const handleExistingAccount = () => {
+        handleSignin();
+        // add logic for getting existing user data.
+        // navigate('/duo/leaderboard');
+      }
+
+      const handleEventSelectionNextClick = () => {
+        // dispatch(
+        //     addEvent(selectedItems)
+        // )
+        handlePositionChange();
+      }
+
+      useEffect(() => {
+        if (creationDate) {
+            navigate('/duo/leaderboard')
+        }
+      })
 
   return (
     <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
@@ -81,7 +109,7 @@ const NewLogin = () => {
                         <div style={{ height: '50px'}}>
                             <button className='login-btn' style={{ backgroundColor: '#1DB954', width: '100%' }} onClick={() => handlePositionChange()}>Get Started</button>
                         </div>
-                        <button className='login-btn' style={{ backgroundColor: 'white', color: '#525967' }} onClick={() => handleSignin()}>I already have an account</button>
+                        <button className='login-btn' style={{ backgroundColor: 'white', color: '#525967' }} onClick={() => handleExistingAccount()}>I already have an account</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +141,7 @@ const NewLogin = () => {
                 </DelayedDisplay>
                 <Show when={selectedItems.length >= 1}>
                     <div style={{ textAlign: 'right', margin: '64px'}}>
-                        <button className='login-btn' onClick={() => handlePositionChange()}>Next</button>
+                        <button className='login-btn' onClick={() => handleEventSelectionNextClick()}>Next</button>
                     </div>
                 </Show>
             </div>
@@ -129,11 +157,11 @@ const NewLogin = () => {
                     id='message'
                     value={username} 
                     style={{ width: '100%', margin: '80px 32px'}}
-                    onChange={(e) => setUsername(e.target.value)}/>
+                    onChange={(e) => handleUsernameChange(e)}/>
                     <label htmlFor='message' style={{ top: '6.2rem', left: '3rem' }}>Username</label>
                     </div>
-                    
-                    <button className='login-btn' style={{ backgroundColor: '#1DB954', width: '100%' }} onClick={() => handleSignin()}>Create Account</button>
+                    <div style={{ color: 'orangered'}}>{errorMessage}</div>
+                    <button type='button' className='login-btn' style={{ backgroundColor: '#1DB954', width: '100%' }} onClick={() => handleCreateAccount()}>Create Account</button>
                 </form>
             </div>
         </Show>

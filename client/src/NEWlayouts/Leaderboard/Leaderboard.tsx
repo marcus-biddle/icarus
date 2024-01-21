@@ -38,6 +38,8 @@ const FAKE_USERS = [
     // Add more entries as needed
   ];
 
+  // when someone creates an account, add them to the leaderboard.
+
 const Leaderboard = () => {
     const [ activeTrophy, setActiveTrophy ] = useState(LEAGUE_LEVELS[2]);
     const isMobile = useIsMobile({});
@@ -46,7 +48,7 @@ const Leaderboard = () => {
             <div style={{ display: 'flex', justifyContent: isMobile ? 'space-around' : 'center', width: isMobile ? '100vw' : '', alignItems: 'center', marginTop: isMobile ? '32px' : '' }}>
                 {LEAGUE_LEVELS.map((trophy) => {
                     return (
-                        <div onClick={() => setActiveTrophy(trophy)} style={{ cursor: 'pointer'}}>
+                        <div key={trophy.name} onClick={() => setActiveTrophy(trophy)} style={{ cursor: 'pointer'}}>
                             <DynamicIcon icon={GiLaurelsTrophy} height={isMobile ? trophy.name === activeTrophy.name ? '70px' : '50px' : trophy.name === activeTrophy.name ? '90px' : '60px'} width={isMobile ? trophy.name === activeTrophy.name ? '70px' : '50px' : trophy.name === activeTrophy.name ? '90px' : '60px'} color={trophy.color} padding={isMobile ? '' : '0 16px'} />
                         </div>
                         
@@ -63,7 +65,7 @@ const Leaderboard = () => {
             </div>
             <div className='container' style={{ textAlign: 'center', maxHeight: isMobile ? '57vh' : '70.5vh', overflowX: 'auto' }}>
                 {FAKE_USERS.map((user, index) => (
-                    <NavLink to={''} className='user-card'>
+                    <NavLink key={user.name} to={''} className='user-card'>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px'}}>
                             <span>{index +1}</span>
                             <span>

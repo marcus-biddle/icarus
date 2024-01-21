@@ -81,10 +81,10 @@ const router = createBrowserRouter([
         path: 'home',
         element: <HomeLayout />,
         loader: async () => {
-          const [logRes, eventRes, pullRes, ] = await Promise.all([
+          const [logRes, eventRes,  ] = await Promise.all([
             logsActions.getLogs(),
             eventActions.getEachEventForAllUsers(),
-            userActions.getUser()
+            // userActions.getUser()
           ]);
         
           return {logs: logRes, events: eventRes};
@@ -106,12 +106,12 @@ const router = createBrowserRouter([
         element: <ChatLayout />,
         loader: async () => {
           const messagesRes = await messageActions.getAllMessages();
-          const userRes = await userActions.createUser();
+          // const userRes = await userActions.createUser();
           return { messages: messagesRes.sort((a, b) => {
             const timestampA = new Date(a.timestamp).getTime();
             const timestampB = new Date(b.timestamp).getTime();
             return timestampA - timestampB;
-          }), user: userRes };
+          }), user: [] };
         },
       },
       {
@@ -119,12 +119,12 @@ const router = createBrowserRouter([
         element: <UserLayout />,
         loader: async () => {
           const messagesRes = await messageActions.getAllMessages();
-          const userRes = await userActions.createUser();
+          // const userRes = await userActions.createUser();
           return { messages: messagesRes.sort((a, b) => {
             const timestampA = new Date(a.timestamp).getTime();
             const timestampB = new Date(b.timestamp).getTime();
             return timestampA - timestampB;
-          }), user: userRes };
+          }), user: [] };
         },
       },
     ]

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from '../features/user/userSlice.ts'
+import thunkMiddleware from 'redux-thunk'
 // import { createStore } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
@@ -16,7 +17,7 @@ const reduxPersistActions = [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER];
  
 const persistConfig = {
   key: 'root',
-  storage,
+  storage
 }
  
 const persistedReducer = persistReducer(persistConfig, userReducer)

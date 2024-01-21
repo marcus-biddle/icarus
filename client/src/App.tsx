@@ -10,19 +10,22 @@ import SideNav from './components/Navigation/SideNav/SideNav';
 import { useIsMobile } from './utilities/hooks/useIsMobile';
 import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
+import { UserState } from './features/user/userSlice';
 
 function App() {
   const auth = useAuthCheck();
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useIsMobile({});
-  const hasGoogleId = useSelector((state: RootState) => state.hasGoogleId);
+  const creationDate = useSelector((state: UserState) => state?.currentUser?.creationDate)
+  const user = useSelector((state: UserState) => state?.currentUser);
 
   useEffect(() => {
-    // if (!hasGoogleId) {
-    //   navigate('duo/login')
-    // }
-  }, [location.pathname, hasGoogleId])
+    if (!creationDate) {
+      navigate('duo/login')
+    }
+    console.log('User -App.tsx', user);
+  }, [location.pathname, creationDate])
 
   return (
     <>

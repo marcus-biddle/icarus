@@ -1,13 +1,21 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, nanoid, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { userActions } from '../../api/users';
 
-export interface UserState {
-  events: string[];
+export interface User {
+  eventIds: string[];
   currentEventId?: string;
-  currentEvent?: string;
+  eventTotals?: [{
+    event: string;
+    totalDays: number; // update once a day
+    totalReps: number;
+    totalXp: number;
+    lastUpdatedDate: string;
+  }],
+  currentEvent?: string; // unused
   email?: string;
   name?: string;
   username?: string;
-  id?: number | null;
+  id?: string | null;
   googleId?: string | null;
   hasGoogleId?: boolean;
   creationDate?: number | null;
@@ -15,7 +23,7 @@ export interface UserState {
   monthlyXp?: number;
   totalXp?: number;
   streak?: number;
-  updateCounts: number;
+  updateCounts: number; // this is to track how often a user adds reps
   streakData?: {
     currentStreak: {
       endDate: string;
@@ -39,7 +47,7 @@ export interface UserState {
   xpGains?: [{
     event: string;
     time: number;
-    totalReps: number;
+    reps: number;
     xp: number;
   }],
   xpSummaries?: [{
@@ -49,59 +57,99 @@ export interface UserState {
     streakExtended: boolean;
     totalUpdatedCounts: number;
     userId: number;
-  }]
+  }],
+  leaderboard: {
+    ranking: number;
+    leagueId: string;
+  }
+}
+
+export interface UserState {
+  currentUser: User | null
 }
 
 const initialState: UserState = {
-  events: [],
-  hasGoogleId: false,
-  updateCounts: 0,
-  streakData: {
-    currentStreak: null,
-    longestStreak: null,
-    previousStreak: null
-  },
-  xpGains: [{
-    event: '',
-    time: 0,
-    totalReps: 0,
-    xp: 0,
-  }],
-  xpSummaries: [{
-    date: 0,
-    gainedXp: 0,
-    numUpdateCounts: 0,
-    streakExtended: true,
-    totalUpdatedCounts: 0,
-    userId: 0,
-  }]
+  currentUser: null
 }
+
+export const createUser: any = createAsyncThunk('user/createUser', async (newUserAttributes: {googleId: string, selectedItems: string[], username: string}) => {
+  const newUser = await userActions.createUser({
+    googleId: newUserAttributes.googleId, 
+    selectedItems: newUserAttributes.selectedItems, 
+    username: newUserAttributes.username, 
+    id: nanoid()
+  });
+
+  console.log('createUser - userSlice', newUser);
+  return newUser
+});
+
+// export const userLogin: any = createAsyncThunk('user/createUser', async (googleId: string) => {
+//   const newUser = await userActions.getUser(googleId);
+
+//   console.log('createUser - userSlice', newUser);
+//   return newUser
+// });
 
 export const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    addEvent: (state: UserState, action: PayloadAction<string>) => {
-      state.events.push(action.payload)
-    },
-    removeEvent: (state: UserState, action: PayloadAction<string>) => {
-      state.events = state.events.filter(event => event !== action.payload);
+    setUser: (state: UserState, action: PayloadAction<User>) => {
+      state.currentUser = action.payload
     },
     updateCurrentEvent: (state: UserState, action: PayloadAction<string>) => {
-      const isAllowed = state.events.includes(action.payload);
-      if (isAllowed) {
-        state.currentEventId = action.payload;
+        if (state.currentUser) state.currentUser.currentEventId = action.payload;
+    },
+    updateUserPractice: (state: UserState, action: PayloadAction<number>) => {
+      if (state.currentUser?.eventTotals && state.currentUser.currentEventId) {
+        const index = state.currentUser?.eventTotals.findIndex(eventTotal => eventTotal.event === state.currentUser?.currentEventId);
+        if (index === -1) {
+          state.currentUser?.eventTotals.push({
+            event: state.currentUser.currentEventId,
+            totalDays: 1,
+            totalReps: action.payload,
+            totalXp: action.payload,
+            lastUpdatedDate: new Date().toLocaleDateString('en-US')
+          })
+        } else {
+          state.currentUser.eventTotals[index] = {
+            ...state.currentUser.eventTotals[index],
+            totalDays: state.currentUser.eventTotals[index].lastUpdatedDate !== new Date().toLocaleDateString('en-US') ? state.currentUser.eventTotals[index].totalDays + 1 : state.currentUser.eventTotals[index].totalDays,
+            totalReps: state.currentUser.eventTotals[index].totalReps + action.payload,
+            totalXp: state.currentUser.eventTotals[index].totalXp + action.payload,
+            lastUpdatedDate: new Date().toLocaleDateString('en-US')
+          }
+        }
       } else {
-        state.currentEventId = state.events[0] || "";
+        if (state.currentUser && state.currentUser.currentEventId) {
+          state.currentUser.eventTotals = [{
+            event: state.currentUser.currentEventId,
+            totalDays: 1,
+            totalReps: action.payload,
+            totalXp: action.payload,
+            lastUpdatedDate: new Date().toLocaleDateString('en-US')
+          }]
+        }
+        
       }
-    }
+
+  },
+  },
+  extraReducers(builder) {
+      builder.addCase(createUser.fulfilled, (state, action: PayloadAction<User>) => {
+        state.currentUser = action.payload;
+      })
   },
 })
 
+
+
 // Action creators are generated for each case reducer function
 export const { 
-  addEvent,
-
+  setUser,
+  updateCurrentEvent,
+  updateUserPractice
  } = userSlice.actions
 
 export default userSlice.reducer

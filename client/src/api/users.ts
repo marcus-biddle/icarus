@@ -2,11 +2,13 @@ import {createAxiosInstance} from "./config/axios";
 
 const axiosInstance = createAxiosInstance();
 
-const createUser = async () => {
-    const googleId = localStorage.getItem('idToken');
+const createUser = async ({ googleId, selectedItems, username, id } : {googleId: string, selectedItems: string[], username: string, id: string}) => {
     try {
         const response = await axiosInstance.post('/users/create', {
-            googleId: googleId
+            googleId: googleId,
+            selectedItems: selectedItems,
+            username: username,
+            id: id
         });
 
         return response.data;
@@ -28,8 +30,7 @@ const getAllUsers = async () => {
     }
 }
 
-const getUser = async () => {
-    const googleId = localStorage.getItem('idToken');
+const getUser = async (googleId: string) => {
     try {
         const response = await axiosInstance.get(`/users/find?googleId=${googleId}`);
         return response.data;

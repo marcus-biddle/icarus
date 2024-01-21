@@ -10,6 +10,7 @@ import logsRouter from './routes/Log.route.js';
 import EventRouter from './routes/Event.route.js';
 import pointsRouter from './routes/ExperiencePoint.route.js';
 import messageRouter from './routes/Message.route.js';
+import leaderboardRouter from './routes/Leaderboard.route.js'
 import { connectMongoDb } from './config/mongoDB.config.js';
 import { credentials } from './middleware/credentials.js';
 import { corsOptions } from './config/corsOptions.js';
@@ -58,6 +59,7 @@ app.use('/', logsRouter);
 app.use('/', pointsRouter);
 app.use('/', messageRouter);
 app.use('/', EventRouter);
+app.use('/', leaderboardRouter);
 
 mongoose.connection.once('open', () => {
   console.log('Connected to MongoDB')

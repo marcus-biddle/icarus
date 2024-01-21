@@ -1,10 +1,10 @@
 .bottom-nav-container {
     position: sticky;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 100%;
     bottom: 0;
     color: white;
-    height: 100px;
+    height: 85px;
     z-index: 1;
 }
 
@@ -17,6 +17,8 @@
     display: flex;
     justify-content: space-around;
     margin-top: 8px;
+    align-items: center;
+    padding-top: 8px;
 }
 
 .link-container .active  {
@@ -25,4 +27,11 @@
     color: #27aef7;
     border-radius: 12px;
     transition: all 0.5s;
+}
+
+.link-container a {
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

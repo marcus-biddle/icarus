@@ -5,6 +5,11 @@ import jwt from 'jsonwebtoken';
 // POST to retreive user or create a new user
 const createUser = async (req, res) => {
     const googleId = req.body.googleId;
+    const selectedItems = req.body.selectedItems;
+    const username = req.body.username;
+    const id = req.body.id;
+
+    console.log(googleId, selectedItems, username, id)
     if (!googleId) return res.status(400).json({ error: 'googleId is required' });
     
     const decodedToken = await jwt.decode(googleId);
@@ -14,8 +19,13 @@ const createUser = async (req, res) => {
 
     try {
         const user = await User.create({
-          username: decodedToken.name,
+          name: decodedToken.name,
           email: decodedToken.email,
+          googleId: googleId,
+          username: username,
+          eventIds: selectedItems,
+          currentEventId: selectedItems[0],
+          id: id
         });
 
         await Logs.create({

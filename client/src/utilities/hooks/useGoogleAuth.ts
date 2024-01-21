@@ -3,29 +3,44 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { createAxiosInstance } from '../../api/config/axios';
 import { userActions } from '../../api/users';
+import { useDispatch } from 'react-redux';
+import { createUser, setUser } from '../../features/user/userSlice';
+// import { setGoogleId } from '../../features/user/userSlice';
 
-export const useGoogleAuth = () => {
+export const useGoogleAuth = ({ selectedItems, username }: {selectedItems: string[], username: string}) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const axiosInstance = createAxiosInstance();
-    const [token, setToken] = useState<string | null>(localStorage.getItem('idToken'));
 
     const handleGoogleSignIn = async (googleId: string) => {
-        if (token === null) {
-            localStorage.setItem('idToken', googleId); // Store the token in localStorage
-            setToken(googleId);
-            await userActions.createUser();
-            // await pushupActions.createPushupLog();
-        } 
-        const user = await userActions.getUser();
+        const user = await userActions.getUser(googleId);
+
+        if (!user) {
+            if (selectedItems.length >= 1) {
+                dispatch(
+                    createUser({
+                        googleId: googleId, 
+                        selectedItems: selectedItems, 
+                        username: username
+                    })
+                )
+            } else {
+                navigate('/duo/login')
+            }
+            
+        };
+
         if (user) {
-            console.log(user)
-            navigate('/duo/leaderboard');
+            console.log('existing user', user);
+            dispatch(
+                setUser(user)
+            )
         }
     };
 
     const handleSignOut = () => {
-        localStorage.removeItem('idToken'); // Remove the token from localStorage
-        setToken(null);
+        // localStorage.removeItem('idToken'); // Remove the token from localStorage
+        // setToken(null);
         navigate('/');
     };
 

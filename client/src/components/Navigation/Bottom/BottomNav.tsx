@@ -9,8 +9,8 @@ const BottomNav = () => {
     <div className='bottom-nav-container'>
         <div className='link-container'>
             {PATHS.map((path) => (
-                <NavLink to={path.link} end key={path.name} >
-                    <DynamicIcon icon={path.icon} height={'45px'} width={'45px'} color='black' />
+                <NavLink to={path.link} key={path.name} >
+                    <DynamicIcon icon={path.icon} height={'60px'} width={'60px'} color='black' />
                 </NavLink>
             ))}
         </div>

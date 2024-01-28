@@ -80,3 +80,14 @@ export const formatDatasets = (array, option) => {
 }
 
 export const googleId = localStorage.getItem('idToken') || '';
+
+export const findUserById = (leaderboardData, userId) => {
+  for (const leagueGroup of leaderboardData.leagueGroups) {
+    console.log(leagueGroup)
+    const foundUser = leagueGroup.users.find(user => user.userId === userId);
+    if (foundUser) {
+      return foundUser;
+    }
+  }
+  return null; // User not found
+};

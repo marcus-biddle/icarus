@@ -5,6 +5,8 @@
     margin: 4px 32px;
     padding: 10px;
     border-radius: 12px;
+    color: white;
+    text-decoration: none;
   }
 
 .user-card:hover {

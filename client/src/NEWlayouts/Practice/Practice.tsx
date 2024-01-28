@@ -3,16 +3,20 @@ import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
 import './Practice.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState, updateUserPractice } from '../../features/user/userSlice';
+import { UserState, updateUserPractice, updateUserYearCount } from '../../features/user/userSlice';
+import { updateLeaderboardXp } from '../../features/leaderboard/leaderboardSlice'
+import { RootState } from '../../app/store';
 
 const Practice = () => {
     const [inputValue, setInputValue] = useState('');
     const [error, setError] = useState('');
     const isMobile = useIsMobile({});
     const dispatch = useDispatch();
-    const currentEventId = useSelector((state: UserState) => state.currentUser?.currentEventId);
-    const eventTotalIndex = useSelector((state: UserState) => state.currentUser?.eventTotals?.findIndex(eventTotal => eventTotal.event === currentEventId)) || -1
-    const eventTotals = useSelector((state: UserState) => state.currentUser?.eventTotals);
+    const user = useSelector((state: RootState) => state.user.currentUser);
+    const userId = user?.id || '';
+    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
+    // const eventTotalIndex = useSelector((state: RootState) => state.user.currentUser?.eventTotals?.findIndex(eventTotal => eventTotal.event === currentEventId)) || -1
+    
 
     const handleInputChange = (e) => {
     const value = e.target.value;
@@ -35,6 +39,17 @@ const Practice = () => {
       updateUserPractice(numericValue)
     )
 
+    if (user?.monthlyXp) {
+      // change this. Possibly move to leaderboard.
+      dispatch(
+        updateLeaderboardXp({xpGain: (numericValue + user?.monthlyXp), userId: user.id })
+      )
+    }
+
+    dispatch(
+      updateUserYearCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
+    )
+    
     setInputValue('');
   };
 

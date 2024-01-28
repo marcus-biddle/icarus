@@ -41,8 +41,51 @@ const getUser = async (googleId: string) => {
     }
 }
 
+const fetchUsersYearSummaries = async (eventId: string) => {
+    try {
+        const response = await axiosInstance.get(`/users/all/year/${eventId}`);
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const updateUserYearCount = async (count: number, eventId: string, userId: string) => {
+    try {
+        const response = await axiosInstance.post('/users/update/yearSummary', {
+            count: count,
+            eventId: eventId,
+            userId: userId
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const fetchUsersMonthSummaries = async (eventId: string) => {
+    try {
+        const response = await axiosInstance.get(`/users/all/month/${eventId}`);
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const userActions = {
     createUser,
     getAllUsers,
-    getUser
+    getUser,
+    fetchUsersYearSummaries,
+    updateUserYearCount,
+    fetchUsersMonthSummaries
 }

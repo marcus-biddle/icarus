@@ -1,7 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userReducer from '../features/user/userSlice.ts'
-import thunkMiddleware from 'redux-thunk'
-// import { createStore } from 'redux'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import userReducer, { UserState } from '../features/user/userSlice.ts'
+import leaderboardReducer, { LeaderboardState } from '../features/leaderboard/leaderboardSlice.ts'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import {
@@ -19,8 +18,14 @@ const persistConfig = {
   key: 'root',
   storage
 }
+
+const rootReducer = combineReducers({
+  user: userReducer,
+  leaderboard: leaderboardReducer,
+  // Add more reducers as needed
+});
  
-const persistedReducer = persistReducer(persistConfig, userReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
  
   export const store = configureStore({ 
     reducer: persistedReducer,
@@ -40,6 +45,10 @@ const persistedReducer = persistReducer(persistConfig, userReducer)
 // })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
+export interface RootState {
+  user: UserState;
+  leaderboard: LeaderboardState;
+  // ... other slices if you have them
+}
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch

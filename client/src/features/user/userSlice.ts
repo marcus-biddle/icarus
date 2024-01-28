@@ -1,5 +1,7 @@
 import { createSlice, nanoid, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { userActions } from '../../api/users';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 export interface User {
   eventIds: string[];
@@ -50,17 +52,40 @@ export interface User {
     reps: number;
     xp: number;
   }],
-  xpSummaries?: [{
-    date: number;
-    gainedXp: number;
-    numUpdateCounts: number;
-    streakExtended: boolean;
-    totalUpdatedCounts: number;
-    userId: number;
+  xpSummaries?: [{ 
+    event: string;
+    week: [{
+      timestamp: number;
+      count: number;
+    }];
+    monthSummary: [{
+      monthName: string;
+      yearIn: number;
+      totalCount: number;
+      weeks: [{
+        weekId: number;
+        count: number;
+      }]
+    }];
+    yearSummary: [{
+      dateYear: string;
+      count: number;
+      months: [{
+        month: string;
+        count: string;
+      }]
+    }]
   }],
-  leaderboard: {
+  leaderboardHistory: [{
     ranking: number;
     leagueId: string;
+    monthlyXp: number;
+    date: string;
+  }],
+  currentLeaderboard: {
+    ranking: number;
+    leagueId: string;
+    monthlyXp: number;
   }
 }
 
@@ -84,12 +109,12 @@ export const createUser: any = createAsyncThunk('user/createUser', async (newUse
   return newUser
 });
 
-// export const userLogin: any = createAsyncThunk('user/createUser', async (googleId: string) => {
-//   const newUser = await userActions.getUser(googleId);
-
-//   console.log('createUser - userSlice', newUser);
-//   return newUser
-// });
+// Update a user's yearly summary. This will be displayed for the Year History Graph.
+// TODO: Could be improved with only returning certain data in future.
+export const updateUserYearCount: any = createAsyncThunk('user/updateUserYearCount', async (yearAttributes: {userCount: number, eventId: string, userId: string }) => {
+  // const userId = useSelector((state: RootState) => state.user.currentUser?.id) || '';
+  return await userActions.updateUserYearCount(yearAttributes.userCount, yearAttributes.eventId, yearAttributes.userId);
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -131,17 +156,35 @@ export const userSlice = createSlice({
             lastUpdatedDate: new Date().toLocaleDateString('en-US')
           }]
         }
-        
       }
 
+      if (state.currentUser) state.currentUser.monthlyXp = (state.currentUser?.monthlyXp || 0) + action.payload;
+
+      state.currentUser?.xpGains?.push({
+        event: state.currentUser.currentEventId || '',
+        time: Date.now(),
+        reps: action.payload,
+        xp: action.payload
+      })
+
+      if (state.currentUser) state.currentUser.currentLeaderboard = {
+        ranking: 0,
+        leagueId: state.currentUser.currentLeaderboard.leagueId,
+        monthlyXp: (state.currentUser.monthlyXp || 0)
+      }
   },
   },
   extraReducers(builder) {
       builder.addCase(createUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
+      }),
+      builder.addCase(updateUserYearCount.fulfilled, (state, action: PayloadAction<User>) => {
+        state.currentUser = action.payload;
       })
   },
 })
+
+// After clicking update, user database should update
 
 
 

@@ -13,6 +13,37 @@ const getLeaderboard = async () => {
     }
 }
 
+const updateLeaderboardXp = async (body: {xpGain: number, userId: string}) => {
+    try {
+        const response = await axiosInstance.post('/leaderboard/update/xp', {
+            xpGain: body.xpGain,
+            userId: body.userId
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const updateLeaderboardRank = async () => {
+    try {
+        const response = await axiosInstance.post('/leaderboard/update/rank', {
+            
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const leaderboardActions = {
-    getLeaderboard
+    getLeaderboard,
+    updateLeaderboardXp,
+    updateLeaderboardRank
 }

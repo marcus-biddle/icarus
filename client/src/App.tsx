@@ -17,14 +17,16 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useIsMobile({});
-  const creationDate = useSelector((state: UserState) => state?.currentUser?.creationDate)
-  const user = useSelector((state: UserState) => state?.currentUser);
+  const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate)
+  const user = useSelector((state: RootState) => state?.user.currentUser);
+  const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
 
   useEffect(() => {
     if (!creationDate) {
       navigate('duo/login')
     }
     console.log('User -App.tsx', user);
+    console.log('Leaderboard -App.tsx', leaderboard);
   }, [location.pathname, creationDate])
 
   return (

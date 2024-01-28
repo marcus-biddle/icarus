@@ -142,3 +142,14 @@ export function getCurrentMonth() {
       endDate: formattedEndDate,
     };
   }
+
+  export const isInCurrentMonth = (dateString) => {
+    // Convert the date string to a JavaScript Date object
+    const date = new Date(dateString);
+  
+    // Get the current date
+    const currentDate = new Date();
+  
+    // Check if the year and month of the given date match the current year and month
+    return date.getFullYear() === currentDate.getFullYear() && date.getMonth() === currentDate.getMonth();
+  };

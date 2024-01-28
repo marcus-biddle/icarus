@@ -51,6 +51,19 @@ const EventTotalsSchema = new mongoose.Schema({
   lastUpdatedDate: String
 });
 
+const LeaderboardHistorySchema = new mongoose.Schema({
+  ranking: Number,
+  leagueId: String,
+  monthlyXp: Number,
+  date: String
+});
+
+const LeaderboardSchema = new mongoose.Schema({
+  ranking: Number,
+  leagueId: String,
+  monthlyXp: Number,
+});
+
 const UserStateSchema = new mongoose.Schema({
   eventIds: [String],
   currentEventId: String,
@@ -73,7 +86,44 @@ const UserStateSchema = new mongoose.Schema({
   updateCounts: Number,
   streakData: StreakDataSchema,
   xpGains: [XpGainSchema],
-  xpSummaries: [XpSummarySchema],
+  xpSummaries: [
+    {
+      event: String,
+      week: [
+        {
+          timestamp: Number,
+          count: Number,
+        }
+      ],
+      monthSummary: [
+        {
+          monthName: String,
+          yearIn: Number,
+          totalCount: Number,
+          weeks: [
+            {
+              weekId: Number,
+              count: Number,
+            }
+          ],
+        }
+      ],
+      yearSummary: [
+        {
+          dateYear: String,
+          count: Number,
+          months: [
+            {
+              month: String,
+              count: Number,
+            }
+          ],
+        }
+      ],
+    }
+  ],
+  leaderboardHistory: [LeaderboardHistorySchema],
+  currentLeaderboard: LeaderboardSchema
 });
 
 const UserModel = mongoose.model('User', UserStateSchema);

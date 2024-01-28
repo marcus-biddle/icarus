@@ -28,6 +28,8 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './app/store'
 import { PersistGate } from 'redux-persist/integration/react';
 import NewLogin from './NEWlayouts/Login/New_Login';
+import HistoryYear from './NEWlayouts/History/HistoryYear';
+import HistoryMonth from './NEWlayouts/History/HistoryMonth';
 
 const router = createBrowserRouter([
   {
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
       {
         path: '/duo/history/week',
         element: <HistoryWeek />,
+      },
+      {
+        path: '/duo/history/year',
+        element: <HistoryYear />,
+      },
+      {
+        path: '/duo/history/month',
+        element: <HistoryMonth />,
       },
       {
         path: '/duo/sections/details/:sectionId',

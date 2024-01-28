@@ -9,12 +9,13 @@ import { GiBodySwapping, GiFireBowl, GiWaterSplash } from "react-icons/gi";
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState, updateCurrentEvent } from '../../features/user/userSlice';
 import { GoChevronRight } from "react-icons/go";
+import { RootState } from '../../app/store';
 
 const StatsBar = () => {
   const isMobile = useIsMobile({});
   const dispatch = useDispatch();
-  const eventList = useSelector((state: UserState) => state.currentUser?.eventIds)
-  const currentEventId = useSelector((state: UserState) => state.currentUser?.currentEventId)
+  const eventList = useSelector((state: RootState) => state.user.currentUser?.eventIds)
+  const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId)
   return (
     <div className='stats-container' style={{ justifyContent: isMobile ? 'space-between' : 'space-around', minWidth: '300px'}}>
         <HoverMenu icon={<DynamicIcon icon={GiBodySwapping} width='25px' height='25px' color='green'/>}>

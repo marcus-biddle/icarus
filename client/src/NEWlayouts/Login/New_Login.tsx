@@ -10,6 +10,8 @@ import { MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../features/user/userSlice';
+import { RootState } from '../../app/store';
+import { fetchLeaderboard } from '../../features/leaderboard/leaderboardSlice';
 // import { addEvent, updateUsername } from '../../features/user/userSlice';
 
 const NewLogin = () => {
@@ -24,7 +26,8 @@ const NewLogin = () => {
     const dispatch = useDispatch();
     const { handleSignin  } = useGoogleAuth({ selectedItems, username });
     const DelayedDisplay = useDelayedDisplay({ delay: 5000 });
-    const creationDate = useSelector((state: UserState) => state?.currentUser?.creationDate)
+    const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate);
+    const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
 
     const handlePositionChange = () => {
         setIsVisibile(false);
@@ -58,15 +61,18 @@ const NewLogin = () => {
       const handleCreateAccount = () => {
         handleSignin();
         // console.log('found!', userFound)
-        // dispatch(
-        //     updateUsername(username)
-        // )
+        dispatch(
+            fetchLeaderboard()
+        )
         // add logic for the other data
         // navigate('/duo/leaderboard')
       }
 
       const handleExistingAccount = () => {
         handleSignin();
+        dispatch(
+            fetchLeaderboard()
+        )
         // add logic for getting existing user data.
         // navigate('/duo/leaderboard');
       }
@@ -82,6 +88,12 @@ const NewLogin = () => {
         if (creationDate) {
             navigate('/duo/leaderboard')
         }
+
+        if (!leaderboard || !leaderboard?.leagueIds) {
+            dispatch(
+                fetchLeaderboard()
+            )
+        };
       })
 
   return (

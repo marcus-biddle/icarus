@@ -18,7 +18,7 @@ const History = () => {
                 <p style={{ fontSize: '14px'}}>Check everyone's total for each day of the week.</p>
                 <div style={{ padding: '16px 0 0 0'}}>
                     <NavLink to={'week'}>
-                    <button style={{ padding: '12px 32px', backgroundColor: 'transparent', border: '1px solid white', fontWeight: '100', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '10px'}}>View Past</button>
+                        <button style={{ padding: '12px 32px', backgroundColor: 'transparent', border: '1px solid white', fontWeight: '100', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '10px'}}>View Past</button>
                     </NavLink>
                 </div>
                 <div>
@@ -29,7 +29,9 @@ const History = () => {
                 <h6 style={{ margin: '0', fontSize: '24px', fontWeight: '700', letterSpacing: '.85px'}}>Month</h6>
                 <p style={{ fontSize: '14px'}}>Check everyone's total for each week of the month.</p>
                 <div style={{ padding: '16px 0 0 0'}}>
-                    <button style={{ padding: '12px 32px', backgroundColor: 'transparent', border: '1px solid white', fontWeight: '100', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '10px'}}>View Past</button>
+                    <NavLink to={'month'}>
+                        <button style={{ padding: '12px 32px', backgroundColor: 'transparent', border: '1px solid white', fontWeight: '100', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '10px'}}>View Past</button>
+                    </NavLink>
                 </div>
                 <div>
                     <GiBiceps style={{ position: 'absolute', width: '200px', height: '200px', transform: 'rotate(-30deg)', opacity: '.25', right: '0', top: '-20px'}} />
@@ -39,7 +41,9 @@ const History = () => {
                 <h6 style={{ margin: '0', fontSize: '24px', fontWeight: '700', letterSpacing: '.85px'}}>Year</h6>
                 <p style={{ fontSize: '14px'}}>Check everyone's total for each month of the year.</p>
                 <div style={{ padding: '16px 0 0 0'}}>
-                    <button style={{ padding: '12px 32px', backgroundColor: 'transparent', border: '1px solid white', fontWeight: '100', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '10px'}}>View Past</button>
+                    <NavLink to={'year'}>
+                        <button style={{ padding: '12px 32px', backgroundColor: 'transparent', border: '1px solid white', fontWeight: '100', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '10px'}}>View Past</button>
+                    </NavLink>
                 </div>
                 <div>
                     <GiBiceps style={{ position: 'absolute', width: '200px', height: '200px', transform: 'rotate(-30deg)', opacity: '.25', right: '0', top: '-20px'}} />

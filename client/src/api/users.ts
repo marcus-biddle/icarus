@@ -69,6 +69,22 @@ const updateUserYearCount = async (count: number, eventId: string, userId: strin
     }
 }
 
+const updateUserMonthCount = async (count: number, eventId: string, userId: string) => {
+    try {
+        const response = await axiosInstance.post('/users/update/monthSummary', {
+            count: count,
+            eventId: eventId,
+            userId: userId
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 const fetchUsersMonthSummaries = async (eventId: string) => {
     try {
         const response = await axiosInstance.get(`/users/all/month/${eventId}`);
@@ -87,5 +103,6 @@ export const userActions = {
     getUser,
     fetchUsersYearSummaries,
     updateUserYearCount,
-    fetchUsersMonthSummaries
+    fetchUsersMonthSummaries,
+    updateUserMonthCount
 }

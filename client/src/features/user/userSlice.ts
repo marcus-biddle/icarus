@@ -60,7 +60,7 @@ export interface User {
     }];
     monthSummary: [{
       monthName: string;
-      yearIn: number;
+      yearIn: string;
       totalCount: number;
       weeks: [{
         weekId: number;
@@ -112,8 +112,11 @@ export const createUser: any = createAsyncThunk('user/createUser', async (newUse
 // Update a user's yearly summary. This will be displayed for the Year History Graph.
 // TODO: Could be improved with only returning certain data in future.
 export const updateUserYearCount: any = createAsyncThunk('user/updateUserYearCount', async (yearAttributes: {userCount: number, eventId: string, userId: string }) => {
-  // const userId = useSelector((state: RootState) => state.user.currentUser?.id) || '';
   return await userActions.updateUserYearCount(yearAttributes.userCount, yearAttributes.eventId, yearAttributes.userId);
+});
+
+export const updateUserMonthCount: any = createAsyncThunk('user/updateUserMonthCount', async (monthAttributes: {userCount: number, eventId: string, userId: string }) => {
+  return await userActions.updateUserMonthCount(monthAttributes.userCount, monthAttributes.eventId, monthAttributes.userId);
 });
 
 export const userSlice = createSlice({
@@ -179,6 +182,9 @@ export const userSlice = createSlice({
         state.currentUser = action.payload;
       }),
       builder.addCase(updateUserYearCount.fulfilled, (state, action: PayloadAction<User>) => {
+        state.currentUser = action.payload;
+      }),
+      builder.addCase(updateUserMonthCount.fulfilled, (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
       })
   },

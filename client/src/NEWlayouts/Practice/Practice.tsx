@@ -3,7 +3,7 @@ import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
 import './Practice.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState, updateUserPractice, updateUserYearCount } from '../../features/user/userSlice';
+import { UserState, updateUserMonthCount, updateUserPractice, updateUserYearCount } from '../../features/user/userSlice';
 import { updateLeaderboardXp } from '../../features/leaderboard/leaderboardSlice'
 import { RootState } from '../../app/store';
 
@@ -48,6 +48,10 @@ const Practice = () => {
 
     dispatch(
       updateUserYearCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
+    )
+
+    dispatch(
+      updateUserMonthCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
     )
     
     setInputValue('');

@@ -21,6 +21,7 @@ const getRandomColor = () => {
     return color;
   };
 
+  // Update eventually for year and month
 const transformMonthSummaries = (userMonthSummaries, currentMonth) => {
     if (!userMonthSummaries) return null;
     return userMonthSummaries.map((user, index) => {
@@ -39,20 +40,17 @@ const transformMonthSummaries = (userMonthSummaries, currentMonth) => {
     }).filter((user) => user && user !== undefined);
   };
 
+  //Broke year history???
 const HistoryMonth = () => {
     const currentDate = new Date();
     const currentMonthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
     const monthIndex = months.findIndex(month => month === currentMonthName);
 
     const [ currentMonthIndex, setCurrentMonthIndex] = useState(monthIndex)
-    // const [ monthShown, setMonthShown ] = useState(months[monthIndex]);
-    const [ prevWeekCount, setPrevWeekCount ] = useState(1);
     const [usersMonthSummaries, setUsersMonthSummaries] = useState(null);
     console.log('userSummaries', (usersMonthSummaries));
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const eventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
-    // const yearSummaries = useSelector((state: RootState) => state.user.currentUser.)
     console.log(eventId);
 
     const handleWeekChange = (prev: boolean) => {

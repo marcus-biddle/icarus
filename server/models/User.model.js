@@ -98,7 +98,7 @@ const UserStateSchema = new mongoose.Schema({
       monthSummary: [
         {
           monthName: String,
-          yearIn: Number,
+          yearIn: String,
           totalCount: Number,
           weeks: [
             {

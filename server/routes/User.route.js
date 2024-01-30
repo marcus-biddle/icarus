@@ -15,5 +15,6 @@ router.get('/api/users/all/year/:eventId', UserControllers.getUserYearArrays);
 router.get('/api/users/all/month/:eventId', UserControllers.getUserMonthArrays);
 
 router.post('/api/users/update/yearSummary', UserControllers.updateUserYearSummary);
+router.post('/api/users/update/monthSummary', UserControllers.updateUserMonthSummary);
 
 export default router;

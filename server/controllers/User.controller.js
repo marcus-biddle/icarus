@@ -474,7 +474,6 @@ const createUser = async (req, res) => {
     const eventId = req.body.eventId;
     const userId = req.body.userId;
 
-    console.log(count, eventId, userId)
     if (!count || !eventId || !userId) return res.status(400).json({ error: 'eventId, userId, and count required.' }); 
 
     const user = await User.findOne({ id: userId }).lean().exec();
@@ -533,8 +532,8 @@ const createUser = async (req, res) => {
   }
 
   // this function solves the weeks object array problem for monthSummaries
-  function getWeekOfMonth(timestamp) {
-    const date = new Date(timestamp);
+  function getWeekOfMonth() {
+    const date = new Date();
     const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     const dayOfWeek = firstDayOfMonth.getDay() === 0 ? 7 : firstDayOfMonth.getDay(); // Adjust for Sunday as the first day of the week
     const firstWeekStart = 1 + (7 - dayOfWeek + 1);
@@ -542,11 +541,76 @@ const createUser = async (req, res) => {
     const currentDay = date.getDate();
     const weekNumber = Math.ceil((currentDay - firstWeekStart) / 7) + 1;
   
+    if (weekNumber >= 5) {
+      return 4
+    }
     return weekNumber;
   }
 
   // create updateMonthSummary, add dispatch, update user.
   // maybe add february and other event data too
+  const updateUserMonthSummary = async (req, res) => {
+    const count = req.body.count;
+    const eventId = req.body.eventId;
+    const userId = req.body.userId;
+
+    console.log(count)
+    if (!count || !eventId || !userId) return res.status(400).json({ error: 'eventId, userId, and count required.' }); 
+
+    const user = await User.findOne({ id: userId }).lean().exec();
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    try {
+      const weekNum = getWeekOfMonth();
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear().toString();
+      const currentMonthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
+
+      // Assume all events are created when user is created.
+      const eventIndex = user.xpSummaries.findIndex(summary => summary.event === eventId);
+      const currentMonthSummaryIndex = user.xpSummaries[eventIndex].monthSummary.findIndex(summary => summary.monthName === currentMonthName && summary.yearIn === currentYear);
+      
+      if (currentMonthSummaryIndex !== -1) {
+        const weekObj = user.xpSummaries[eventIndex].monthSummary[currentMonthSummaryIndex].weeks.filter(week => week.weekId === weekNum)[0];
+        weekObj.count += count;
+
+        user.xpSummaries[eventIndex].monthSummary[currentMonthSummaryIndex].totalCount += count;
+      }
+
+      if (currentMonthSummaryIndex === -1) {
+        const newMonthObj = {
+          monthName: currentMonthName,
+          yearIn: currentYear,
+          totalCount: count,
+          weeks: [
+            {
+              weekId: 1,
+              count: weekNum === 1 ? count : 0
+            },
+            {
+              weekId: 2,
+              count: weekNum === 2 ? count : 0
+            },
+            {
+              weekId: 3,
+              count: weekNum === 3 ? count : 0
+            },
+            {
+              weekId: 4,
+              count: weekNum === 4 ? count : 0
+            },
+          ]
+        }
+
+        user.xpSummaries[eventIndex].monthSummary.push(newMonthObj);
+      }
+
+      await User.findOneAndUpdate({ id: userId }, user, { new: true });
+      return res.status(201).json(user);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 
   const UserControllers = {
     createUser,
@@ -555,7 +619,8 @@ const createUser = async (req, res) => {
     addFakeUser,
     getUserYearArrays,
     updateUserYearSummary,
-    getUserMonthArrays
+    getUserMonthArrays,
+    updateUserMonthSummary
   }
 
   export default UserControllers;

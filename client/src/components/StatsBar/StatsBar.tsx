@@ -15,10 +15,10 @@ const StatsBar = () => {
   const isMobile = useIsMobile({});
   const dispatch = useDispatch();
   const eventList = useSelector((state: RootState) => state.user.currentUser?.eventIds)
-  const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId)
+  const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || ''
   return (
     <div className='stats-container' style={{ justifyContent: isMobile ? 'space-between' : 'space-around', minWidth: '300px'}}>
-        <HoverMenu icon={<DynamicIcon icon={GiBodySwapping} width='25px' height='25px' color='green'/>}>
+        <HoverMenu icon={<DynamicIcon icon={GiBodySwapping} width='25px' height='25px' color='aqua'/>} text={currentEventId}>
         <div style={{ width: '225px'}} className='container'>
           <h6 style={{ padding: '10px 16px', margin: '0', borderBottom: '1px solid #1E293B', textAlign: 'left', textTransform: 'uppercase', fontSize: '13px', color: 'white', letterSpacing: '1.12px'}}>Switch Events</h6>
           <ul className='stats-user-event-list'>
@@ -37,7 +37,7 @@ const StatsBar = () => {
           </div>
         </div>
         </HoverMenu>
-        <HoverMenu icon={<DynamicIcon icon={GiFireBowl} width='25px' height='25px' color='red' />}>
+        <HoverMenu icon={<DynamicIcon icon={GiFireBowl} width='25px' height='25px' color='red' />} text='0'>
         {/* <div className='container'>test</div> */}{null}
         </HoverMenu>
     </div>

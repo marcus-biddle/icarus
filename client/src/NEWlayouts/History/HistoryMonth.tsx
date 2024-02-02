@@ -68,7 +68,7 @@ const HistoryMonth = () => {
                 // eventually move the inner function to the bar graph?
                 setUsersMonthSummaries(transformMonthSummaries(data, months[currentMonthIndex]));
             } catch (error) {
-                console.error('Error fetching user year summaries:', error);
+                console.error('Error fetching user month summaries:', error);
             }
         };
 

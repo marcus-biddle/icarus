@@ -23,6 +23,7 @@ const createUser = async (req, res) => {
       const currentYear = currentDate.getFullYear().toString();
       const currentMonthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
       const allXpSummaries = [];
+      const allEventTotals = [];
       
       selectedItems.map(item => {
         const summary = {
@@ -43,6 +44,16 @@ const createUser = async (req, res) => {
             ],
         }
         allXpSummaries.push(summary);
+
+        const eventTotal = {
+          event: event,
+          lastUpdatedDate: new Date().toLocaleDateString('en-US'),
+          totalDays: 0,
+          totalReps: 0,
+          totalXp: 0
+        }
+
+        allEventTotals.push(eventTotal);
       })
 
         const user = await User.create({
@@ -64,7 +75,8 @@ const createUser = async (req, res) => {
             leagueId: 'bronze',
             monthlyXp: 0,
           },
-          xpSummaries: allXpSummaries
+          xpSummaries: allXpSummaries,
+          eventTotals: allEventTotals
         });
 
         await addUsersToLeagueHelper('bronze', [{

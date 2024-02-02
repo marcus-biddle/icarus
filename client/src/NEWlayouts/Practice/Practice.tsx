@@ -3,7 +3,7 @@ import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
 import './Practice.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState, updateUserMonthCount, updateUserPractice, updateUserYearCount } from '../../features/user/userSlice';
+import { UserState, updateCounts, updateUserPractice } from '../../features/user/userSlice';
 import { updateLeaderboardXp } from '../../features/leaderboard/leaderboardSlice'
 import { RootState } from '../../app/store';
 
@@ -35,23 +35,21 @@ const Practice = () => {
     console.log('Submitted value:', inputValue);
     const numericValue = Number(inputValue);
 
+    // redo lol
     dispatch(
       updateUserPractice(numericValue)
     )
 
-    if (user?.monthlyXp) {
-      // change this. Possibly move to leaderboard.
       dispatch(
-        updateLeaderboardXp({xpGain: (numericValue + user?.monthlyXp), userId: user.id })
+        updateLeaderboardXp({xpGain: (numericValue + (user?.monthlyXp || 0)), userId: userId })
       )
-    }
+
+    // dispatch(
+    //   updateUserYearCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
+    // )
 
     dispatch(
-      updateUserYearCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
-    )
-
-    dispatch(
-      updateUserMonthCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
+      updateCounts({ userCount: numericValue, eventId: currentEventId, userId: userId })
     )
     
     setInputValue('');

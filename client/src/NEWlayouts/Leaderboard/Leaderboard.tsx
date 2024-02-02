@@ -14,6 +14,7 @@ import { UserState } from '../../features/user/userSlice';
 import { LeaderboardState, fetchLeaderboard, updateLeaderboardRank } from '../../features/leaderboard/leaderboardSlice'
 import { RootState } from '../../app/store';
 import { findUserById } from '../../helpers/data';
+import { leaderboardActions } from '../../api/leaderboard';
 
 export const LEAGUE_LEVELS = [
     { name: 'bronze', color: '#cd7f32', description: 'Top 10 players advance.' }, // Bronze
@@ -59,33 +60,36 @@ const Leaderboard = () => {
     const league = useSelector((state: RootState) => state.leaderboard.currentLeaderboard?.leagueGroups[leagueIndex])
     const isMobile = useIsMobile({});
     const dispatch = useDispatch();
-    const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
+    // const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
     const monthlyXp = useSelector((state: RootState) => state.user.currentUser?.monthlyXp);
     const userId = useSelector((state: RootState) => state.user.currentUser?.id)
-    const userInLeaderboard = leaderboard && findUserById(leaderboard, userId);
+    // const userInLeaderboard = leaderboard && findUserById(leaderboard, userId);
 
-
-
-    console.log('ID', !userInLeaderboard)
-    // console.log('TEST', userInLeaderboard)
-    console.log('TEST', leaderboard)
+    const [leaderboard, setLeaderboard] = useState<any>(null);
+    
 
    const handeRefreshClick = () => {
         dispatch(
             updateLeaderboardRank()
         )
    };
+   
 
     useEffect(() => {
-        if (!userInLeaderboard) {
-            dispatch(
-                fetchLeaderboard()
-            )
-            dispatch(
-                updateLeaderboardRank()
-            )
+        const fetchData = async () => {
+            try {
+                const data: any = await leaderboardActions.updateLeaderboardRank();
+                setLeaderboard(data.updatedLeaderboard.leagueGroups[leagueIndex]);
+                // console.log('test', data.updatedLeaderboard.leagueGroups[leagueIndex])
+                // create a dispatch to find current user and update their leaderboard placement in redux
+            } catch (error) {
+                console.error('Error fetching leaderboard:', error);
+            }
         };
-    }, [userInLeaderboard])
+
+        fetchData();
+    }, [leagueIndex])
+
     return (
         <TwoColumnGrid showSecondColumnInMobile={false}>
             <div style={{ display: 'flex', justifyContent: isMobile ? 'space-around' : 'center', width: isMobile ? '100vw' : '', alignItems: 'center', marginTop: isMobile ? '32px' : '' }}>
@@ -110,7 +114,7 @@ const Leaderboard = () => {
                 <button style={{ textTransform: 'uppercase', backgroundColor: 'transparent', letterSpacing: '1.12px', color: 'lightcyan', fontWeight: '700'}}>View Details</button>
             </div>
             <div className='container' style={{ textAlign: 'center', maxHeight: isMobile ? '57vh' : '70.5vh', overflowX: 'auto' }}>
-                {league?.users.map((user) => (
+                {leaderboard && leaderboard.users.map((user) => (
                     <NavLink key={user.userId} to={''} className='user-card'>
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px'}}>
                             <span>{user.ranking}</span>
@@ -126,22 +130,6 @@ const Leaderboard = () => {
                         </div>
                     </NavLink>
                 ))}
-                {/* {FAKE_USERS.map((user, index) => (
-                    <NavLink key={user.name} to={''} className='user-card'>
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '24px'}}>
-                            <span>{index +1}</span>
-                            <span>
-                                <DynamicIcon icon={GoIssueDraft} height='50px' width='50px' />
-                            </span>
-                            <span>
-                                <p style={{ fontSize: '16px', fontWeight: '700', letterSpacing: '1.12px'}}>{user.name}</p>
-                            </span>
-                        </div>
-                        <div>
-                            <p style={{ fontSize: '16px', fontWeight: '300', letterSpacing: '1.12px'}}>{user.exp} XP</p>
-                        </div>
-                    </NavLink>
-                ))} */}
             </div>
         </TwoColumnGrid>
       )

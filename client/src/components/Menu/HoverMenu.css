@@ -4,15 +4,15 @@
     position: relative;
   }
   
-  .text-container {
+  /* .text-container {
     padding: 6px 18px 2px 18px;
     border-radius: 8px;
     transition: background-color 0.3s;
   }
   
   .text-container:hover {
-    background-color: rgba(198, 190, 190, 0.2); /* Change background color when hovered */
-  }
+    background-color: rgba(198, 190, 190, 0.2);
+  } */
   
   .menu-container {
     position: absolute;

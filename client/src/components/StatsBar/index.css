@@ -23,6 +23,6 @@
 }
 
 .stats-user-event-list li:hover {
-  background-color: grey;
+  /* background-color: grey; */
   cursor: pointer;
 }

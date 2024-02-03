@@ -6,7 +6,7 @@
     left: -375px; /* Initially hidden off-screen */
     width: 375px;
     height: 100%;
-    background-color: #0d111d;
+    /* background-color: #0d111d; */
     transition: left 0.3s ease;
     z-index: 1000;
     border-top-right-radius: 5%;
@@ -44,7 +44,7 @@
     text-decoration: none;
     color: white;
     font-weight: 400;
-    background-color: transparent;
+    /* background-color: transparent; */
     border-radius: 6px;
     padding: 8px 32px;
     max-width: 90%;

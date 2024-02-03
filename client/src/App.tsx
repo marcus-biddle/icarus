@@ -12,6 +12,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from './app/store';
 import { UserState } from './features/user/userSlice';
 
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "./components/ui/resizable";
+import { Toaster } from "./components/ui/sonner"
+
 function App() {
   const auth = useAuthCheck();
   const location = useLocation();
@@ -31,15 +38,29 @@ function App() {
 
   return (
     <>
-      <div style={{ display: 'flex', color: 'white', backgroundColor: '#121827'}}>
+      <div style={{ }}>
         {/* {false && <Camera />} */}
 
         {/* {!location.pathname.includes('duo') && <TopNavbar />} */}
-        {!isMobile && !location.pathname.includes('login') && <SideNav />}
+        {/* {!isMobile && !location.pathname.includes('login') && <SideNav />} */}
         
-        <div style={{ zIndex: '1', position: 'relative', minHeight: '100vh', backgroundColor: '#121827', minWidth: '100vw'}}>
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel defaultSize={25}>
+            <SideNav />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={75}>
+            <div className="flex justify-center p-6 min-h-screen">
+              <Outlet />
+              <Toaster />
+            </div>
+            
+          </ResizablePanel>
+        </ResizablePanelGroup>
+
+        {/* <div style={{ zIndex: '1', position: 'relative', minHeight: '100vh', backgroundColor: '#121827', minWidth: '100vw'}}>
           <Outlet />
-        </div>
+        </div> */}
         
       </div>
       {/* {location.pathname.includes('duo') && <BottomNav />} */}

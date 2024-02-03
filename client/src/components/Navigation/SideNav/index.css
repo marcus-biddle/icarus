@@ -17,7 +17,7 @@
 }
 
 .new-nav-list a:hover {
-    background-color: #97979718;
+    /* background-color: #97979718; */
     border-radius: 12px;
     transition: all 0.5s;
 }
@@ -30,7 +30,7 @@
 }
 
 .new-nav-list .active  {
-    background-color: #d0e7f3c8 !important;
+    /* background-color: #d0e7f3c8 !important; */
     border: 2px solid #62c1f5;
     color: #27aef7;
     border-radius: 12px;

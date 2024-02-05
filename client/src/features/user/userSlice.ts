@@ -25,7 +25,7 @@ export interface User {
   monthlyXp?: number;
   totalXp?: number;
   streak?: number;
-  updateCounts: number; // this is to track how often a user adds reps
+  updateUser: number; // this is to track how often a user adds reps
   streakData?: {
     currentStreak: {
       endDate: string;
@@ -116,11 +116,16 @@ export const createUser: any = createAsyncThunk('user/createUser', async (newUse
 //   return await userActions.updateUserYearCount(yearAttributes.userCount, yearAttributes.eventId, yearAttributes.userId);
 // });
 
-export const updateCounts: any = createAsyncThunk('user/updateCounts', async (attributes: {userCount: number, eventId: string, userId: string }) => {
-  console.log('count')
-  await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
-  return await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
-  
+export const updateUser: any = createAsyncThunk('user/updateUser', async (attributes: {userCount: number, eventId: string, userId: string }) => {
+  console.log('count', attributes.userCount, attributes.eventId, attributes.userId);
+  const streak = await userActions.updateStreak(attributes.userId, attributes.eventId);
+  const stat = await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
+  const year = await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
+  const month = await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
+  const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount)
+
+  console.log('updateCount', streak, stat, year, month, reward)
+  // return reward;
 });
 
 export const userSlice = createSlice({
@@ -185,7 +190,7 @@ export const userSlice = createSlice({
       builder.addCase(createUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
       })
-      builder.addCase(updateCounts.fulfilled, (state, action: PayloadAction<User>) => {
+      builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
         // state.currentUser = action.payload;
       })
       // builder.addCase(updateUserMonthCount.fulfilled, (state, action: PayloadAction<User>) => {

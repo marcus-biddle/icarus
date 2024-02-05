@@ -30,6 +30,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import NewLogin from './NEWlayouts/Login/New_Login';
 import HistoryYear from './NEWlayouts/History/HistoryYear';
 import HistoryMonth from './NEWlayouts/History/HistoryMonth';
+import Profile, { profileLoader } from './NEWlayouts/Profile/Profile';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,11 @@ const router = createBrowserRouter([
       {
         path: '/duo/leaderboard',
         element: <Leaderboard />,
+      },
+      {
+        path: '/duo/user/:userId',
+        element: <Profile />,
+        loader: profileLoader,
       },
       
       {

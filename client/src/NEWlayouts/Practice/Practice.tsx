@@ -3,7 +3,7 @@ import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
 import './Practice.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState, updateCounts, updateUserPractice } from '../../features/user/userSlice';
+import { UserState, updateUser, updateUserPractice } from '../../features/user/userSlice';
 import { updateLeaderboardXp } from '../../features/leaderboard/leaderboardSlice'
 import { RootState } from '../../app/store';
 
@@ -100,7 +100,7 @@ const Practice = () => {
       )
   
       dispatch(
-        updateCounts({ userCount: Number(values.userCount), eventId: currentEventId, userId: userId })
+        updateUser({ userCount: Number(values.userCount), eventId: currentEventId, userId: userId })
       )
 
       toast("Event has been updated", {
@@ -122,7 +122,7 @@ const Practice = () => {
       <Tabs defaultValue="update" className="">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="update">Update</TabsTrigger>
-          <TabsTrigger value="password">History</TabsTrigger>
+          <TabsTrigger value="password">Records</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
         <TabsContent value="update" className=' my-24'>

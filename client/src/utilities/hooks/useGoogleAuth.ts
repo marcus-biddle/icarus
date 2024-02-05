@@ -13,9 +13,6 @@ export const useGoogleAuth = ({ selectedItems, username }: {selectedItems: strin
     const axiosInstance = createAxiosInstance();
 
     const handleGoogleSignIn = async (googleId: string) => {
-        const user = await userActions.getUser(googleId);
-
-        if (!user) {
             if (selectedItems.length >= 1) {
                 dispatch(
                     createUser({
@@ -27,15 +24,6 @@ export const useGoogleAuth = ({ selectedItems, username }: {selectedItems: strin
             } else {
                 navigate('/duo/login')
             }
-            
-        };
-
-        if (user) {
-            console.log('existing user', user);
-            dispatch(
-                setUser(user)
-            )
-        }
     };
 
     const handleSignOut = () => {

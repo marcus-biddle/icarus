@@ -23,7 +23,7 @@ const createUser = async (req, res) => {
       const currentYear = currentDate.getFullYear().toString();
       const currentMonthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
       const allXpSummaries = [];
-      const allEventTotals = [];
+      // const allEventTotals = [];
       
       selectedItems.map(item => {
         const summary = {
@@ -45,16 +45,37 @@ const createUser = async (req, res) => {
         }
         allXpSummaries.push(summary);
 
-        const eventTotal = {
-          event: event,
-          lastUpdatedDate: new Date().toLocaleDateString('en-US'),
-          totalDays: 0,
-          totalReps: 0,
-          totalXp: 0
-        }
+        // const eventTotal = {
+        //   event: item,
+        //   lastUpdatedDate: new Date().toLocaleDateString('en-US'),
+        //   totalDays: 0,
+        //   totalReps: 0,
+        //   totalXp: 0
+        // }
 
-        allEventTotals.push(eventTotal);
+        // allEventTotals.push(eventTotal);
       })
+
+      const statisticsSkeleton = [
+        {
+          eventId: 'pushups',
+          weeklyAverage: 0,
+          currentStreak: 0,
+          personalBest: 0
+        },
+        {
+          eventId: 'pullups',
+          weeklyAverage: 0,
+          currentStreak: 0,
+          personalBest: 0
+        },
+        {
+          eventId: 'running',
+          weeklyAverage: 0,
+          currentStreak: 0,
+          personalBest: 0
+        }
+      ]
 
         const user = await User.create({
           name: decodedToken.name,
@@ -76,7 +97,11 @@ const createUser = async (req, res) => {
             monthlyXp: 0,
           },
           xpSummaries: allXpSummaries,
-          eventTotals: allEventTotals
+          // eventTotals: allEventTotals,
+          statistics: statisticsSkeleton,
+          level: 1,
+          totalXp: 0,
+          levelCompletionRate: 0,
         });
 
         await addUsersToLeagueHelper('bronze', [{
@@ -125,7 +150,25 @@ const createUser = async (req, res) => {
     const { googleId } = req.query;
     const decodedToken = await jwt.decode(googleId);
     try {
-      const foundUser = await User.findOne({ email: decodedToken.email }).lean().exec();;
+      const foundUser = await User.findOne({ email: decodedToken.email }).lean().exec();
+
+      if (foundUser) {
+        return res.status(200).json(foundUser);
+      } else {
+        return res.status(404).json({ error: 'User not found.' });
+      }
+    } catch (error) {
+      console.log('ERR FINDING')
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  const findProfile = async (req, res) => {
+    const { userId } = req.params;
+    
+    if (!userId) return res.status(400).json({ error: 'userId is required' });
+    try {
+      const foundUser = await User.findOne({ id: userId }).lean().exec();
 
       if (foundUser) {
         return res.status(200).json(foundUser);
@@ -624,6 +667,213 @@ const createUser = async (req, res) => {
     }
   }
 
+  const updateStatistic = async (req, res) => {
+    const count = req.body.count;
+    const eventId = req.body.eventId;
+    const userId = req.body.userId;
+    // get streak and average (put average into redux) from user
+
+    if (!count || !eventId || !userId) return res.status(400).json({ error: 'missing req body variables.' });
+
+    const user = await User.findOne({ id: userId });
+    if (!user) return res.status(400).json({ error: 'no user found.' });
+
+    try {
+      const statsIndex = user.statistics.findIndex(stat => stat.eventId === eventId);
+      const streakIndex = user.streaks.findIndex(streak => streak.eventId === eventId);
+
+      if (statsIndex === -1 || streakIndex === -1) return res.status(400).json({ error: `no index found. looking for ${eventId}` });
+
+      const currentPersonalBest = user.statistics[statsIndex].personalBest;
+      const currentStreak = user.streaks[streakIndex].streakLength;
+      
+      const updatedStatistic = {
+        event: eventId,
+        weeklyAverage: 0, //need to get
+        currentStreak: currentStreak,
+        personalBest: currentPersonalBest > count ? currentPersonalBest : count
+      }
+
+      const best = currentPersonalBest > count ? currentPersonalBest : count
+      console.log(best, currentPersonalBest, count);
+      const updatedUser = await User.findOneAndUpdate(
+        {
+          id: userId,
+          'statistics.eventId': eventId
+        },
+        {
+          $set: {
+            'statistics.$.weeklyAverage': 1,
+            'statistics.$.currentStreak': currentStreak,
+            'statistics.$.personalBest': best,
+          },
+        },
+        { new: true }
+      );
+
+      if (!updatedUser) return res.status(404).json({ error: 'updatedUser error.' });
+
+      console.log(updatedUser)
+      return res.status(201).json(updatedUser);
+
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  const updateStreak = async (req, res) => {
+    const eventId = req.body.eventId;
+    const userId = req.body.userId;
+
+    if (!eventId || !userId) return res.status(400).json({ error: 'missing req body variables.' });
+
+    const user = await User.findOne({ id: userId }).lean().exec();
+    if (!user) return res.status(400).json({ error: 'no user found.' });
+
+    try {
+      const eventIndex = user.streaks.findIndex(streak => streak.eventId === eventId);
+      console.log('t', eventId, eventIndex);
+
+      if (eventIndex === -1) {
+        console.log('eventId not found')
+        const newStreak = {
+          eventId: eventId,
+          lastExtendedDate: new Date().getTime(),
+          streakLength: 1,
+          startDate: new Date().getTime()
+        }
+
+        await User.findOneAndUpdate(
+          { id: userId },
+          { $push: { streaks: newStreak } },
+          { new: true }
+        );
+
+        return res.status(200).json({ message: 'Streak updated successfully.' });
+      }
+
+      if (eventId !== -1) {
+        console.log('eventId found')
+        const streak = user.streaks[eventIndex];
+
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        const startOfYesterday = currentDate.getTime() - 24 * 60 * 60 * 1000;
+        const isYesterday = streak.lastExtendedDate >= startOfYesterday && streak.lastExtendedDate < currentDate.getTime();
+        
+        if (isYesterday) {
+          const updatedUser = await User.findOneAndUpdate(
+            { 
+              id: userId,
+              'streaks.eventId': eventId,
+            },
+            {
+              $set: {
+                'streaks.$.lastExtendedDate': new Date().getTime(),
+                'streaks.$.streakLength': streak.streakLength + 1,
+              },
+            },
+            { new: true }
+          );
+          console.log(updatedUser)
+        } else {
+          const updatedUser = await User.findOneAndUpdate(
+            { 
+              id: userId,
+              'streaks.eventId': eventId,
+            },
+            {
+              $set: {
+                'streaks.$.lastExtendedDate': new Date().getTime(),
+                'streaks.$.streakLength': 1,
+                'streaks.$.startDate': new Date().getTime(),
+              },
+            },
+            { new: true }
+          );
+          console.log(updatedUser)
+        }
+
+        return res.status(200).json({ message: 'Streak updated successfully.' });
+      }
+
+      
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  function calculateLevel(xp) {
+    // Define XP thresholds for each level
+    const thresholds = Array.from({ length: 100 }, (_, index) => Math.floor(100 * Math.pow(index + 1, 1.5)));
+    const levelOverview = {
+      level: 1,
+      levelCompletionRate: 0
+    } 
+    // Find the highest level whose threshold is less than or equal to the user's XP
+    for (let i = thresholds.length - 1; i >= 0; i--) {
+      if (xp >= thresholds[i]) {
+        levelOverview.level = i + 1;
+        levelOverview.levelCompletionRate = (xp / thresholds[i + 1]);
+        return levelOverview; // Levels are usually 1-based
+      }
+    }
+  
+    return levelOverview; // Default to level 1 if XP is less than the lowest threshold
+  }
+
+  function calculateXp(eventId, reps) {
+    // Define XP values for each eventId
+    const xpValues = {
+      pushups: 0.5,
+      running: 3.33,
+      pullups: 1,
+      // Add more eventId-XP mappings as needed
+    };
+  
+    // Get the XP value for the specific eventId
+    const xp = xpValues[eventId] || 0;
+  
+    // Calculate total XP based on reps and eventId-specific XP
+    const totalXp = reps * xp;
+  
+    return totalXp;
+  }
+
+  const rewardXp = async (req, res) => {
+    const eventId = req.body.eventId;
+    const userId = req.body.userId;
+    const count = req.body.count
+
+    if (!eventId || !userId || !count) return res.status(400).json({ error: 'missing req body variables.' });
+
+    const user = await User.findOne({ id: userId }).lean().exec();
+    if (!user) return res.status(400).json({ error: 'no user found.' });
+
+    try {
+      const userXP = calculateXp(eventId, count);
+      const levelOverview = calculateLevel(user.totalXp + userXP);
+
+      const updatedUser = await User.findOneAndUpdate(
+        { id: userId },
+        {
+          $set: {
+            totalXp: user.totalXp + userXP, // Update totalXp
+            level: levelOverview.level, // Update level
+            levelCompletionRate: levelOverview.levelCompletionRate,
+          },
+        },
+        { new: true }
+      );
+
+      return res.status(200).json(updatedUser);
+
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   const UserControllers = {
     createUser,
     findUser,
@@ -632,7 +882,11 @@ const createUser = async (req, res) => {
     getUserYearArrays,
     updateUserYearSummary,
     getUserMonthArrays,
-    updateUserMonthSummary
+    updateUserMonthSummary,
+    findProfile,
+    updateStreak,
+    updateStatistic,
+    rewardXp
   }
 
   export default UserControllers;

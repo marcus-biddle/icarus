@@ -41,6 +41,17 @@ const getUser = async (googleId: string) => {
     }
 }
 
+const fetchUser = async (userId: string) => {
+    try {
+        const response = await axiosInstance.get(`/user/${userId}`);
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 const fetchUsersYearSummaries = async (eventId: string) => {
     try {
         const response = await axiosInstance.get(`/users/all/year/${eventId}`);
@@ -97,12 +108,63 @@ const fetchUsersMonthSummaries = async (eventId: string) => {
     }
 }
 
+const updateStreak = async ( userId: string, eventId: string) => {
+    try {
+        const response = await axiosInstance.post('/users/update/streak', {
+            eventId: eventId,
+            userId: userId
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const updateStatistic = async ( userId: string, eventId: string, count: number) => {
+    try {
+        const response = await axiosInstance.post('/users/update/statistics', {
+            eventId: eventId,
+            userId: userId,
+            count: count
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const rewardXp = async ( userId: string, eventId: string, count: number) => {
+    try {
+        const response = await axiosInstance.post('/users/update/xp', {
+            eventId: eventId,
+            userId: userId,
+            count: count
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const userActions = {
     createUser,
     getAllUsers,
     getUser,
+    fetchUser,
     fetchUsersYearSummaries,
     updateUserYearCount,
     fetchUsersMonthSummaries,
-    updateUserMonthCount
+    updateUserMonthCount,
+    updateStreak,
+    updateStatistic,
+    rewardXp
 }

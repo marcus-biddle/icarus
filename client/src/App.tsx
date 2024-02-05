@@ -45,11 +45,11 @@ function App() {
         {/* {!isMobile && !location.pathname.includes('login') && <SideNav />} */}
         
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel defaultSize={25}>
+          <ResizablePanel defaultSize={25} className=' min-w-[125px]'>
             <SideNav />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={75}>
+          <ResizablePanel defaultSize={75} className=' min-w-[50%]'>
             <div className="flex justify-center p-6 min-h-screen">
               <Outlet />
               <Toaster />

@@ -22,6 +22,7 @@ const PreviousStreakSchema = new mongoose.Schema({
 });
 
 const StreakDataSchema = new mongoose.Schema({
+  eventId: String,
   currentStreak: CurrentStreakSchema,
   longestStreak: LongestStreakSchema,
   previousStreak: PreviousStreakSchema,
@@ -64,6 +65,13 @@ const LeaderboardSchema = new mongoose.Schema({
   monthlyXp: Number,
 });
 
+const StatisticSchema = new mongoose.Schema({
+  eventId: String,
+  weeklyAverage: Number,
+  currentStreak: Number,
+  personalBest: Number,
+});
+
 const UserStateSchema = new mongoose.Schema({
   eventIds: [String],
   currentEventId: String,
@@ -72,6 +80,8 @@ const UserStateSchema = new mongoose.Schema({
   email: String,
   name: String,
   username: String,
+  level: Number,
+  levelCompletionRate: Number,
   id: String,
   googleId: String,
   hasGoogleId: Boolean,
@@ -84,7 +94,13 @@ const UserStateSchema = new mongoose.Schema({
   totalXp: Number,
   streak: Number,
   updateCounts: Number,
-  streakData: StreakDataSchema,
+  // streakData: [StreakDataSchema],
+  streaks: [{
+    eventId: String,
+    lastExtendedDate: Number,
+    streakLength: Number,
+    startDate: Number,
+  }],
   xpGains: [XpGainSchema],
   xpSummaries: [
     {
@@ -123,7 +139,8 @@ const UserStateSchema = new mongoose.Schema({
     }
   ],
   leaderboardHistory: [LeaderboardHistorySchema],
-  currentLeaderboard: LeaderboardSchema
+  currentLeaderboard: LeaderboardSchema,
+  statistics: [StatisticSchema]
 });
 
 const UserModel = mongoose.model('User', UserStateSchema);

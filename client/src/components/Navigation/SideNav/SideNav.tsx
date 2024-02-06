@@ -34,7 +34,7 @@ export const PATHS: PathItem[] = [
 const SideNav = ({size}: {size: number}) => {
     const isMobile = useIsMobile({ threshold: 1150 });
     const userId = useSelector((state: RootState) => state.user.currentUser?.id);
-    const username = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
+    const name = useSelector((state: RootState) => state.user.currentUser?.name) || '? ?';
   return (
     <nav >
         <div className='flex justify-center text-baseline items-start gap-2 text-primary my-8 transition-all duration-300 ease'>
@@ -43,7 +43,7 @@ const SideNav = ({size}: {size: number}) => {
                 FitWars
             </h1>}
         </div>
-        <ul className=' my-16'>
+        <ul className=' my-16 list-none'>
             {PATHS.map((path) => (
                 <li key={path.name}>
                     <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
@@ -53,8 +53,8 @@ const SideNav = ({size}: {size: number}) => {
                         {path.name === 'Profile' 
                         ? 
                         <Avatar className=' w-[40px] h-[40px]'>
-                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                            <AvatarFallback>{getInitials(username)}</AvatarFallback>
+                            <AvatarImage src={name === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
+                            <AvatarFallback>{getInitials(name)}</AvatarFallback>
                         </Avatar> 
                         : 
                         <path.icon className=' h-[40px] w-[40px] transition-none' />

@@ -19,6 +19,5 @@
     flex: 1; /* Smaller right column */
     padding: 20px;
     /* max-height: 400px; */
-    transition: all .39s ease-in;
     /* box-shadow: 0 4px 6px rgba(0,0,0,0.3); */
   }

@@ -25,6 +25,16 @@ import {
 } from "../../components/ui/form"
 import { Input } from "../../components/ui/input"
 import { toast } from "sonner"
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../components/ui/table"
 
 
 
@@ -36,7 +46,7 @@ const Practice = () => {
     const user = useSelector((state: RootState) => state.user.currentUser);
     const userId = user?.id || '';
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
-    // const eventTotalIndex = useSelector((state: RootState) => state.user.currentUser?.eventTotals?.findIndex(eventTotal => eventTotal.event === currentEventId)) || -1
+    const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
     
 
     const handleInputChange = (e) => {
@@ -52,36 +62,11 @@ const Practice = () => {
     }
   };
 
-  // const handleSubmit = () => {
-  //   // Perform submit action here (e.g., send the positive number to an API)
-  //   console.log('Submitted value:', inputValue);
-  //   const numericValue = Number(inputValue);
-
-  //   // redo lol
-  //   dispatch(
-  //     updateUserPractice(numericValue)
-  //   )
-
-  //     dispatch(
-  //       updateLeaderboardXp({xpGain: (numericValue + (user?.monthlyXp || 0)), userId: userId })
-  //     )
-
-  //   // dispatch(
-  //   //   updateUserYearCount({ userCount: numericValue, eventId: currentEventId, userId: userId })
-  //   // )
-
-  //   dispatch(
-  //     updateCounts({ userCount: numericValue, eventId: currentEventId, userId: userId })
-  //   )
-    
-  //   // setInputValue('');
-  // };
-
   const formSchema = z.object({
     userCount: z.string().min(1),
   })
 
-  // 1. Define your form.
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,10 +74,7 @@ const Practice = () => {
     },
   })
  
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(Number(values.userCount))
     if (Number(values.userCount)) {
       dispatch(
@@ -148,7 +130,36 @@ const Practice = () => {
             </form>
           </Form>
         </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
+        <TabsContent value="password">
+          <Table className=' mt-16'>
+            <TableCaption>A list of your recent records.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Record</TableHead>
+                <TableHead className='text-center'>Time</TableHead>
+                <TableHead className='text-center'>Reward</TableHead>
+                <TableHead className="text-right">Count</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {xpGains.map((entry, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
+                  <TableCell>{entry.time}</TableCell>
+                  <TableCell>{entry.xp} XP</TableCell>
+                  <TableCell className="text-right">{entry.reps}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={2}>Total</TableCell>
+                <TableCell className="text-center">-</TableCell>
+                <TableCell className="text-right">-</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TabsContent>
       </Tabs>
       
         {/* <div style={{ padding: isMobile ? '120px 0' : '40px 0'}}>

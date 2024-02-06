@@ -679,23 +679,27 @@ const createUser = async (req, res) => {
     if (!user) return res.status(400).json({ error: 'no user found.' });
 
     try {
+      const weekNum = getWeekOfMonth();
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear().toString();
+      const currentMonthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
+
       const statsIndex = user.statistics.findIndex(stat => stat.eventId === eventId);
       const streakIndex = user.streaks.findIndex(streak => streak.eventId === eventId);
 
-      if (statsIndex === -1 || streakIndex === -1) return res.status(400).json({ error: `no index found. looking for ${eventId}` });
+      if (statsIndex === -1) return res.status(400).json({ error: `no index found. looking for ${eventId}` });
 
       const currentPersonalBest = user.statistics[statsIndex].personalBest;
-      const currentStreak = user.streaks[streakIndex].streakLength;
-      
-      const updatedStatistic = {
-        event: eventId,
-        weeklyAverage: 0, //need to get
-        currentStreak: currentStreak,
-        personalBest: currentPersonalBest > count ? currentPersonalBest : count
-      }
+      const currentStreak = user.streaks[streakIndex].streakLength || 1;
 
       const best = currentPersonalBest > count ? currentPersonalBest : count
-      console.log(best, currentPersonalBest, count);
+      
+      const summaryIndex = user.xpSummaries.findIndex(summary => summary.event === eventId); // fix event to eventId for consistency
+      const monthIndex = user.xpSummaries[summaryIndex].monthSummary.findIndex(month => month.monthName === currentMonthName && month.yearIn === currentYear);
+      const weekIndex = user.xpSummaries[summaryIndex].monthSummary[monthIndex].weeks.findIndex(week => week.weekId === weekNum);
+      const weekCount = user.xpSummaries[summaryIndex].monthSummary[monthIndex].weeks[weekIndex].count || 0;
+      const weeklyAverage = weekCount === 0 ? 0 : weekCount / 7;
+
       const updatedUser = await User.findOneAndUpdate(
         {
           id: userId,
@@ -703,7 +707,7 @@ const createUser = async (req, res) => {
         },
         {
           $set: {
-            'statistics.$.weeklyAverage': 1,
+            'statistics.$.weeklyAverage': weeklyAverage,
             'statistics.$.currentStreak': currentStreak,
             'statistics.$.personalBest': best,
           },
@@ -713,7 +717,7 @@ const createUser = async (req, res) => {
 
       if (!updatedUser) return res.status(404).json({ error: 'updatedUser error.' });
 
-      console.log(updatedUser)
+      // console.log(updatedUser)
       return res.status(201).json(updatedUser);
 
     } catch (error) {
@@ -732,14 +736,13 @@ const createUser = async (req, res) => {
 
     try {
       const eventIndex = user.streaks.findIndex(streak => streak.eventId === eventId);
-      console.log('t', eventId, eventIndex);
 
       if (eventIndex === -1) {
         console.log('eventId not found')
         const newStreak = {
           eventId: eventId,
           lastExtendedDate: new Date().getTime(),
-          streakLength: 1,
+          streakLength: 0,
           startDate: new Date().getTime()
         }
 
@@ -760,39 +763,40 @@ const createUser = async (req, res) => {
         currentDate.setHours(0, 0, 0, 0);
 
         const startOfYesterday = currentDate.getTime() - 24 * 60 * 60 * 1000;
-        const isYesterday = streak.lastExtendedDate >= startOfYesterday && streak.lastExtendedDate < currentDate.getTime();
-        
+        const isYesterday = streak.lastExtendedDate >= startOfYesterday;
+        const sameDay = streak.lastExtendedDate === currentDate.getTime();
+        console.log(isYesterday, 'isYester', startOfYesterday, new Date(currentDate.getTime()), new Date(streak.lastExtendedDate) )
+        if (sameDay) return res.status(200).json({ message: 'Streak updated successfully.' });
         if (isYesterday) {
-          const updatedUser = await User.findOneAndUpdate(
+          await User.findOneAndUpdate(
             { 
               id: userId,
               'streaks.eventId': eventId,
             },
             {
               $set: {
-                'streaks.$.lastExtendedDate': new Date().getTime(),
+                'streaks.$.lastExtendedDate': currentDate.getTime(),
                 'streaks.$.streakLength': streak.streakLength + 1,
               },
             },
             { new: true }
           );
-          console.log(updatedUser)
         } else {
-          const updatedUser = await User.findOneAndUpdate(
+          console.log('changing streak back')
+          await User.findOneAndUpdate(
             { 
               id: userId,
               'streaks.eventId': eventId,
             },
             {
               $set: {
-                'streaks.$.lastExtendedDate': new Date().getTime(),
-                'streaks.$.streakLength': 1,
-                'streaks.$.startDate': new Date().getTime(),
+                'streaks.$.lastExtendedDate': currentDate.getTime(),
+                'streaks.$.streakLength': 0,
+                'streaks.$.startDate': currentDate.getTime(),
               },
             },
             { new: true }
           );
-          console.log(updatedUser)
         }
 
         return res.status(200).json({ message: 'Streak updated successfully.' });
@@ -854,6 +858,21 @@ const createUser = async (req, res) => {
     try {
       const userXP = calculateXp(eventId, count);
       const levelOverview = calculateLevel(user.totalXp + userXP);
+
+      await User.findOneAndUpdate(
+        { id: userId },
+        {
+          $push: {
+              xpGains: {
+                event: eventId,
+                time: Date.now(),
+                reps: count,
+                xp: userXP
+              }
+          },
+        },
+        { new: true }
+      );
 
       const updatedUser = await User.findOneAndUpdate(
         { id: userId },

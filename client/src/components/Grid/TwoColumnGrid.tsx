@@ -7,6 +7,7 @@ import { LEAGUE_LEVELS } from '../../NEWlayouts/Leaderboard/Leaderboard';
 import { DynamicIcon } from '../Icons/DynamicIcon';
 import { GiLaurelsTrophy } from "react-icons/gi";
 import { Show } from '../../helpers/functional';
+import { GoUnfold } from "react-icons/go";
 
  
 import { cn } from "../../lib/utils"
@@ -37,6 +38,11 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../../components/ui/drawer"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../../components/ui/collapsible"
 import AverageVsDaily from '../Charts/AverageVsDaily';
 
 
@@ -45,6 +51,7 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
   const [goal, setGoal] = React.useState(350)
+  const [isOpen, setIsOpen] = React.useState(false)
  
   function onClick(adjustment: number) {
     setGoal(Math.max(200, Math.min(400, goal + adjustment)))
@@ -61,7 +68,7 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
           </div>
           
           <div className=' flex flex-col gap-8'>
-            <div className=" flex flex-row justify-between">
+            <div className=" flex flex-row justify-between gap-8">
               <div>
                 <Popover open={open} onOpenChange={setOpen}>
                   <PopoverTrigger asChild>
@@ -175,9 +182,28 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                 </Drawer>
               </div>
             </div>
-            <div className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm w-full">
-              <AverageVsDaily />
-            </div>
+            <Collapsible
+              open={isOpen}
+              onOpenChange={setIsOpen}
+              className="space-y-2 w-full mb-16"
+            >
+              <div className="flex items-center justify-between space-x-4 px-1">
+                <h4 className="text-sm font-semibold">
+                  Currently available graphs
+                </h4>
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <GoUnfold className="h-4 w-4" />
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </CollapsibleTrigger>
+              </div>
+              <CollapsibleContent className="space-y-2">
+                <div className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm w-full">
+                  <AverageVsDaily />
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         </div>
   )

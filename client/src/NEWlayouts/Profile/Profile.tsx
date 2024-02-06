@@ -14,7 +14,7 @@ export async function profileLoader({ params }) {
     return { profile };
   }
 
-  function getInitials(name) {
+  export function getInitials(name) {
     const words = name.split(' ');
     const initials = words.map(word => word.charAt(0));
   
@@ -40,8 +40,8 @@ const Profile = () => {
       }, [])
   return (
     <div className=' w-full'>
-        <div className=' flex items-start gap-16'>
-            <Avatar className=' w-52 h-52'>
+        <div className=' flex items-start md:gap-16 gap-8'>
+            <Avatar className=' md:w-40 md:h-40 sm:w-40 sm:h-40 h-32 w-32'>
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                 <AvatarFallback>{getInitials(profile.name)}</AvatarFallback>
             </Avatar>
@@ -64,13 +64,14 @@ const Profile = () => {
             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-4">Statistics</h3>
             <div className=' flex flex-wrap justify-center gap-8'>
                 {profile.statistics.map((stat) => {
+                    const metric = stat.eventId === 'running' ? 'miles' : 'reps'
                     return (
                         <div key={stat.eventId} className="rounded-[--radius] border px-4 py-2 font-mono text-sm shadow-sm w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
                             <div className="text-lg font-semibold capitalize">{stat.eventId}</div>
                             <ul className="my-6 list-disc [&>li]:mt-2">
-                                <li><p className="text-sm text-muted-foreground">Weekly average:</p> {stat.weeklyAverage} reps</li>
+                                <li><p className="text-sm text-muted-foreground">Weekly average:</p> {stat.weeklyAverage.toFixed(2)} {metric}</li>
                                 <li><p className="text-sm text-muted-foreground">Current streak:</p> {stat.currentStreak} days</li>
-                                <li><p className="text-sm text-muted-foreground">Personal Best:</p> {stat.personalBest} reps</li>
+                                <li><p className="text-sm text-muted-foreground">Personal Best:</p> {stat.personalBest} {metric}</li>
                             </ul>
                         </div>
                     )

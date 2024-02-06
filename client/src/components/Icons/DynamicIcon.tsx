@@ -1,4 +1,3 @@
-import React, { ReactElement } from 'react';
 import { IconType } from 'react-icons/lib';
 
 interface DynamicIconProps {
@@ -11,6 +10,6 @@ interface DynamicIconProps {
 
 export const DynamicIcon = ({ icon: Icon, width, height, color, padding }: DynamicIconProps) => {
   return (
-    <Icon style={{ width: width, height: height, color: color, padding: padding, transition: 'all .5s ease' }} />
+    <Icon style={{ width: width, height: height, padding: padding,  }} className={`${color} transition-none`} />
   )
 }

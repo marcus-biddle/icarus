@@ -58,13 +58,18 @@ export const options = {
 const AverageVsDaily = () => {
     const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
+    const statistics = useSelector((state: RootState) => state.user.currentUser?.statistics);
+    const weeklyAverage = statistics?.find(stat => stat.eventId === currentEventId)?.weeklyAverage || 0;
 
+    console.log(xpGains)
     if (xpGains.length === 0) return;
     // Convert timestamps to Date objects
-const formattedData = xpGains.filter(entry => entry.event === currentEventId).map(entry => ({
+const formattedData = xpGains.slice(0,8).filter(entry => entry.event === currentEventId).map(entry => ({
     ...entry,
     time: new Date(entry.time),
   }));
+
+  
 
   if (formattedData.length === 0) return;
   // Group entries by day
@@ -82,8 +87,6 @@ const groupedData = formattedData.reduce((acc, entry) => {
 const result = Object.values(groupedData).map((entries: any) => {
     const sumReps = entries.reduce((sum, entry) => sum + entry.reps, 0);
     const sumXp = entries.reduce((sum, entry) => sum + entry.xp, 0);
-    const averageReps = sumReps / entries.length;
-    const averageXp = sumXp / entries.length;
   
     return {
       date: new Date(entries[0].time).toLocaleDateString(),
@@ -91,31 +94,23 @@ const result = Object.values(groupedData).map((entries: any) => {
     };
   });
 
+  console.log(result)
+
   // Get averageRepsThisWeek
-  const currentDate = new Date();
-  const startOfWeek = new Date(currentDate);
-  startOfWeek.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7); // Go back to the last Sunday
-  startOfWeek.setHours(0, 0, 0, 0);
+  // const currentDate = new Date();
+  // const startOfWeek = new Date(currentDate);
+  // startOfWeek.setDate(currentDate.getDate() - (currentDate.getDay() + 6) % 7); // Go back to the last Sunday
+  // startOfWeek.setHours(0, 0, 0, 0);
   
-  const endOfWeek = new Date(currentDate);
-  endOfWeek.setDate(startOfWeek.getDate() + 6); // Add six days to get to this Saturday
-  endOfWeek.setHours(23, 59, 59, 999);
+  // const endOfWeek = new Date(currentDate);
+  // endOfWeek.setDate(startOfWeek.getDate() + 6); // Add six days to get to this Saturday
+  // endOfWeek.setHours(23, 59, 59, 999);
 
-console.log(startOfWeek, endOfWeek)
-const entriesThisWeek = result.filter(entry => {
-  const entryDate = new Date(entry.date);
-  return entryDate >= startOfWeek && entryDate <= endOfWeek;
-});
-
-console.log('this week', entriesThisWeek)
-
-// Calculate average reps for entries this week
-  const sumRepsThisWeek = entriesThisWeek.reduce((sum, entry) => sum + entry.sumReps, 0);
-  const averageRepsThisWeek = sumRepsThisWeek / entriesThisWeek.length;
-  console.log("Average Reps This Week:", averageRepsThisWeek);
-
-
-  console.log('formatted', result)
+// console.log(startOfWeek, endOfWeek)
+// const entriesThisWeek = result.filter(entry => {
+//   const entryDate = new Date(entry.date);
+//   return entryDate >= startOfWeek && entryDate <= endOfWeek;
+// });
 
   const labels = result.map(entry => entry.date);
 
@@ -124,7 +119,7 @@ console.log('this week', entriesThisWeek)
     datasets: [
       {
         label: 'Your Moving Average',
-        data: Array.from({ length: result.length }, () => averageRepsThisWeek),
+        data: Array.from({ length: result.length }, () => weeklyAverage),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         yAxisID: 'y',

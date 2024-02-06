@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Camera } from './components/Camera'
 import './App.css'
 import { Outlet, redirect, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
@@ -28,6 +28,8 @@ function App() {
   const user = useSelector((state: RootState) => state?.user.currentUser);
   const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
 
+  const [sidebarSize, setSidebarSize] = useState(25);
+
   useEffect(() => {
     if (!creationDate) {
       navigate('duo/login')
@@ -38,18 +40,18 @@ function App() {
 
   return (
     <>
-      <div style={{ }}>
+      <div >
         {/* {false && <Camera />} */}
 
         {/* {!location.pathname.includes('duo') && <TopNavbar />} */}
         {/* {!isMobile && !location.pathname.includes('login') && <SideNav />} */}
         
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel defaultSize={25} className=' min-w-[125px]'>
-            <SideNav />
+        {!isMobile ? <ResizablePanelGroup direction={"horizontal"} onLayout={(sizes) => setSidebarSize(sizes[0])}>
+          <ResizablePanel defaultSize={0} className=' min-w-[155px]'>
+            <SideNav size={sidebarSize} />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={75} className=' min-w-[50%]'>
+          <ResizablePanel defaultSize={100} className=' min-w-[50%]'>
             <div className="flex justify-center p-6 min-h-screen">
               <Outlet />
               <Toaster />
@@ -57,6 +59,14 @@ function App() {
             
           </ResizablePanel>
         </ResizablePanelGroup>
+        :
+        <div>
+          <div className="flex justify-center p-6 min-h-screen mb-32">
+            <Outlet />
+            <Toaster />
+          </div>
+        </div>
+        }
 
         {/* <div style={{ zIndex: '1', position: 'relative', minHeight: '100vh', backgroundColor: '#121827', minWidth: '100vw'}}>
           <Outlet />

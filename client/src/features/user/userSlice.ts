@@ -2,92 +2,8 @@ import { createSlice, nanoid, PayloadAction, createAsyncThunk } from '@reduxjs/t
 import { userActions } from '../../api/users';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { User } from './userTypes';
 
-export interface User {
-  eventIds: string[];
-  currentEventId?: string;
-  eventTotals?: [{
-    event: string;
-    totalDays: number; // update once a day
-    totalReps: number;
-    totalXp: number;
-    lastUpdatedDate: string;
-  }],
-  currentEvent?: string; // unused
-  email?: string;
-  name?: string;
-  username?: string;
-  id?: string | null;
-  googleId?: string | null;
-  hasGoogleId?: boolean;
-  creationDate?: number | null;
-  weeklyXp?: number;
-  monthlyXp?: number;
-  totalXp?: number;
-  streak?: number;
-  updateUser: number; // this is to track how often a user adds reps
-  streakData?: {
-    currentStreak: {
-      endDate: string;
-      lastExtendedDate: string;
-      length: number;
-      startDate: string;
-    } | null,
-    longestStreak: {
-      achieveDate: string;
-      endDate: string;
-      length: number;
-      startDate: string;
-    } | null,
-    previousStreak: {
-      endDate: string;
-      lastExtendedDate: string;
-      length: number;
-      startDate: string;
-    } | null
-  },
-  xpGains?: [{
-    event: string;
-    time: number;
-    reps: number;
-    xp: number;
-  }],
-  xpSummaries?: [{ 
-    event: string;
-    week: [{
-      timestamp: number;
-      count: number;
-    }];
-    monthSummary: [{
-      monthName: string;
-      yearIn: string;
-      totalCount: number;
-      weeks: [{
-        weekId: number;
-        count: number;
-      }]
-    }];
-    yearSummary: [{
-      dateYear: string;
-      count: number;
-      months: [{
-        month: string;
-        count: string;
-      }]
-    }]
-  }],
-  leaderboardHistory: [{
-    ranking: number;
-    leagueId: string;
-    monthlyXp: number;
-    date: string;
-  }],
-  currentLeaderboard: {
-    ranking: number;
-    leagueId: string;
-    monthlyXp: number;
-  }
-}
 
 export interface UserState {
   currentUser: User | null
@@ -119,13 +35,13 @@ export const createUser: any = createAsyncThunk('user/createUser', async (newUse
 export const updateUser: any = createAsyncThunk('user/updateUser', async (attributes: {userCount: number, eventId: string, userId: string }) => {
   console.log('count', attributes.userCount, attributes.eventId, attributes.userId);
   const streak = await userActions.updateStreak(attributes.userId, attributes.eventId);
-  const stat = await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
   const year = await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
   const month = await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
-  const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount)
+  const stat = await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
+  const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount);
 
-  console.log('updateCount', streak, stat, year, month, reward)
-  // return reward;
+  console.log('updateCount', reward)
+  return reward;
 });
 
 export const userSlice = createSlice({
@@ -191,7 +107,7 @@ export const userSlice = createSlice({
         state.currentUser = action.payload;
       })
       builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
-        // state.currentUser = action.payload;
+        state.currentUser = action.payload;
       })
       // builder.addCase(updateUserMonthCount.fulfilled, (state, action: PayloadAction<User>) => {
       //   state.currentUser = action.payload;

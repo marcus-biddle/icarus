@@ -38,7 +38,7 @@
     display: flex;
     background-color: #01040a;
     width: 100%;
-    transition: width 0.3s;
+    /* transition: width 0.3s; */
     padding: 4px;
   }
   

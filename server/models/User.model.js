@@ -82,6 +82,7 @@ const UserStateSchema = new mongoose.Schema({
   username: String,
   level: Number,
   levelCompletionRate: Number,
+  xpRequiredForNextLevel: Number,
   id: String,
   googleId: String,
   hasGoogleId: Boolean,

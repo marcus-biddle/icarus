@@ -80,6 +80,7 @@ interface CurrentStreak {
     username: string;
     level: number;
     levelCompletionRate: number;
+    xpRequiredForNextLevel: number;
     id: string;
     googleId: string;
     hasGoogleId: boolean;

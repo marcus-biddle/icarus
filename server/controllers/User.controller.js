@@ -3,6 +3,8 @@ import User from '../models/User.model.js';
 import Leaderboard from '../models/Leaderboard.model.js'
 import jwt from 'jsonwebtoken';
 
+const thresholds = Array.from({ length: 100 }, (_, index) => Math.floor(100 * Math.pow(index + 1, 1.5)));
+
 // POST to create a new user
 const createUser = async (req, res) => {
     const googleId = req.body.googleId;
@@ -102,6 +104,7 @@ const createUser = async (req, res) => {
           level: 1,
           totalXp: 0,
           levelCompletionRate: 0,
+          xpRequiredForNextLevel: thresholds[0]
         });
 
         await addUsersToLeagueHelper('bronze', [{
@@ -810,16 +813,18 @@ const createUser = async (req, res) => {
 
   function calculateLevel(xp) {
     // Define XP thresholds for each level
-    const thresholds = Array.from({ length: 100 }, (_, index) => Math.floor(100 * Math.pow(index + 1, 1.5)));
+    
     const levelOverview = {
       level: 1,
-      levelCompletionRate: 0
+      levelCompletionRate: xp / thresholds[1],
+      xpRequiredForNextLevel: thresholds[0]
     } 
     // Find the highest level whose threshold is less than or equal to the user's XP
     for (let i = thresholds.length - 1; i >= 0; i--) {
       if (xp >= thresholds[i]) {
-        levelOverview.level = i + 1;
+        levelOverview.level = i + 2;
         levelOverview.levelCompletionRate = (xp / thresholds[i + 1]);
+        levelOverview.xpRequiredForNextLevel= thresholds[i + 1]
         return levelOverview; // Levels are usually 1-based
       }
     }
@@ -881,6 +886,7 @@ const createUser = async (req, res) => {
             totalXp: user.totalXp + userXP, // Update totalXp
             level: levelOverview.level, // Update level
             levelCompletionRate: levelOverview.levelCompletionRate,
+            xpRequiredForNextLevel: levelOverview.xpRequiredForNextLevel
           },
         },
         { new: true }

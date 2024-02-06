@@ -5,7 +5,7 @@ import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
 import { Show } from '../../helpers/functional';
 import { useDelayedDisplay } from '../../utilities/hooks/useDelayedDisplay';
-import { MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md";
+import { GoHourglass } from "react-icons/go";
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState, removeUser } from '../../features/user/userSlice';
@@ -31,22 +31,17 @@ import {
   import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { Input } from '../../components/ui/input';
 
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
     const [ isVisible, setIsVisibile ] = useState(true);
     const [username, setUsername] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
-    const isMobile = useIsMobile({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { handleSignin  } = useGoogleAuth({ username });
-    const DelayedDisplay = useDelayedDisplay({ delay: 5000 });
+    const { handleGoogleSignIn  } = useGoogleAuth();
     const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate);
-    const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
 
     const handlePositionChange = () => {
         setIsVisibile(false);
@@ -55,34 +50,6 @@ const NewLogin = () => {
             setIsVisibile(true);
           }, 1000);
     };
-
-    // const handleCheckboxChange = (item: string) => {
-    //     if (selectedItems.includes(item)) {
-    //         setSelectedItems(selectedItems.filter((selectedItem) => selectedItem !== item));
-    //     } else {
-    //         setSelectedItems([...selectedItems, item]);
-    //     }
-    // };
-
-    const handleUsernameChange = (event) => {
-        const newUsername = event.target.value;
-    
-        // Check for special characters in the username
-        const specialCharacters = /[!@#$%^&*(),.?":{}|<>]/;
-        if (specialCharacters.test(newUsername)) {
-          setErrorMessage('Username cannot contain special characters.');
-        } else {
-          setErrorMessage('');
-          setUsername(newUsername);
-        }
-      };
-
-      const handleEventSelectionNextClick = () => {
-        // dispatch(
-        //     addEvent(selectedItems)
-        // )
-        handlePositionChange();
-      }
 
       const formSchema = z.object({
         userName: z.string().min(1),
@@ -97,16 +64,7 @@ const NewLogin = () => {
       })
 
       function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(Number(values.userName))
-        handleSignin();
-    
-          toast("Achievement Unlocked!", {
-            description: `${values.userName} successfully joined the group.`,
-            // action: {
-            //   label: "Undo",
-            //   onClick: () => console.log("Undo"),
-            // },
-          })
+        handleGoogleSignIn(values.userName);
       }
 
       useEffect(() => {
@@ -119,7 +77,7 @@ const NewLogin = () => {
               removeUser()
             )
           }
-      }, [creationDate])
+      }, [creationDate, location.pathname])
 
   return (
     <div className=' w-full'>
@@ -136,7 +94,7 @@ const NewLogin = () => {
                     </CardHeader>
                     <CardContent className='flex justify-evenly mt-16 mb-8'>
                         <Button onClick={() => handlePositionChange()}>Create Account</Button>
-                        <Button variant="secondary" onClick={() => handleSignin()}>Login</Button>
+                        <Button variant="secondary" onClick={() => handleGoogleSignIn('')}>Login</Button>
                     </CardContent>
                     <CardFooter>
                     <p className="text-sm text-muted-foreground">*Loading times could vary up to a few minutes in the beginning due to our third party cloud hosting provider.</p>
@@ -171,6 +129,10 @@ const NewLogin = () => {
                                     )}
                                 />
                                 <Button type="submit">Create Account</Button>
+                                <Button disabled>
+                                    <GoHourglass className="mr-2 h-4 w-4 animate-spin" />
+                                    Please wait
+                                </Button>
                             </form>
                         </Form>
                     </CardContent>

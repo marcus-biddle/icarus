@@ -1,14 +1,19 @@
 import { createSlice, nanoid, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { userActions } from '../../api/users';
 import { User } from './userTypes';
+import { RootState } from '@/app/store';
 
 
 export interface UserState {
-  currentUser: User | null
+  currentUser: User | null,
+  status: string,
+  error: string | null
 }
 
 const initialState: UserState = {
-  currentUser: null
+  currentUser: null,
+  status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+  error: null
 }
 
 export const createUser: any = createAsyncThunk('user/createUser', async (newUserAttributes: {googleId: string, selectedItems: string[], username: string}) => {
@@ -113,6 +118,10 @@ export const userSlice = createSlice({
       })
   },
 })
+
+export const getCurrentUser = (state: RootState) => state.user.currentUser;
+export const getUserStatus = (state: RootState) => state.user.status;
+export const getUserError = (state: RootState) => state.user.error;
 
 export const { 
   setUser,

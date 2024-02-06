@@ -53,7 +53,10 @@ const Profile = () => {
                 
                 <div className=' flex flex-wrap gap-1 py-4'>
                     <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">Level {profile.level}</code>
-                    <Progress value={progress} className="w-[100%] h-[4px]"  />
+                    <div className='w-full'>
+                        <Progress value={progress} className="w-[100%] h-[4px]"  />
+                        <p className="text-sm text-muted-foreground text-right">{(profile.levelCompletionRate * 100).toFixed(2)}%</p>
+                    </div>
                 </div>
                 
                 <small className="text-sm font-medium leading-none">Joined <em className=' italic text-sm'>{formatTimestamp(profile.creationDate)}</em></small>

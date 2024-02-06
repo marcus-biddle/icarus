@@ -85,7 +85,7 @@ const NewLogin = () => {
 
       useEffect(() => {
         if (creationDate) {
-            navigate('/duo/leaderboard')
+            navigate('/duo/practice')
         }
 
         if (!leaderboard || !leaderboard?.leagueIds) {

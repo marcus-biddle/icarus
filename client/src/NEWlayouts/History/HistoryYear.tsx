@@ -77,7 +77,7 @@ const HistoryYear = () => {
   return (
     <TwoColumnGrid showSecondColumnInMobile={true}>
         <div style={{ display: 'flex', gap: '32px', alignItems: 'center', borderBottom: '1px solid #1E293B', paddingBottom: '8px'}}>
-            <button className='date-btn' onClick={() => navigate('/duo/history')}>
+            <button className='date-btn' onClick={() => navigate('/history')}>
                 <DynamicIcon icon={GoArrowLeft} width='40px' height='40px' color='white' />
             </button>
             <h4 style={{ margin: '0', fontWeight: '700', letterSpacing: '.85px' }}>History By Year</h4>

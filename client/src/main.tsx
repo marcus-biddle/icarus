@@ -48,100 +48,49 @@ const router = createBrowserRouter([
         element: <LandingPageLayout />,
       },
       {
-        path: '/duo/login',
+        path: '/login',
         element: <NewLogin />,
       },
       {
-        path: '/duo/sections',
+        path: '/sections',
         element: <HomeLevel1 />,
       },
       {
-        path: '/duo/workout',
+        path: '/workout',
         element: <Workout />,
       },
       {
-        path: '/duo/practice',
+        path: '/practice',
         element: <Practice />,
       },
       {
-        path: '/duo/history',
+        path: '/history',
         element: <History />,
       },
       {
-        path: '/duo/history/week',
+        path: '/history/week',
         element: <HistoryWeek />,
       },
       {
-        path: '/duo/history/year',
+        path: '/history/year',
         element: <HistoryYear />,
       },
       {
-        path: '/duo/history/month',
+        path: '/history/month',
         element: <HistoryMonth />,
       },
       {
-        path: '/duo/sections/details/:sectionId',
+        path: '/sections/details/:sectionId',
         element: <Details />,
       },
       {
-        path: '/duo/leaderboard',
+        path: '/leaderboard',
         element: <Leaderboard />,
       },
       {
-        path: '/duo/user/:userId',
+        path: '/user/:userId',
         element: <Profile />,
         loader: profileLoader,
-      },
-      
-      {
-        path: 'home',
-        element: <HomeLayout />,
-        loader: async () => {
-          const [logRes, eventRes,  ] = await Promise.all([
-            logsActions.getLogs(),
-            eventActions.getEachEventForAllUsers(),
-            // userActions.getUser()
-          ]);
-        
-          return {logs: logRes, events: eventRes};
-        },
-      },
-      {
-        path: 'leader-board',
-        element: (
-            <PlayerActivityLayout />
-        ),
-        loader: async () => {
-          const response = await eventActions.getTodaysEventForEachUser();
-          const yearResponse = await eventActions.getYearEventForEachUser();
-          return { todayActivity: response, yearActivity: yearResponse };
-        },
-      },
-      {
-        path: 'chat',
-        element: <ChatLayout />,
-        loader: async () => {
-          const messagesRes = await messageActions.getAllMessages();
-          // const userRes = await userActions.createUser();
-          return { messages: messagesRes.sort((a, b) => {
-            const timestampA = new Date(a.timestamp).getTime();
-            const timestampB = new Date(b.timestamp).getTime();
-            return timestampA - timestampB;
-          }), user: [] };
-        },
-      },
-      {
-        path: 'user',
-        element: <UserLayout />,
-        loader: async () => {
-          const messagesRes = await messageActions.getAllMessages();
-          // const userRes = await userActions.createUser();
-          return { messages: messagesRes.sort((a, b) => {
-            const timestampA = new Date(a.timestamp).getTime();
-            const timestampB = new Date(b.timestamp).getTime();
-            return timestampA - timestampB;
-          }), user: [] };
-        },
       },
     ]
   },

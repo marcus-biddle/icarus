@@ -44,20 +44,22 @@ function App() {
 
   useEffect(() => {
     if (!creationDate) {
-      navigate('duo/login')
+      navigate('/login')
     }
     console.log('User -App.tsx', user);
     console.log('Leaderboard -App.tsx', leaderboard);
   }, [location.pathname, creationDate])
 
+  console.log(!isMobile || !location.pathname.includes('login'))
+
   return (
     <div className=' relative'>
       <div>
         
-        {!isMobile ? <ResizablePanelGroup direction={"horizontal"} onLayout={(sizes) => setSidebarSize(sizes[0])}>
-          <ResizablePanel defaultSize={0} className=' min-w-[155px]'>
+        {!isMobile && !location.pathname.includes('login') ? <ResizablePanelGroup direction={"horizontal"} onLayout={(sizes) => setSidebarSize(sizes[0])}>
+          {<ResizablePanel defaultSize={0} className=' min-w-[155px]'>
             <SideNav size={sidebarSize} />
-          </ResizablePanel>
+          </ResizablePanel>}
           <ResizableHandle withHandle />
           <ResizablePanel defaultSize={100} className=' min-w-[50%]'>
             <div className="flex justify-center p-6 min-h-screen">
@@ -99,7 +101,8 @@ function App() {
             {PATHS.map((path) => (
                 <div key={path.name}>
                     <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
-                        isActive ? 'flex justify-evenly items-center my-2 bg-primary-foreground border border-primary rounded-[--radius] p-2' : 'flex justify-around items-center my-2h hover:bg-muted rounded-[--radius] p-2'
+                        isActive ? 'flex justify-evenly items-center my-2 bg-primary-foreground border border-primary rounded-[--radius] p-2' 
+                        : 'flex justify-evenly items-center my-2 hover:bg-muted rounded-[--radius] p-2'
                         }
                     >
                         {path.name === 'Profile' 

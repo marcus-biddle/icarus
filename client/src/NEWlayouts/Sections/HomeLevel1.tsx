@@ -73,7 +73,7 @@ const HomeLevel1 = () => {
               </div>
               <div>
                 
-                  <NavLink to={'/duo/workout'}>
+                  <NavLink to={'/workout'}>
                     <button className='start-btn' style={{ boxShadow: isMobile ? '' : '0 4px 6px rgba(0,0,0,0.4)', width: isMobile ? '90%' : '', marginRight: isMobile ? '' : '24px'}}>Start</button>
                   </NavLink>
                 {!isMobile && <NavLink to={'details/1'} style={{ fontWeight: '700', textDecoration: 'none', color: 'inherit', textTransform: 'uppercase', letterSpacing: '1.12px', fontSize: '14px'}}>See Details</NavLink>}

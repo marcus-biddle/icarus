@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { GiGorilla, GiLaurelCrown, GiLibertyWing } from "react-icons/gi";
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
-import './Login.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
 import { Show } from '../../helpers/functional';
@@ -11,8 +10,29 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../features/user/userSlice';
 import { RootState } from '../../app/store';
-// import { fetchLeaderboard } from '../../features/leaderboard/leaderboardSlice';
-// import { addEvent, updateUsername } from '../../features/user/userSlice';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+  } from "../../components/ui/card"
+import { Button } from '../../components/ui/button';
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "../../components/ui/form"
+  import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { Input } from '../../components/ui/input';
 
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
@@ -57,25 +77,6 @@ const NewLogin = () => {
         }
       };
 
-      const handleCreateAccount = () => {
-        handleSignin();
-        // console.log('found!', userFound)
-        // dispatch(
-        //     fetchLeaderboard()
-        // )
-        // add logic for the other data
-        // navigate('/duo/leaderboard')
-      }
-
-      const handleExistingAccount = () => {
-        handleSignin();
-        // dispatch(
-        //     fetchLeaderboard()
-        // )
-        // add logic for getting existing user data.
-        // navigate('/duo/leaderboard');
-      }
-
       const handleEventSelectionNextClick = () => {
         // dispatch(
         //     addEvent(selectedItems)
@@ -83,9 +84,34 @@ const NewLogin = () => {
         handlePositionChange();
       }
 
+      const formSchema = z.object({
+        userName: z.string().min(1),
+      })
+    
+    
+      const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+          userName: "",
+        },
+      })
+
+      function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(Number(values.userName))
+        handleSignin();
+    
+          toast("Achievement Unlocked!", {
+            description: `${values.userName} successfully joined the group.`,
+            // action: {
+            //   label: "Undo",
+            //   onClick: () => console.log("Undo"),
+            // },
+          })
+      }
+
       useEffect(() => {
         if (creationDate) {
-            navigate('/duo/practice')
+            navigate('/practice')
         }
 
         if (!leaderboard || !leaderboard?.leagueIds) {
@@ -96,52 +122,62 @@ const NewLogin = () => {
       })
 
   return (
-    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
-        <div style={{ padding: isMobile ? '32px' : '32px 240px'}}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1DB954'}}>
-                <DynamicIcon icon={GiGorilla} width='40px' height='40px' color='white' />
-                <h2 style={{ margin: '0', color: 'inherit', fontWeight: '700', letterSpacing: '1.12px', fontSize: isMobile ? '46px' : '48px'}}>FitWars</h2>
-            </div>
+    <div className=' w-full'>
+        <div className='flex text-baseline gap-2 text-primary w-full justify-center items-end md:justify-start '>
+            <DynamicIcon icon={GiGorilla} width='50px' height='50px' color='text-accent' />
+            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
         </div>
         <Show when={position === 0}>
-            <div style={{ maxHeight: '80%', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: isMobile ? 'column' : 'row' }} className={`fade-in-out ${isVisible ? 'visible' : 'hidden'}`}>
-                <div style={{ position: 'relative', width: '500px', height: '500px', display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
-                    <div className='tile' style={{ }}>
-                        <div className='fly'>
-                            <GiLibertyWing className='tile-icon-flipped' />
-                            <GiLaurelCrown className='tile-icon-center' />
-                            <GiLibertyWing className='tile-icon-nonFlipped' />
-                        </div>
-                    </div>
-                </div>
-                <div style={{ maxWidth: '500px', padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px' }}>
-                    <h1 style={{ margin: '0', fontWeight: '700', letterSpacing: '.85px'}}>Compete against yourself and friends in workouts!</h1>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '200px'}}>
-                        <div style={{ height: '50px'}}>
-                            <button className='login-btn' style={{ backgroundColor: '#1DB954', width: '100%' }} onClick={() => handlePositionChange()}>Get Started</button>
-                        </div>
-                        <button className='login-btn' style={{ backgroundColor: 'white', color: '#525967' }} onClick={() => handleExistingAccount()}>I already have an account</button>
-                    </div>
-                </div>
+            <div className='w-full flex justify-center my-24'>
+                <Card className=' w-full md:w-[600px]'>
+                    <CardHeader>
+                        <CardTitle className=' scroll-m-20 text-2xl font-semibold tracking-tight'>Track. Compete. Improve.</CardTitle>
+                        <CardDescription>Sign in below or create an account.</CardDescription>
+                    </CardHeader>
+                    <CardContent className='flex justify-evenly mt-16 mb-8'>
+                        <Button onClick={() => handlePositionChange()}>Create Account</Button>
+                        <Button variant="secondary" onClick={() => handleSignin()}>Login</Button>
+                    </CardContent>
+                    <CardFooter>
+                    <p className="text-sm text-muted-foreground">*Loading times could vary up to a few minutes in the beginning due to our third party cloud hosting provider.</p>
+                    </CardFooter>
+                </Card>
             </div>
         </Show>
         <Show when={position === 1}>
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <h2 style={{ padding: isMobile ? '0 24px' : ''}}>Last step! What should everyone call you?</h2>
-                <form onSubmit={() => null} className='form-container' style={{ display: isMobile ? '' : 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-                    <div className='input-group-signin' style={{ width: isMobile? '350px' : '700px' }}>
-                    <input
-                    required
-                    type='text'
-                    id='message'
-                    value={username} 
-                    style={{ width: '100%', margin: '80px 32px'}}
-                    onChange={(e) => handleUsernameChange(e)}/>
-                    <label htmlFor='message' style={{ top: '6.2rem', left: '3rem' }}>Username</label>
-                    </div>
-                    <div style={{ color: 'orangered'}}>{errorMessage}</div>
-                    <button type='button' className='login-btn' style={{ backgroundColor: '#1DB954', width: '100%' }} onClick={() => handleCreateAccount()}>Create Account</button>
-                </form>
+        <div className='w-full flex justify-center my-24'>
+                <Card className=' w-full md:w-[600px]'>
+                    <CardHeader>
+                        <CardTitle className=' scroll-m-20 text-2xl font-semibold tracking-tight'>Track. Compete. Improve.</CardTitle>
+                        <CardDescription>Sign in below or create an account.</CardDescription>
+                    </CardHeader>
+                    <CardContent className='flex justify-evenly mt-16 mb-8'>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 min-w-[50%]">
+                                <FormField
+                                    control={form.control}
+                                    name="userName"
+                                    render={({ field }) => (
+                                    <FormItem>
+                                        {/* <FormLabel>Update Exercise </FormLabel> */}
+                                        <FormControl>
+                                        <Input placeholder={''} {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Please enter a username.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                    )}
+                                />
+                                <Button type="submit">Create Account</Button>
+                            </form>
+                        </Form>
+                    </CardContent>
+                    <CardFooter>
+                    <p className="text-sm text-muted-foreground">*Loading times could vary up to a few minutes in the beginning due to our third party cloud hosting provider.</p>
+                    </CardFooter>
+                </Card>
             </div>
         </Show>
     </div>

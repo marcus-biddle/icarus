@@ -10,13 +10,13 @@ const createUser = async (req, res) => {
     const username = req.body.username;
     const id = req.body.id;
 
-    console.log(googleId, selectedItems, username, id)
     if (!googleId) return res.status(400).json({ error: 'googleId is required' });
     
     const decodedToken = await jwt.decode(googleId);
 
     const duplicate = await User.findOne({ email: decodedToken.email }).lean().exec();
     if (duplicate) return res.status(200).json(duplicate);
+    if (username === '') return res.status(200);
 
     try {
       const currentDate = new Date();

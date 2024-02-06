@@ -23,12 +23,12 @@ interface PathItem {
 
 export const PATHS: PathItem[] = [
     // { name: 'Workouts', icon: GoHome, link: 'duo/sections', locked: true },
-    { name: 'Practice', icon: GoLightBulb, link: '/duo/practice' },
-    // { name: 'History', icon: GoMortarBoard, link: '/duo/history', locked: false },
+    { name: 'Practice', icon: GoLightBulb, link: '/practice' },
+    // { name: 'History', icon: GoMortarBoard, link: '/history', locked: false },
     // { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard', locked: false },
     // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
     // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
-    { name: 'Profile', icon: GoIssueDraft, link: '/duo/user' },
+    { name: 'Profile', icon: GoIssueDraft, link: '/user' },
 ]
 
 const SideNav = ({size}: {size: number}) => {

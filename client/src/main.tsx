@@ -7,15 +7,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google'; //https://github.com/MomenSherif/react-oauth#usegooglelogin-both-implicit--authorization-code-flow
-import HomeLayout from './layouts/Home/HomeLayout';
-import { userActions } from './api/users';
-import { logsActions } from './api/recentChanges'
-import PlayerActivityLayout from './layouts/Stats/PlayerActivityLayout';
-import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
-import { ChatLayout } from './layouts/Chat/ChatLayout';
-import { messageActions } from './api/messages';
-import { eventActions } from './api/events';
-import { UserLayout } from './layouts/User/UserLayout';
 import HomeLevel1 from './NEWlayouts/Sections/HomeLevel1';
 import Leaderboard from './NEWlayouts/Leaderboard/Leaderboard';
 import Details from './NEWlayouts/Sections/Details/Details';
@@ -38,14 +29,10 @@ const router = createBrowserRouter([
     element: (
         <App />
     ),
-    // loader: async () => {
-    //   const token = localStorage.getItem('idToken');
-    //   return { token: token }
-    // },
     children: [
       {
         path: '/',
-        element: <LandingPageLayout />,
+        element: <NewLogin />,
       },
       {
         path: '/login',

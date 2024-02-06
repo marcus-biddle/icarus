@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 import { NavLink, Outlet, redirect, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthCheck } from './utilities/hooks/useAuthCheck';
-import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
-import BottomNav from './components/Navigation/Bottom/BottomNav';
 import SideNav, { PATHS } from './components/Navigation/SideNav/SideNav';
 import { useIsMobile } from './utilities/hooks/useIsMobile';
 import { useSelector } from 'react-redux';

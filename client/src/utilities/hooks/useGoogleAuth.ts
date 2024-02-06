@@ -2,7 +2,7 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { createAxiosInstance } from '../../api/config/axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../features/user/userSlice';
+import { createUser, getCurrentUser } from '../../features/user/userSlice';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { RootState } from '@/app/store';

@@ -72,11 +72,11 @@ const NewLogin = () => {
             navigate('/practice')
         }
 
-        if (location.pathname.includes('login') && position === 0) {
-            dispatch(
-              removeUser()
-            )
-          }
+        // if (location.pathname.includes('login')) {
+        //     dispatch(
+        //       removeUser()
+        //     )
+        // }
       }, [creationDate, location.pathname])
 
   return (
@@ -94,7 +94,7 @@ const NewLogin = () => {
                     </CardHeader>
                     <CardContent className='flex justify-evenly mt-16 mb-8'>
                         <Button onClick={() => handlePositionChange()}>Create Account</Button>
-                        <Button variant="secondary" onClick={() => handleGoogleSignIn('')}>Login</Button>
+                        <Button variant="secondary" onClick={() => handleGoogleSignIn('Hello World')}>Login</Button>
                     </CardContent>
                     <CardFooter>
                     <p className="text-sm text-muted-foreground">*Loading times could vary up to a few minutes in the beginning due to our third party cloud hosting provider.</p>

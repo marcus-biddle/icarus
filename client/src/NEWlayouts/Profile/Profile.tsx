@@ -68,7 +68,7 @@ const Profile = () => {
                     return (
                         <div key={stat.eventId} className="rounded-[--radius] border px-4 py-2 font-mono text-sm shadow-sm w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
                             <div className="text-lg font-semibold capitalize">{stat.eventId}</div>
-                            <ul className="my-6 list-disc [&>li]:mt-2">
+                            <ul className="my-6 list-none [&>li]:mt-2">
                                 <li><p className="text-sm text-muted-foreground">Weekly average:</p> {stat.weeklyAverage.toFixed(2)} {metric}</li>
                                 <li><p className="text-sm text-muted-foreground">Current streak:</p> {stat.currentStreak} days</li>
                                 <li><p className="text-sm text-muted-foreground">Personal Best:</p> {stat.personalBest} {metric}</li>

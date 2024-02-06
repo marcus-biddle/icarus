@@ -54,8 +54,13 @@ function App() {
         removeUser()
       )
     }
+
+    if (location.pathname.includes('login')) {
+      dispatch(
+        removeUser()
+      )
+    }
     console.log('User -App.tsx', user);
-    console.log('Leaderboard -App.tsx', leaderboard);
   }, [location.pathname, creationDate])
 
   return (

@@ -8,7 +8,7 @@ import { useDelayedDisplay } from '../../utilities/hooks/useDelayedDisplay';
 import { MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md";
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState } from '../../features/user/userSlice';
+import { UserState, removeUser } from '../../features/user/userSlice';
 import { RootState } from '../../app/store';
 import {
     Card,
@@ -114,12 +114,12 @@ const NewLogin = () => {
             navigate('/practice')
         }
 
-        if (!leaderboard || !leaderboard?.leagueIds) {
-            // dispatch(
-            //     fetchLeaderboard()
-            // )
-        };
-      })
+        if (location.pathname.includes('login') && position === 0) {
+            dispatch(
+              removeUser()
+            )
+          }
+      }, [creationDate])
 
   return (
     <div className=' w-full'>

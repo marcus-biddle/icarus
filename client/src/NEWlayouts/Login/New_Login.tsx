@@ -129,10 +129,10 @@ const NewLogin = () => {
                                     )}
                                 />
                                 <Button type="submit">Create Account</Button>
-                                <Button disabled>
+                                {/* <Button disabled>
                                     <GoHourglass className="mr-2 h-4 w-4 animate-spin" />
                                     Please wait
-                                </Button>
+                                </Button> */}
                             </form>
                         </Form>
                     </CardContent>

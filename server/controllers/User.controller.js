@@ -3,8 +3,6 @@ import User from '../models/User.model.js';
 import Leaderboard from '../models/Leaderboard.model.js'
 import jwt from 'jsonwebtoken';
 
-const thresholds = Array.from({ length: 100 }, (_, index) => Math.floor(100 * Math.pow(index + 1, 1.5)));
-
 // POST to create a new user
 const createUser = async (req, res) => {
     const googleId = req.body.googleId;
@@ -104,7 +102,7 @@ const createUser = async (req, res) => {
           level: 1,
           totalXp: 0,
           levelCompletionRate: 0,
-          xpRequiredForNextLevel: thresholds[0]
+          xpRequiredForNextLevel: 100
         });
 
         await addUsersToLeagueHelper('bronze', [{
@@ -813,7 +811,8 @@ const createUser = async (req, res) => {
 
   function calculateLevel(xp) {
     // Define XP thresholds for each level
-    
+    const thresholds = Array.from({ length: 100 }, (_, index) => Math.floor(100 * Math.pow(index + 1, 1.5)));
+
     const levelOverview = {
       level: 1,
       levelCompletionRate: xp / thresholds[1],

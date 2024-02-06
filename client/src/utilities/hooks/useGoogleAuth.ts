@@ -1,10 +1,9 @@
-import { useState} from 'react'
+
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { createAxiosInstance } from '../../api/config/axios';
-import { userActions } from '../../api/users';
 import { useDispatch } from 'react-redux';
-import { createUser, setUser } from '../../features/user/userSlice';
+import { createUser } from '../../features/user/userSlice';
 // import { setGoogleId } from '../../features/user/userSlice';
 
 export const useGoogleAuth = ({ selectedItems, username }: {selectedItems: string[], username: string}) => {

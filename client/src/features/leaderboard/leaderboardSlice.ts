@@ -22,11 +22,11 @@ export interface Leaderboard {
     currentLeaderboard: null
   }
 
-  export const fetchLeaderboard: any = createAsyncThunk('leaderboard/fetchLeaderboard', async (newUserAttributes: {googleId: string, selectedItems: string[], username: string}) => {
-    const leaderboard = await leaderboardActions.getLeaderboard();
-    console.log('leaderboard - leaderboardSlice', leaderboard);
-    return leaderboard
-  });
+  // export const fetchLeaderboard: any = createAsyncThunk('leaderboard/fetchLeaderboard', async (newUserAttributes: {googleId: string, selectedItems: string[], username: string}) => {
+  //   const leaderboard = await leaderboardActions.getLeaderboard();
+  //   console.log('leaderboard - leaderboardSlice', leaderboard);
+  //   return leaderboard
+  // });
 
   export const updateLeaderboardXp: any = createAsyncThunk('leaderboard/updateLeaderboardXp', async (user: {xpGain: number, userId: string}) => {
     const leaderboard = await leaderboardActions.updateLeaderboardXp({xpGain: user.xpGain, userId: user.userId});
@@ -34,11 +34,11 @@ export interface Leaderboard {
     return leaderboard
   });
 
-  export const updateLeaderboardRank: any = createAsyncThunk('leaderboard/updateLeaderboardRank', async (user: {xpGain: number, userId: string}) => {
-    const leaderboard = await leaderboardActions.updateLeaderboardRank();
-    console.log('leaderboardRank - leaderboardSlice', leaderboard);
-    return leaderboard
-  });
+  // export const updateLeaderboardRank: any = createAsyncThunk('leaderboard/updateLeaderboardRank', async (user: {xpGain: number, userId: string}) => {
+  //   const leaderboard = await leaderboardActions.updateLeaderboardRank();
+  //   console.log('leaderboardRank - leaderboardSlice', leaderboard);
+  //   return leaderboard
+  // });
 
 
 export const leaderboardSlice = createSlice({
@@ -50,15 +50,15 @@ export const leaderboardSlice = createSlice({
       },
     },
     extraReducers(builder) {
-      builder.addCase(fetchLeaderboard.fulfilled, (state, action: PayloadAction<Leaderboard>) => {
-        state.currentLeaderboard = action.payload;
-      }),
+      // builder.addCase(fetchLeaderboard.fulfilled, (state, action: PayloadAction<Leaderboard>) => {
+      //   state.currentLeaderboard = action.payload;
+      // }),
       builder.addCase(updateLeaderboardXp.fulfilled, (state, action: PayloadAction<Leaderboard>) => {
         state.currentLeaderboard = action.payload;
-      }),
-      builder.addCase(updateLeaderboardRank.fulfilled, (state, action: PayloadAction<any>) => {
-        state.currentLeaderboard = action.payload.updatedLeaderboard;
       })
+      // builder.addCase(updateLeaderboardRank.fulfilled, (state, action: PayloadAction<any>) => {
+      //   state.currentLeaderboard = action.payload.updatedLeaderboard;
+      // })
     },
   })
   

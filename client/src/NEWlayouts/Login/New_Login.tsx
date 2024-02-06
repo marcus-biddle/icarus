@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../features/user/userSlice';
 import { RootState } from '../../app/store';
-import { fetchLeaderboard } from '../../features/leaderboard/leaderboardSlice';
+// import { fetchLeaderboard } from '../../features/leaderboard/leaderboardSlice';
 // import { addEvent, updateUsername } from '../../features/user/userSlice';
 
 const NewLogin = () => {
@@ -61,18 +61,18 @@ const NewLogin = () => {
       const handleCreateAccount = () => {
         handleSignin();
         // console.log('found!', userFound)
-        dispatch(
-            fetchLeaderboard()
-        )
+        // dispatch(
+        //     fetchLeaderboard()
+        // )
         // add logic for the other data
         // navigate('/duo/leaderboard')
       }
 
       const handleExistingAccount = () => {
         handleSignin();
-        dispatch(
-            fetchLeaderboard()
-        )
+        // dispatch(
+        //     fetchLeaderboard()
+        // )
         // add logic for getting existing user data.
         // navigate('/duo/leaderboard');
       }
@@ -90,9 +90,9 @@ const NewLogin = () => {
         }
 
         if (!leaderboard || !leaderboard?.leagueIds) {
-            dispatch(
-                fetchLeaderboard()
-            )
+            // dispatch(
+            //     fetchLeaderboard()
+            // )
         };
       })
 

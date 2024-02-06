@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react'
-import './PlayerActivityLayout.css';
+// import './PlayerActivityLayout.css';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty } from '../../helpers/functional';
 import { BarChart } from '../../components/Charts/Bar';
@@ -82,7 +82,7 @@ const PlayerActivityLayout = () => {
       
       <div className='template-container'>
         <div className='chart-container'>
-            <BarChart title={`${formatEventType(type)} Competition`} datasets={data.yearActivity} eventType={type}/>
+            {/* <BarChart title={`${formatEventType(type)} Competition`} datasets={data.yearActivity} eventType={type}/> */}
         </div>
         <div className='topRank-container'>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px'}}>

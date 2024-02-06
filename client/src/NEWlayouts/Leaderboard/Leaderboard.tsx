@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 import { daysLeftInMonth, isInCurrentMonth } from '../../helpers/date';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../features/user/userSlice';
-import { LeaderboardState, fetchLeaderboard, updateLeaderboardRank } from '../../features/leaderboard/leaderboardSlice'
+import { LeaderboardState } from '../../features/leaderboard/leaderboardSlice'
 import { RootState } from '../../app/store';
 import { findUserById } from '../../helpers/data';
 import { leaderboardActions } from '../../api/leaderboard';
@@ -69,17 +69,17 @@ const Leaderboard = () => {
     
 
    const handeRefreshClick = () => {
-        dispatch(
-            updateLeaderboardRank()
-        )
+        // dispatch(
+        //     updateLeaderboardRank()
+        // )
    };
    
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data: any = await leaderboardActions.updateLeaderboardRank();
-                setLeaderboard(data.updatedLeaderboard.leagueGroups[leagueIndex]);
+                // const data: any = await leaderboardActions.updateLeaderboardRank();
+                // setLeaderboard(data.updatedLeaderboard.leagueGroups[leagueIndex]);
                 // console.log('test', data.updatedLeaderboard.leagueGroups[leagueIndex])
                 // create a dispatch to find current user and update their leaderboard placement in redux
             } catch (error) {

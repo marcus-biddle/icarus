@@ -1,7 +1,5 @@
 import { createSlice, nanoid, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { userActions } from '../../api/users';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
 import { User } from './userTypes';
 
 
@@ -34,10 +32,10 @@ export const createUser: any = createAsyncThunk('user/createUser', async (newUse
 
 export const updateUser: any = createAsyncThunk('user/updateUser', async (attributes: {userCount: number, eventId: string, userId: string }) => {
   console.log('count', attributes.userCount, attributes.eventId, attributes.userId);
-  const streak = await userActions.updateStreak(attributes.userId, attributes.eventId);
-  const year = await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
-  const month = await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
-  const stat = await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
+  await userActions.updateStreak(attributes.userId, attributes.eventId);
+  await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
+  await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
+  await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
   const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount);
 
   console.log('updateCount', reward)

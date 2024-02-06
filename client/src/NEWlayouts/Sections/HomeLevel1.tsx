@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react';
-
-import './index.css';
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { NavLink } from 'react-router-dom';

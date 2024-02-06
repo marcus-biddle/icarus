@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
-import './Practice.css'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserState, updateUser, updateUserPractice } from '../../features/user/userSlice';
-import { updateLeaderboardXp } from '../../features/leaderboard/leaderboardSlice'
+import { updateUser, updateUserPractice } from '../../features/user/userSlice';
 import { RootState } from '../../app/store';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"

@@ -39,10 +39,6 @@ function App() {
   return (
     <>
       <div >
-        {/* {false && <Camera />} */}
-
-        {/* {!location.pathname.includes('duo') && <TopNavbar />} */}
-        {/* {!isMobile && !location.pathname.includes('login') && <SideNav />} */}
         
         {!isMobile ? <ResizablePanelGroup direction={"horizontal"} onLayout={(sizes) => setSidebarSize(sizes[0])}>
           <ResizablePanel defaultSize={0} className=' min-w-[155px]'>
@@ -65,18 +61,9 @@ function App() {
           </div>
         </div>
         }
-
-        {/* <div style={{ zIndex: '1', position: 'relative', minHeight: '100vh', backgroundColor: '#121827', minWidth: '100vw'}}>
-          <Outlet />
-        </div> */}
         
       </div>
-      {/* {location.pathname.includes('duo') && <BottomNav />} */}
-      {/* <div style={{ backgroundColor: '#121827', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-        <footer className='footer-container'>
-          
-        </footer>
-      </div> */}
+
       
       {isMobile && !location.pathname.includes('login') && <BottomNav />}
     </>

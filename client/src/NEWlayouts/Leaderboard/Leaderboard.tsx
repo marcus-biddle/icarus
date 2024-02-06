@@ -4,7 +4,6 @@ import { GoRuby, GoShieldLock, GoTrophy, GoIssueDraft } from "react-icons/go";
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
 import { GiShield } from "react-icons/gi";
 import { GiLaurelsTrophy } from "react-icons/gi";
-import './index.css';
 import TwoColumnGrid from '../../components/Grid/TwoColumnGrid';
 import { NavLink } from 'react-router-dom';
 import { daysLeftInMonth, isInCurrentMonth } from '../../helpers/date';

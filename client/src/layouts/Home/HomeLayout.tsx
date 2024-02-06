@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import './HomeLayout.css'
 import { formatDateString, getCurrentMonth, months } from '../../helpers/date';
 import { useLoaderData } from 'react-router';
 import { Show, isArrayEmpty, showIfOrElse } from '../../helpers/functional';

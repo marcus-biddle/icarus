@@ -6,23 +6,20 @@ import { useDispatch } from 'react-redux';
 import { createUser } from '../../features/user/userSlice';
 // import { setGoogleId } from '../../features/user/userSlice';
 
-export const useGoogleAuth = ({ selectedItems, username }: {selectedItems: string[], username: string}) => {
+export const useGoogleAuth = ({ username }: {username: string}) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const axiosInstance = createAxiosInstance();
 
     const handleGoogleSignIn = async (googleId: string) => {
-            if (selectedItems.length >= 1) {
+
                 dispatch(
                     createUser({
                         googleId: googleId, 
-                        selectedItems: selectedItems, 
+                        selectedItems: ['pushups', 'pullups', 'running'], 
                         username: username
                     })
                 )
-            } else {
-                navigate('/duo/login')
-            }
     };
 
     const handleSignOut = () => {

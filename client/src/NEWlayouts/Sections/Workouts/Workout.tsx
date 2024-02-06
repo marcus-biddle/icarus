@@ -4,7 +4,6 @@ import { DynamicIcon } from '../../../components/Icons/DynamicIcon'
 import { GoArrowLeft, GoRepo, GoPackage, GoTrophy, GoCircle, GoCheckCircle  } from "react-icons/go";
 import { useNavigate } from 'react-router';
 import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
-import './index.css'
 
 const USER_DATA2 = [
     { tileID: 1, status: 'completed', locked: true },

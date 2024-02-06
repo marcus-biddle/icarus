@@ -17,14 +17,13 @@ import { RootState } from '../../app/store';
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
     const [ isVisible, setIsVisibile ] = useState(true);
-    const [ selectedItems, setSelectedItems ] = useState<string[]>([]);
     const [username, setUsername] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const isMobile = useIsMobile({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { handleSignin  } = useGoogleAuth({ selectedItems, username });
+    const { handleSignin  } = useGoogleAuth({ username });
     const DelayedDisplay = useDelayedDisplay({ delay: 5000 });
     const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate);
     const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
@@ -37,13 +36,13 @@ const NewLogin = () => {
           }, 1000);
     };
 
-    const handleCheckboxChange = (item: string) => {
-        if (selectedItems.includes(item)) {
-            setSelectedItems(selectedItems.filter((selectedItem) => selectedItem !== item));
-        } else {
-            setSelectedItems([...selectedItems, item]);
-        }
-    };
+    // const handleCheckboxChange = (item: string) => {
+    //     if (selectedItems.includes(item)) {
+    //         setSelectedItems(selectedItems.filter((selectedItem) => selectedItem !== item));
+    //     } else {
+    //         setSelectedItems([...selectedItems, item]);
+    //     }
+    // };
 
     const handleUsernameChange = (event) => {
         const newUsername = event.target.value;
@@ -127,38 +126,6 @@ const NewLogin = () => {
             </div>
         </Show>
         <Show when={position === 1}>
-            <div style={{ color: 'white'}} className={`fade-in-out ${isVisible ? 'visible' : 'hidden'}`}>
-                <h2 style={{ padding: isMobile ? '0 24px' : ''}}>Welcome to the group! Please select as many exercises as you would like to participate in.</h2>
-                <DelayedDisplay>
-                    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: '32px', marginTop: '80px'}}>
-                        <div className='container' style={{ minWidth: isMobile ? '80%' : '150px', height: isMobile ? '120px' : '100px', cursor: 'pointer'}} onClick={() => handleCheckboxChange('pushups')}>
-                            <div style={{ textAlign: 'right', padding: '4px'}}>
-                                {selectedItems.includes('pushups') ? <DynamicIcon icon={MdOutlineCheckBox} width={isMobile ? '35px' : '25px'} height={isMobile ? '35px' : '25px'} /> : <DynamicIcon icon={MdOutlineCheckBoxOutlineBlank} width={isMobile ? '35px' : '25px'} height={isMobile ? '35px' : '25px'} />}
-                            </div>
-                            <h4 style={{ fontSize: isMobile ? '28px' : ''}}>Push-ups</h4>
-                        </div>
-                        <div className='container' style={{ minWidth: isMobile ? '80%' : '150px', height: isMobile ? '120px' : '100px', cursor: 'pointer'}} onClick={() => handleCheckboxChange('pullups')}>
-                            <div style={{ textAlign: 'right', padding: '4px'}}>
-                                {selectedItems.includes('pullups') ? <DynamicIcon icon={MdOutlineCheckBox} width={isMobile ? '35px' : '25px'} height={isMobile ? '35px' : '25px'} /> : <DynamicIcon icon={MdOutlineCheckBoxOutlineBlank} width={isMobile ? '35px' : '25px'} height={isMobile ? '35px' : '25px'} />}
-                            </div>
-                            <h4 style={{ fontSize: isMobile ? '28px' : ''}}>Pull-ups</h4>
-                        </div>
-                        <div className='container' style={{ minWidth: isMobile ? '80%' : '150px', height: isMobile ? '120px' : '100px', cursor: 'pointer'}} onClick={() => handleCheckboxChange('running')}>
-                            <div style={{ textAlign: 'right', padding: '4px'}}>
-                                {selectedItems.includes('running') ? <DynamicIcon icon={MdOutlineCheckBox} width={isMobile ? '35px' : '25px'} height={isMobile ? '35px' : '25px'} /> : <DynamicIcon icon={MdOutlineCheckBoxOutlineBlank} width={isMobile ? '35px' : '25px'} height={isMobile ? '35px' : '25px'} />}
-                            </div>
-                            <h4 style={{ fontSize: isMobile ? '28px' : ''}}>Running</h4>
-                        </div>
-                    </div>
-                </DelayedDisplay>
-                <Show when={selectedItems.length >= 1}>
-                    <div style={{ textAlign: 'right', margin: '64px'}}>
-                        <button className='login-btn' onClick={() => handleEventSelectionNextClick()}>Next</button>
-                    </div>
-                </Show>
-            </div>
-        </Show>
-        <Show when={position === 2}>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <h2 style={{ padding: isMobile ? '0 24px' : ''}}>Last step! What should everyone call you?</h2>
                 <form onSubmit={() => null} className='form-container' style={{ display: isMobile ? '' : 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>

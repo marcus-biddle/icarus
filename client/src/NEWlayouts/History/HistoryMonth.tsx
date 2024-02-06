@@ -3,7 +3,6 @@ import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
 import { DynamicIcon } from '../../components/Icons/DynamicIcon'
 import { GoChevronLeft, GoChevronRight, GoArrowLeft } from "react-icons/go";
 import { getWeekDates, months } from '../../helpers/date';
-import './HistoryWeek.css'
 import { BarChart } from '../../components/Charts/Bar';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';

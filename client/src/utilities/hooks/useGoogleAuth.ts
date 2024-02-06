@@ -6,6 +6,7 @@ import { createUser } from '../../features/user/userSlice';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { RootState } from '@/app/store';
+import { useNavigate } from 'react-router';
 
 function isWithinLastTwoMinutes(timestamp: number) {
     // Get the current timestamp in milliseconds
@@ -25,7 +26,9 @@ export const useGoogleAuth = () => {
     const [googleId, setGoogleId] = useState<string | null>(null);
     const [username, setUsername] = useState<string | null>(null);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const creationDate = useSelector((state: RootState) => state.user.currentUser?.creationDate) || 0;
+    const userId = useSelector((state: RootState) => state.user.currentUser?.id);
     const axiosInstance = createAxiosInstance();
 
     useEffect(() => {
@@ -37,6 +40,10 @@ export const useGoogleAuth = () => {
                     username: username
                 })
             )
+
+            if (creationDate) {
+                navigate(`/user/${userId}`)
+            }
         }
 
         if (isWithinLastTwoMinutes(creationDate)) {
@@ -45,6 +52,7 @@ export const useGoogleAuth = () => {
     }, [googleId, username, creationDate])
 
     const handleGoogleSignIn = (userName: string) => {
+        console.log('handlesignin')
         openGoogleModal();
         setUsername(userName);
     };
@@ -55,7 +63,7 @@ export const useGoogleAuth = () => {
         onSuccess: async (codeResponse) => {
         // MOve to api folder
             const response = await axiosInstance.post(
-                'https://icarus-server.onrender.com/auth/google', {
+                'http://localhost:3000/auth/google', {
                     code: codeResponse.code,
                 });
 
@@ -63,7 +71,7 @@ export const useGoogleAuth = () => {
 
                 setGoogleId(await response.data.id_token)
         },
-        onError: errorResponse => console.log(errorResponse),
+        onError: errorResponse => console.log('this fail', errorResponse),
     });
 
   return { handleGoogleSignIn }

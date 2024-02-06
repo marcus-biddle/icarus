@@ -79,7 +79,7 @@ export const formatDatasets = (array, option) => {
   return datasets;
 }
 
-export const googleId = localStorage.getItem('idToken') || '';
+// export const googleId = localStorage.getItem('idToken') || '';
 
 export const findUserById = (leaderboardData, userId) => {
   for (const leagueGroup of leaderboardData.leagueGroups) {

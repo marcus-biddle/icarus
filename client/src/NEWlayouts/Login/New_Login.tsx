@@ -36,12 +36,10 @@ import { Input } from '../../components/ui/input';
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
     const [ isVisible, setIsVisibile ] = useState(true);
-    const [username, setUsername] = useState('');
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+
+    
     const { handleGoogleSignIn  } = useGoogleAuth();
-    const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate);
 
     const handlePositionChange = () => {
         setIsVisibile(false);
@@ -64,20 +62,21 @@ const NewLogin = () => {
       })
 
       function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log('onsubmit')
         handleGoogleSignIn(values.userName);
       }
 
-      useEffect(() => {
-        if (creationDate) {
-            navigate('/practice')
-        }
+    //   useEffect(() => {
+    //     if (creationDate) {
+    //         navigate('/practice')
+    //     }
 
-        // if (location.pathname.includes('login')) {
-        //     dispatch(
-        //       removeUser()
-        //     )
-        // }
-      }, [creationDate, location.pathname])
+    //     // if (location.pathname.includes('login')) {
+    //     //     dispatch(
+    //     //       removeUser()
+    //     //     )
+    //     // }
+    //   }, [creationDate, location.pathname])
 
   return (
     <div className=' w-full'>
@@ -94,7 +93,7 @@ const NewLogin = () => {
                     </CardHeader>
                     <CardContent className='flex justify-evenly mt-16 mb-8'>
                         <Button onClick={() => handlePositionChange()}>Create Account</Button>
-                        <Button variant="secondary" onClick={() => handleGoogleSignIn('Hello World')}>Login</Button>
+                        <Button variant="secondary" onClick={() => handleGoogleSignIn(' ')}>Login</Button>
                     </CardContent>
                     <CardFooter>
                     <p className="text-sm text-muted-foreground">*Loading times could vary up to a few minutes in the beginning due to our third party cloud hosting provider.</p>

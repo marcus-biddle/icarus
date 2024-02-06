@@ -29,13 +29,11 @@ import { getInitials } from './NEWlayouts/Profile/Profile';
 import { removeUser } from './features/user/userSlice';
 
 function App() {
-  const auth = useAuthCheck();
   const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useIsMobile({});
   const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate)
   const user = useSelector((state: RootState) => state?.user.currentUser);
-  const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
   const userId = useSelector((state: RootState) => state.user.currentUser?.id);
   const name = useSelector((state: RootState) => state.user.currentUser?.name) || '? ?';
   const dispatch = useDispatch();

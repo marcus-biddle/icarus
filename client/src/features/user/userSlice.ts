@@ -50,7 +50,8 @@ export const userSlice = createSlice({
       state.currentUser = action.payload
     },
     removeUser: (state: UserState) => {
-      state.currentUser = null
+      state.currentUser = null;
+      console.log('test')
     },
     updateCurrentEvent: (state: UserState, action: PayloadAction<string>) => {
         if (state.currentUser) state.currentUser.currentEventId = action.payload;
@@ -110,17 +111,9 @@ export const userSlice = createSlice({
       builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
       })
-      // builder.addCase(updateUserMonthCount.fulfilled, (state, action: PayloadAction<User>) => {
-      //   state.currentUser = action.payload;
-      // })
   },
 })
 
-// After clicking update, user database should update
-
-
-
-// Action creators are generated for each case reducer function
 export const { 
   setUser,
   removeUser,

@@ -42,6 +42,11 @@ function App() {
 
   const [sidebarSize, setSidebarSize] = useState(25);
 
+  const handleRemoveUser = () => {
+    console.log('clicked')
+    dispatch(removeUser());
+  };
+
   useEffect(() => {
     if (!creationDate && !location.pathname.includes('login')) {
       navigate('/login')
@@ -100,7 +105,7 @@ function App() {
               </div>
               <div className="grid gap-2">
             {PATHS.map((path) => (
-                <div key={path.name}>
+                <div key={path.name} onClick={() => path.name === 'Logout' ? handleRemoveUser() : null}>
                     <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
                         isActive ? 'flex justify-evenly items-center my-2 bg-primary-foreground border border-primary rounded-[--radius] p-2' 
                         : 'flex justify-evenly items-center my-2 hover:bg-muted rounded-[--radius] p-2'
@@ -112,8 +117,7 @@ function App() {
                             <AvatarImage src={name === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
                             <AvatarFallback>{getInitials(name)}</AvatarFallback>
                         </Avatar> 
-                        : 
-                        <path.icon className=' h-[40px] w-[40px] transition-none' />
+                        : <path.icon className=' h-[40px] w-[40px] transition-none' />
                         // <DynamicIcon icon={path.icon} height={'40px'} width={'40px'} />
                         }
                         <h4 className={`scroll-m-20 text-xl font-semibold tracking-tight w-32 transition-all duration-150 ease-in-out`}>{path.name}</h4>

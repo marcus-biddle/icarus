@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GoHome, GoMortarBoard, GoTrophy, GoTelescope, GoOrganization, GoIssueDraft, GoLock, GoLightBulb } from "react-icons/go";
+import { GoHome, GoMortarBoard, GoTrophy, GoTelescope, GoOrganization, GoIssueDraft, GoSignOut, GoLightBulb } from "react-icons/go";
 import { NavLink } from 'react-router-dom';
 import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
 import { DynamicIcon } from '../../Icons/DynamicIcon';
@@ -29,6 +29,7 @@ export const PATHS: PathItem[] = [
     // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
     // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
     { name: 'Profile', icon: GoIssueDraft, link: '/user' },
+    { name: 'Logout', icon: GoSignOut, link: '' },
 ]
 
 const SideNav = ({size}: {size: number}) => {

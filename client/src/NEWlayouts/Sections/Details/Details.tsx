@@ -1,5 +1,4 @@
 import React from 'react'
-import StatsBar from '../../../components/StatsBar/StatsBar';
 import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
 import { GoArrowLeft, GoBroadcast } from "react-icons/go";
 import { DynamicIcon } from '../../../components/Icons/DynamicIcon';

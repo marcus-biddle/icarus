@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile'
-import StatsBar from '../../components/StatsBar/StatsBar';
 import { GoRuby, GoShieldLock, GoTrophy, GoIssueDraft } from "react-icons/go";
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
 import { GiShield } from "react-icons/gi";

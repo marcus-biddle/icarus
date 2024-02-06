@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Camera } from './components/Camera'
 import './App.css'
 import { Outlet, redirect, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import TopNavbar from './components/Navigation/TopNavbar';
 import { useAuthCheck } from './utilities/hooks/useAuthCheck';
 import LandingPageLayout from './layouts/LandingPage/LandingPageLayout';
 import BottomNav from './components/Navigation/Bottom/BottomNav';

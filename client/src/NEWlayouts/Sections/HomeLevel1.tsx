@@ -2,8 +2,6 @@ import React, { useRef, useState } from 'react';
 
 import './index.css';
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
-import HoverMenu from '../../components/Menu/HoverMenu';
-import StatsBar from '../../components/StatsBar/StatsBar';
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { NavLink } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
@@ -105,7 +103,7 @@ const HomeLevel1 = () => {
       </div>
       <div className="right-column" style={{ borderBottom: isMobile ? '1px solid grey' : '', backgroundColor: isMobile ? color : '', zIndex: '1', boxShadow: isMobile ? '0 4px 6px rgba(0,0,0,0.3)' : ''}}>
         {/* Content for the right column */}
-        <StatsBar />
+        
       </div>
     </div>
   )

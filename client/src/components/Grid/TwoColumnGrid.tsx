@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-import StatsBar from '../StatsBar/StatsBar'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import './index.css'
 import { NavLink } from 'react-router-dom';

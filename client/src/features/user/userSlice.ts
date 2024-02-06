@@ -49,6 +49,9 @@ export const userSlice = createSlice({
     setUser: (state: UserState, action: PayloadAction<User>) => {
       state.currentUser = action.payload
     },
+    removeUser: (state: UserState) => {
+      state.currentUser = null
+    },
     updateCurrentEvent: (state: UserState, action: PayloadAction<string>) => {
         if (state.currentUser) state.currentUser.currentEventId = action.payload;
     },
@@ -120,6 +123,7 @@ export const userSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { 
   setUser,
+  removeUser,
   updateCurrentEvent,
   updateUserPractice
  } = userSlice.actions

@@ -4,7 +4,7 @@ import { NavLink, Outlet, redirect, useLoaderData, useLocation, useNavigate } fr
 import { useAuthCheck } from './utilities/hooks/useAuthCheck';
 import SideNav, { PATHS } from './components/Navigation/SideNav/SideNav';
 import { useIsMobile } from './utilities/hooks/useIsMobile';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './app/store';
 import { Button } from "./components/ui/button"
 import { GoGear } from "react-icons/go";
@@ -26,6 +26,7 @@ import {
   AvatarImage,
 } from "./components/ui/avatar"
 import { getInitials } from './NEWlayouts/Profile/Profile';
+import { removeUser } from './features/user/userSlice';
 
 function App() {
   const auth = useAuthCheck();
@@ -37,18 +38,20 @@ function App() {
   const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
   const userId = useSelector((state: RootState) => state.user.currentUser?.id);
   const name = useSelector((state: RootState) => state.user.currentUser?.name) || '? ?';
+  const dispatch = useDispatch();
 
   const [sidebarSize, setSidebarSize] = useState(25);
 
   useEffect(() => {
-    if (!creationDate) {
+    if (!creationDate && !location.pathname.includes('login')) {
       navigate('/login')
+      dispatch(
+        removeUser()
+      )
     }
     console.log('User -App.tsx', user);
     console.log('Leaderboard -App.tsx', leaderboard);
   }, [location.pathname, creationDate])
-
-  console.log(!isMobile || !location.pathname.includes('login'))
 
   return (
     <div className=' relative'>

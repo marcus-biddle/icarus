@@ -35,7 +35,7 @@ function App() {
   const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate)
   const user = useSelector((state: RootState) => state?.user.currentUser);
   const userId = useSelector((state: RootState) => state.user.currentUser?.id);
-  const name = useSelector((state: RootState) => state.user.currentUser?.name) || '? ?';
+  const name = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
   const dispatch = useDispatch();
 
   const [sidebarSize, setSidebarSize] = useState(25);

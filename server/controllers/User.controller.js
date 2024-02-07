@@ -1,29 +1,52 @@
-import Logs from '../models/Log.model.js';
+import Password from '../models/Password.model.js';
 import User from '../models/User.model.js';
 import Leaderboard from '../models/Leaderboard.model.js'
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
+const hashPassword = async (password) => {
+  try {
+    // Generate a salt
+    const salt = await bcrypt.genSalt(10); // 10 is the number of salt rounds
+    
+    // Hash the password with the salt
+    const hash = await bcrypt.hash(password, salt);
+    
+    return hash;
+  } catch (error) {
+    throw new Error('Error hashing password');
+  }
+};
+
+const comparePasswords = async (password, hashedPassword) => {
+  try {
+    // Compare the entered password with the hashed password
+    const match = await bcrypt.compare(password, hashedPassword);
+    
+    return match;
+  } catch (error) {
+    throw new Error('Error comparing passwords');
+  }
+};
 // POST to create a new user
 const createUser = async (req, res) => {
-    const googleId = req.body.googleId;
-    const selectedItems = req.body.selectedItems;
+    const password = req.body.password
     const username = req.body.username;
+    const email = req.body.email;
     const id = req.body.id;
+    const selectedItems = ['pushups', 'pullups', 'running'];
+    const saltRounds = 10;
 
-    if (!googleId) return res.status(400).json({ error: 'googleId is required' });
-    
-    const decodedToken = await jwt.decode(googleId);
+    if (!password || !username || !id || !email) return res.status(400).json({ error: 'username, password, and id is required' });
 
-    const duplicate = await User.findOne({ email: decodedToken.email }).lean().exec();
-    if (duplicate) return res.status(200).json(duplicate);
-    if (username === '') return res.status(200);
+    const duplicate = await User.findOne({ email: email }).lean().exec();
+    if (duplicate) return res.status(200);
 
     try {
       const currentDate = new Date();
       const currentYear = currentDate.getFullYear().toString();
       const currentMonthName = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(currentDate);
       const allXpSummaries = [];
-      // const allEventTotals = [];
       
       selectedItems.map(item => {
         const summary = {
@@ -44,16 +67,6 @@ const createUser = async (req, res) => {
             ],
         }
         allXpSummaries.push(summary);
-
-        // const eventTotal = {
-        //   event: item,
-        //   lastUpdatedDate: new Date().toLocaleDateString('en-US'),
-        //   totalDays: 0,
-        //   totalReps: 0,
-        //   totalXp: 0
-        // }
-
-        // allEventTotals.push(eventTotal);
       })
 
       const statisticsSkeleton = [
@@ -78,26 +91,13 @@ const createUser = async (req, res) => {
       ]
 
         const user = await User.create({
-          name: decodedToken.name,
-          email: decodedToken.email,
-          googleId: googleId,
+          name: '',
+          email: email,
+          id: id,
           username: username,
           eventIds: selectedItems,
           currentEventId: selectedItems[0],
-          id: id,
-          leaderboardHistory: [{
-            ranking: 0,
-            leagueId: 'bronze',
-            monthlyXp: 0,
-            date: new Date().toLocaleDateString('en-US')
-          }],
-          currentLeaderboard: {
-            ranking: 0,
-            leagueId: 'bronze',
-            monthlyXp: 0,
-          },
           xpSummaries: allXpSummaries,
-          // eventTotals: allEventTotals,
           statistics: statisticsSkeleton,
           level: 1,
           totalXp: 0,
@@ -105,15 +105,13 @@ const createUser = async (req, res) => {
           xpRequiredForNextLevel: 100
         });
 
-        await addUsersToLeagueHelper('bronze', [{
-          ranking: 0,
-          name: decodedToken.name,
-          xp: 0,
-          userId: id,
-        }]);
-
-        await Logs.create({
-          action: `${decodedToken.name} joined the group.`,
+        await bcrypt.genSalt(saltRounds, async function(err, salt) {
+          await bcrypt.hash(password, salt, async function(err, hash) {
+              await Password.create({
+                userId: user._id,
+                password: hash
+              })
+          });
         });
 
         return res.status(201).json(user);
@@ -121,6 +119,33 @@ const createUser = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   };
+
+  const fetchUserForLogin = async (req, res) => {
+    const password = req.body.password
+    const email = req.body.email;
+
+    if (!password || !email) return res.status(400).json({ error: 'email and password required' });
+
+    try {
+      const user =  await User.findOne({ email: email }).lean().exec();
+      if (!user) return res.status(400).json({ error: 'user does not exist.' });
+
+      const userPassword = await Password.findOne({ userId: user._id });
+      if (!userPassword) return res.status(400).json({ error: 'password does not exist.' });
+
+      const hash = userPassword.password;
+      await bcrypt.compare(password, hash, async function(err, result) {
+        if (result === true) {
+          return res.status(201).json(user)
+        } else {
+          return res.status(400).json({ error: 'password is incorrect.' });
+        }
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+    
+  }
 
   const addUsersToLeagueHelper = async (leagueId, users) => {
     try {
@@ -900,6 +925,7 @@ const createUser = async (req, res) => {
 
   const UserControllers = {
     createUser,
+    fetchUserForLogin,
     findUser,
     findAllUsers,
     addFakeUser,

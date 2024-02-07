@@ -28,31 +28,37 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  next();
+});
 
 // Routes
 // app.use('/api/users', userRoutes);
 
-app.post('/auth/google', async (req, res) => {
-  // res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-  // res.header('Referrer-Policy', 'no-referrer-when-downgrade');
-  const oAuth2Client = new OAuth2Client(
-    process.env.GOOGLE_CLIENT_ID,
-    process.env.GOOGLE_CLIENT_SECRET,
-    'postmessage',
-  );
+// app.post('/auth/google', async (req, res) => {
+//   // res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+//   // res.header('Referrer-Policy', 'no-referrer-when-downgrade');
+//   const oAuth2Client = new OAuth2Client(
+//     process.env.GOOGLE_CLIENT_ID,
+//     process.env.GOOGLE_CLIENT_SECRET,
+//     'postmessage',
+//   );
 
-  try {
-    const { tokens } = await oAuth2Client.getToken(req.body.code); // exchange code for tokens
-    await oAuth2Client.setCredentials(tokens);
-    const user = oAuth2Client.credentials;
-    console.log('POST AUTH', user)
+//   try {
+//     const { tokens } = await oAuth2Client.getToken(req.body.code); // exchange code for tokens
+//     await oAuth2Client.setCredentials(tokens);
+//     const user = oAuth2Client.credentials;
+//     console.log('POST AUTH', user)
     
-    return res.json(user);
-  } catch (err) {
-    console.log('Could not sign in', err)
-  }
+//     return res.json(user);
+//   } catch (err) {
+//     console.log('Could not sign in', err)
+//   }
   
-});
+// });
 
 app.use('/', usersRouter);
 app.use('/', logsRouter);

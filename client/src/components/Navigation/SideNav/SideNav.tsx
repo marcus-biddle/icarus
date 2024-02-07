@@ -35,7 +35,7 @@ export const PATHS: PathItem[] = [
 const SideNav = ({size}: {size: number}) => {
     const isMobile = useIsMobile({ threshold: 1150 });
     const userId = useSelector((state: RootState) => state.user.currentUser?.id);
-    const name = useSelector((state: RootState) => state.user.currentUser?.name) || '? ?';
+    const name = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
   return (
     <nav >
         <div className='flex justify-center text-baseline items-start gap-2 text-primary my-8 transition-all duration-300 ease'>

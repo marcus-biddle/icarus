@@ -16,15 +16,23 @@ const initialState: UserState = {
   error: null
 }
 
-export const createUser: any = createAsyncThunk('user/createUser', async (newUserAttributes: {googleId: string, selectedItems: string[], username: string}) => {
+export const createUser: any = createAsyncThunk('user/createUser', async (newUserAttributes: { username: string, password: string, email: string }) => {
   const newUser = await userActions.createUser({
-    googleId: newUserAttributes.googleId, 
-    selectedItems: newUserAttributes.selectedItems, 
-    username: newUserAttributes.username, 
+    password: newUserAttributes.password, 
+    username: newUserAttributes.username,
+    email: newUserAttributes.email,
     id: nanoid()
   });
 
-  console.log('createUser - userSlice', newUser);
+  return newUser
+});
+
+export const fetchUserForLogin: any = createAsyncThunk('user/fetchUserForLogin', async (existingUserAttributes: { email: string, password: string }) => {
+  const newUser = await userActions.fetchUserForLogin({
+    password: existingUserAttributes.password, 
+    email: existingUserAttributes.email,
+  });
+  
   return newUser
 });
 
@@ -56,7 +64,7 @@ export const userSlice = createSlice({
     },
     removeUser: (state: UserState) => {
       state.currentUser = null;
-      console.log('test')
+      console.log('user removed')
     },
     updateCurrentEvent: (state: UserState, action: PayloadAction<string>) => {
         if (state.currentUser) state.currentUser.currentEventId = action.payload;
@@ -112,7 +120,10 @@ export const userSlice = createSlice({
   extraReducers(builder) {
       builder.addCase(createUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
-      })
+      }),
+      builder.addCase(fetchUserForLogin.fulfilled, (state, action: PayloadAction<User>) => {
+        state.currentUser = action.payload;
+      }),
       builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
         state.currentUser = action.payload;
       })

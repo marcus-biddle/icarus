@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 import { daysLeftInMonth, isInCurrentMonth } from '../../helpers/date';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../features/user/userSlice';
-import { LeaderboardState } from '../../features/leaderboard/leaderboardSlice'
+// import { LeaderboardState } from '../../features/leaderboard/leaderboardSlice'
 import { RootState } from '../../app/store';
 import { findUserById } from '../../helpers/data';
 import { leaderboardActions } from '../../api/leaderboard';
@@ -54,8 +54,8 @@ const Leaderboard = () => {
     const index = LEAGUE_LEVELS.findIndex(level => level.name === (userLeagueId?.leagueId || 'bronze'))
     const [ activeTrophy, setActiveTrophy ] = useState(LEAGUE_LEVELS[index]);
 
-    const leagueIndex: number = useSelector((state: RootState) => state.leaderboard.currentLeaderboard?.leagueGroups.findIndex(group => group.leagueId === activeTrophy.name)) || 0
-    const league = useSelector((state: RootState) => state.leaderboard.currentLeaderboard?.leagueGroups[leagueIndex])
+    // const leagueIndex: number = useSelector((state: RootState) => state.leaderboard.currentLeaderboard?.leagueGroups.findIndex(group => group.leagueId === activeTrophy.name)) || 0
+    // const league = useSelector((state: RootState) => state.leaderboard.currentLeaderboard?.leagueGroups[leagueIndex])
     const isMobile = useIsMobile({});
     const dispatch = useDispatch();
     // const leaderboard = useSelector((state: RootState) => state.leaderboard.currentLeaderboard);
@@ -73,20 +73,20 @@ const Leaderboard = () => {
    };
    
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // const data: any = await leaderboardActions.updateLeaderboardRank();
-                // setLeaderboard(data.updatedLeaderboard.leagueGroups[leagueIndex]);
-                // console.log('test', data.updatedLeaderboard.leagueGroups[leagueIndex])
-                // create a dispatch to find current user and update their leaderboard placement in redux
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // const data: any = await leaderboardActions.updateLeaderboardRank();
+    //             // setLeaderboard(data.updatedLeaderboard.leagueGroups[leagueIndex]);
+    //             // console.log('test', data.updatedLeaderboard.leagueGroups[leagueIndex])
+    //             // create a dispatch to find current user and update their leaderboard placement in redux
+    //         } catch (error) {
+    //             console.error('Error fetching leaderboard:', error);
+    //         }
+    //     };
 
-        fetchData();
-    }, [leagueIndex])
+    //     fetchData();
+    // }, [l])
 
     return (
         <TwoColumnGrid showSecondColumnInMobile={false}>

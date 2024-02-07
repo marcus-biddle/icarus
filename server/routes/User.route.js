@@ -4,7 +4,8 @@ import express from 'express';
 const router = express.Router();
 
 // Route for Google Sign-In
-router.post('/api/users/create', UserControllers.createUser);
+router.post('/api/user/create', UserControllers.createUser);
+router.post('/api/user/login', UserControllers.fetchUserForLogin);
 router.post('/api/users/create/fake', UserControllers.addFakeUser);
 
 // Route to get a user's profile

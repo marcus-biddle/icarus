@@ -2,13 +2,28 @@ import {createAxiosInstance} from "./config/axios";
 
 const axiosInstance = createAxiosInstance();
 
-const createUser = async ({ googleId, selectedItems, username, id } : {googleId: string, selectedItems: string[], username: string, id: string}) => {
+const createUser = async ({ password, username, id, email } : {password: string, username: string, id: string, email: string }) => {
     try {
-        const response = await axiosInstance.post('/users/create', {
-            googleId: googleId,
-            selectedItems: selectedItems,
+        const response = await axiosInstance.post('/user/create', {
+            password: password,
             username: username,
-            id: id
+            id: id,
+            email: email
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
+const fetchUserForLogin = async ({ password, email } : {password: string, email: string }) => {
+    try {
+        const response = await axiosInstance.post('/user/login', {
+            password: password,
+            email: email,
         });
 
         return response.data;
@@ -157,6 +172,7 @@ const rewardXp = async ( userId: string, eventId: string, count: number) => {
 
 export const userActions = {
     createUser,
+    fetchUserForLogin,
     getAllUsers,
     getUser,
     fetchUser,

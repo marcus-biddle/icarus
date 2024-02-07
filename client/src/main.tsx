@@ -86,9 +86,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <GoogleOAuthProvider clientId={'352965571009-thr1jubafej7u7k33rft4gtn73l57scv.apps.googleusercontent.com'}>
         <RouterProvider router={router} />
-      </GoogleOAuthProvider>
     </PersistGate>
   </Provider>
 )

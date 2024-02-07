@@ -41,7 +41,7 @@ const Profile = () => {
   return (
     <div className=' w-full'>
         <div className=' flex items-start md:gap-16 gap-8'>
-            <Avatar className=' md:w-40 md:h-40 sm:w-40 sm:h-40 h-32 w-32'>
+            <Avatar className=' md:w-40 md:h-40 sm:w-40 sm:h-40 h-32 w-32 text-4xl'>
                 <AvatarImage src={profile.username === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
                 <AvatarFallback>{getInitials(profile.username)}</AvatarFallback>
             </Avatar>

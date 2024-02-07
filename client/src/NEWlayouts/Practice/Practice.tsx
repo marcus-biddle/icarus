@@ -95,7 +95,7 @@ const Practice = () => {
 
   return (
     <TwoColumnGrid showSecondColumnInMobile={true}>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize mt-8">
         Practice Your Craft: <br /> {currentEventId}
       </h1>
       <Separator className="my-6" />
@@ -103,7 +103,7 @@ const Practice = () => {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="update">Update</TabsTrigger>
           <TabsTrigger value="password">Records</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
+          <TabsTrigger value="graphs">Graphs</TabsTrigger>
         </TabsList>
         <TabsContent value="update" className=' my-24'>
           <Form {...form}>
@@ -157,6 +157,9 @@ const Practice = () => {
               </TableRow>
             </TableFooter>
           </Table>
+        </TabsContent>
+        <TabsContent value="graphs">
+          Currently unavailable.
         </TabsContent>
       </Tabs>
       

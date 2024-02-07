@@ -181,7 +181,7 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                 </Drawer>
               </div>
             </div>
-            <Collapsible
+            {false && <Collapsible
               open={isOpen}
               onOpenChange={setIsOpen}
               className="space-y-2 w-full mb-16"
@@ -202,7 +202,7 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                   <AverageVsDaily />
                 </div>
               </CollapsibleContent>
-            </Collapsible>
+            </Collapsible>}
           </div>
         </div>
   )

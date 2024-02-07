@@ -29,6 +29,7 @@ import {
 import { AccountCreation } from '../../components/Forms/accountCreation';
 import { LoginForm } from '../../components/Forms/LoginForm';
 
+
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
     const [ isVisible, setIsVisibile ] = useState(true);

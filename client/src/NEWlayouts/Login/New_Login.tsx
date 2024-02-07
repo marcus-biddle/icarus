@@ -26,7 +26,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs"
-import { AccountCreation } from '../../components/Forms/accountCreation';
+import { AccountCreation } from '../../components/Forms/AccountCreation';
 import { LoginForm } from '../../components/Forms/LoginForm';
 
 

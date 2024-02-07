@@ -42,13 +42,13 @@ const Profile = () => {
     <div className=' w-full'>
         <div className=' flex items-start md:gap-16 gap-8'>
             <Avatar className=' md:w-40 md:h-40 sm:w-40 sm:h-40 h-32 w-32'>
-                <AvatarImage src={profile.name === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
-                <AvatarFallback>{getInitials(profile.name)}</AvatarFallback>
+                <AvatarImage src={profile.username === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
+                <AvatarFallback>{getInitials(profile.username)}</AvatarFallback>
             </Avatar>
             <div className='text-left w-full'>
                 <div>
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{profile.username}</h1>
-                    <p className="text-sm text-muted-foreground font-normal px-0">{profile.name}</p>
+                    <p className="text-sm text-muted-foreground font-normal px-0">{profile.username}</p>
                 </div>
                 
                 <div className=' flex flex-wrap gap-1 py-4'>

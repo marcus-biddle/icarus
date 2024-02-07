@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer, { UserState } from '../features/user/userSlice.ts'
-// import leaderboardReducer, { LeaderboardState } from '../features/leaderboard/leaderboardSlice.ts'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import {

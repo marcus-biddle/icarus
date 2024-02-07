@@ -44,23 +44,6 @@ const NewLogin = () => {
           }, 1000);
     };
 
-      const formSchema = z.object({
-        userName: z.string().min(1),
-      })
-    
-    
-      const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          userName: "",
-        },
-      })
-
-      function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log('onsubmit')
-        // handleGoogleSignIn(values.userName);
-      }
-
       useEffect(() => {
         if (creationDate) {
             navigate('/practice')
@@ -82,12 +65,12 @@ const NewLogin = () => {
                             {/* <CardDescription>Sign in below or create an account.</CardDescription> */}
                         </CardHeader>
                         <CardContent className='flex justify-evenly mb-8'>
-                            <Tabs defaultValue="account" className="w-[400px]">
+                            <Tabs defaultValue="signup" className="w-[400px]">
                                 <TabsList className="grid w-full grid-cols-2">
-                                    <TabsTrigger value="account">Account</TabsTrigger>
-                                    <TabsTrigger value="password">Password</TabsTrigger>
+                                    <TabsTrigger value="signup">Create</TabsTrigger>
+                                    <TabsTrigger value="login">Login</TabsTrigger>
                                 </TabsList>
-                                <TabsContent value="account">
+                                <TabsContent value="signup">
                                     <Card>
                                     <CardHeader>
                                         <CardTitle>Create Account</CardTitle>
@@ -100,7 +83,7 @@ const NewLogin = () => {
                                     </CardContent>
                                     </Card>
                                 </TabsContent>
-                                <TabsContent value="password">
+                                <TabsContent value="login">
                                     <Card>
                                     <CardHeader>
                                         <CardTitle>Login</CardTitle>

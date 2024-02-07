@@ -109,12 +109,6 @@ export const userSlice = createSlice({
         reps: action.payload,
         xp: action.payload
       })
-
-      if (state.currentUser) state.currentUser.currentLeaderboard = {
-        ranking: 0,
-        leagueId: state.currentUser.currentLeaderboard.leagueId,
-        monthlyXp: (state.currentUser.monthlyXp || 0)
-      }
   },
   },
   extraReducers(builder) {

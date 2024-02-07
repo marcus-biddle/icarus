@@ -27,6 +27,7 @@ import {
 } from "./components/ui/avatar"
 import { getInitials } from './NEWlayouts/Profile/Profile';
 import { removeUser } from './features/user/userSlice';
+import { CiMenuKebab } from "react-icons/ci";
 
 function App() {
   const location = useLocation();
@@ -89,7 +90,7 @@ function App() {
         <Popover>
           <PopoverTrigger asChild>
           <Button variant="outline" size="icon" className=' h-14 w-14'>
-            <GoGear className="h-10 w-10 text-primary" />
+            <CiMenuKebab className="h-10 w-10 text-primary" />
           </Button>
           </PopoverTrigger>
           <PopoverContent className="w-64 mr-4">

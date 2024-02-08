@@ -23,17 +23,10 @@ import {
 } from "../../components/ui/form"
 import { Input } from "../../components/ui/input"
 import { toast } from "sonner"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../components/ui//table"
+
 import { RepFrequency } from '../../components/Charts/RepFrequency';
+import RecordTable from '../../components/Tables/RecordTable';
+
 
 
 
@@ -47,7 +40,6 @@ const Practice = () => {
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
     const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
     const graphs = useSelector((state: RootState) => state.user.currentUser?.graphs) || [];
-    
 
     const handleInputChange = (e) => {
     const value = e.target.value;
@@ -115,7 +107,7 @@ const Practice = () => {
   return (
     <TwoColumnGrid showSecondColumnInMobile={true}>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize mt-8">
-        Fortify Your Skill: <br /> {currentEventId}
+        Fortify Your Skill: <br /> <span className=' text-primary'>{currentEventId}</span>
       </h1>
       <Separator className="my-6" />
       <Tabs defaultValue="update" className="" onValueChange={(e) => handleTabChange(e)}>
@@ -148,34 +140,7 @@ const Practice = () => {
           </Form>
         </TabsContent>
         <TabsContent value="password">
-          <Table className=' mt-16'>
-            <TableCaption>A list of your recent records.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Record</TableHead>
-                <TableHead className='text-center'>Time</TableHead>
-                <TableHead className='text-center'>Reward</TableHead>
-                <TableHead className="text-right">Count</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {xpGains.map((entry, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>{entry.time}</TableCell>
-                  <TableCell>{entry.xp} XP</TableCell>
-                  <TableCell className="text-right">{entry.reps}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={2}>Total</TableCell>
-                <TableCell className="text-center">-</TableCell>
-                <TableCell className="text-right">-</TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
+          <RecordTable />
         </TabsContent>
         <TabsContent value="graphs">
           <RepFrequency />

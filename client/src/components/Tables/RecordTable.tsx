@@ -78,13 +78,15 @@ const RecordTable = () => {
         to: lastDayOfMonth,
     });
 
+    
+
     const entriesByDateSelected = xpGains.filter(entry => {
         const entryDate = new Date(entry.time);
         if (entry.event === currentEventId) {
             return entryDate >= (date?.from || today) && entryDate <= (date?.to || today);
         }
     })
-
+    console.log(date, entriesByDateSelected )
     const totals = sumXpAndReps(entriesByDateSelected);
 
   return (
@@ -142,7 +144,7 @@ const RecordTable = () => {
                 <TableRow key={index}>
                     <TableCell className="font-medium"></TableCell>
                     <TableCell>{timestampToDateTime(entry.time)}</TableCell>
-                    <TableCell>{entry.xp} XP</TableCell>
+                    <TableCell>{entry.xp}</TableCell>
                     <TableCell className="text-right">{entry.reps}</TableCell>
                 </TableRow>
                 ))}
@@ -151,8 +153,8 @@ const RecordTable = () => {
                 <TableRow>
                 <TableCell colSpan={1} className=' max-w-10'>Total</TableCell>
                 <TableCell className="text-center">{entriesByDateSelected.length} Days</TableCell>
-                <TableCell className="text-center min-w-[90px]">{totals.totalXp} XP</TableCell>
-                <TableCell className="text-right min-w-[90px]">{totals.totalReps} Reps</TableCell>
+                <TableCell className="text-center min-w-[100px]">{totals.totalXp} XP</TableCell>
+                <TableCell className="text-right min-w-[100px]">{totals.totalReps} Reps</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>

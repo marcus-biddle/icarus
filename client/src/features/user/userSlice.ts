@@ -50,7 +50,7 @@ export const updateUser: any = createAsyncThunk('user/updateUser', async (attrib
   await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
   await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
   const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount);
-
+//not updating currentEventId, need to add to backup
   console.log('updateCount', reward)
   return reward;
 });
@@ -68,6 +68,63 @@ export const userSlice = createSlice({
     },
     updateCurrentEvent: (state: UserState, action: PayloadAction<string>) => {
         if (state.currentUser) state.currentUser.currentEventId = action.payload;
+    },
+    updateGraphs: (state: UserState) => {
+      if (!state.currentUser) {
+        return state; // If currentUser doesn't exist, return the current state unchanged
+      }
+      const binSizes = [10, 25, 50, 75, 76];
+
+      if (!state.currentUser.graphs) {
+        // If graphs doesn't exist, initialize it with an empty array
+        state.currentUser.graphs = [{
+          graphType: 'histogram',
+          graphData: {
+            userData: [],
+            averageUsers: null,
+            binSizes: binSizes
+          }
+        }];
+      }
+      // update histogram here
+      
+      const counts = Array(binSizes.length).fill(0);
+
+      state.currentUser?.xpGains.filter(entry => entry.event === state.currentUser?.currentEventId).forEach((item) => {
+        // Find the appropriate bin for the current item
+        let foundBin = false;
+        for (let index = 0; index < binSizes.length; index++) {
+          const binSize = binSizes[index];
+          if (item.reps < binSize) {
+            counts[index]++;
+            foundBin = true;
+            break; // Exit the loop once the bin is found
+          }
+        }
+    
+        // If the rep count exceeds the last bin size, assign it to the last bin
+        if (!foundBin) {
+          counts[counts.length - 1]++;
+        }
+      });
+
+      const newGraph = {
+        graphType: 'histogram',
+        graphData: {
+          userData: counts,
+          averageUsers: null,
+          binSizes: binSizes
+        }
+      };
+    
+      const histIndex = state.currentUser.graphs.findIndex(graph => graph.graphType === 'histogram');
+
+      if (histIndex === -1) {
+        // Push new graph into the existing graphs array
+        state.currentUser.graphs.push(newGraph);
+      } else {
+        state.currentUser.graphs[histIndex] = newGraph;
+      }
     },
     updateUserPractice: (state: UserState, action: PayloadAction<number>) => {
       if (state.currentUser?.eventTotals && state.currentUser.currentEventId) {
@@ -101,7 +158,7 @@ export const userSlice = createSlice({
         }
       }
 
-      if (state.currentUser) state.currentUser.monthlyXp = (state.currentUser?.monthlyXp || 0) + action.payload;
+      // if (state.currentUser) state.currentUser.monthlyXp = (state.currentUser?.monthlyXp || 0) + action.payload;
 
       state.currentUser?.xpGains?.push({
         event: state.currentUser.currentEventId || '',
@@ -119,7 +176,21 @@ export const userSlice = createSlice({
         state.currentUser = action.payload;
       }),
       builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<User>) => {
+        const currentEventId = state.currentUser?.currentEventId || '';
         state.currentUser = action.payload;
+        state.currentUser.currentEventId = currentEventId;
+        if (!state.currentUser.graphs) {
+          const binSizes = [10, 25, 50, 75, 76];
+          // If graphs doesn't exist, initialize it with an empty array
+          state.currentUser.graphs = [{
+            graphType: 'histogram',
+            graphData: {
+              userData: [],
+              averageUsers: null,
+              binSizes: binSizes
+            }
+          }];
+        }
       })
   },
 })
@@ -132,7 +203,8 @@ export const {
   setUser,
   removeUser,
   updateCurrentEvent,
-  updateUserPractice
+  updateUserPractice,
+  updateGraphs
  } = userSlice.actions
 
 export default userSlice.reducer

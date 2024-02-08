@@ -115,7 +115,7 @@ function App() {
                             <AvatarImage src={name === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
                             <AvatarFallback>{getInitials(name)}</AvatarFallback>
                         </Avatar> 
-                        : <path.icon className=' h-[40px] w-[40px] transition-none' />
+                        : <path.icon className=' h-[32px] w-[32px] transition-none' />
                         // <DynamicIcon icon={path.icon} height={'40px'} width={'40px'} />
                         }
                         <h4 className={`scroll-m-20 text-xl font-semibold tracking-tight w-32 transition-all duration-150 ease-in-out`}>{path.name}</h4>

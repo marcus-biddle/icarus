@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
 import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, updateUserPractice } from '../../features/user/userSlice';
+import { updateGraphs, updateUser, updateUserPractice } from '../../features/user/userSlice';
 import { RootState } from '../../app/store';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
@@ -33,6 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui//table"
+import { RepFrequency } from '../../components/Charts/RepFrequency';
 
 
 
@@ -43,8 +44,9 @@ const Practice = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.currentUser);
     const userId = user?.id || '';
-    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
+    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
     const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
+    const graphs = useSelector((state: RootState) => state.user.currentUser?.graphs) || [];
     
 
     const handleInputChange = (e) => {
@@ -93,13 +95,30 @@ const Practice = () => {
     }
   }
 
+  const handleTabChange = (tab: string) => {
+    if (tab === 'graphs') {
+      dispatch(
+        updateGraphs()
+      )
+    }
+  }
+
+  useEffect(() => {
+    if (graphs.length === 0 || (graphs[0].graphData.userData.length === 0 && xpGains.filter(entry => entry.event === currentEventId).length > 0)) {
+      console.log('graphs updated')
+      dispatch(
+        updateGraphs()
+      )
+    }
+  }, [graphs, xpGains, currentEventId])
+
   return (
     <TwoColumnGrid showSecondColumnInMobile={true}>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize mt-8">
-        Practice Your Craft: <br /> {currentEventId}
+        Fortify Your Skill: <br /> {currentEventId}
       </h1>
       <Separator className="my-6" />
-      <Tabs defaultValue="update" className="">
+      <Tabs defaultValue="update" className="" onValueChange={(e) => handleTabChange(e)}>
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="update">Update</TabsTrigger>
           <TabsTrigger value="password">Records</TabsTrigger>
@@ -159,7 +178,7 @@ const Practice = () => {
           </Table>
         </TabsContent>
         <TabsContent value="graphs">
-          Currently unavailable.
+          <RepFrequency />
         </TabsContent>
       </Tabs>
       

@@ -53,10 +53,11 @@ export const AccountCreation = () => {
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+        const capitalizedUsername = values.username.charAt(0).toUpperCase() + values.username.slice(1);
         dispatch(
             createUser({
                 password: values.password,
-                username: values.username,
+                username: capitalizedUsername,
                 email: values.email
             })
         )

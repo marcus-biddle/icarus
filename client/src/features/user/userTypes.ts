@@ -76,25 +76,31 @@ interface CurrentStreak {
     currentEvent: string;
     eventTotals: EventTotals[];
     email: string;
-    name: string;
-    username: string;
+    name?: string;
+    username?: string;
     level: number;
     levelCompletionRate: number;
     xpRequiredForNextLevel: number;
     id: string;
-    googleId: string;
-    hasGoogleId: boolean;
     creationDate: number;
-    weeklyXp: number;
-    monthlyXp: number;
+    // weeklyXp: number;
+    // monthlyXp: number;
     totalXp: number;
-    streak: number;
-    updateCounts: number;
-    streakData: StreakData[];
+    streak?: number;
+    updateCounts?: number;
+    streakData?: StreakData[];
     xpGains: XpGain[];
-    xpSummaries: XpSummary[];
-    leaderboardHistory: LeaderboardHistory[];
-    currentLeaderboard: Leaderboard;
+    xpSummaries?: XpSummary[];
+    leaderboardHistory?: LeaderboardHistory[];
+    currentLeaderboard?: Leaderboard;
     statistics: Statistic[];
+    graphs?: [{
+      graphType: string;
+      graphData: {
+        userData: number[],
+        averageUsers: number[] | null,
+        binSizes: number[]
+      }
+    }] | any[]
   }
   

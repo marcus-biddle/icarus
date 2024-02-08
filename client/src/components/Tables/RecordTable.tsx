@@ -151,7 +151,7 @@ const RecordTable = () => {
                 <TableRow>
                 <TableCell colSpan={1} className=' max-w-10'>Total</TableCell>
                 <TableCell className="text-center">{entriesByDateSelected.length} Days</TableCell>
-                <TableCell className="text-right min-w-[90px]">{totals.totalXp} XP</TableCell>
+                <TableCell className="text-center min-w-[90px]">{totals.totalXp} XP</TableCell>
                 <TableCell className="text-right min-w-[90px]">{totals.totalReps} Reps</TableCell>
                 </TableRow>
             </TableFooter>

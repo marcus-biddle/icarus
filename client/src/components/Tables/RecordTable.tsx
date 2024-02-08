@@ -140,7 +140,7 @@ const RecordTable = () => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {entriesByDateSelected.map((entry, index) => (
+                {entriesByDateSelected.sort((a:any, b: any) => b.time - a.time).map((entry, index) => (
                 <TableRow key={index}>
                     <TableCell className="font-medium"></TableCell>
                     <TableCell>{timestampToDateTime(entry.time)}</TableCell>

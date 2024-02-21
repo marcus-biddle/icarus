@@ -26,7 +26,7 @@ import {
 } from "../../components/ui/popover"
 import { IoCalendarOutline } from "react-icons/io5";
 
-  function timestampToDateTime(timestamp) {
+  export function timestampToDateTime(timestamp) {
     // Create a new Date object with the provided timestamp (in milliseconds)
     const date = new Date(timestamp);
   

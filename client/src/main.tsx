@@ -22,6 +22,7 @@ import NewLogin from './NEWlayouts/Login/New_Login';
 import HistoryYear from './NEWlayouts/History/HistoryYear';
 import HistoryMonth from './NEWlayouts/History/HistoryMonth';
 import Profile, { profileLoader } from './NEWlayouts/Profile/Profile';
+import { Group } from './NEWlayouts/Group/Group';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: '/practice',
         element: <Practice />,
+      },
+      {
+        path: '/group',
+        element: <Group />,
       },
       {
         path: '/history',

@@ -43,12 +43,14 @@ import {
   CollapsibleTrigger,
 } from "../../components/ui/collapsible"
 import AverageVsDaily from '../Charts/AverageVsDaily';
+import { TbArrowsSort } from "react-icons/tb";
+import { IoCheckmarkOutline } from "react-icons/io5";
 
 
 const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: ReactNode, showSecondColumnInMobile: boolean }) => {
   const isMobile = useIsMobile({});
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [value, setValue] = React.useState("pushups")
   const [goal, setGoal] = React.useState(350)
   const [isOpen, setIsOpen] = React.useState(false)
  
@@ -77,10 +79,8 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                       aria-expanded={open}
                       className="w-[200px] justify-between"
                     >
-                    {value
-                      ? `Current event: ${eventIds.find((event) => event === value)}`
-                      : `Current event: ${currentEventId}`}
-                    {/* <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" /> */}
+                    {`Exercise: ${currentEventId.charAt(0).toUpperCase() + currentEventId.slice(1)}`}
+                    <TbArrowsSort className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[200px] p-0">
@@ -101,13 +101,13 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                               )
                             }}
                           >
-                            {event}
-                            {/* <CheckIcon
+                            {event.charAt(0).toUpperCase() + event.slice(1)}
+                            <IoCheckmarkOutline
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                value === framework.value ? "opacity-100" : "opacity-0"
+                                event === currentEventId ? "opacity-100" : "opacity-0"
                               )}
-                            /> */}
+                            />
                           </CommandItem>
                         ))}
                       </CommandGroup>

@@ -923,6 +923,59 @@ const createUser = async (req, res) => {
     }
   }
 
+  function sumRepsByDay(xpGains) {
+    const sumRepsByDayMap = new Map(); // Map to store summed reps by day and event
+  
+    // Iterate through each XP gain entry
+    xpGains.forEach(entry => {
+      // Get the date without the time (set hours, minutes, seconds, milliseconds to 0)
+      const entryDate = new Date(entry.time);
+      entryDate.setHours(0, 0, 0, 0);
+  
+      // Generate a unique key combining date and event
+      const key = entryDate.getTime() + '-' + entry.event;
+  
+      // If the key already exists in the map, add reps to the existing total
+      if (sumRepsByDayMap.has(key)) {
+        sumRepsByDayMap.set(key, sumRepsByDayMap.get(key) + entry.reps);
+      } else { // Otherwise, initialize the total reps for the key
+        sumRepsByDayMap.set(key, entry.reps);
+      }
+    });
+  
+    // Convert the map to an array of objects with date, event, and total reps
+    const sumRepsByDayArray = Array.from(sumRepsByDayMap, ([key, totalReps]) => {
+      const [time, event] = key.split('-');
+      return { time: parseInt(time), event, totalReps };
+    });
+  
+    return sumRepsByDayArray;
+  }
+
+  const getAllUserXpGains = async (req, res) => {
+
+    try {
+      const users = await User.find()
+
+      const xpGainsList = [];
+
+      users.map((user) => {
+        const obj = {
+          username: user.username,
+          xpGains: sumRepsByDay(user.xpGains)
+        }
+
+        xpGainsList.push(obj);
+      })
+
+      return res.status(200).json(xpGainsList);
+
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    };
+    
+  }
+
   const UserControllers = {
     createUser,
     fetchUserForLogin,
@@ -936,7 +989,8 @@ const createUser = async (req, res) => {
     findProfile,
     updateStreak,
     updateStatistic,
-    rewardXp
+    rewardXp,
+    getAllUserXpGains
   }
 
   export default UserControllers;

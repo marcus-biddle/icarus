@@ -170,6 +170,17 @@ const rewardXp = async ( userId: string, eventId: string, count: number) => {
     }
 }
 
+const getAllUserXpGains = async () => {
+    try {
+        const response = await axiosInstance.get('/users/all/xpGains')
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const userActions = {
     createUser,
     fetchUserForLogin,
@@ -182,5 +193,6 @@ export const userActions = {
     updateUserMonthCount,
     updateStreak,
     updateStatistic,
-    rewardXp
+    rewardXp,
+    getAllUserXpGains
 }

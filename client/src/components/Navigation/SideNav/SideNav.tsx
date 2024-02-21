@@ -13,7 +13,8 @@ import {
     AvatarImage,
   } from "../../../components/ui/avatar"
 import { getInitials } from '../../../NEWlayouts/Profile/Profile';
-
+import { VscGraph } from "react-icons/vsc";
+import { GiLaurelsTrophy } from "react-icons/gi";
 
 interface PathItem {
     name: string;
@@ -24,11 +25,13 @@ interface PathItem {
 export const PATHS: PathItem[] = [
     // { name: 'Workouts', icon: GoHome, link: 'duo/sections', locked: true },
     { name: 'Forge', icon: GoLightBulb, link: '/practice' },
+    { name: 'Colosseum', icon: VscGraph, link: '/group' },
+    { name: 'Champions', icon: GiLaurelsTrophy, link: '/group' },
     // { name: 'History', icon: GoMortarBoard, link: '/history', locked: false },
     // { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard', locked: false },
     // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
     // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
-    { name: 'Profile', icon: GoIssueDraft, link: '/user' },
+    { name: 'Warrior', icon: GoIssueDraft, link: '/user' },
     { name: 'Logout', icon: GoSignOut, link: '' },
 ]
 

@@ -107,7 +107,7 @@ const Practice = () => {
   return (
     <TwoColumnGrid showSecondColumnInMobile={true}>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize mt-8">
-        Fortify Your Skill: <br /> <span className=' text-primary'>{currentEventId}</span>
+        Fortify Your Skill: <br /> <span className=' text-primary text-5xl'>{currentEventId}</span>
       </h1>
       <Separator className="my-6" />
       <Tabs defaultValue="update" className="" onValueChange={(e) => handleTabChange(e)}>

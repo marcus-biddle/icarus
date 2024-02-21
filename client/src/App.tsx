@@ -104,7 +104,7 @@ function App() {
               <div className="grid gap-2">
             {PATHS.map((path) => (
                 <div key={path.name} onClick={() => path.name === 'Logout' ? handleRemoveUser() : null}>
-                    <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
+                    <NavLink to={path.name === 'Warrior' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
                         isActive ? 'flex justify-evenly items-center my-2 bg-primary-foreground border border-primary rounded-[--radius] p-2' 
                         : 'flex justify-evenly items-center my-2 hover:bg-muted rounded-[--radius] p-2'
                         }

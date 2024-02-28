@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { NavLink, Outlet, redirect, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, redirect, useLoaderData, useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import { useAuthCheck } from './utilities/hooks/useAuthCheck';
 import SideNav, { PATHS } from './components/Navigation/SideNav/SideNav';
 import { useIsMobile } from './utilities/hooks/useIsMobile';
@@ -38,8 +38,10 @@ function App() {
   const userId = useSelector((state: RootState) => state.user.currentUser?.id);
   const name = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
   const dispatch = useDispatch();
+  const {state} = useNavigation();
 
   const [sidebarSize, setSidebarSize] = useState(25);
+  console.log(state)
 
   const handleRemoveUser = () => {
     console.log('clicked')

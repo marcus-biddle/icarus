@@ -35,11 +35,16 @@ export const profileLoader = async({ params }) => {
 const Profile = () => {
     const user: any = useLoaderData();
     const [progress, setProgress] = useState(0)
-    console.log('THIS', user)
+    console.log('THIS', user.profile)
 
     useEffect(() => {
-        const timer = setTimeout(() => setProgress(user.levelCompletionRate * 100), 500)
-        return () => clearTimeout(timer)
+        const setProgressBarLength = async () => {
+            const profile = await user.profile;
+            const timer = setTimeout(() => setProgress(profile.levelCompletionRate * 100), 500)
+            return () => clearTimeout(timer)
+        }
+        setProgressBarLength();
+        
       }, [])
 
   return (

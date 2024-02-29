@@ -90,7 +90,7 @@ const RecordTable = () => {
     const totals = sumXpAndReps(entriesByDateSelected);
 
   return (
-    <div>
+    <>
         <div className=" my-10">
             <Popover>
                 <PopoverTrigger asChild>
@@ -129,36 +129,33 @@ const RecordTable = () => {
                 </PopoverContent>
             </Popover>
         </div>
-        <Table>
+        <Table className='mb-24'>
             {/* <TableCaption>A list of your recent records.</TableCaption> */}
             <TableHeader>
                 <TableRow>
-                <TableHead className="w-[0]"></TableHead>
-                <TableHead className='text-center'>Day</TableHead>
-                <TableHead className='text-center'>Reward</TableHead>
+                {/* <TableHead className="w-[0]"></TableHead> */}
+                <TableHead className='text-center'>Entry</TableHead>
                 <TableHead className="text-right">Count</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {entriesByDateSelected.sort((a:any, b: any) => b.time - a.time).map((entry, index) => (
                 <TableRow key={index}>
-                    <TableCell className="font-medium"></TableCell>
+                    {/* <TableCell className="font-medium"></TableCell> */}
                     <TableCell>{timestampToDateTime(entry.time)}</TableCell>
-                    <TableCell>{entry.xp}</TableCell>
                     <TableCell className="text-right">{entry.reps}</TableCell>
                 </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
                 <TableRow>
-                <TableCell colSpan={1} className=' max-w-10'>Total</TableCell>
-                <TableCell className="text-center">{entriesByDateSelected.length} Days</TableCell>
-                <TableCell className="text-center min-w-[100px]">{totals.totalXp} XP</TableCell>
+                {/* <TableCell colSpan={1} className=' max-w-10'>Total</TableCell> */}
+                <TableCell className="text-center">{entriesByDateSelected.length} Entries</TableCell>
                 <TableCell className="text-right min-w-[100px]">{totals.totalReps} Reps</TableCell>
                 </TableRow>
             </TableFooter>
         </Table>
-    </div>
+    </>
   )
 }
 

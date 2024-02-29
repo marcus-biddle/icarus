@@ -88,8 +88,20 @@ function App() {
 
       
       {isMobile && !location.pathname.includes('login') && 
-      <div className=' fixed right-10 bottom-10'>
-        <Popover>
+      <nav className="fixed bottom-0 left-0 right-0 bg-background border text-white flex justify-around items-center py-3 shadow-2xl">
+            {PATHS.map((path) => (
+                <div key={path.name} onClick={() => path.name === 'Logout' ? handleRemoveUser() : null} className='flex flex-col items-center'>
+                    <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
+                        isActive ? 'flex flex-col items-center my-2  rounded-[--radius] text-primary' 
+                        : 'flex flex-col items-center my-2 hover:bg-muted rounded-[--radius]'
+                        }
+                    >
+                        <path.icon className=' h-[25px] w-[25px] transition-none' />
+                        <p className={`scroll-m-20 font-light tracking-wider transition-all duration-150 ease-in-out`}>{path.name}</p>
+                    </NavLink>
+                </div>
+            ))}
+        {/* <Popover>
           <PopoverTrigger asChild>
           <Button variant="outline" size="icon" className=' h-14 w-14'>
             <CiMenuKebab className="h-10 w-10 text-primary" />
@@ -127,8 +139,8 @@ function App() {
               </div>
             </div>
           </PopoverContent>
-        </Popover>
-      </div>
+        </Popover> */}
+      </nav>
       
       }
     </div>

@@ -26,7 +26,17 @@ import { toast } from "sonner"
 
 import { RepFrequency } from '../../components/Charts/RepFrequency';
 import RecordTable from '../../components/Tables/RecordTable';
-
+import { Label } from "../../components/ui/label"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../../components/ui/sheet"
 
 
 
@@ -106,19 +116,24 @@ const Practice = () => {
 
   return (
     <TwoColumnGrid showSecondColumnInMobile={true}>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize mt-8">
-        Fortify Your Skill: <br /> <span className=' text-primary text-5xl'>{currentEventId}</span>
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize my-8">
+        Training Exercise: <br /> <span className=' text-primary text-5xl'>{currentEventId}</span>
       </h1>
-      <Separator className="my-6" />
-      <Tabs defaultValue="update" className="" onValueChange={(e) => handleTabChange(e)}>
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="update">Update</TabsTrigger>
-          <TabsTrigger value="password">Records</TabsTrigger>
-          <TabsTrigger value="graphs">Graphs</TabsTrigger>
-        </TabsList>
-        <TabsContent value="update" className=' my-24'>
+      <RecordTable />
+      <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" className=" fixed bottom-[125px] right-[25px] rounded-full text-[30px] bg-muted text-primary shadow-md items-center text-center h-16 w-16">+</Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Add Entry</SheetTitle>
+          <SheetDescription>
+            Update your exercise count here. Click save when you're done.
+          </SheetDescription>
+        </SheetHeader>
+        <div className="grid gap-4 py-4">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form className="space-y-8">
               <FormField
                 control={form.control}
                 name="userCount"
@@ -128,24 +143,41 @@ const Practice = () => {
                     <FormControl>
                       <Input placeholder={''} {...field} />
                     </FormControl>
-                    <FormDescription>
+                    {/* <FormDescription>
                       Enter the total amount performed for this exercise.
-                    </FormDescription>
+                    </FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              {/* <Button type="submit">Submit</Button> */}
             </form>
           </Form>
+        </div>
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button type="submit" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+          </SheetClose>
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+      {/* <Separator className="my-6" /> */}
+      {/* <Tabs defaultValue="update" className="" onValueChange={(e) => handleTabChange(e)}>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="update">Update</TabsTrigger>
+          <TabsTrigger value="password">Records</TabsTrigger>
+          <TabsTrigger value="graphs">Graphs</TabsTrigger>
+        </TabsList>
+        <TabsContent value="update" className=' my-24'>
+          
         </TabsContent>
         <TabsContent value="password">
-          <RecordTable />
+          
         </TabsContent>
         <TabsContent value="graphs">
           <RepFrequency />
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
       
         {/* <div style={{ padding: isMobile ? '120px 0' : '40px 0'}}>
             <p style={{ fontSize: '18px', padding: '24px'}}>Please enter a number below for how many reps you performed.</p>

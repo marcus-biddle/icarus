@@ -24,15 +24,15 @@ interface PathItem {
 
 export const PATHS: PathItem[] = [
     // { name: 'Workouts', icon: GoHome, link: 'duo/sections', locked: true },
-    { name: 'Forge', icon: GoLightBulb, link: '/practice' },
-    { name: 'Colosseum', icon: VscGraph, link: '/group' },
-    { name: 'Champions', icon: GiLaurelsTrophy, link: '/group' },
+    { name: 'Train', icon: GoLightBulb, link: '/practice' },
+    { name: 'Group', icon: VscGraph, link: '/group' },
+    { name: 'Winners', icon: GiLaurelsTrophy, link: '/group' },
     // { name: 'History', icon: GoMortarBoard, link: '/history', locked: false },
     // { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard', locked: false },
     // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
     // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
-    { name: 'Warrior', icon: GoIssueDraft, link: '/user' },
-    { name: 'Logout', icon: GoSignOut, link: '' },
+    { name: 'Profile', icon: GoIssueDraft, link: '/user' },
+    // { name: 'Logout', icon: GoSignOut, link: '' },
 ]
 
 const SideNav = ({size}: {size: number}) => {

@@ -109,9 +109,23 @@ export const Group = () => {
                     defaultMonth={date?.from}
                     selected={date}
                     onSelect={(e) => {
-                      const shouldSelect = areDatesLessThan30DaysApart(e);
-                      if (shouldSelect) {
-                        setDate(e)
+                      
+                      if (!e?.to) {
+                        setDate({
+                          from: e?.from,
+                          to: e?.from
+                        })
+                      }
+                      if (!date?.to || !date.from || date === e || !e) {
+                        setDate({
+                          from: date?.from,
+                          to: date?.from
+                        })
+                      } else {
+                        const shouldSelect = areDatesLessThan30DaysApart(e);
+                        if (shouldSelect) {
+                          setDate(e)
+                        }
                       }
                     }}
                     numberOfMonths={1}

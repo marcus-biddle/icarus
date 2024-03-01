@@ -54,9 +54,10 @@ const EventTotalsSchema = new mongoose.Schema({
 
 const LeaderboardHistorySchema = new mongoose.Schema({
   ranking: Number,
-  leagueId: String,
-  monthlyXp: Number,
-  date: String
+  count: Number,
+  eventId: String,
+  monthName: String,
+  year: String
 });
 
 const LeaderboardSchema = new mongoose.Schema({

@@ -28,6 +28,7 @@ import {
 import { getInitials } from './NEWlayouts/Profile/Profile';
 import { removeUser } from './features/user/userSlice';
 import { CiMenuKebab } from "react-icons/ci";
+import { ExerciseSelection } from './components/ExerciseSelection/ExerciseSelection';
 
 function App() {
   const location = useLocation();
@@ -60,7 +61,7 @@ function App() {
 
   return (
     <div className=' relative'>
-      <div>
+      <>
         
         {!isMobile && !location.pathname.includes('login') ? <ResizablePanelGroup direction={"horizontal"} onLayout={(sizes) => setSidebarSize(sizes[0])}>
           {<ResizablePanel defaultSize={0} className=' min-w-[155px]'>
@@ -77,14 +78,24 @@ function App() {
         </ResizablePanelGroup>
         :
         <div>
-          <div className="flex justify-center p-6 min-h-screen mb-32">
-            <Outlet />
+          <div className="min-h-screen mb-32">
+            {!location.pathname.includes('user') && <div className=' bg-primary-foreground border text-white rounded-sm px-6 py-6'>
+              <ExerciseSelection />
+              <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-left py-4 text-primary">
+                {location.pathname.slice(1)}
+              </h1>
+            </div>}
+            
+            <div className=' p-6'>
+              <Outlet />
+            </div>
+            
             <Toaster />
           </div>
         </div>
         }
         
-      </div>
+      </>
 
       
       {isMobile && !location.pathname.includes('login') && 

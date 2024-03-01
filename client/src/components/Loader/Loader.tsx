@@ -19,9 +19,9 @@ export const Loader = () => {
   }, []);
 
   return (
-    <div className=' h-full flex flex-col justify-center items-center'>
+    <div className=' fixed top-[50%] left-0 w-full flex flex-col justify-center items-center align-middle content-center'>
       <Progress value={progress} className="w-[90%] h-[6px]" />
-      <p className=' text-muted py-8'>Database is loading <br /> this should take less than a minute...</p>
+      <p className=' text-foreground py-8'>Database is loading <br /> this should take less than a minute...</p>
     </div>
   )
 }

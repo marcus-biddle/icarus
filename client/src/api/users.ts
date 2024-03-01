@@ -58,6 +58,7 @@ const getUser = async (googleId: string) => {
 
 const fetchUser = async (userId: string) => {
     try {
+        // await new Promise((resolve) => setTimeout(resolve, 60000));
         const response = await axiosInstance.get(`/user/${userId}`);
         return response.data;
 

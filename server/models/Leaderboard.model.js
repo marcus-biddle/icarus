@@ -2,23 +2,32 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-    ranking: { type: Number, required: true },
-    name: { type: String, required: true },
-    xp: { type: Number, required: true },
-    userId: { type: String, required: true },
-  });
-  
-  const leagueGroupSchema = new Schema({
-    leagueId: { type: String, required: true },
-    users: { type: [userSchema], required: true },
-  });
-  
-  const leaderboardSchema = new Schema({
-    leagueIds: { type: [String], required: true },
-    leagueGroups: { type: [leagueGroupSchema], required: true },
-  });
-  
-  const LeaderboardModel = mongoose.model('Leaderboard', leaderboardSchema);
-  
-  export default LeaderboardModel;
+const MonthlyLeaderboardSchema = new Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  ranking: Number,
+  count: Number,
+  event: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event'
+  },
+  month: {
+    type: Number,
+    required: true
+  },
+  year: {
+    type: Number,
+    required: true
+  }
+});
+
+// Indexes for efficient queries
+MonthlyLeaderboardSchema.index({ month: 1, year: 1 });
+MonthlyLeaderboardSchema.index({ user: 1, month: 1, year: 1 });
+
+const LeaderboardHistory = mongoose.model('MonthlyLeaderboard', MonthlyLeaderboardSchema);
+
+export default LeaderboardHistory;

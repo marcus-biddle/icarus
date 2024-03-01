@@ -91,7 +91,7 @@ const RecordTable = () => {
 
   return (
     <>
-        <div className=" my-10">
+        <div className=" mb-10">
             <Popover>
                 <PopoverTrigger asChild>
                 <Button

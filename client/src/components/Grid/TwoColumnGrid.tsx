@@ -115,7 +115,7 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                   </PopoverContent>
                 </Popover>
               </div>
-              <div>
+              {/* <div>
                 <Drawer>
                   <DrawerTrigger asChild>
                     <Button variant="outline">Create Goal</Button>
@@ -135,7 +135,6 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                             onClick={() => onClick(-10)}
                             disabled={goal <= 0}
                           >
-                            {/* <MinusIcon className="h-4 w-4" /> */}---
                             <span className="sr-only">Decrease</span>
                           </Button>
                           <div className="flex-1 text-center">
@@ -153,24 +152,10 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                             onClick={() => onClick(10)}
                             disabled={goal >= 3000}
                           >
-                            {/* <PlusIcon className="h-4 w-4" /> */}++
                             <span className="sr-only">Increase</span>
                           </Button>
                         </div>
                         <div className="mt-3 h-[120px]">
-                          {/* <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={data}>
-                              <Bar
-                                dataKey="goal"
-                                style={
-                                  {
-                                    fill: "hsl(var(--foreground))",
-                                    opacity: 0.9,
-                                  } as React.CSSProperties
-                                }
-                              />
-                            </BarChart>
-                          </ResponsiveContainer> */}
                         </div>
                       </div>
                       <DrawerFooter>
@@ -182,7 +167,7 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                     </div>
                   </DrawerContent>
                 </Drawer>
-              </div>
+              </div> */}
             </div>
             {false && <Collapsible
               open={isOpen}

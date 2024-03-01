@@ -26,7 +26,7 @@ export const PATHS: PathItem[] = [
     // { name: 'Workouts', icon: GoHome, link: 'duo/sections', locked: true },
     { name: 'Train', icon: GoLightBulb, link: '/practice' },
     { name: 'Group', icon: VscGraph, link: '/group' },
-    { name: 'Winners', icon: GiLaurelsTrophy, link: '/group' },
+    // { name: 'Winners', icon: GiLaurelsTrophy, link: '/group' },
     // { name: 'History', icon: GoMortarBoard, link: '/history', locked: false },
     // { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard', locked: false },
     // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },

@@ -115,10 +115,10 @@ const Practice = () => {
   }, [graphs, xpGains, currentEventId])
 
   return (
-    <TwoColumnGrid showSecondColumnInMobile={true}>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize my-8">
+    <>
+      {/* <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize my-8">
         Training Exercise: <br /> <span className=' text-primary text-5xl'>{currentEventId}</span>
-      </h1>
+      </h1> */}
       <RecordTable />
       <Sheet>
       <SheetTrigger asChild>
@@ -193,7 +193,7 @@ const Practice = () => {
                 {error && <p style={{ color: 'red' }}>{error}</p>}
             </div>
         </div> */}
-    </TwoColumnGrid>
+    </>
   )
 }
 

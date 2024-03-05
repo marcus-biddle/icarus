@@ -9,6 +9,16 @@ const loggerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  amount: {
+    type: Number,
+  },
+  event: {
+    type: String
+  },
+  username: {
+    type: String,
+    required: true
+  },
 });
 
 const Logs = mongoose.model('Logs', loggerSchema);

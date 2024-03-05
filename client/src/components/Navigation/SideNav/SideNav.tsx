@@ -23,7 +23,7 @@ interface PathItem {
   }
 
 export const PATHS: PathItem[] = [
-    // { name: 'Workouts', icon: GoHome, link: 'duo/sections', locked: true },
+    { name: 'Feed', icon: GoHome, link: '/feed' },
     { name: 'Train', icon: GoLightBulb, link: '/practice' },
     { name: 'Group', icon: VscGraph, link: '/group' },
     // { name: 'Winners', icon: GiLaurelsTrophy, link: '/group' },

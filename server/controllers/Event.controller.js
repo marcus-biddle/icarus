@@ -43,6 +43,13 @@ const updateEventForUser = async (req, res) => {
             },
         })
 
+        await Logs.create({
+          action: "completed",
+          amount: count,
+          event: eventExist._id,
+          username: user.username
+        })
+
         return res.status(201).json(newEvent);
     }
 
@@ -81,6 +88,13 @@ const updateEventForUser = async (req, res) => {
         )
       }
 
+      await Logs.create({
+        action: "completed",
+        amount: count,
+        event: eventExist._id,
+        username: user.username
+      })
+      
     return res.status(201).json(existingEvent);
   } catch (error) {
     res.status(400).json({ error: error.message });

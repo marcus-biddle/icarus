@@ -13,6 +13,6 @@ const getLogs = async () => {
     }
 }
 
-export const logsActions = {
+export const logActions = {
     getLogs
 }

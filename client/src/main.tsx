@@ -23,6 +23,7 @@ import HistoryYear from './NEWlayouts/History/HistoryYear';
 import HistoryMonth from './NEWlayouts/History/HistoryMonth';
 import Profile, { profileLoader } from './NEWlayouts/Profile/Profile';
 import { Group } from './NEWlayouts/Group/Group';
+import { Feed } from './NEWlayouts/Feed';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/practice',
         element: <Practice />,
+      },
+      {
+        path: '/feed',
+        element: <Feed />,
       },
       {
         path: '/group',

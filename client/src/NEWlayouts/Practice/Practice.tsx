@@ -84,7 +84,7 @@ const Practice = () => {
       )
   
       dispatch(
-        updateUser({ userCount: Number(values.userCount), eventId: currentEventId, userId: userId })
+        updateUser({ userCount: Number(values.userCount), eventId: currentEventId, userId: userId, username: user?.username })
       )
 
       toast("Event has been updated", {

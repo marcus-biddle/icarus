@@ -43,12 +43,14 @@ const updateEventForUser = async (req, res) => {
             },
         })
 
-        await Logs.create({
+        const log = await Logs.create({
           action: "completed",
           amount: count,
           event: eventExist._id,
           username: user.username
         })
+
+        console.log(log);
 
         return res.status(201).json(newEvent);
     }
@@ -68,9 +70,9 @@ const updateEventForUser = async (req, res) => {
 
       await existingEvent.save();
     
-      await Logs.create({
-        action: `${decodedToken.name} completed ${count} ${event === 'running' ? count > 1 ? 'miles' : 'mile' : count > 1 ? `${event}s` : event}.`,
-      });
+      // await Logs.create({
+      //   action: `${decodedToken.name} completed ${count} ${event === 'running' ? count > 1 ? 'miles' : 'mile' : count > 1 ? `${event}s` : event}.`,
+      // });
 
       const collectedExp = count * exp;
 
@@ -88,13 +90,15 @@ const updateEventForUser = async (req, res) => {
         )
       }
 
-      await Logs.create({
+      const log = await Logs.create({
         action: "completed",
         amount: count,
         event: eventExist._id,
         username: user.username
       })
-      
+
+      console.log(log);
+
     return res.status(201).json(existingEvent);
   } catch (error) {
     res.status(400).json({ error: error.message });

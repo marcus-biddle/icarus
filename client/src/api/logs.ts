@@ -13,6 +13,24 @@ const getLogs = async () => {
     }
 }
 
+const updateLogs = async (count: number, eventId: string, action: string, username: string) => {
+    try {
+        const response = await axiosInstance.post('/logs/update', {
+            action: action,
+            amount: count,
+            event: eventId,
+            username: username
+        });
+
+        return response.data;
+
+    } catch (err) {
+        console.log('err', err);
+        return null;
+    }
+}
+
 export const logActions = {
-    getLogs
+    getLogs,
+    updateLogs
 }

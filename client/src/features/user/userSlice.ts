@@ -2,6 +2,7 @@ import { createSlice, nanoid, PayloadAction, createAsyncThunk } from '@reduxjs/t
 import { userActions } from '../../api/users';
 import { User } from './userTypes';
 import { RootState } from '@/app/store';
+import { logActions } from '@/api/logs';
 
 
 export interface UserState {
@@ -43,13 +44,14 @@ export const fetchUserForLogin: any = createAsyncThunk('user/fetchUserForLogin',
 //   return await userActions.updateUserYearCount(yearAttributes.userCount, yearAttributes.eventId, yearAttributes.userId);
 // });
 
-export const updateUser: any = createAsyncThunk('user/updateUser', async (attributes: {userCount: number, eventId: string, userId: string }) => {
+export const updateUser: any = createAsyncThunk('user/updateUser', async (attributes: {userCount: number, eventId: string, userId: string, username: string }) => {
   console.log('count', attributes.userCount, attributes.eventId, attributes.userId);
   await userActions.updateStreak(attributes.userId, attributes.eventId);
   await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
   await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
   await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
   const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount);
+  await logActions.updateLogs(attributes.userCount, attributes.eventId, 'completed', attributes.username);
 //not updating currentEventId, need to add to backup
   console.log('updateCount', reward)
   return reward;

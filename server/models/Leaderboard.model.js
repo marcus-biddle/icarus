@@ -2,32 +2,43 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const MonthlyLeaderboardSchema = new Schema({
-  user: {
+const monthlyLeaderboardSchema = new Schema({
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  ranking: Number,
-  count: Number,
-  event: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Event'
-  },
-  month: {
-    type: Number,
+  month: Number,
+  year: Number,
+  eventId: {
+    type: String,
     required: true
   },
-  year: {
+  eventCount: Number,
+  rank: {
     type: Number,
-    required: true
+    default: 0
   }
 });
 
-// Indexes for efficient queries
-MonthlyLeaderboardSchema.index({ month: 1, year: 1 });
-MonthlyLeaderboardSchema.index({ user: 1, month: 1, year: 1 });
+// Pre-save hook to calculate and update the rank based on eventCount
+monthlyLeaderboardSchema.pre('save', async function (next) {
+  try {
+    const count = await this.model('MonthlyLeaderboard').countDocuments({
+      $and: [
+        { month: this.month },
+        { year: this.year },
+        { eventId: this.eventId },
+        { eventCount: { $gt: this.eventCount } } // Count entries with higher eventCount
+      ]
+    });
+    this.rank = count + 1; // Calculate rank based on count of higher eventCounts
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
-const LeaderboardHistory = mongoose.model('MonthlyLeaderboard', MonthlyLeaderboardSchema);
+const MonthlyLeaderboard = mongoose.model('MonthlyLeaderboard', monthlyLeaderboardSchema);
 
-export default LeaderboardHistory;
+export default MonthlyLeaderboard;

@@ -19,6 +19,10 @@ import { userActions } from '../../api/users'
 import GroupTable from '../../components/Tables/GroupTable'
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
 import { Show } from '../../helpers/functional';
+import { leaderboardActions } from '../../api/leaderboard';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { getCurrentMonth, getCurrentYear } from '../../helpers/date';
 
 function areDatesLessThan30DaysApart(dates) {
     // Calculate the difference in milliseconds between the two dates
@@ -50,12 +54,14 @@ function areDatesLessThan30DaysApart(dates) {
   }
 
 export const Group = () => {
-  const [page, setPage] = useState<null | 'graph' | 'table' | 'winners'>(null)
+  const [page, setPage] = useState<null | 'graph' | 'table' | 'winners' | 'leaderboard'>(null)
     const today = new Date();
     const firstDayOfMonth = startOfMonth(today);
     const lastDayOfMonth = endOfMonth(today);
 
     const [data, setData] = useState([]);
+    const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
+    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId)
     const [date, setDate] = useState<DateRange | undefined>({
         from: firstDayOfMonth,
         to: today,
@@ -66,7 +72,9 @@ export const Group = () => {
 
     const fetchData = async () => {
         const response = await userActions.getAllUserXpGains();
+        const leaderboardRes = await leaderboardActions.getMonthlyLeaderboard();
         setData(response);
+        setLeaderboardData(leaderboardRes);
       }
     
     const memoizedFetchData = useMemo(() => fetchData, [userActions.getAllUserXpGains]);
@@ -74,6 +82,8 @@ export const Group = () => {
         useEffect(() => {
         memoizedFetchData();
         }, [memoizedFetchData])
+
+        console.log(leaderboardData);
 
   return (
     <>
@@ -227,6 +237,10 @@ export const Group = () => {
           </div>
         </>
         <div className=' flex flex-col gap-4 my-8'>
+          <button onClick={() => setPage('leaderboard')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
+            <p>View Leaderboard</p>
+            <GoChevronRight className=' h-5 w-5' />
+          </button>
           <button onClick={() => setPage('graph')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
             <p>View Group Graph</p>
             <GoChevronRight className=' h-5 w-5' />
@@ -236,7 +250,7 @@ export const Group = () => {
             <GoChevronRight className=' h-5 w-5' />
           </button>
           <button onClick={() => setPage('winners')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
-            <p>View Winners</p>
+            <p>Past Winners</p>
             <GoChevronRight className=' h-5 w-5' />
           </button>
         </div>
@@ -249,6 +263,33 @@ export const Group = () => {
       </Show>
       <Show when={page === 'winners'}>
         No data available.
+      </Show>
+      <Show when={page === 'leaderboard'}>
+      <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{getCurrentMonth()} {getCurrentYear()} Leaderboard</h2>
+      <div className='my-4'>
+        {leaderboardData.filter(leaderboard => leaderboard.eventId === currentEventId).map((entry, index) => (
+          <div className=' flex gap-2'>
+            <div className=' min-w-28 min-h-28 bg-card rounded-md relative border flex justify-center text-center items-center'>
+                {entry.userId.username[0].toUpperCase()}
+                {/* <div className='bg-primary w-14 h-14 absolute right-0 bottom-0 rounded-tl-full text-right flex flex-col align-bottom pt-2 pr-1'>
+                    <p className='text-white text-sm'>Rank</p>
+                    <p className=' font-mono text-lg '>4</p>
+                </div> */}
+            </div>
+            <div className=' text-left pl-4 w-full flex flex-col justify-around'>
+                <div>
+                    <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight"><span className=' text-primary pr-2'>#{index + 1}</span> {entry.userId.username}</h4>
+                    <p className="text-sm text-muted-foreground">Total {entry.eventId} completed: {entry.eventCount}</p>
+                </div>
+                <div className='flex justify-between text-lg font-semibold'>
+                    {/* <div className=' text-green-600'>{log.action.toUpperCase()}</div> */}
+                    {/* <div>{log.amount} reps</div> */}
+                </div>
+            </div>
+          </div>
+        ))}
+      </div>
+        
       </Show>
     </>
   )

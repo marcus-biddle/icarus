@@ -3,6 +3,7 @@ import { userActions } from '../../api/users';
 import { User } from './userTypes';
 import { RootState } from '@/app/store';
 import { logActions } from '@/api/logs';
+import { leaderboardActions } from '@/api/leaderboard';
 
 
 export interface UserState {
@@ -52,6 +53,7 @@ export const updateUser: any = createAsyncThunk('user/updateUser', async (attrib
   await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
   const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount);
   await logActions.updateLogs(attributes.userCount, attributes.eventId, 'completed', attributes.username);
+  await leaderboardActions.updateMonthlyLeaderboard(attributes.userId, attributes.eventId, attributes.userCount)
 //not updating currentEventId, need to add to backup
   console.log('updateCount', reward)
   return reward;

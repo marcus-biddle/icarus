@@ -1,240 +1,114 @@
-import LeaderboardModel from '../models/Leaderboard.model.js'
+import MonthlyLeaderboard from "../models/Leaderboard.model.js";
+import User from '../models/User.model.js';
 
-const fakeLeaderboardData = {
-  leagueIds: ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master', 'grandmaster'],
-  leagueGroups: [
-    {
-      leagueId: 'bronze',
-      users: [
-        { ranking: 1, name: 'User1', xp: 100, userId: 'id1' },
-        { ranking: 2, name: 'User2', xp: 900, userId: 'id2' },
-        { ranking: 3, name: 'User3', xp: 1200, userId: 'id3' },
-      ],
-    },
-    {
-      leagueId: 'silver',
-      users: [
-        { ranking: 1, name: 'User4', xp: 120, userId: 'id4' },
-        { ranking: 2, name: 'User5', xp: 110, userId: 'id5' },
-        { ranking: 3, name: 'User6', xp: 100, userId: 'id6' },
-        { ranking: 4, name: 'User7', xp: 95, userId: 'id7' },
-      ],
-    },
-    {
-      leagueId: 'gold',
-      users: [
-        { ranking: 1, name: 'User8', xp: 150, userId: 'id8' },
-        { ranking: 2, name: 'User9', xp: 140, userId: 'id9' },
-        // Add more users for gold league if needed
-      ],
-    },
-    {
-      leagueId: 'platinum',
-      users: [
-        { ranking: 1, name: 'User10', xp: 180, userId: 'id10' },
-        { ranking: 2, name: 'User11', xp: 170, userId: 'id11' },
-        // Add more users for platinum league if needed
-      ],
-    },
-    {
-      leagueId: 'diamond',
-      users: [
-        { ranking: 1, name: 'User12', xp: 220, userId: 'id12' },
-        { ranking: 2, name: 'User13', xp: 210, userId: 'id13' },
-        // Add more users for diamond league if needed
-      ],
-    },
-    {
-      leagueId: 'master',
-      users: [
-        { ranking: 1, name: 'User14', xp: 260, userId: 'id14' },
-        // Add more users for master league if needed
-      ],
-    },
-    {
-      leagueId: 'grandmaster',
-      users: [
-        { ranking: 1, name: 'User15', xp: 300, userId: 'id15' },
-        // Add more users for grandmaster league if needed
-      ],
-    },
-  ],
+const getCurrentMonthYear = () => {
+  const now = new Date();
+  const month = now.getMonth() + 1; // Months are 0-indexed, so add 1
+  const year = now.getFullYear();
+  return { month, year };
 };
 
-  const setupLeaderboard = async () => {
-    try {
-      // Remove existing data
-      await LeaderboardModel.deleteMany();
-  
-      // Create new Leaderboard data
-      const leaderboard = new LeaderboardModel(fakeLeaderboardData);
-  
-      // Save to the database
-      await leaderboard.save();
-  
-      console.log('Leaderboard set up successfully!');
-    } catch (error) {
-      console.error('Error setting up Leaderboard:', error);
-    }
-  };
-// Controller function to get the Leaderboard
-const getLeaderboard = async (req, res) => {
+const getMonthlyLeaderboard = async (req, res) => {
   try {
-    // Fetch the Leaderboard from the database
-    const leaderboard = await LeaderboardModel.findOne();
+    const { month, year } = getCurrentMonthYear();
 
-    if (!leaderboard) {
-      return res.status(404).json({ message: 'Leaderboard not found' });
+    let leaderboard = await MonthlyLeaderboard
+      .find({ month, year })
+      .sort({ eventCount: -1 }) // Sort by eventCount in descending order
+      .populate({
+        path: 'userId',
+        select: 'username' // Select only the 'username' field of the User
+      })
+      .lean();
+
+    return res.status(200).json(leaderboard);
+  } catch (error) {
+    console.error('Error fetching monthly leaderboard:', error.message);
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+// unused
+const getMonthlyLeaderboardWithUsernames = async (month, year) => {
+  try {
+    let leaderboard = await MonthlyLeaderboard
+      .find({ month, year })
+      .sort({ eventCount: -1 }) // Sort by eventCount in descending order
+      .populate('userId', 'username'); // Populate user's username
+
+    // If leaderboard is empty, return null or empty array
+    if (!leaderboard || leaderboard.length === 0) {
+      return null; // or return []
     }
 
-    // Return the Leaderboard as JSON response
-    res.status(200).json(leaderboard);
+    // Optional: Add user's username to each leaderboard entry
+    leaderboard = await Promise.all(leaderboard.map(async (entry) => {
+      const user = await User.findById(entry.userId);
+      return {
+        _id: entry._id,
+        userId: entry.userId,
+        username: user ? user.username : 'Unknown', // Fallback if user not found
+        eventId: entry.eventId,
+        month: entry.month,
+        year: entry.year,
+        eventCount: entry.eventCount,
+        rank: entry.rank
+      };
+    }));
+
+    return leaderboard;
   } catch (error) {
-    console.error('Error fetching leaderboard:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Error fetching monthly leaderboard with usernames:', error.message);
+    throw new Error('Failed to fetch monthly leaderboard with usernames');
   }
 };
 
-const updateLeaderboardXp = async (req, res) => {
-  const newXp = req.body.xpGain;
-  const userId = req.body.userId
+const updateMonthlyLeaderboard = async (req, res) => {
+  const userId = req.body.userId;
+  const eventId = req.body.eventId;
+  const eventCount = req.body.eventCount;
+  const { month, year } = getCurrentMonthYear();
+
+  if (!eventCount || !eventId || !userId) return res.status(400).json({ error: 'missing information.' }); 
+
+  console.log(userId, eventId, eventCount, )
+
+  const foundUser = await User.findOne({ id: userId }).lean().exec();
+  if (!foundUser) return res.status(400).json({ error: 'user not found.' }); 
 
   try {
-    const updatedLeaderboard = await LeaderboardModel.findOneAndUpdate(
-      {
-        'leagueGroups.users.userId': userId
-      },
-      {
-        $set: {
-          'leagueGroups.$[group].users.$[user].xp': newXp
-        }
-      },
-      {
-        arrayFilters: [
-          { 'group.users.userId': userId },
-          { 'user.userId': userId }
-        ],
-        new: true
-      }
-    );
-
-    // const updatedRanks = await updateRanks();
-
-    return res.json(updatedLeaderboard);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const updateLeaderboardRank = async (req, res) => {
-  try {
-    const updatedLeaderboard = await updateLeaderboardRanking();
-
-    return res.json({ updatedLeaderboard });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-const updateLeaderboardRanking = async () => {
-  try {
-    const updatedLeaderboard = await LeaderboardModel.aggregate([
-      {
-        $unwind: '$leagueGroups',
-      },
-      {
-        $unwind: '$leagueGroups.users',
-      },
-      {
-        $sort: {
-          'leagueGroups.users.xp': -1,
-        },
-      },
-      {
-        $group: {
-          _id: '$leagueGroups.leagueId',
-          users: {
-            $push: {
-              ranking: '$leagueGroups.users.ranking',
-              name: '$leagueGroups.users.name',
-              xp: '$leagueGroups.users.xp',
-              userId: '$leagueGroups.users.userId',
-            },
-          },
-        },
-      },
-      {
-        $unwind: '$users',
-      },
-      {
-        $set: {
-          'users.ranking': { $sum: 1 },
-        },
-      },
-      {
-        $group: {
-          _id: '$_id',
-          users: {
-            $push: '$users',
-          },
-          leagueId: { $first: '$_id' },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          leagueGroups: {
-            $push: {
-              leagueId: '$leagueId',
-              users: '$users',
-            },
-          },
-          leagueIds: {
-            $push: '$leagueId',
-          },
-        },
-      },
-    ]);
-    
-    // Update the rankings based on array position
-    updatedLeaderboard[0]?.leagueGroups.forEach((group) => {
-      group.users.forEach((user, index) => {
-        user.ranking = index + 1;
-      });
+    let leaderboardEntry = await MonthlyLeaderboard.findOne({
+      userId: foundUser._id,
+      eventId: eventId,
+      month: month,
+      year: year
     });
-    
-    
-    
-    
-    
-    console.log(updatedLeaderboard)
 
-    if (!updatedLeaderboard || !updatedLeaderboard[0]) {
-      throw new Error('Failed to update leaderboard ranking.');
+    if (!leaderboardEntry) {
+      // If entry doesn't exist, create a new one
+      leaderboardEntry = new MonthlyLeaderboard({
+        userId: foundUser._id,
+        eventId: eventId,
+        month: month,
+        year: year,
+        eventCount: eventCount
+      });
+    } else {
+      // Update existing entry
+      leaderboardEntry.eventCount = leaderboardEntry.eventCount + eventCount;
     }
 
-    for (const group of updatedLeaderboard[0].leagueGroups) {
-      await LeaderboardModel.findOneAndUpdate(
-        { 'leagueGroups.leagueId': group.leagueId },
-        { $set: { 'leagueGroups.$.users': group.users } },
-        { new: true }
-      );
-    }
-
-    console.log('Leaderboard ranking updated successfully.');
-
-    const leaderboard = await LeaderboardModel.findOne();
-    return leaderboard
+    await leaderboardEntry.save();
+    // console.log('Monthly leaderboard entry updated:', leaderboardEntry);
+    return res.status(201).json(leaderboardEntry);
   } catch (error) {
-    console.error('Error updating leaderboard ranking:', error);
+    console.error('Error updating monthly leaderboard entry:', error.message);
+    throw new Error('Failed to update monthly leaderboard entry');
   }
 };
-
 const LeaderboardControllers = {
-    getLeaderboard,
-    setupLeaderboard,
-    updateLeaderboardXp,
-    updateLeaderboardRank
-  }
+  getMonthlyLeaderboard,
+  updateMonthlyLeaderboard
+}
 
-  export default LeaderboardControllers;
+export default LeaderboardControllers;

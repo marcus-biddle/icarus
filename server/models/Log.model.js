@@ -19,6 +19,10 @@ const loggerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  rank: {
+    type: Number,
+    required: true
+  },
 });
 
 const Logs = mongoose.model('Logs', loggerSchema);

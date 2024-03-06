@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { GoHome, GoMortarBoard, GoTrophy, GoTelescope, GoOrganization, GoIssueDraft, GoSignOut, GoLightBulb } from "react-icons/go";
 import { NavLink } from 'react-router-dom';
-import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
 import { DynamicIcon } from '../../Icons/DynamicIcon';
 import { IconType } from 'react-icons/lib';
 import { GiGorilla } from "react-icons/gi";
@@ -12,7 +11,7 @@ import {
     AvatarFallback,
     AvatarImage,
   } from "../../../components/ui/avatar"
-import { getInitials } from '../../../NEWlayouts/Profile/Profile';
+import { getInitials } from '../../../NEWlayouts/Profile';
 import { VscGraph } from "react-icons/vsc";
 import { GiLaurelsTrophy } from "react-icons/gi";
 
@@ -36,7 +35,6 @@ export const PATHS: PathItem[] = [
 ]
 
 const SideNav = ({size}: {size: number}) => {
-    const isMobile = useIsMobile({ threshold: 1150 });
     const userId = useSelector((state: RootState) => state.user.currentUser?.id);
     const name = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
   return (

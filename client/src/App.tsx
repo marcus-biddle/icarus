@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import { NavLink, Outlet, redirect, useLoaderData, useLocation, useNavigate, useNavigation } from 'react-router-dom';
-import { useAuthCheck } from './utilities/hooks/useAuthCheck';
 import SideNav, { PATHS } from './components/Navigation/SideNav/SideNav';
-import { useIsMobile } from './utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './app/store';
-import { Button } from "./components/ui/button"
-import { GoGear } from "react-icons/go";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./components/ui/popover"
 
 import {
   ResizableHandle,
@@ -20,16 +11,11 @@ import {
   ResizablePanelGroup,
 } from "./components/ui/resizable";
 import { Toaster } from "./components/ui/sonner"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "./components/ui/avatar"
-import { getInitials } from './NEWlayouts/Profile/Profile';
 import { removeUser } from './features/user/userSlice';
 import { CiMenuKebab } from "react-icons/ci";
 import { ExerciseSelection } from './components/ExerciseSelection/ExerciseSelection';
 import { GiGorilla } from "react-icons/gi";
+import { useIsMobile } from './hooks/useIsMobile';
 
 function App() {
   const location = useLocation();

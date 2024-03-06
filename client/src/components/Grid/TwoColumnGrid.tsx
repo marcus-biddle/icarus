@@ -1,11 +1,5 @@
 import React, { ReactNode } from 'react'
-import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import './index.css'
-import { NavLink } from 'react-router-dom';
-import { LEAGUE_LEVELS } from '../../NEWlayouts/Leaderboard/Leaderboard';
-import { DynamicIcon } from '../Icons/DynamicIcon';
-import { GiLaurelsTrophy } from "react-icons/gi";
-import { Show } from '../../helpers/functional';
 import { GoUnfold } from "react-icons/go";
 
  
@@ -26,17 +20,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { updateCurrentEvent, updateGraphs } from '../../features/user/userSlice';
- 
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../../components/ui/drawer"
 import {
   Collapsible,
   CollapsibleContent,
@@ -45,6 +28,7 @@ import {
 import AverageVsDaily from '../Charts/AverageVsDaily';
 import { TbArrowsSort } from "react-icons/tb";
 import { IoCheckmarkOutline } from "react-icons/io5";
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 
 const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: ReactNode, showSecondColumnInMobile: boolean }) => {

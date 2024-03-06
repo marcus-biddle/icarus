@@ -13,13 +13,13 @@ const getLogs = async () => {
     }
 }
 
-const updateLogs = async (count: number, eventId: string, action: string, username: string) => {
+const updateLogs = async (count: number, eventId: string, action: string, userId: string) => {
     try {
         const response = await axiosInstance.post('/logs/update', {
             action: action,
             amount: count,
             event: eventId,
-            username: username
+            userId: userId
         });
 
         return response.data;

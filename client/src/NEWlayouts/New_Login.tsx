@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { GiGorilla, GiLaurelCrown, GiLibertyWing } from "react-icons/gi";
-import { DynamicIcon } from '../../components/Icons/DynamicIcon';
-import { useIsMobile } from '../../utilities/hooks/useIsMobile';
+import { DynamicIcon } from '../components/Icons/DynamicIcon';
+import { useIsMobile } from '../utilities/hooks/useIsMobile';
 // import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
-import { Show } from '../../helpers/functional';
-import { useDelayedDisplay } from '../../utilities/hooks/useDelayedDisplay';
+import { Show } from '../helpers/functional';
+import { useDelayedDisplay } from '../utilities/hooks/useDelayedDisplay';
 import { GoHourglass } from "react-icons/go";
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { RootState } from '../app/store';
   import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form';
@@ -19,15 +19,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card"
+} from "../components/ui/card"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../components/ui/tabs"
-import { AccountCreation } from '../../components/Forms/AccountCreation';
-import { LoginForm } from '../../components/Forms/LoginForm';
+} from "../components/ui/tabs"
+import { AccountCreation } from '../components/Forms/AccountCreation';
+import { LoginForm } from '../components/Forms/LoginForm';
 
 
 const NewLogin = () => {

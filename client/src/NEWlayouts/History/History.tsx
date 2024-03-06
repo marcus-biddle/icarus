@@ -1,10 +1,10 @@
 import React from 'react'
 import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
-import { useIsMobile } from '../../utilities/hooks/useIsMobile'
 import { NavLink } from 'react-router-dom';
 import { GiBiceps } from "react-icons/gi";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const History = () => {
     const isMobile = useIsMobile({});

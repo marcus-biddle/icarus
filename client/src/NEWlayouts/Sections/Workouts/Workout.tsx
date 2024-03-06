@@ -3,7 +3,7 @@ import TwoColumnGrid from '../../../components/Grid/TwoColumnGrid'
 import { DynamicIcon } from '../../../components/Icons/DynamicIcon'
 import { GoArrowLeft, GoRepo, GoPackage, GoTrophy, GoCircle, GoCheckCircle  } from "react-icons/go";
 import { useNavigate } from 'react-router';
-import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 const USER_DATA2 = [
     { tileID: 1, status: 'completed', locked: true },

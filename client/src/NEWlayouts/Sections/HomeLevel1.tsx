@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { DynamicIcon } from '../../components/Icons/DynamicIcon';
-import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { NavLink } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { GoTrophy } from "react-icons/go";
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const COLORS = ['#24a876', '#e83ce8'];
 

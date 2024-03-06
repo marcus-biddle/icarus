@@ -11,7 +11,6 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 // import { CalendarIcon } from "@radix-ui/react-icons"
 import { addDays, addMonths, endOfMonth, format, parse, startOfMonth } from "date-fns"
 import { DateRange } from "react-day-picker"
@@ -25,6 +24,7 @@ import {
   PopoverTrigger,
 } from "../../components/ui/popover"
 import { userActions } from '../../api/users';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 ChartJS.register(
   CategoryScale,

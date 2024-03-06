@@ -8,22 +8,21 @@ import {
 } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google'; //https://github.com/MomenSherif/react-oauth#usegooglelogin-both-implicit--authorization-code-flow
 import HomeLevel1 from './NEWlayouts/Sections/HomeLevel1';
-import Leaderboard from './NEWlayouts/Leaderboard/Leaderboard';
 import Details from './NEWlayouts/Sections/Details/Details';
 import Workout from './NEWlayouts/Sections/Workouts/Workout';
 import History from './NEWlayouts/History/History';
 import HistoryWeek from './NEWlayouts/History/HistoryWeek';
-import Practice from './NEWlayouts/Practice/Practice';
 
 import { Provider } from 'react-redux';
 import { store, persistor } from './app/store'
 import { PersistGate } from 'redux-persist/integration/react';
-import NewLogin from './NEWlayouts/Login/New_Login';
 import HistoryYear from './NEWlayouts/History/HistoryYear';
 import HistoryMonth from './NEWlayouts/History/HistoryMonth';
-import Profile, { profileLoader } from './NEWlayouts/Profile/Profile';
-import { Group } from './NEWlayouts/Group/Group';
 import { Feed } from './NEWlayouts/Feed';
+import NewLogin from './NEWlayouts/New_Login';
+import Practice from './NEWlayouts/Practice';
+import { Group } from './NEWlayouts/Group';
+import Profile, { profileLoader } from './NEWlayouts/Profile';
 
 const router = createBrowserRouter([
   {
@@ -79,10 +78,6 @@ const router = createBrowserRouter([
       {
         path: '/sections/details/:sectionId',
         element: <Details />,
-      },
-      {
-        path: '/leaderboard',
-        element: <Leaderboard />,
       },
       {
         path: '/user/:userId',

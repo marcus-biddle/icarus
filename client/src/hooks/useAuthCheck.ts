@@ -1,5 +1,5 @@
+import { getToken } from '@/helpers/functional';
 import { useEffect, useState } from 'react'
-import { getToken } from '../../helpers/functional';
 import { useLocation, useNavigate } from 'react-router';
 
 export const useAuthCheck = () => {

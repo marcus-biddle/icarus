@@ -19,17 +19,23 @@ import { RootState } from '../../app/store';
 import { updateCurrentEvent, updateGraphs } from '../../features/user/userSlice';
 import { TbArrowsSort } from "react-icons/tb";
 import { IoCheckmarkOutline } from "react-icons/io5";
+import { GiFlame } from 'react-icons/gi'
 
 export const ExerciseSelection = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("pushups")
 
+  const stats = useSelector((state: RootState) => state.user.currentUser?.statistics);
   const eventIds = useSelector((state: RootState) => state.user.currentUser?.eventIds) || [];
   const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
   const dispatch = useDispatch();
 
   return (
-    <div className=' w-full text-right'>
+    <div className=' w-full text-right flex justify-between items-center'>
+      {stats && stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak > 0 && <div className=' flex items-baseline gap-2 text-red-600'>
+        <GiFlame className=' w-5 h-5' />
+        <p className="text-lg font-mono">{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
+      </div>}
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
             <Button

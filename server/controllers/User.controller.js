@@ -778,7 +778,7 @@ const createUser = async (req, res) => {
           { new: true }
         );
 
-        return res.status(200).json({ message: 'Streak updated successfully.' });
+        return res.status(200).json(user.streaks);
       }
 
       if (eventId !== -1) {
@@ -825,7 +825,7 @@ const createUser = async (req, res) => {
           );
         }
 
-        return res.status(200).json({ message: 'Streak updated successfully.' });
+        return res.status(200).json(user.streaks);
       }
 
       

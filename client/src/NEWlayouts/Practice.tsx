@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import TwoColumnGrid from '../../components/Grid/TwoColumnGrid'
-import { useIsMobile } from '../../utilities/hooks/useIsMobile';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateGraphs, updateUser, updateUserPractice } from '../../features/user/userSlice';
-import { RootState } from '../../app/store';
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
-import { Separator } from "../../components/ui/separator"
+import { updateGraphs, updateUser, updateUserPractice } from '../features/user/userSlice';
+import { RootState } from '../app/store';
 
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Button } from "../../components/ui/button"
+import { Button } from "../components/ui/button"
 import {
   Form,
   FormControl,
@@ -20,13 +15,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form"
-import { Input } from "../../components/ui/input"
+} from "../components/ui/form"
+import { Input } from "../components/ui/input"
 import { toast } from "sonner"
 
-import { RepFrequency } from '../../components/Charts/RepFrequency';
-import RecordTable from '../../components/Tables/RecordTable';
-import { Label } from "../../components/ui/label"
+import { RepFrequency } from '../components/Charts/RepFrequency';
+import RecordTable from '../components/Tables/RecordTable';
+import { Label } from "../components/ui/label"
 import {
   Sheet,
   SheetClose,
@@ -36,7 +31,8 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../../components/ui/sheet"
+} from "../components/ui/sheet"
+import { useIsMobile } from '../hooks/useIsMobile';
 
 
 
@@ -94,14 +90,6 @@ const Practice = () => {
           onClick: () => console.log("Undo"),
         },
       })
-    }
-  }
-
-  const handleTabChange = (tab: string) => {
-    if (tab === 'graphs') {
-      dispatch(
-        updateGraphs()
-      )
     }
   }
 

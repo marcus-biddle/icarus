@@ -1,9 +1,9 @@
 import React from 'react'
-import { useIsMobile } from '../../../utilities/hooks/useIsMobile';
 import { GoArrowLeft, GoBroadcast } from "react-icons/go";
 import { DynamicIcon } from '../../../components/Icons/DynamicIcon';
 import { useNavigate } from 'react-router';
 import TwoColumnGrid from '../../../components/Grid/TwoColumnGrid';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 const Details = () => {
     const isMobile = useIsMobile({});

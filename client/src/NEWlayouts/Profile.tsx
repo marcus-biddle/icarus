@@ -1,18 +1,18 @@
 import React, { useEffect, useState, Suspense } from 'react'
 import { Await, defer, useLoaderData } from 'react-router';
-import { userActions } from '../../api/users';
+import { userActions } from '../api/users';
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-  } from "../../components/ui/avatar"
-  import { Progress } from "../../components/ui/progress"
-import { Separator } from '../../components/ui/separator';
-import { getCurrentMonth } from '../../helpers/date';
-import { Loader } from '../../components/Loader/Loader';
-import { Button } from '../../components/ui/button';
+  } from "../components/ui/avatar"
+  import { Progress } from "../components/ui/progress"
+import { Separator } from '../components/ui/separator';
+import { getCurrentMonth } from '../helpers/date';
+import { Loader } from '../components/Loader/Loader';
+import { Button } from '../components/ui/button';
 import { useDispatch } from 'react-redux';
-import { removeUser } from '../../features/user/userSlice';
+import { removeUser } from '../features/user/userSlice';
 
 export const profileLoader = async({ params }) => {
     // await new Promise((resolve) => setTimeout(resolve, 1500));

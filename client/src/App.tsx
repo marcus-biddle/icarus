@@ -29,6 +29,7 @@ import { getInitials } from './NEWlayouts/Profile/Profile';
 import { removeUser } from './features/user/userSlice';
 import { CiMenuKebab } from "react-icons/ci";
 import { ExerciseSelection } from './components/ExerciseSelection/ExerciseSelection';
+import { GiGorilla } from "react-icons/gi";
 
 function App() {
   const location = useLocation();
@@ -43,11 +44,6 @@ function App() {
 
   const [sidebarSize, setSidebarSize] = useState(25);
   console.log(state)
-
-  const handleRemoveUser = () => {
-    console.log('clicked')
-    dispatch(removeUser());
-  };
 
   useEffect(() => {
     if (!creationDate && !location.pathname.includes('login')) {
@@ -80,9 +76,14 @@ function App() {
         <div>
           <div className="min-h-screen mb-32">
             {!location.pathname.includes('user') && <div className=' bg-primary-foreground border text-white rounded-sm px-6 py-6'>
-              <ExerciseSelection />
+              {!location.pathname.includes('login')  && <ExerciseSelection />}
               <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-left py-4 text-primary">
-                {location.pathname.slice(1)}
+                {location.pathname.includes('login') ? 
+                <div className='flex text-baseline gap-2 text-primary w-full text-left items-end'>
+                  <GiGorilla className=' w-[50px] h-[50px] text-accent' />
+                  <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
+                </div>
+                : location.pathname.slice(1)}
               </h1>
             </div>}
             
@@ -101,7 +102,7 @@ function App() {
       {isMobile && !location.pathname.includes('login') && 
       <nav className="fixed bottom-0 left-0 right-0 bg-background border text-white flex justify-around items-center py-3 shadow-2xl">
             {PATHS.map((path) => (
-                <div key={path.name} onClick={() => path.name === 'Logout' ? handleRemoveUser() : null} className='flex flex-col items-center'>
+                <div key={path.name} className='flex flex-col items-center'>
                     <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
                         isActive ? 'flex flex-col items-center my-2  rounded-[--radius] text-primary' 
                         : 'flex flex-col items-center my-2 hover:bg-muted rounded-[--radius]'

@@ -53,15 +53,12 @@ const NewLogin = () => {
 
   return (
         <div className=' w-full'>
-            <div className='flex text-baseline gap-2 text-primary w-full justify-center items-end md:justify-start '>
-                <DynamicIcon icon={GiGorilla} width='50px' height='50px' color='text-accent' />
-                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
-            </div>
+            
             <Show when={position === 0}>
-                <div className='w-full flex justify-center my-24'>
+                <div className='w-full flex justify-center'>
                     <Card className=' w-full md:w-[600px] border-none'>
                         <CardHeader>
-                            <CardTitle className=' scroll-m-20 text-2xl font-semibold tracking-tight'>Track. Compete. Improve.</CardTitle>
+                            {/* <CardTitle className=' scroll-m-20 text-2xl font-semibold tracking-tight'>Track. Compete. Improve.</CardTitle> */}
                             {/* <CardDescription>Sign in below or create an account.</CardDescription> */}
                         </CardHeader>
                         <CardContent className='flex justify-evenly mb-8'>

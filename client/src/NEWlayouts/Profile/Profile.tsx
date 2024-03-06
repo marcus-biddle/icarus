@@ -10,6 +10,9 @@ import {
 import { Separator } from '../../components/ui/separator';
 import { getCurrentMonth } from '../../helpers/date';
 import { Loader } from '../../components/Loader/Loader';
+import { Button } from '../../components/ui/button';
+import { useDispatch } from 'react-redux';
+import { removeUser } from '../../features/user/userSlice';
 
 export const profileLoader = async({ params }) => {
     // await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -34,7 +37,8 @@ export const profileLoader = async({ params }) => {
 
 const Profile = () => {
     const user: any = useLoaderData();
-    const [progress, setProgress] = useState(0)
+    const [progress, setProgress] = useState(0);
+    const dispatch = useDispatch();
     console.log('THIS', user.profile)
 
     useEffect(() => {
@@ -55,6 +59,9 @@ const Profile = () => {
             }>
                 {(profile) => (
                     <>
+                        <div className=' w-full text-right'>
+                            <Button variant="ghost" onClick={() => dispatch(removeUser())}>Logout</Button>
+                        </div>
                         <div className=' flex items-start md:gap-16 gap-8'>
                             <Avatar className=' md:w-40 md:h-40 sm:w-40 sm:h-40 h-32 w-32 text-4xl'>
                                 <AvatarImage src={profile.username === 'mars' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />

@@ -60,8 +60,10 @@ export const Group = () => {
     const lastDayOfMonth = endOfMonth(today);
 
     const [data, setData] = useState([]);
+    const [userPosition, setUserPosition] = useState<any>({});
     const [leaderboardData, setLeaderboardData] = useState<any[]>([]);
-    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId)
+    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
+    const username = useSelector((state: RootState) => state.user.currentUser?.username);
     const [date, setDate] = useState<DateRange | undefined>({
         from: firstDayOfMonth,
         to: today,
@@ -71,19 +73,25 @@ export const Group = () => {
     const labels = generateDateLabels(date);
 
     const fetchData = async () => {
+      // needs a better name
         const response = await userActions.getAllUserXpGains();
         const leaderboardRes = await leaderboardActions.getMonthlyLeaderboard();
+        console.log(response);
         setData(response);
         setLeaderboardData(leaderboardRes);
+
+        const user = leaderboardRes.find(entry => entry.userId.username === username && entry.eventId === currentEventId);
+        console.log(user);
+        setUserPosition(user);
       }
     
-    const memoizedFetchData = useMemo(() => fetchData, [userActions.getAllUserXpGains]);
+    const memoizedFetchData = useMemo(() => fetchData, [userActions.getAllUserXpGains, leaderboardActions.getMonthlyLeaderboard, currentEventId]);
 
-        useEffect(() => {
-        memoizedFetchData();
-        }, [memoizedFetchData])
+    useEffect(() => {
+      memoizedFetchData();
+    }, [memoizedFetchData])
 
-        console.log(leaderboardData);
+    console.log(leaderboardData);
 
   return (
     <>
@@ -217,23 +225,23 @@ export const Group = () => {
       <Show when={page === null}>
         <>
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-6">Your Position This Month</h2>
-          <div className="grid grid-cols-2 gap-4 font-mono">
+          <div className="grid grid-cols-2 gap-4 font-mono p-4">
             <div className=' text-left'>
               <p className=' text-muted-foreground'>Rank</p>
-              <p className=' font-mono text-xl font-bold'>4</p>
+              <p className=' font-mono text-xl font-bold'>{userPosition && userPosition.rank ? userPosition.rank : '-'}</p>
             </div>
             <div className=' text-left'>
               <p className=' text-muted-foreground'>Total Count</p>
-              <p className=' font-mono text-xl font-bold'>1000</p>
+              <p className=' font-mono text-xl font-bold'>{userPosition && userPosition.eventCount ? userPosition.eventCount : '-'}</p>
             </div>
-            <div className=' text-left'>
+            {/* <div className=' text-left'>
               <p className=' text-muted-foreground'>Active Days</p>
               <p className=' font-mono text-xl font-bold'>15</p>
             </div>
             <div className=' text-left'>
               <p className=' text-muted-foreground'>Active / Inactive Ratio</p>
               <p className=' font-mono text-xl font-bold'>50%</p>
-            </div>
+            </div> */}
           </div>
         </>
         <div className=' flex flex-col gap-6 my-8'>
@@ -268,7 +276,7 @@ export const Group = () => {
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{getCurrentMonth()} {getCurrentYear()} Leaderboard</h2>
       <div className='my-4 flex flex-col gap-4'>
         {leaderboardData.filter(leaderboard => leaderboard.eventId === currentEventId).map((entry, index) => (
-          <div className=' flex gap-2'>
+          <div className=' flex gap-2' key={entry.userId.username}>
             <div className=' min-w-28 min-h-28 bg-card rounded-md relative border flex justify-center text-center items-center'>
                 {entry.userId.username[0].toUpperCase()}
                 {/* <div className='bg-primary w-14 h-14 absolute right-0 bottom-0 rounded-tl-full text-right flex flex-col align-bottom pt-2 pr-1'>
@@ -278,7 +286,7 @@ export const Group = () => {
             </div>
             <div className=' text-left pl-4 w-full flex flex-col justify-around'>
                 <div>
-                    <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight"><span className=' text-primary pr-2'>#{index + 1}</span> {entry.userId.username}</h4>
+                    <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight"><span className=' text-primary pr-2'>#{entry.rank}</span> {entry.userId.username}</h4>
                     <p className="text-sm text-muted-foreground">Total {entry.eventId} completed: {entry.eventCount}</p>
                 </div>
                 <div className='flex justify-between text-lg font-semibold'>

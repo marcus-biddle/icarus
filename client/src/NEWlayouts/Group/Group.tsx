@@ -236,23 +236,23 @@ export const Group = () => {
             </div>
           </div>
         </>
-        <div className=' flex flex-col gap-4 my-8'>
-          <button onClick={() => setPage('leaderboard')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
+        <div className=' flex flex-col gap-6 my-8'>
+          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('leaderboard')} >
             <p>View Leaderboard</p>
             <GoChevronRight className=' h-5 w-5' />
-          </button>
-          <button onClick={() => setPage('graph')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
+          </Button>
+          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('graph')}>
             <p>View Group Graph</p>
             <GoChevronRight className=' h-5 w-5' />
-          </button>
-          <button onClick={() => setPage('table')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
+          </Button>
+          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('table')} >
             <p>View Group Table</p>
             <GoChevronRight className=' h-5 w-5' />
-          </button>
-          <button onClick={() => setPage('winners')} className=' border rounded-sm flex justify-between px-4 py-4 text-foreground bg-background shadow-lg items-center'>
+          </Button>
+          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('winners')} >
             <p>Past Winners</p>
             <GoChevronRight className=' h-5 w-5' />
-          </button>
+          </Button>
         </div>
       </Show>
       <Show when={page === 'graph'}>
@@ -266,7 +266,7 @@ export const Group = () => {
       </Show>
       <Show when={page === 'leaderboard'}>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{getCurrentMonth()} {getCurrentYear()} Leaderboard</h2>
-      <div className='my-4'>
+      <div className='my-4 flex flex-col gap-4'>
         {leaderboardData.filter(leaderboard => leaderboard.eventId === currentEventId).map((entry, index) => (
           <div className=' flex gap-2'>
             <div className=' min-w-28 min-h-28 bg-card rounded-md relative border flex justify-center text-center items-center'>

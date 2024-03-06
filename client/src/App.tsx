@@ -81,7 +81,7 @@ function App() {
                 {location.pathname.includes('login') ? 
                 <div className='flex text-baseline gap-2 text-primary w-full text-left items-end'>
                   <GiGorilla className=' w-[50px] h-[50px] text-accent' />
-                  <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
+                  <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
                 </div>
                 : location.pathname.slice(1)}
               </h1>

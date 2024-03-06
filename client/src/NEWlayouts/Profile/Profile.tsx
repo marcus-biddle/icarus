@@ -78,7 +78,7 @@ const Profile = () => {
                             </div>
                         </div>
                         <Separator className=' my-8' />
-                        <div>
+                        {/* <div>
                             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-4">{getCurrentMonth()} Tracker</h3>
                             <div className=' flex flex-row justify-center gap-4 mb-8'>
                                 {profile.statistics.map((stat) => {
@@ -89,13 +89,12 @@ const Profile = () => {
                                             <ul className="my-6 list-none [&>li]:mt-2">
                                                 <li><p className="text-sm text-muted-foreground">Ranking:</p> 1st</li>
                                                 <li><p className="text-sm text-muted-foreground">Count:</p> {stat.currentStreak} days</li>
-                                                {/* <li><p className="text-sm text-muted-foreground">Personal Best:</p> {stat.personalBest} {metric}</li> */}
                                             </ul>
                                         </div>
                                     )
                                 })}
                             </div>
-                        </div>
+                        </div> */}
                         <div>
                             <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-4">Statistics</h3>
                             <div className=' flex flex-wrap justify-center gap-8'>

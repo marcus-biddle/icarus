@@ -31,8 +31,8 @@ export const ExerciseSelection = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className=' w-full text-right flex justify-between items-center'>
-      {stats && stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak > 0 && <div className=' flex items-baseline gap-2 text-red-600'>
+    <div className={`w-full text-right ${stats && stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak > 1 ? 'flex justify-between' : ''}  items-center`}>
+      {stats && stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak > 1 && <div className=' flex items-baseline gap-2 text-red-600'>
         <GiFlame className=' w-5 h-5' />
         <p className="text-lg font-mono">{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
       </div>}

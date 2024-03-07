@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { GiGorilla, GiLaurelCrown, GiLibertyWing } from "react-icons/gi";
 import { DynamicIcon } from '../components/Icons/DynamicIcon';
-import { useIsMobile } from '../utilities/hooks/useIsMobile';
 // import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
 import { Show } from '../helpers/functional';
 import { useDelayedDisplay } from '../utilities/hooks/useDelayedDisplay';
@@ -32,34 +31,22 @@ import { LoginForm } from '../components/Forms/LoginForm';
 
 const NewLogin = () => {
     const [ position, nextPosition ] = useState(0);
-    const [ isVisible, setIsVisibile ] = useState(true);
     const navigate = useNavigate();
     const creationDate = useSelector((state: RootState) => state.user.currentUser?.creationDate);
 
-    const handlePositionChange = () => {
-        setIsVisibile(false);
-        setTimeout(() => {
-            nextPosition(position + 1);
-            setIsVisibile(true);
-          }, 1000);
-    };
+    useEffect(() => {
+    if (creationDate) {
+        navigate('/practice')
+    }
 
-      useEffect(() => {
-        if (creationDate) {
-            navigate('/practice')
-        }
-
-      }, [creationDate, location.pathname])
+    }, [creationDate, location.pathname])
 
   return (
         <div className=' w-full'>
-            
             <Show when={position === 0}>
                 <div className='w-full flex justify-center'>
                     <Card className=' w-full md:w-[600px] border-none'>
                         <CardHeader>
-                            {/* <CardTitle className=' scroll-m-20 text-2xl font-semibold tracking-tight'>Track. Compete. Improve.</CardTitle> */}
-                            {/* <CardDescription>Sign in below or create an account.</CardDescription> */}
                         </CardHeader>
                         <CardContent className='flex justify-evenly mb-8'>
                             <Tabs defaultValue="signup" className="w-[400px]">

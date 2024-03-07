@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -14,8 +14,10 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createUser, fetchUserForLogin } from '../../features/user/userSlice'
+import { RootState } from '../../app/store';
+import { FaSpinner } from 'react-icons/fa';
 
 const formSchema = z.object({
     email: z.string().email({
@@ -37,6 +39,8 @@ const formSchema = z.object({
 
 export const LoginForm = () => {
     const dispatch = useDispatch();
+    const [ isLoading, setIsLoading ] = useState(false);
+    const creationDate = useSelector((state: RootState) => state.user.currentUser?.creationDate);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -47,6 +51,7 @@ export const LoginForm = () => {
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsLoading(true);
         dispatch(
             fetchUserForLogin({
                 password: values.password,
@@ -54,6 +59,12 @@ export const LoginForm = () => {
             })
         )
     }
+
+    useEffect(() => {
+        if (creationDate) {
+            setIsLoading(false);
+        }
+    }, [creationDate])
 
   return (
     <div>
@@ -91,7 +102,21 @@ export const LoginForm = () => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <div className=' w-full flex justify-center'>
+                    <Button
+                    variant={"default"}
+                    className={`relative text-foreground flex items-center justify-center px-4 py-2 w-32 h-10 text-sm  focus:outline-none focus:ring-2 focus:ring-offset-2  ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    type="submit" disabled={isLoading}>
+                        {isLoading ? (
+                            <span className="flex items-center pl-3">
+                                <FaSpinner className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                                <p>Loading...</p>
+                            </span>
+                        ) 
+                        :
+                        'Submit'}
+                    </Button>
+                </div>
             </form>
         </Form>
     </div>

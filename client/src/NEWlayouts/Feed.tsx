@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { logActions } from '../api/logs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { formatTimestamp } from '../helpers/date';
 import { Show } from '../helpers/functional';
+import { useLoader } from '../hooks/useLoader';
+import { Loader } from '../components/Loader/Loader';
 
 export const Feed = () => {
     const [ feedData, setFeedData ] = useState<any[]>([]);
-    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId)
+    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
+    const dispatch = useDispatch();
+    const loading = useSelector((state: RootState) => state.loading.loading);
+    
+    const fetchData = async () => {
+        const res = await logActions.getLogs();
+        setFeedData(res);
+    }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await logActions.getLogs();
-            setFeedData(res);
-        }
+    useLoader(fetchData);
 
-        fetchData();
-    }, []);
-    console.log(feedData);
+    if (loading) {
+        return <Loader />
+    }
+
   return (
     <div className='flex flex-col gap-10'>
         <Show when={feedData.length > 0}>

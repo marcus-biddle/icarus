@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer, { UserState } from '../features/user/userSlice.ts'
+import loadingReducer, { LoadingState } from '../features/loading/loadingSlice.ts'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import {
@@ -20,6 +21,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userReducer,
+  loading: loadingReducer
   // Add more reducers as needed
 });
  
@@ -45,6 +47,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export interface RootState {
   user: UserState;
+  loading: LoadingState;
   // ... other slices if you have them
 }
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

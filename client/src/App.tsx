@@ -16,6 +16,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { ExerciseSelection } from './components/ExerciseSelection/ExerciseSelection';
 import { GiGorilla } from "react-icons/gi";
 import { useIsMobile } from './hooks/useIsMobile';
+import { Loader } from './components/Loader/Loader';
 
 function App() {
   const location = useLocation();
@@ -26,10 +27,9 @@ function App() {
   const userId = useSelector((state: RootState) => state.user.currentUser?.id);
   const name = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
   const dispatch = useDispatch();
-  const {state} = useNavigation();
+  const loading = useSelector((state: RootState) => state.loading.loading);
 
   const [sidebarSize, setSidebarSize] = useState(25);
-  console.log(state)
 
   useEffect(() => {
     if (!creationDate && !location.pathname.includes('login')) {
@@ -99,45 +99,6 @@ function App() {
                     </NavLink>
                 </div>
             ))}
-        {/* <Popover>
-          <PopoverTrigger asChild>
-          <Button variant="outline" size="icon" className=' h-14 w-14'>
-            <CiMenuKebab className="h-10 w-10 text-primary" />
-          </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-64 mr-4">
-            <div className="grid gap-4">
-              <div className="space-y-2">
-                <h4 className="font-medium leading-none">War Portal</h4>
-                <p className="text-sm text-muted-foreground">
-                  Tap to navigate  through site.
-                </p>
-              </div>
-              <div className="grid gap-2">
-            {PATHS.map((path) => (
-                <div key={path.name} onClick={() => path.name === 'Logout' ? handleRemoveUser() : null}>
-                    <NavLink to={path.name === 'Warrior' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
-                        isActive ? 'flex justify-evenly items-center my-2 bg-primary-foreground border border-primary rounded-[--radius] p-2' 
-                        : 'flex justify-evenly items-center my-2 hover:bg-muted rounded-[--radius] p-2'
-                        }
-                    >
-                        {path.name === 'Profile' 
-                        ? 
-                        <Avatar className=' w-[40px] h-[40px]'>
-                            <AvatarImage src={name === 'Marcus Biddle' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
-                            <AvatarFallback>{getInitials(name)}</AvatarFallback>
-                        </Avatar> 
-                        : <path.icon className=' h-[32px] w-[32px] transition-none' />
-                        // <DynamicIcon icon={path.icon} height={'40px'} width={'40px'} />
-                        }
-                        <h4 className={`scroll-m-20 text-xl font-semibold tracking-tight w-32 transition-all duration-150 ease-in-out`}>{path.name}</h4>
-                    </NavLink>
-                </div>
-            ))}
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover> */}
       </nav>
       
       }

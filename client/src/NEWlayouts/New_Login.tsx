@@ -3,7 +3,6 @@ import { GiGorilla, GiLaurelCrown, GiLibertyWing } from "react-icons/gi";
 import { DynamicIcon } from '../components/Icons/DynamicIcon';
 // import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
 import { Show } from '../helpers/functional';
-import { useDelayedDisplay } from '../utilities/hooks/useDelayedDisplay';
 import { GoHourglass } from "react-icons/go";
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +48,7 @@ const NewLogin = () => {
                         <CardHeader>
                         </CardHeader>
                         <CardContent className='flex justify-evenly mb-8'>
-                            <Tabs defaultValue="signup" className="w-[400px]">
+                            <Tabs defaultValue="login" className="w-[400px]">
                                 <TabsList className="grid w-full grid-cols-2">
                                     <TabsTrigger value="signup">Create</TabsTrigger>
                                     <TabsTrigger value="login">Login</TabsTrigger>

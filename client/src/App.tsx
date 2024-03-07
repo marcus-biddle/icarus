@@ -86,7 +86,7 @@ function App() {
 
       
       {isMobile && !location.pathname.includes('login') && 
-      <nav className="fixed bottom-0 left-0 right-0 bg-background border text-white flex justify-around items-center py-3 shadow-2xl">
+      <nav className="fixed bottom-0 left-0 right-0 bg-primary-foreground text-white flex justify-around items-center py-3 shadow-2xl w-full">
             {PATHS.map((path) => (
                 <div key={path.name} className='flex flex-col items-center'>
                     <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>

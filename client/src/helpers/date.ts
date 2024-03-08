@@ -13,7 +13,7 @@ export function getCurrentMonth() {
     return currentDate.getMonth() + 1; // Adding 1 because months are zero-based (0-11)
   };
 
-  export const getMonthName = (monthNumber) => {
+  export const getMonthName = (monthNumber: number) => {
     if (monthNumber >= 1 && monthNumber <= 12) {
       return months[monthNumber - 1]; // Adjusting for zero-based indexing
     } else {
@@ -64,8 +64,8 @@ export function getCurrentMonth() {
     return formattedDate;
   }
   
-  export function formatDateString(dateString) {
-    const options = {
+  export function formatDateString(dateString: string) {
+    const options: any = {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -84,7 +84,7 @@ export function getCurrentMonth() {
     return currentDate.getFullYear();
   }
 
-  export function formatTimestamp(timestamp) {
+  export function formatTimestamp(timestamp: Date) {
     // Assuming the input timestamp is in milliseconds
     const date = new Date(timestamp);
   
@@ -122,7 +122,7 @@ export function getCurrentMonth() {
     return daysLeft;
   }
 
-  export function getWeekDates(inputDate) {
+  export function getWeekDates(inputDate: any) {
     const currentDate = inputDate ? new Date(inputDate) : new Date();
   
     // Calculate the start date of the week (Sunday)
@@ -143,7 +143,7 @@ export function getCurrentMonth() {
     };
   }
 
-  export const isInCurrentMonth = (dateString) => {
+  export const isInCurrentMonth = (dateString: string) => {
     // Convert the date string to a JavaScript Date object
     const date = new Date(dateString);
   
@@ -153,3 +153,14 @@ export function getCurrentMonth() {
     // Check if the year and month of the given date match the current year and month
     return date.getFullYear() === currentDate.getFullYear() && date.getMonth() === currentDate.getMonth();
   };
+
+  export const isOlderThan7Minutes = (timestamp: Date | null) => {
+    const now = new Date();
+
+    if (timestamp === null) return true;
+
+    const differenceInMilliseconds = now.getTime() - timestamp.getTime();
+    const differenceInMinutes = differenceInMilliseconds / (1000 * 60); // Convert milliseconds to minutes
+  
+    return differenceInMinutes > 7;
+  }

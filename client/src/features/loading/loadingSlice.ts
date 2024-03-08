@@ -1,12 +1,13 @@
-import { RootState } from '@/app/store';
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface LoadingState {
     loading: boolean,
+    lastLoadTimestamp: Date | null
 }
 
 const initialState: LoadingState = {
   loading: false,
+  lastLoadTimestamp: null
 };
 
 const loadingSlice = createSlice({
@@ -15,6 +16,7 @@ const loadingSlice = createSlice({
   reducers: {
     startLoading: (state: LoadingState) => {
       state.loading = true;
+      state.lastLoadTimestamp = new Date();
     },
     stopLoading: (state: LoadingState) => {
       state.loading = false;

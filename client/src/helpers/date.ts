@@ -154,7 +154,7 @@ export function getCurrentMonth() {
     return date.getFullYear() === currentDate.getFullYear() && date.getMonth() === currentDate.getMonth();
   };
 
-  export const isOlderThan7Minutes = (timestamp: Date | null) => {
+  export const isOlderThan7Minutes = (timestamp: string | null) => {
     if (timestamp === null) { return true };
 
     const now = new Date();

@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface LoadingState {
     loading: boolean,
-    lastLoadTimestamp: Date | null
+    lastLoadTimestamp: string | null
 }
 
 const initialState: LoadingState = {
@@ -14,7 +14,7 @@ const loadingSlice = createSlice({
   name: 'loading',
   initialState,
   reducers: {
-    startLoading: (state: LoadingState, action: PayloadAction<Date>) => {
+    startLoading: (state: LoadingState, action: PayloadAction<string>) => {
       state.loading = true;
       state.lastLoadTimestamp = action.payload;
     },

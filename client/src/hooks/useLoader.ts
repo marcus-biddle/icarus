@@ -13,7 +13,7 @@ export const useLoader = (fetchData: () => Promise<void>) => {
         const fetchDataWithLoading = async () => {
             try {
                 if (isOlderThan7Minutes(loadingTimestamp)) {
-                    const newTimestamp: Date = new Date();
+                    const newTimestamp: string = new Date().toISOString();
                     dispatch(startLoading(newTimestamp));
                 }
                 await fetchData();

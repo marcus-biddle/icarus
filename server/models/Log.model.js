@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const loggerSchema = new mongoose.Schema({
   timestamp: {
-    type: Date,
+    type: Number,
     default: Date.now,
   },
   action: {

@@ -8,17 +8,28 @@ const getAllLogs = async (req, res) => {
     // Set the time to the beginning of the day (midnight)
     today.setHours(0, 0, 0, 0);
 
+    const endOfDay = new Date(today.getTime() + 24 * 60 * 60 * 1000); // End of the day (tomorrow's beginning)
+
     const result = await Logs.find({
       timestamp: {
-        $gte: today,  // Greater than or equal to today (beginning of the day)
-        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000) // Less than tomorrow (end of the day)
+        $gte: today.getTime(),  // Greater than or equal to today's beginning timestamp
+        $lt: endOfDay.getTime() // Less than tomorrow's beginning timestamp
       }
     }).sort({ timestamp: -1 });
+
+    // Get the IDs of logs in the result
+    const resultIds = result.map(log => log._id);
+
+    // Delete logs that are not in the result
+    await Logs.deleteMany({
+      _id: { $nin: resultIds }
+    });
+    
     return res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
 
 const updateLogs = async (req, res) => {
   const action = req.body.action;

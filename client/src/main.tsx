@@ -22,7 +22,7 @@ import { Feed } from './NEWlayouts/Feed';
 import NewLogin from './NEWlayouts/New_Login';
 import Practice from './NEWlayouts/Practice';
 import { Group } from './NEWlayouts/Group';
-import Profile, { profileLoader } from './NEWlayouts/Profile';
+import Profile from './NEWlayouts/Profile';
 
 const router = createBrowserRouter([
   {
@@ -82,7 +82,6 @@ const router = createBrowserRouter([
       {
         path: '/user/:userId',
         element: <Profile />,
-        loader: profileLoader,
       },
     ]
   },

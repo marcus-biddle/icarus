@@ -155,11 +155,11 @@ export function getCurrentMonth() {
   };
 
   export const isOlderThan7Minutes = (timestamp: Date | null) => {
+    if (timestamp === null) { return true };
+
     const now = new Date();
-
-    if (timestamp === null) return true;
-
-    const differenceInMilliseconds = now.getTime() - timestamp.getTime();
+    const timestampDate = new Date(timestamp);
+    const differenceInMilliseconds = now.getTime() - timestampDate.getTime();
     const differenceInMinutes = differenceInMilliseconds / (1000 * 60); // Convert milliseconds to minutes
   
     return differenceInMinutes > 7;

@@ -11,9 +11,10 @@ import { Separator } from '../components/ui/separator';
 import { getCurrentMonth } from '../helpers/date';
 import { Loader } from '../components/Loader/Loader';
 import { Button } from '../components/ui/button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../features/user/userSlice';
 import { useLoader } from '../hooks/useLoader';
+import { RootState } from '../app/store';
 
 // export const profileLoader = async({ params }) => {
 //     // await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -37,7 +38,7 @@ import { useLoader } from '../hooks/useLoader';
   }
 
 const Profile = () => {
-    const user: any = useLoaderData();
+    const loading = useSelector((state: RootState) => state.loading.loading);
     const [progress, setProgress] = useState(0);
     const [ userData, setUserData ] = useState<any>(null);
     const dispatch = useDispatch();
@@ -54,6 +55,10 @@ const Profile = () => {
     }
 
     useLoader(fetchData);
+
+    if (loading) {
+        return <Loader />
+    }
 
     useEffect(() => {
         setProgressBarLength();

@@ -33,12 +33,15 @@ import {
   SheetTrigger,
 } from "../components/ui/sheet"
 import { useIsMobile } from '../hooks/useIsMobile';
-
+import { FaPlus } from "react-icons/fa6";
+import { FaSpinner } from 'react-icons/fa';
 
 
 const Practice = () => {
     const [inputValue, setInputValue] = useState<number | null>(null);
     const [error, setError] = useState('');
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ open, setOpen ] = useState(false);
     const isMobile = useIsMobile({});
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.currentUser);
@@ -73,6 +76,7 @@ const Practice = () => {
   })
  
   function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     console.log(Number(values.userCount))
     if (Number(values.userCount)) {
       dispatch(
@@ -83,11 +87,20 @@ const Practice = () => {
         updateUser({ userCount: Number(values.userCount), eventId: currentEventId, userId: userId, username: user?.username })
       )
 
-      toast("Event has been updated", {
-        description: new Date().toDateString(),
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
+      // we need these to change after everything is confidently updated.
+      setOpen(false);
+      setIsLoading(false);
+
+      toast.success("", {
+        description:`Successfully Updated! ${ new Date().toDateString()}`,
+        classNames: {
+          description: ''
+        },
+        style: {
+          backgroundColor: '#1E4E38', // Custom green color
+          color: '#000000 !important', // Black text color with !important
+          boxShadow: '0 2px 4px rgba(0,0,0,0.2)', // Shadow for depth
+          textAlign: 'center', // Center the text
         },
       })
     }
@@ -108,9 +121,11 @@ const Practice = () => {
         Training Exercise: <br /> <span className=' text-primary text-5xl'>{currentEventId}</span>
       </h1> */}
       <RecordTable />
-      <Sheet>
+      <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" className=" fixed bottom-[125px] right-[25px] rounded-full text-[30px] bg-muted text-primary shadow-md items-center text-center h-16 w-16">+</Button>
+        <Button variant="outline" className=" fixed bottom-[125px] right-[25px] rounded-full text-[30px] bg-muted text-primary shadow-md items-center text-center h-16 w-16">
+          <FaPlus className='h-full w-full' />
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -144,7 +159,16 @@ const Practice = () => {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit" onClick={form.handleSubmit(onSubmit)}>Save</Button>
+            <Button type="submit" disabled={isLoading} onClick={form.handleSubmit(onSubmit)}>
+              {isLoading ? 
+                (
+                  <span className="flex items-center pl-3">
+                      <FaSpinner className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                      <p>Updating...</p>
+                  </span>
+                )  
+                : 'Save'}
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

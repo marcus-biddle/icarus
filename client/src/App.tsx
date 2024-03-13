@@ -60,7 +60,7 @@ function App() {
         </ResizablePanelGroup>
         :
         <div>
-          <div className="min-h-screen mb-32">
+          <div className=" " style={{ height: 'calc(100vh + 8rem)' }}>
             {!location.pathname.includes('user') && <div className=' bg-primary-foreground border text-white rounded-sm px-6 py-6'>
               {!location.pathname.includes('login')  && <ExerciseSelection />}
               <>

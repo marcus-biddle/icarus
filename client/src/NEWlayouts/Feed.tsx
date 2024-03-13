@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { logActions } from '../api/logs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
@@ -12,7 +12,9 @@ export const Feed = () => {
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
     const dispatch = useDispatch();
     const loading = useSelector((state: RootState) => state.loading.loading);
-    
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [visibleItems, setVisibleItems] = useState<number[]>([]);
+
     const fetchData = async () => {
         const res = await logActions.getLogs();
         setFeedData(res);
@@ -20,37 +22,75 @@ export const Feed = () => {
 
     useLoader(fetchData);
 
-    if (loading) {
+    useEffect(() => {
+        const handleScroll = () => {
+          if (!containerRef.current) return;
+          
+          const container = containerRef.current;
+          const { scrollTop, clientHeight } = container;
+    
+          const items = Array.from(container.children) as HTMLElement[];
+          const newVisibleItems: number[] = [];
+    
+          items.forEach((item, index) => {
+            const itemTop = item.offsetTop;
+            const itemBottom = itemTop + item.offsetHeight;
+            const itemHeight = item.offsetHeight;
+            const x = scrollTop + clientHeight;
+
+            if (scrollTop - itemTop <= (-160) && itemBottom <= scrollTop + clientHeight + 150) {
+              newVisibleItems.push(index);
+            }
+          });
+    
+          setVisibleItems(newVisibleItems);
+        };
+    
+        const container = containerRef.current;
+        if (container) {
+          container.addEventListener('scroll', handleScroll);
+          handleScroll(); // Initial calculation
+        }
+    
+        return () => {
+          if (container) {
+            container.removeEventListener('scroll', handleScroll);
+          }
+        };
+      }, [feedData]);
+
+      useEffect(() => {
+        console.log('Visible Items:', visibleItems);
+      }, [visibleItems]);
+
+      if (loading) {
         return <Loader />
     }
 
   return (
-    <div className='flex flex-col gap-10'>
+    <div >
         <Show when={feedData.length > 0}>
-            {feedData?.filter(log => log.event === currentEventId).map((log, index) => {
-                return (
-                    <div className='flex' key={index}>
-                        <div className=' min-w-28 min-h-28 bg-card rounded-md relative border flex justify-center text-center items-center text-2xl'>
-                            {log.username[0].toUpperCase()}
-                            <div className='bg-primary-foreground text-primary w-14 h-5 absolute right-0 bottom-0 text-right flex flex-row items-center rounded-tl-md justify-around'>
-                                <p className=' text-sm'>Rank</p>
-                                <p className=' font-mono text-lg '>{log.rank ? log.rank : 0}</p>
+            <div ref={containerRef} className="overflow-y-auto h-[635px]">
+                {feedData?.filter(log => log.event === currentEventId).map((log, index) => {
+                    return (
+                        <div className={`border p-4 my-6 rounded-lg w-full ${!visibleItems.includes(index) ? 'opacity-20' : ''} ${(feedData.length - 1) === index ? ' mb-16' : ''}`} key={index}>
+                            <div className='w-full flex flex-col'>
+                                <div className=' flex justify-between'>
+                                    <div className=' text-left'>
+                                        <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight">{log.username}</h4>
+                                        <p className="text-sm text-muted-foreground">{formatTimestamp(log.timestamp)}</p>
+                                    </div>
+                                    <div className=''>
+                                        <div className=' text-green-600'>{log.action.toUpperCase()}</div>
+                                        <div>{log.amount} reps</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className=' text-left pl-4 w-full flex flex-col justify-around'>
-                            <div>
-                                <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight">{log.username}</h4>
-                                <p className="text-sm text-muted-foreground">{formatTimestamp(log.timestamp)}</p>
-                            </div>
-                            <div className='flex justify-between text-lg font-semibold'>
-                                <div className=' text-green-600'>{log.action.toUpperCase()}</div>
-                                <div>{log.amount} reps</div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                )
-            })}
+                    )
+                })}
+            </div>
+            
         </Show>
         <Show when={feedData.length === 0}>
             <p>No one has worked out today!</p>

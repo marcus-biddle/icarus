@@ -63,14 +63,14 @@ function App() {
           <div className="min-h-screen mb-32">
             {!location.pathname.includes('user') && <div className=' bg-primary-foreground border text-white rounded-sm px-6 py-6'>
               {!location.pathname.includes('login')  && <ExerciseSelection />}
-              <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-left py-4 text-primary">
+              <>
                 {location.pathname.includes('login') ? 
                 <div className='flex text-baseline gap-2 text-primary w-full text-left items-end'>
                   <GiGorilla className=' w-[50px] h-[50px] text-accent' />
                   <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
                 </div>
-                : location.pathname.slice(1)}
-              </h1>
+                : <h1 key={location.pathname.slice(1)} className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-left pt-4 text-primary animate-fadeIn">{location.pathname.slice(1)}</h1>}
+              </>
             </div>}
             
             <div className=' p-6'>

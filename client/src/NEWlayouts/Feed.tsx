@@ -68,9 +68,9 @@ export const Feed = () => {
     }
 
   return (
-    <div >
+    <div>
         <Show when={feedData.length > 0}>
-            <div ref={containerRef} className="overflow-y-auto h-[635px]">
+            <div ref={containerRef} className="overflow-y-auto" style={{ height: 'calc(100vh - 16rem)' }}>
                 {feedData?.filter(log => log.event === currentEventId).map((log, index) => {
                     return (
                         <div className={`border p-4 my-6 rounded-lg w-full ${!visibleItems.includes(index) ? 'opacity-20' : ''} ${(feedData.length - 1) === index ? ' mb-16' : ''}`} key={index}>

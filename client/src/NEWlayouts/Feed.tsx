@@ -6,6 +6,7 @@ import { formatTimestamp } from '../helpers/date';
 import { Show } from '../helpers/functional';
 import { useLoader } from '../hooks/useLoader';
 import { Loader } from '../components/Loader/Loader';
+import { Button } from "../components/ui/button"
 
 export const Feed = () => {
     const [ feedData, setFeedData ] = useState<any[]>([]);
@@ -14,6 +15,8 @@ export const Feed = () => {
     const loading = useSelector((state: RootState) => state.loading.loading);
     const containerRef = useRef<HTMLDivElement>(null);
     const [visibleItems, setVisibleItems] = useState<number[]>([]);
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+    const [ refeshData, setRefreshData ] = useState<boolean>(false);
 
     const fetchData = async () => {
         const res = await logActions.getLogs();
@@ -60,8 +63,17 @@ export const Feed = () => {
       }, [feedData]);
 
       useEffect(() => {
-        console.log('Visible Items:', visibleItems);
-      }, [visibleItems]);
+        if (feedData.length > 0) {
+          setIsVisible(true);
+        }
+        if (refeshData) {
+          setIsVisible(false);
+          console.log('running')
+          setFeedData([]);
+          fetchData();
+          setRefreshData(false);
+        }
+      }, [feedData, refeshData]);
 
       if (loading) {
         return <Loader />
@@ -70,14 +82,17 @@ export const Feed = () => {
   return (
     <>
         <Show when={feedData.length > 0}>
+          <div className=' w-full text-right'>
+            <Button variant={"ghost"} onClick={() => setRefreshData(true)} className=' uppercase text-ring tracking-wide'>Refresh</Button>
+          </div>
             <div ref={containerRef} className="overflow-y-auto" style={{ height: 'calc(100vh - 18rem)' }}>
                 {feedData?.filter(log => log.event === currentEventId).map((log, index) => {
                     return (
-                        <div className={`border p-4 my-6 rounded-lg w-full ${!visibleItems.includes(index) ? 'opacity-20' : ''} ${(feedData.length - 1) === index ? ' mb-16' : ''}`} key={index}>
+                        <div className={`border p-4 my-6 rounded-lg w-full ${!visibleItems.includes(index) ? 'opacity-20' : ''} ${(feedData.length - 1) === index ? ' mb-16' : ''} bg-primary-foreground transform transition-transform duration-500 ${isVisible ? 'scale-100' : 'scale-0'}`} key={index}>
                             <div className='w-full flex flex-col'>
                                 <div className=' flex justify-between'>
                                     <div className=' text-left'>
-                                        <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight">{log.username}</h4>
+                                        <h4 className="scroll-m-20 text-2xl text-primary font-semibold tracking-tight">{log.username}</h4>
                                         <p className="text-sm text-muted-foreground">{formatTimestamp(log.timestamp)}</p>
                                     </div>
                                     <div className=''>
@@ -93,7 +108,7 @@ export const Feed = () => {
             
         </Show>
         <Show when={feedData.length === 0}>
-            <p>No one has worked out today!</p>
+            {<p>No one has worked out today!</p>}
         </Show>
         
     </>

@@ -182,20 +182,20 @@ export const Group = () => {
           </div>
         </>
         <div className=' flex flex-col gap-6 my-8'>
-          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('leaderboard')} >
-            <p>View Leaderboard</p>
+          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'leaderboard' ? 'border-ring' : ''}`} onClick={() => setPage('leaderboard')} >
+            <p>Leaderboard</p>
             <GoChevronRight className=' h-5 w-5' />
           </Button>
-          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('graph')}>
-            <p>View Group Graph</p>
+          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'graph' ? 'border-ring' : ''}`} onClick={() => setPage('graph')}>
+            <p>Group Graph</p>
             <GoChevronRight className=' h-5 w-5' />
           </Button>
-          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('table')} >
-            <p>View Group Table</p>
+          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'table' ? 'border-ring' : ''}`} onClick={() => setPage('table')} >
+            <p>Group Table</p>
             <GoChevronRight className=' h-5 w-5' />
           </Button>
-          <Button variant={"default"} className='flex justify-between py-6 text-primary-foreground' onClick={() => setPage('winners')} >
-            <p>Past Winners</p>
+          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'winners' ? 'border-ring' : ''}`} onClick={() => setPage('winners')} >
+            <p>Winners</p>
             <GoChevronRight className=' h-5 w-5' />
           </Button>
         </div>

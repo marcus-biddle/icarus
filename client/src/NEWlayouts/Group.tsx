@@ -160,7 +160,29 @@ export const Group = () => {
         </Popover>
       </>}
       <Show when={page === null}>
-        <>
+      <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-6">Your Month Recap</h2>
+        <div className=' border py-6 rounded-md bg-primary-foreground flex justify-evenly'>
+          <div className=' text-left'>
+            <p className=' text-muted-foreground'>Rank</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>{userPosition && userPosition.rank ? userPosition.rank : '-'}</p>
+          </div>
+          <div className='border border-ring border-r-1 h-[55px]' />
+          <div className=' text-left'>
+            <p className=' text-muted-foreground'>Total Count</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>{userPosition && userPosition.eventCount ? userPosition.eventCount : '-'}</p>
+          </div>
+          <div className='border border-ring border-r-1 h-[55px]' />
+          <div className=' text-left'>
+            <p className=' text-muted-foreground'>Streak</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
+          </div>
+          <div className='border border-ring border-r-1 h-[55px]' />
+          <div className=' text-left'>
+            <p className=' text-muted-foreground'>Personal Best</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>{stats?.filter(stat => stat.eventId === currentEventId)[0].personalBest}</p>
+          </div>
+        </div>
+        {/* <>
           <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-6">Your Position This Month</h2>
           <div className="grid grid-cols-2 gap-4 font-mono p-4">
             <div className=' text-left'>
@@ -180,7 +202,8 @@ export const Group = () => {
               <p className=' font-mono text-xl font-bold'>{stats?.filter(stat => stat.eventId === currentEventId)[0].personalBest}</p>
             </div>
           </div>
-        </>
+        </> */}
+        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight text-left mt-6">Group Statistics</h3>
         <div className=' flex flex-col gap-6 my-8'>
           <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'leaderboard' ? 'border-ring' : ''}`} onClick={() => setPage('leaderboard')} >
             <p>Leaderboard</p>

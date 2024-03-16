@@ -162,22 +162,22 @@ export const Group = () => {
       <Show when={page === null}>
       <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-6">Your Month Recap</h2>
         <div className=' border py-6 rounded-md bg-primary-foreground flex justify-evenly'>
-          <div className=' text-left'>
+          <div className=' text-left flex flex-col gap-2'>
             <p className=' text-muted-foreground'>Rank</p>
             <p className=' font-mono text-3xl font-bold text-foreground'>{userPosition && userPosition.rank ? userPosition.rank : '-'}</p>
           </div>
-          <div className='border border-ring border-r-1 h-[55px]' />
-          <div className=' text-left'>
+          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className=' text-left flex flex-col gap-2'>
             <p className=' text-muted-foreground'>Total Count</p>
             <p className=' font-mono text-3xl font-bold text-foreground'>{userPosition && userPosition.eventCount ? userPosition.eventCount : '-'}</p>
           </div>
-          <div className='border border-ring border-r-1 h-[55px]' />
-          <div className=' text-left'>
+          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className=' text-left flex flex-col gap-2'>
             <p className=' text-muted-foreground'>Streak</p>
             <p className=' font-mono text-3xl font-bold text-foreground'>{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
           </div>
-          <div className='border border-ring border-r-1 h-[55px]' />
-          <div className=' text-left'>
+          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className=' text-left flex flex-col gap-2'>
             <p className=' text-muted-foreground'>Personal Best</p>
             <p className=' font-mono text-3xl font-bold text-foreground'>{stats?.filter(stat => stat.eventId === currentEventId)[0].personalBest}</p>
           </div>

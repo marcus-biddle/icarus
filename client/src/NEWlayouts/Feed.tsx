@@ -16,7 +16,20 @@ export const Feed = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [visibleItems, setVisibleItems] = useState<number[]>([]);
     const [isVisible, setIsVisible] = useState<boolean>(false);
-    const [ refeshData, setRefreshData ] = useState<boolean>(false);
+    const [ refreshData, setRefreshData ] = useState<boolean>(false);
+
+    const handleRefresh = () => {
+      // Disable the button
+      setRefreshData(true);
+      setIsVisible(false);
+      setFeedData([]);
+      fetchData();
+
+      // Enable the button after 5 seconds
+      setTimeout(() => {
+          setRefreshData(false);
+      }, 3000); // 5 seconds in milliseconds
+  };
 
     const fetchData = async () => {
         const res = await logActions.getLogs();
@@ -60,31 +73,27 @@ export const Feed = () => {
             container.removeEventListener('scroll', handleScroll);
           }
         };
-      }, [feedData]);
+      }, [feedData, currentEventId]);
 
       useEffect(() => {
         if (feedData.length > 0) {
           setIsVisible(true);
         }
-        if (refeshData) {
-          setIsVisible(false);
-          console.log('running')
-          setFeedData([]);
-          fetchData();
-          setRefreshData(false);
-        }
-      }, [feedData, refeshData]);
+      }, [feedData]);
 
       if (loading) {
         return <Loader />
     }
 
+    console.log(refreshData)
+
   return (
     <>
-        <Show when={feedData.length > 0}>
-          <div className=' w-full text-right'>
-            <Button variant={"ghost"} onClick={() => setRefreshData(true)} className=' uppercase text-ring tracking-wide'>Refresh</Button>
-          </div>
+      <div className=' w-full text-right'>
+        <Button disabled={refreshData} variant={"ghost"} onClick={() => handleRefresh()} className=' uppercase text-ring tracking-wide'>Refresh</Button>
+      </div>
+        <Show when={feedData.filter(log => log.event === currentEventId).length > 0}>
+          
             <div ref={containerRef} className="overflow-y-auto" style={{ height: 'calc(100vh - 18rem)' }}>
                 {feedData?.filter(log => log.event === currentEventId).map((log, index) => {
                     return (
@@ -107,7 +116,7 @@ export const Feed = () => {
             </div>
             
         </Show>
-        <Show when={feedData.length === 0}>
+        <Show when={feedData.filter(log => log.event === currentEventId).length === 0 && !refreshData}>
             {<p>No one has worked out today!</p>}
         </Show>
         

@@ -4,12 +4,10 @@ import { useNavigation } from 'react-router';
 
 export const Loader = () => {
   const [progress, setProgress] = useState(1.67);
-  const { state } = useNavigation();
 
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) => {
-        // Increase progress by 20, making sure it doesn't exceed 100
         const newProgress = prevProgress + 1.67;
         return newProgress <= 100 ? newProgress : 100;
       });

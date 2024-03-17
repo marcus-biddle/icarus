@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // https://icarus-server.onrender.com/api
-// http://localhost:3000/api
+// http://localhost:3001/api
 
 export const createAxiosInstance = () => {
   // Create an instance of Axios with custom configuration

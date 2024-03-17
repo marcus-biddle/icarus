@@ -16,7 +16,6 @@ import { credentials } from './middleware/credentials.js';
 import { corsOptions } from './config/corsOptions.js';
 import mongoose from 'mongoose';
 
-
 dotenv.config();
 connectMongoDb();
 
@@ -81,9 +80,5 @@ mongoose.connection.on('error', err => {
 app.get('/', (req, res) => {
   res.json('Hello, world');
 });
-
-app.listen(3000, (req, res) => {
-    console.log('Server is running on port 3000');
-  });
 
 export default app;

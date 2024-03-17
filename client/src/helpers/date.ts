@@ -164,3 +164,15 @@ export function getCurrentMonth() {
   
     return differenceInMinutes > 7;
   }
+
+  export function convertToLocalTime(timestamp: number): string {
+    const date = new Date(timestamp);
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      hour12: true, timeZone: 'America/Los_Angeles'
+    };
+    const formattedLocalTime: string = date.toLocaleString('en-US', options);
+  
+    return formattedLocalTime;
+  }

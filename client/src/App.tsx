@@ -17,6 +17,7 @@ import { ExerciseSelection } from './components/ExerciseSelection/ExerciseSelect
 import { GiGorilla } from "react-icons/gi";
 import { useIsMobile } from './hooks/useIsMobile';
 import { Loader } from './components/Loader/Loader';
+import { MobileNav } from './components/Navigation/MobileNav';
 
 function App() {
   const location = useLocation();
@@ -59,17 +60,19 @@ function App() {
           </ResizablePanel>
         </ResizablePanelGroup>
         :
-        <div>
+        <>
           <div className=" " style={{ height: 'calc(100vh + 8rem)' }}>
-            {!location.pathname.includes('user') && <div className=' bg-primary-foreground border text-white rounded-sm px-6 py-6'>
-              {!location.pathname.includes('login')  && <ExerciseSelection />}
+
+            {!location.pathname.includes('user') && 
+            <div className=' bg-primary-foreground border text-white rounded-sm flex flex-row-reverse justify-between text-center items-center p-4'>
+              {!location.pathname.includes('login')  && <MobileNav />}
               <>
                 {location.pathname.includes('login') ? 
                 <div className='flex text-baseline gap-2 text-primary w-full text-left items-end'>
                   <GiGorilla className=' w-[50px] h-[50px] text-accent' />
                   <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
                 </div>
-                : <h1 key={location.pathname.slice(1)} className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-left pt-4 text-primary animate-fadeIn">{location.pathname.slice(1)}</h1>}
+                : <h1 key={location.pathname.slice(1)} className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-primary animate-fadeIn">{location.pathname.slice(1)}</h1>}
               </>
             </div>}
             
@@ -77,15 +80,16 @@ function App() {
               <Outlet />
             </div>
             
-            <Toaster />
+            
           </div>
-        </div>
+          <Toaster />
+        </>
         }
         
       </>
 
       
-      {isMobile && !location.pathname.includes('login') && 
+      {/* {isMobile && !location.pathname.includes('login') && 
       <nav className="fixed bottom-0 left-0 right-0 bg-primary-foreground text-white flex justify-around items-center py-3 shadow-2xl w-full">
             {PATHS.map((path) => (
                 <div key={path.name} className='flex flex-col items-center'>
@@ -101,7 +105,7 @@ function App() {
             ))}
       </nav>
       
-      }
+      } */}
     </div>
   )
 }

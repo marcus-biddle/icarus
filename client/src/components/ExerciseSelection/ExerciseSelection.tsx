@@ -31,12 +31,7 @@ export const ExerciseSelection = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={`w-full text-right ${stats && stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak > 1 ? 'flex justify-between' : ''}  items-center`}>
-      {stats && stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak > 1 && 
-        <Button variant={"outline"} className=' flex gap-4'>
-          <GiFlame className=' w-5 h-5 text-red-700' />
-          <p className="text-lg font-mono">{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
-        </Button>}
+    <div className={` `}>
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
             <Button

@@ -3,9 +3,6 @@ import { logActions } from '../api/logs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { convertToLocalTime, formatTimestamp } from '../helpers/date';
-import { Show } from '../helpers/functional';
-import { useLoader } from '../hooks/useLoader';
-import { Loader } from '../components/Loader/Loader';
 import { Button } from "../components/ui/button"
 import { Separator } from "../components/ui/separator"
 
@@ -24,12 +21,33 @@ interface GroupedLogs {
   [key: string]: Log[];
 }
 
+const isToday = (someDate: Date) => {
+  const today = new Date();
+  return (
+    someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear()
+  );
+};
+
+const isYesterday = (someDate: Date) => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  return (
+    someDate.getDate() === yesterday.getDate() &&
+    someDate.getMonth() === yesterday.getMonth() &&
+    someDate.getFullYear() === yesterday.getFullYear()
+  );
+};
+
 function groupLogsByDay(logs: Log[]): GroupedLogs {
   const grouped: GroupedLogs = {};
 
   logs.forEach((log) => {
     const date = new Date(log.timestamp);
-    const dateString = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+    const dateString = isToday(date) ? 'Today' : isYesterday(date) ? 'Yesterday' : `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
 
     if (!grouped[dateString]) {
       grouped[dateString] = [];
@@ -70,11 +88,15 @@ export const Feed = () => {
         setFeedData(groupLogsByDay(res));
     }
 
-    useLoader(fetchData);
+    useEffect(() => {
+      fetchData();
+    }, []);
 
-      if (loading) {
-        return <Loader />
-    }
+    // useLoader(fetchData);
+
+    //   if (loading) {
+    //     return <Loader />
+    // }
 
     useEffect(() => {
       if (feedData !== null) {

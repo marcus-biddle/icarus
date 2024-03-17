@@ -117,9 +117,27 @@ const Practice = () => {
 
   return (
     <>
-      {/* <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl capitalize my-8">
-        Training Exercise: <br /> <span className=' text-primary text-5xl'>{currentEventId}</span>
-      </h1> */}
+      <div className=' border py-6 rounded-md bg-primary-foreground flex justify-evenly'>
+          <div className=' text-left flex flex-col gap-2'>
+            <p className=' text-muted-foreground'>Rank</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>1</p>
+          </div>
+          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className=' text-left flex flex-col gap-2'>
+            <p className=' text-muted-foreground'>Count</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>0</p>
+          </div>
+          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className=' text-left flex flex-col gap-2'>
+            <p className=' text-muted-foreground'>Streak</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>0</p>
+          </div>
+          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className=' text-left flex flex-col gap-2'>
+            <p className=' text-muted-foreground'>High Score</p>
+            <p className=' font-mono text-3xl font-bold text-foreground'>0</p>
+          </div>
+        </div>
       <RecordTable />
       <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>

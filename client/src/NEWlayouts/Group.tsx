@@ -23,6 +23,17 @@ import { leaderboardActions } from '../api/leaderboard';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { getCurrentMonth, getCurrentYear } from '../helpers/date';
+import { ExerciseSelection } from '../components/ExerciseSelection/ExerciseSelection';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select"
+import { NavLink } from 'react-router-dom';
 
 function areDatesLessThan30DaysApart(dates) {
     // Calculate the difference in milliseconds between the two dates
@@ -54,7 +65,7 @@ function areDatesLessThan30DaysApart(dates) {
   }
 
 export const Group = () => {
-  const [page, setPage] = useState<null | 'graph' | 'table' | 'winners' | 'leaderboard'>(null)
+  const [page, setPage] = useState<'graph' | 'table' | 'winners' | 'leaderboard'>('leaderboard')
     const today = new Date();
     const firstDayOfMonth = startOfMonth(today);
     const lastDayOfMonth = endOfMonth(today);
@@ -70,7 +81,7 @@ export const Group = () => {
         to: today,
     });
 
-    console.log(stats)
+    console.log('stats', stats)
     const labels = generateDateLabels(date);
 
     const fetchData = async () => {
@@ -92,16 +103,31 @@ export const Group = () => {
       memoizedFetchData();
     }, [memoizedFetchData])
 
-    console.log(leaderboardData);
+    console.log('leaderboardData', leaderboardData);
 
   return (
     <>
-      {page !== null && <div className=' mb-6'>
+      <ExerciseSelection />
+      <Select onValueChange={(e) => setPage(e)}>
+        <SelectTrigger className="w-full mb-16 shadow-lg text-lg text-popever">
+          <SelectValue placeholder="Leaderboard" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Directory</SelectLabel>
+            <SelectItem value="leaderboard">Leaderboard</SelectItem>
+            <SelectItem value="graph">Graph</SelectItem>
+            <SelectItem value="winners">Past Winners</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
+      {/* {page !== null && <div className=' mb-6'>
         <Button onClick={() => setPage(null)} variant="secondary" className=' items-center text-center content-center flex'>
           <GoChevronLeft className="h-5 w-5" />
           <p className=' text-md'>Go Back</p>
         </Button>
-      </div>}
+      </div>} */}
       {(page === 'table' || page === 'graph') && 
       <>
         <Popover>
@@ -159,70 +185,6 @@ export const Group = () => {
             </PopoverContent>
         </Popover>
       </>}
-      <Show when={page === null}>
-      <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-6">Your Month Recap</h2>
-        <div className=' border py-6 rounded-md bg-primary-foreground flex justify-evenly'>
-          <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>Rank</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>{userPosition && userPosition.rank ? userPosition.rank : '-'}</p>
-          </div>
-          <div className='border border-ring border-r-1 h-[65px]' />
-          <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>Total Count</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>{userPosition && userPosition.eventCount ? userPosition.eventCount : '-'}</p>
-          </div>
-          <div className='border border-ring border-r-1 h-[65px]' />
-          <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>Streak</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
-          </div>
-          <div className='border border-ring border-r-1 h-[65px]' />
-          <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>Personal Best</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>{stats?.filter(stat => stat.eventId === currentEventId)[0].personalBest}</p>
-          </div>
-        </div>
-        {/* <>
-          <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-6">Your Position This Month</h2>
-          <div className="grid grid-cols-2 gap-4 font-mono p-4">
-            <div className=' text-left'>
-              <p className=' text-muted-foreground'>Rank</p>
-              <p className=' font-mono text-xl font-bold'>{userPosition && userPosition.rank ? userPosition.rank : '-'}</p>
-            </div>
-            <div className=' text-left'>
-              <p className=' text-muted-foreground'>Total Count</p>
-              <p className=' font-mono text-xl font-bold'>{userPosition && userPosition.eventCount ? userPosition.eventCount : '-'}</p>
-            </div>
-            <div className=' text-left'>
-              <p className=' text-muted-foreground'>Streak</p>
-              <p className=' font-mono text-xl font-bold'>{stats?.filter(stat => stat.eventId === currentEventId)[0].currentStreak}</p>
-            </div>
-            <div className=' text-left'>
-              <p className=' text-muted-foreground'>Personal Best</p>
-              <p className=' font-mono text-xl font-bold'>{stats?.filter(stat => stat.eventId === currentEventId)[0].personalBest}</p>
-            </div>
-          </div>
-        </> */}
-        <h3 className="scroll-m-20 text-xl font-semibold tracking-tight text-left mt-6">Group Statistics</h3>
-        <div className=' flex flex-col gap-6 my-8'>
-          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'leaderboard' ? 'border-ring' : ''}`} onClick={() => setPage('leaderboard')} >
-            <p>Leaderboard</p>
-            <GoChevronRight className=' h-5 w-5' />
-          </Button>
-          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'graph' ? 'border-ring' : ''}`} onClick={() => setPage('graph')}>
-            <p>Group Graph</p>
-            <GoChevronRight className=' h-5 w-5' />
-          </Button>
-          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'table' ? 'border-ring' : ''}`} onClick={() => setPage('table')} >
-            <p>Group Table</p>
-            <GoChevronRight className=' h-5 w-5' />
-          </Button>
-          <Button variant={"default"} className={`flex justify-between py-6 bg-primary-foreground text-primary border shadow-md ${page === 'winners' ? 'border-ring' : ''}`} onClick={() => setPage('winners')} >
-            <p>Winners</p>
-            <GoChevronRight className=' h-5 w-5' />
-          </Button>
-        </div>
-      </Show>
       <Show when={page === 'graph'}>
         <GroupUserTotal date={date} data={data || []} labels={labels} />
       </Show>
@@ -236,27 +198,19 @@ export const Group = () => {
       </div>
       </Show>
       <Show when={page === 'leaderboard'}>
-        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{getCurrentMonth()} {getCurrentYear()} Leaderboard</h2>
+        <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{getCurrentMonth()} {getCurrentYear()}</h2>
         <div className='my-4 flex flex-col gap-4'>
           {leaderboardData.filter(leaderboard => leaderboard.eventId === currentEventId).map((entry, index) => (
-            <div className=' flex gap-2' key={entry.userId.username}>
-              <div className=' min-w-28 min-h-28 bg-card rounded-md relative border flex justify-center text-center items-center text-2xl'>
-                  {entry.userId.username[0].toUpperCase()}
-                  {/* <div className='bg-primary w-14 h-14 absolute right-0 bottom-0 rounded-tl-full text-right flex flex-col align-bottom pt-2 pr-1'>
-                      <p className='text-white text-sm'>Rank</p>
-                      <p className=' font-mono text-lg '>4</p>
-                  </div> */}
-              </div>
-              <div className=' text-left pl-4 w-full flex flex-col justify-around'>
-                  <div>
-                      <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight"><span className=' text-primary pr-2'>#{entry.rank}</span> {entry.userId.username}</h4>
-                      <p className="text-sm text-muted-foreground">Total {entry.eventId} completed: {entry.eventCount}</p>
-                  </div>
-                  <div className='flex justify-between text-lg font-semibold'>
-                      {/* <div className=' text-green-600'>{log.action.toUpperCase()}</div> */}
-                      {/* <div>{log.amount} reps</div> */}
-                  </div>
-              </div>
+            <div className={`border py-2 px-4 rounded-lg w-full bg-secondary transform transition-transform duration-500 `} key={entry.userId.username}>
+              <NavLink to={`/user/${entry.userId.id}`}>
+                <div className=' text-left pl-4 w-full flex flex-col justify-around'>
+                    <div className='flex justify-between items-center'>
+                        <h4 className="scroll-m-20 text-2xl font-semibold tracking-tight"><span className=' text-primary pr-2'>#{entry.rank}</span> {entry.userId.username}</h4>
+                        <p className="text-lg font-semibold font-mono">{entry.eventCount}</p>
+                    </div>
+                </div>
+              </NavLink>
+              
             </div>
           ))}
         </div>

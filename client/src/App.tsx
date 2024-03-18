@@ -56,8 +56,7 @@ function App() {
         :
         <>
           <div className=" " style={{ height: 'calc(100vh + 8rem)' }}>
-            {!location.pathname.includes('user') && 
-            <div className=' bg-primary-foreground border text-white rounded-sm flex flex-row-reverse justify-between text-center items-center p-4'>
+            {<div className=' bg-primary-foreground border text-white rounded-sm flex flex-row-reverse justify-between text-center items-center p-4'>
               {!location.pathname.includes('login')  && <MobileNav />}
               <>
                 {location.pathname.includes('login') ? 
@@ -65,7 +64,7 @@ function App() {
                   <GiGorilla className=' w-[50px] h-[50px] text-accent' />
                   <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
                 </div>
-                : <h1 key={location.pathname.slice(1)} className="scroll-m-20 text-3xl font-extrabold tracking-wider capitalize text-primary animate-fadeIn">{location.pathname.slice(1)}</h1>}
+                : <h1 key={location.pathname.split('/')[1]} className="scroll-m-20 text-3xl font-extrabold tracking-wider capitalize text-primary animate-fadeIn">{location.pathname.split('/')[1]}</h1>}
               </>
             </div>}
             

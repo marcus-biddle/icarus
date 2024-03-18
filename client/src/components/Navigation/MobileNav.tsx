@@ -13,11 +13,13 @@ import {
     SheetTrigger,
   } from "../ui/sheet"
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Show } from '../../helpers/functional'
 import { GoHome, GoMortarBoard, GoTrophy, GoTelescope, GoOrganization, GoIssueDraft, GoSignOut, GoLightBulb } from "react-icons/go";
 import { IconType } from 'react-icons/lib';
+import { removeUser } from '../../features/user/userSlice';
+import { Separator } from '../ui/separator';
 
 interface PathItem {
     name: string;
@@ -35,11 +37,12 @@ export const PATHS: PathItem[] = [
     // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
     // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
     { name: 'Profile', icon: GoIssueDraft, link: '/user' },
-    // { name: 'Logout', icon: GoSignOut, link: '' },
+    { name: 'Logout', icon: GoSignOut, link: '' },
 ]
 
 export const MobileNav = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
     const userId = useSelector((state: RootState) => state.user.currentUser?.id);
 
   return (
@@ -57,11 +60,14 @@ export const MobileNav = () => {
                 <SheetHeader>
                 <SheetTitle className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Menu</SheetTitle>
                 <SheetDescription asChild>
-                    <ul className='text-left [&>li]:mt-2'>
-                        {PATHS.map((path) => (
-                            <li key={path.name}>
+                    <ul className='text-left'>
+                        {PATHS.map((path, index) => (
+                            <li key={path.name} className={`${index === PATHS.length - 1 ? 'mt-20' : 'mt-2'}`}>
+                                <Show when={path.name === 'Logout'}>
+                                    <Separator className='my-4' />
+                                </Show>
                                 <SheetClose asChild>
-                                    <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link}>
+                                    <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} onClick={() => path.name === 'Logout' ? dispatch(removeUser()) : ''}>
                                         <p className="leading-10 scroll-m-20 text-xl font-semibold tracking-tight">{path.name}</p>
                                     </NavLink>
                                 </SheetClose>

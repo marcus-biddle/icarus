@@ -26,7 +26,7 @@ interface CurrentStreak {
     previousStreak: PreviousStreak;
   }
   
-  interface XpGain {
+  interface eventEntry {
     event: string;
     time: number;
     reps: number;
@@ -89,7 +89,7 @@ interface CurrentStreak {
     streak?: number;
     updateCounts?: number;
     streakData?: StreakData[];
-    xpGains: XpGain[];
+    eventEntries: eventEntry[];
     xpSummaries?: XpSummary[];
     leaderboardHistory?: LeaderboardHistory[];
     currentLeaderboard?: Leaderboard;

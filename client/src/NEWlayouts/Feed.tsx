@@ -85,6 +85,7 @@ export const Feed = () => {
   // need to move the function to add eventId filtering
     const fetchData = async () => {
         const res = await logActions.getLogs();
+        console.log(res)
         setFeedData(groupLogsByDay(res));
     }
 
@@ -121,20 +122,23 @@ export const Feed = () => {
       {feedData && Object.entries(feedData).map(([date, logsInDay]) => (
         <div key={date}>
           <div className=' relative'>
-            <h4 className=" min-w-24 text-md font-medium  leading-none absolute bottom-[-8px] lef-0 bg-background">{date}</h4>
+            <h4 className=" min-w-24 text-md text-left font-medium  leading-none absolute bottom-[-8px] left-0 bg-background">{date}</h4>
             <Separator />
           </div>
           
           <ul className={`border p-4 my-6 rounded-lg w-full bg-primary-foreground transform transition-transform duration-200 ${isVisible ? 'scale-100' : 'scale-0'}`}>
             {logsInDay.map((log, index) => (
-                <li className={`border p-4 my-6 rounded-lg w-full bg-background transform transition-transform duration-500 ${isVisible ? 'scale-100' : 'scale-0'}`} key={log._id}>
-                  <div className='w-full flex flex-col'>
-                      <div className=' flex justify-between'>
-                          <div className=' text-left'>
-                              <h4 className="scroll-m-20 text-2xl text-primary font-semibold font-mono tracking-tight">{log.username}</h4>
-                              <p className="text-sm text-muted-foreground font-mono">{convertToLocalTime(log.timestamp)}</p>
+                <li className={`border py-2 px-4 my-4 rounded-lg w-full bg-background transform transition-transform duration-500 ${isVisible ? 'scale-100' : 'scale-0'}`} key={log._id}>
+                  <div className='w-full flex flex-col h-full'>
+                      <div className=' flex justify-between h-full'>
+                          <div className=' text-left h-full'>
+                            <div className=''>
+                              <h4 className="scroll-m-20 text-2xl text-primary font-semibold font-mono tracking-tight">{log.username}</h4> 
+                              <span className='text-md text-muted-foreground'>{log.event}</span>
+                            </div>
+                            <p className="text-sm text-muted font-mono">{convertToLocalTime(log.timestamp)}</p>
                           </div>
-                          <div className=''>
+                          <div className=' h-[75px] items-center flex flex-col justify-around'>
                               <div className=' text-green-600 font-mono'>{log.action.toUpperCase()}</div>
                               <div className='font-mono'>{log.amount} reps</div>
                           </div>

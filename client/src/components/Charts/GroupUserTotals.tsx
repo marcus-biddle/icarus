@@ -117,13 +117,13 @@ export const GroupUserTotal = ({ date, data, labels }) => {
 
     console.log(data)
     data.map((user: any) => {
-        if (user.xpGains.length > 0) {
+        if (user.eventEntries.length > 0) {
             graphData.push({
                 label: user.username,
                 data: labels.map((label, index) => {
-                  const timeIndex = user.xpGains.findIndex(entry => label === formatDateFromTimestamp(entry.time) && entry.event === currentEventId)
+                  const timeIndex = user.eventEntries.findIndex(entry => label === formatDateFromTimestamp(entry.time) && entry.event === currentEventId)
                   if (timeIndex !== -1) {
-                    return user.xpGains[timeIndex].totalReps;
+                    return user.eventEntries[timeIndex].totalReps;
                   } else {
                     return 0;
                   }
@@ -133,7 +133,7 @@ export const GroupUserTotal = ({ date, data, labels }) => {
         }
     })
 
-    console.log('xpGains', graphData);
+    console.log('eventEntries', graphData);
     const chartData = {
         labels,
         datasets: graphData

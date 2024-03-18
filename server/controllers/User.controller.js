@@ -319,7 +319,7 @@ const createUser = async (req, res) => {
         startDate: '01/05/2022',
       },
     },
-    xpGains: [
+    eventEntries: [
       {
         event: 'Event1',
         time: 1641975900000, // Example timestamp for January 12, 2022
@@ -892,7 +892,7 @@ const createUser = async (req, res) => {
         { id: userId },
         {
           $push: {
-              xpGains: {
+              eventEntries: {
                 event: eventId,
                 time: Date.now(),
                 reps: count,
@@ -923,11 +923,11 @@ const createUser = async (req, res) => {
     }
   }
 
-  function sumRepsByDay(xpGains) {
+  function sumRepsByDay(eventEntries) {
     const sumRepsByDayMap = new Map(); // Map to store summed reps by day and event
   
     // Iterate through each XP gain entry
-    xpGains.forEach(entry => {
+    eventEntries.forEach(entry => {
       // Get the date without the time (set hours, minutes, seconds, milliseconds to 0)
       const entryDate = new Date(entry.time);
       entryDate.setHours(0, 0, 0, 0);
@@ -962,7 +962,7 @@ const createUser = async (req, res) => {
       users.map((user) => {
         const obj = {
           username: user.username,
-          xpGains: sumRepsByDay(user.xpGains)
+          eventEntries: sumRepsByDay(user.eventEntries)
         }
 
         xpGainsList.push(obj);

@@ -56,15 +56,15 @@ export const options = {
 
 
 const AverageVsDaily = () => {
-    const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
+    const eventEntries = useSelector((state: RootState) => state.user.currentUser?.eventEntries) || [];
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
     const statistics = useSelector((state: RootState) => state.user.currentUser?.statistics);
     const weeklyAverage = statistics?.find(stat => stat.eventId === currentEventId)?.weeklyAverage || 0;
 
-    console.log(xpGains)
-    if (xpGains.length === 0) return;
+    console.log(eventEntries)
+    if (eventEntries.length === 0) return;
     // Convert timestamps to Date objects
-const formattedData = xpGains.slice(0,8).filter(entry => entry.event === currentEventId).map(entry => ({
+const formattedData = eventEntries.slice(0,8).filter(entry => entry.event === currentEventId).map(entry => ({
     ...entry,
     time: new Date(entry.time),
   }));

@@ -16,7 +16,7 @@ import {
 } from "../../components/ui/popover"
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { updateCurrentEvent, updateGraphs } from '../../features/user/userSlice';
+import { updateCurrentEvent } from '../../features/user/userSlice';
 import { TbArrowsSort } from "react-icons/tb";
 import { IoCheckmarkOutline } from "react-icons/io5";
 import { GiFlame } from 'react-icons/gi'
@@ -31,21 +31,21 @@ export const ExerciseSelection = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className={` `}>
-        <Popover open={open} onOpenChange={setOpen}>
+    <div className={' w-full'}>
+        <Popover open={open} onOpenChange={setOpen} >
             <PopoverTrigger asChild>
             <Button
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[200px] justify-between shadow-lg"
+                className="w-full justify-between shadow-lg p-4 text-lg text-popever mb-8"
             >
             {`Exercise: ${currentEventId.charAt(0).toUpperCase() + currentEventId.slice(1)}`}
-            <TbArrowsSort className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <TbArrowsSort className="h-6 w-6 text-primary" />
             </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-            <Command>
+            <PopoverContent className="min-w-[365px]">
+            <Command className={' w-full'}>
                 <CommandInput placeholder="Search event..." className="h-9" />
                 <CommandEmpty>No event found.</CommandEmpty>
                 <CommandGroup>
@@ -57,15 +57,12 @@ export const ExerciseSelection = () => {
                         setValue(currentValue)
                         setOpen(false)
                         dispatch(updateCurrentEvent(event))
-                        dispatch(
-                        updateGraphs()
-                        )
                     }}
                     >
                     {event.charAt(0).toUpperCase() + event.slice(1)}
                     <IoCheckmarkOutline
                         className={cn(
-                        "ml-auto h-4 w-4",
+                        "ml-auto h-4 w-4 text-primary",
                         event === currentEventId ? "opacity-100" : "opacity-0"
                         )}
                     />

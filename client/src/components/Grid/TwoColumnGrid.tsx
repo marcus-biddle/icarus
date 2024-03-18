@@ -19,7 +19,7 @@ import {
 } from "../../components/ui/popover"
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { updateCurrentEvent, updateGraphs } from '../../features/user/userSlice';
+import { updateCurrentEvent } from '../../features/user/userSlice';
 import {
   Collapsible,
   CollapsibleContent,
@@ -80,9 +80,6 @@ const TwoColumnGrid = ({ children, showSecondColumnInMobile }: { children: React
                               setValue(currentValue)
                               setOpen(false)
                               dispatch(updateCurrentEvent(event))
-                              dispatch(
-                                updateGraphs()
-                              )
                             }}
                           >
                             {event.charAt(0).toUpperCase() + event.slice(1)}

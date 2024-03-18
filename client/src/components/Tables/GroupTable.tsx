@@ -29,13 +29,13 @@ const GroupTable = ({ data, labels }) => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-            {data.filter(user => user.xpGains.length > 0).map((user, userIndex) => (
+            {data.filter(user => user.eventEntries.length > 0).map((user, userIndex) => (
                 <TableRow key={userIndex}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                         <Table>
                             <TableBody>
-                                {user.xpGains.filter(entry => entry.event === currentEventId && labels.includes(formatDateFromTimestamp(entry.time))).map((entry, entryIndex) => (
+                                {user.eventEntries.filter(entry => entry.event === currentEventId && labels.includes(formatDateFromTimestamp(entry.time))).map((entry, entryIndex) => (
                                 <TableRow key={entryIndex}>
                                     {/* <TableCell className="font-medium"></TableCell> */}
                                     <TableCell>{formatDateFromTimestamp(entry.time)}</TableCell>

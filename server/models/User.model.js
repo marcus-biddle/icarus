@@ -28,7 +28,7 @@ const StreakDataSchema = new mongoose.Schema({
   previousStreak: PreviousStreakSchema,
 });
 
-const XpGainSchema = new mongoose.Schema({
+const EventEntriesSchema = new mongoose.Schema({
   event: String,
   time: Number,
   reps: Number,
@@ -103,7 +103,7 @@ const UserStateSchema = new mongoose.Schema({
     streakLength: Number,
     startDate: Number,
   }],
-  xpGains: [XpGainSchema],
+  eventEntries: [EventEntriesSchema],
   xpSummaries: [
     {
       event: String,

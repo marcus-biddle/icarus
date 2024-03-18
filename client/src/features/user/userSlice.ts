@@ -52,6 +52,8 @@ export const updateUser: any = createAsyncThunk('user/updateUser', async (attrib
   await userActions.updateUserYearCount(attributes.userCount, attributes.eventId, attributes.userId);
   await userActions.updateUserMonthCount(attributes.userCount, attributes.eventId, attributes.userId);
   await userActions.updateStatistic(attributes.userId, attributes.eventId, attributes.userCount);
+  
+  // updates eventEntries. TODO separate actions.
   const reward = await userActions.rewardXp(attributes.userId, attributes.eventId, attributes.userCount);
   await logActions.updateLogs(attributes.userCount, attributes.eventId, 'completed', attributes.userId);
   await leaderboardActions.updateMonthlyLeaderboard(attributes.userId, attributes.eventId, attributes.userCount)
@@ -73,98 +75,90 @@ export const userSlice = createSlice({
     updateCurrentEvent: (state: UserState, action: PayloadAction<string>) => {
         if (state.currentUser) state.currentUser.currentEventId = action.payload;
     },
-    updateGraphs: (state: UserState) => {
-      if (!state.currentUser) {
-        return state; // If currentUser doesn't exist, return the current state unchanged
-      }
-      const binSizes = [10, 25, 50, 75, 76];
+    // updateGraphs: (state: UserState) => {
+    //   if (!state.currentUser) {
+    //     return state; // If currentUser doesn't exist, return the current state unchanged
+    //   }
+    //   const binSizes = [10, 25, 50, 75, 76];
 
-      if (!state.currentUser.graphs) {
-        // If graphs doesn't exist, initialize it with an empty array
-        state.currentUser.graphs = [{
-          graphType: 'histogram',
-          graphData: {
-            userData: [],
-            averageUsers: null,
-            binSizes: binSizes
-          }
-        }];
-      }
-      // update histogram here
+    //   if (!state.currentUser.graphs) {
+    //     // If graphs doesn't exist, initialize it with an empty array
+    //     state.currentUser.graphs = [{
+    //       graphType: 'histogram',
+    //       graphData: {
+    //         userData: [],
+    //         averageUsers: null,
+    //         binSizes: binSizes
+    //       }
+    //     }];
+    //   }
+    //   // update histogram here
       
-      const counts = Array(binSizes.length).fill(0);
+    //   const counts = Array(binSizes.length).fill(0);
 
-      state.currentUser?.xpGains.filter(entry => entry.event === state.currentUser?.currentEventId).forEach((item) => {
-        // Find the appropriate bin for the current item
-        let foundBin = false;
-        for (let index = 0; index < binSizes.length; index++) {
-          const binSize = binSizes[index];
-          if (item.reps < binSize) {
-            counts[index]++;
-            foundBin = true;
-            break; // Exit the loop once the bin is found
-          }
-        }
+    //   state.currentUser?.eventEntries.filter(entry => entry.event === state.currentUser?.currentEventId).forEach((item) => {
+    //     // Find the appropriate bin for the current item
+    //     let foundBin = false;
+    //     for (let index = 0; index < binSizes.length; index++) {
+    //       const binSize = binSizes[index];
+    //       if (item.reps < binSize) {
+    //         counts[index]++;
+    //         foundBin = true;
+    //         break; // Exit the loop once the bin is found
+    //       }
+    //     }
     
-        // If the rep count exceeds the last bin size, assign it to the last bin
-        if (!foundBin) {
-          counts[counts.length - 1]++;
-        }
-      });
+    //     // If the rep count exceeds the last bin size, assign it to the last bin
+    //     if (!foundBin) {
+    //       counts[counts.length - 1]++;
+    //     }
+    //   });
 
-      const newGraph = {
-        graphType: 'histogram',
-        graphData: {
-          userData: counts,
-          averageUsers: null,
-          binSizes: binSizes
-        }
-      };
+    //   const newGraph = {
+    //     graphType: 'histogram',
+    //     graphData: {
+    //       userData: counts,
+    //       averageUsers: null,
+    //       binSizes: binSizes
+    //     }
+    //   };
     
-      const histIndex = state.currentUser.graphs.findIndex(graph => graph.graphType === 'histogram');
+    //   const histIndex = state.currentUser.graphs.findIndex(graph => graph.graphType === 'histogram');
 
-      if (histIndex === -1) {
-        // Push new graph into the existing graphs array
-        state.currentUser.graphs.push(newGraph);
-      } else {
-        state.currentUser.graphs[histIndex] = newGraph;
-      }
-    },
-    updateUserPractice: (state: UserState, action: PayloadAction<number>) => {
-      if (state.currentUser?.eventTotals && state.currentUser.currentEventId) {
-        const index = state.currentUser?.eventTotals.findIndex(eventTotal => eventTotal.event === state.currentUser?.currentEventId);
-        if (index === -1) {
-          state.currentUser?.eventTotals.push({
-            event: state.currentUser.currentEventId,
-            totalDays: 1,
-            totalReps: action.payload,
-            totalXp: action.payload,
-            lastUpdatedDate: new Date().toLocaleDateString('en-US')
-          })
-        } else {
-          state.currentUser.eventTotals[index] = {
-            ...state.currentUser.eventTotals[index],
-            totalDays: state.currentUser.eventTotals[index].lastUpdatedDate !== new Date().toLocaleDateString('en-US') ? state.currentUser.eventTotals[index].totalDays + 1 : state.currentUser.eventTotals[index].totalDays,
-            totalReps: state.currentUser.eventTotals[index].totalReps + action.payload,
-            totalXp: state.currentUser.eventTotals[index].totalXp + action.payload,
-            lastUpdatedDate: new Date().toLocaleDateString('en-US')
+    //   if (histIndex === -1) {
+    //     // Push new graph into the existing graphs array
+    //     state.currentUser.graphs.push(newGraph);
+    //   } else {
+    //     state.currentUser.graphs[histIndex] = newGraph;
+    //   }
+    // },
+    updateUserEventEntries: (state: UserState, action: PayloadAction<number>) => {
+      if (!state.currentUser) {
+            return state;
           }
-        }
-      } else {
-        if (state.currentUser && state.currentUser.currentEventId) {
-          state.currentUser.eventTotals = [{
-            event: state.currentUser.currentEventId,
-            totalDays: 1,
-            totalReps: action.payload,
-            totalXp: action.payload,
-            lastUpdatedDate: new Date().toLocaleDateString('en-US')
-          }]
-        }
-      }
+
+        // const index = state.currentUser?.eventTotals.findIndex(eventTotal => eventTotal.event === state.currentUser?.currentEventId);
+        // if (index === -1) {
+        //   state.currentUser?.eventTotals.push({
+        //     event: state.currentUser.currentEventId,
+        //     totalDays: 1,
+        //     totalReps: action.payload,
+        //     totalXp: action.payload,
+        //     lastUpdatedDate: new Date().toLocaleDateString('en-US')
+        //   })
+        // } else {
+        //   state.currentUser.eventTotals[index] = {
+        //     ...state.currentUser.eventTotals[index],
+        //     totalDays: state.currentUser.eventTotals[index].lastUpdatedDate !== new Date().toLocaleDateString('en-US') ? state.currentUser.eventTotals[index].totalDays + 1 : state.currentUser.eventTotals[index].totalDays,
+        //     totalReps: state.currentUser.eventTotals[index].totalReps + action.payload,
+        //     totalXp: state.currentUser.eventTotals[index].totalXp + action.payload,
+        //     lastUpdatedDate: new Date().toLocaleDateString('en-US')
+        //   }
+        // }
 
       // if (state.currentUser) state.currentUser.monthlyXp = (state.currentUser?.monthlyXp || 0) + action.payload;
 
-      state.currentUser?.xpGains?.push({
+      state.currentUser?.eventEntries?.push({
         event: state.currentUser.currentEventId || '',
         time: Date.now(),
         reps: action.payload,
@@ -207,8 +201,8 @@ export const {
   setUser,
   removeUser,
   updateCurrentEvent,
-  updateUserPractice,
-  updateGraphs
+  updateUserEventEntries,
+  // updateGraphs
  } = userSlice.actions
 
 export default userSlice.reducer

@@ -15,7 +15,7 @@ router.get('/api/user/:userId', UserControllers.findProfile);
 router.get('/api/users/all', UserControllers.findAllUsers);
 router.get('/api/users/all/year/:eventId', UserControllers.getUserYearArrays);
 router.get('/api/users/all/month/:eventId', UserControllers.getUserMonthArrays);
-router.get('/api/users/all/xpGains', UserControllers.getAllUserXpGains);
+router.get('/api/users/all/eventEntries', UserControllers.getAllUserXpGains);
 
 router.post('/api/users/update/yearSummary', UserControllers.updateUserYearSummary);
 router.post('/api/users/update/monthSummary', UserControllers.updateUserMonthSummary);

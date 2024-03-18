@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { updateGraphs, updateUser, updateUserPractice } from '../features/user/userSlice';
+import { updateUser, updateUserEventEntries } from '../features/user/userSlice';
 import { RootState } from '../app/store';
 
 import { z } from "zod"
@@ -18,10 +18,6 @@ import {
 } from "../components/ui/form"
 import { Input } from "../components/ui/input"
 import { toast } from "sonner"
-
-import { RepFrequency } from '../components/Charts/RepFrequency';
-import RecordTable from '../components/Tables/RecordTable';
-import { Label } from "../components/ui/label"
 import {
   Sheet,
   SheetClose,
@@ -35,33 +31,106 @@ import {
 import { useIsMobile } from '../hooks/useIsMobile';
 import { FaPlus } from "react-icons/fa6";
 import { FaSpinner } from 'react-icons/fa';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "../components/ui//table"
+// import * as React from "react"
+// import { CalendarIcon } from "@radix-ui/react-icons"
+import { addDays, endOfMonth, format, startOfMonth } from "date-fns"
+import { DateRange } from "react-day-picker"
+ 
+import { cn } from "../lib/utils"
+import { Calendar } from "../components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../components/ui/popover"
+import { IoCalendarOutline } from "react-icons/io5";
+import { ExerciseSelection } from '../components/ExerciseSelection/ExerciseSelection';
 
+
+const isDateBetween = (startDate, endDate, targetDate) => {
+  const startMillis = startDate.getTime();
+  const endMillis = endDate.getTime();
+  const targetMillis = targetDate.getTime();
+
+  return targetMillis >= startMillis && targetMillis <= endMillis;
+};
 
 const Practice = () => {
-    const [inputValue, setInputValue] = useState<number | null>(null);
-    const [error, setError] = useState('');
+    // const [inputValue, setInputValue] = useState<number | null>(null);
+    // const [error, setError] = useState('');
     const [ isLoading, setIsLoading ] = useState(false);
     const [ open, setOpen ] = useState(false);
-    const isMobile = useIsMobile({});
+    // const isMobile = useIsMobile({});
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.currentUser);
     const userId = user?.id || '';
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
-    const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
-    const graphs = useSelector((state: RootState) => state.user.currentUser?.graphs) || [];
 
-    const handleInputChange = (e) => {
-    const value = e.target.value;
+    const eventEntries = useSelector((state: RootState) => state.user.currentUser?.eventEntries) || [];
+    
+    // const graphs = useSelector((state: RootState) => state.user.currentUser?.graphs) || [];
 
-    // Allow only positive numbers
-    if (/^\d*\.?\d*$/.test(value)) {
-      setInputValue(Number(value));
-      console.log(Number(value))
-      setError('');
-    } else {
-      setError('Please enter a positive number');
-    }
-  };
+    const today = new Date();
+    const firstDayOfMonth = startOfMonth(today);
+    const lastDayOfMonth = endOfMonth(today);
+
+    const [dateRange, setDateRange] = useState<DateRange | undefined>({
+        from: firstDayOfMonth,
+        to: lastDayOfMonth,
+    });
+
+    console.log(dateRange)
+
+    const groupAndSumByDay = (data) => {
+      const groupedData = {};
+    
+      data.forEach((item) => {
+        if (item.event === currentEventId) {
+          const date = new Date(item.time);
+          const formattedDate = date.toDateString(); // Convert to "Sun Mar 31 2024" format
+      
+          if (dateRange && dateRange.from && isDateBetween(
+            new Date(dateRange.from),
+            new Date(dateRange.to || dateRange.from),
+            new Date(formattedDate)
+          )) {
+            if (!groupedData[formattedDate]) {
+              groupedData[formattedDate] = {
+                reps: item.reps,
+                xp: item.xp,
+              };
+            } else {
+              groupedData[formattedDate].reps += item.reps;
+              groupedData[formattedDate].xp += item.xp;
+            }
+          }
+        }
+      });
+    
+      return groupedData;
+    };
+
+    const groupedEntries = groupAndSumByDay(eventEntries);
+    const sortedGroupedEntries = Object.entries(groupedEntries).map(([date, { reps, xp }]: any[]) => ({
+      date,
+      totalReps: reps,
+      totalXP: xp,
+    }));
+
+    const totalXP = sortedGroupedEntries.reduce((acc, curr) => acc + curr.totalXP, 0).toFixed(0);
+    const totalReps = sortedGroupedEntries.reduce((acc, curr) => acc + curr.totalReps, 0).toFixed(0);
+    const highestTotalReps = sortedGroupedEntries.reduce((maxReps, { totalReps }) => (totalReps > maxReps ? totalReps : maxReps), 0).toFixed(0);
+    console.log('eventEntries', sortedGroupedEntries)
 
   const formSchema = z.object({
     userCount: z.string().min(1),
@@ -80,7 +149,7 @@ const Practice = () => {
     console.log(Number(values.userCount))
     if (Number(values.userCount)) {
       dispatch(
-        updateUserPractice((Number(values.userCount)))
+        updateUserEventEntries((Number(values.userCount)))
       )
   
       dispatch(
@@ -106,42 +175,44 @@ const Practice = () => {
     }
   }
 
-  useEffect(() => {
-    if (graphs.length === 0 || (graphs[0].graphData.userData.length === 0 && xpGains.filter(entry => entry.event === currentEventId).length > 0)) {
-      console.log('graphs updated')
-      dispatch(
-        updateGraphs()
-      )
-    }
-  }, [graphs, xpGains, currentEventId])
+  // not sure what this does?
+  // useEffect(() => {
+  //   if (graphs.length === 0 || (graphs[0].graphData.userData.length === 0 && eventEntries.filter(entry => entry.event === currentEventId).length > 0)) {
+  //     console.log('graphs updated')
+  //     dispatch(
+  //       updateGraphs()
+  //     )
+  //   }
+  // }, [graphs, eventEntries, currentEventId])
 
   return (
     <>
-      <div className=' border py-6 rounded-md bg-primary-foreground flex justify-evenly'>
+      <ExerciseSelection />
+      <div className=' border py-4 rounded-md bg-primary-foreground flex justify-evenly'>
           <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>Rank</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>1</p>
+            <p className=' text-muted-foreground'>Entries</p>
+            <p className=' font-mono text-2xl font-bold text-foreground'>{sortedGroupedEntries.length}</p>
           </div>
-          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className='border border-ring border-r-1 h-[65px] mx-2' />
           <div className=' text-left flex flex-col gap-2'>
             <p className=' text-muted-foreground'>Count</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>0</p>
+            <p className=' font-mono text-2xl font-bold text-foreground'>{totalReps}</p>
           </div>
-          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className='border border-ring border-r-1 h-[65px] mx-2' />
           <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>Streak</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>0</p>
+            <p className=' text-muted-foreground'>XP</p>
+            <p className=' font-mono text-2xl font-bold text-foreground'>{totalXP}</p>
           </div>
-          <div className='border border-ring border-r-1 h-[65px]' />
+          <div className='border border-ring border-r-1 h-[65px] mx-2' />
           <div className=' text-left flex flex-col gap-2'>
-            <p className=' text-muted-foreground'>High Score</p>
-            <p className=' font-mono text-3xl font-bold text-foreground'>0</p>
+            <p className=' text-muted-foreground'>Best</p>
+            <p className=' font-mono text-2xl font-bold text-foreground'>{highestTotalReps}</p>
           </div>
         </div>
-      <RecordTable />
+      
       <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline" className=" fixed bottom-[125px] right-[25px] rounded-full text-[30px] bg-muted text-primary shadow-md items-center text-center h-16 w-16">
+        <Button variant={"default"} className=' w-full my-8'>
           <FaPlus className='h-full w-full' />
         </Button>
       </SheetTrigger>
@@ -191,38 +262,66 @@ const Practice = () => {
         </SheetFooter>
       </SheetContent>
     </Sheet>
-      {/* <Separator className="my-6" /> */}
-      {/* <Tabs defaultValue="update" className="" onValueChange={(e) => handleTabChange(e)}>
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="update">Update</TabsTrigger>
-          <TabsTrigger value="password">Records</TabsTrigger>
-          <TabsTrigger value="graphs">Graphs</TabsTrigger>
-        </TabsList>
-        <TabsContent value="update" className=' my-24'>
-          
-        </TabsContent>
-        <TabsContent value="password">
-          
-        </TabsContent>
-        <TabsContent value="graphs">
-          <RepFrequency />
-        </TabsContent>
-      </Tabs> */}
-      
-        {/* <div style={{ padding: isMobile ? '120px 0' : '40px 0'}}>
-            <p style={{ fontSize: '18px', padding: '24px'}}>Please enter a number below for how many reps you performed.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: isMobile ? 'center' : ''}}>
-                <input
-                    type="text"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    placeholder="Enter a positive number"
-                    className='practice-input'
+    {/* <RecordTable /> */}
+    <>
+        <div className=" ">
+            <Popover>
+                <PopoverTrigger asChild>
+                <Button
+                    id="date"
+                    variant={"secondary"}
+                    className={cn(
+                    "w-full justify-start text-left font-normal mb-8 shadow-md",
+                    !dateRange && "text-muted-foreground"
+                    )}
+                >
+                    <IoCalendarOutline className="mr-2 h-4 w-4" />
+                    {dateRange?.from ? (
+                    dateRange.to ? (
+                        <>
+                        {format(dateRange.from, "LLL dd, y")} -{" "}
+                        {format(dateRange.to, "LLL dd, y")}
+                        </>
+                    ) : (
+                        format(dateRange.from, "LLL dd, y")
+                    )
+                    ) : (
+                    <span>Pick a date</span>
+                    )}
+                </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                    initialFocus
+                    mode="range"
+                    defaultMonth={dateRange?.from}
+                    selected={dateRange}
+                    onSelect={setDateRange}
+                    numberOfMonths={1}
                 />
-                <button onClick={handleSubmit} className='practice-input-btn'>Submit</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-            </div>
-        </div> */}
+                </PopoverContent>
+            </Popover>
+        </div>
+        <Table className=' bg-primary-foreground rounded-lg shadow-sm'>
+            {/* <TableCaption>A list of your recent records.</TableCaption> */}
+            <TableHeader className=''>
+                <TableRow>
+                <TableHead className='text-left'>Entry</TableHead>
+                <TableHead className="text-right">Count</TableHead>
+                <TableHead className="text-right text-muted-foreground">XP</TableHead>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                {sortedGroupedEntries.map((entry, index) => (
+                <TableRow key={index}>
+                    <TableCell className='text-left'>{entry.date}</TableCell>
+                    <TableCell className="text-right">{entry.totalReps}</TableCell>
+                    <TableCell className="text-right text-muted-foreground">{entry.totalXP.toFixed(0)}</TableCell>
+                </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </>
     </>
   )
 }

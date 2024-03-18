@@ -173,7 +173,7 @@ const rewardXp = async ( userId: string, eventId: string, count: number) => {
 
 const getAllUserXpGains = async () => {
     try {
-        const response = await axiosInstance.get('/users/all/xpGains')
+        const response = await axiosInstance.get('/users/all/eventEntries')
         return response.data;
 
     } catch (err) {

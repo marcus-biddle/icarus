@@ -67,7 +67,7 @@ const RecordTable = () => {
     const user = useSelector((state: RootState) => state.user.currentUser);
     const userId = user?.id || '';
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
-    const xpGains = useSelector((state: RootState) => state.user.currentUser?.xpGains) || [];
+    const eventEntries = useSelector((state: RootState) => state.user.currentUser?.eventEntries) || [];
 
     const today = new Date();
     const firstDayOfMonth = startOfMonth(today);
@@ -80,7 +80,7 @@ const RecordTable = () => {
 
     
 
-    const entriesByDateSelected = xpGains.filter(entry => {
+    const entriesByDateSelected = eventEntries.filter(entry => {
         const entryDate = new Date(entry.time);
         if (entry.event === currentEventId) {
             return entryDate >= (date?.from || today) && entryDate <= (date?.to || today);
@@ -91,14 +91,14 @@ const RecordTable = () => {
 
   return (
     <>
-        <div className=" mb-10">
+        <div className=" ">
             <Popover>
                 <PopoverTrigger asChild>
                 <Button
                     id="date"
-                    variant={"outline"}
+                    variant={"secondary"}
                     className={cn(
-                    "w-[300px] justify-start text-left font-normal",
+                    "w-full justify-start text-left font-normal mb-8 shadow-md",
                     !date && "text-muted-foreground"
                     )}
                 >
@@ -129,12 +129,11 @@ const RecordTable = () => {
                 </PopoverContent>
             </Popover>
         </div>
-        <Table className='mb-24'>
+        <Table className=' bg-primary-foreground rounded-lg shadow-sm'>
             {/* <TableCaption>A list of your recent records.</TableCaption> */}
-            <TableHeader>
+            <TableHeader className=''>
                 <TableRow>
-                {/* <TableHead className="w-[0]"></TableHead> */}
-                <TableHead className='text-center'>Entry</TableHead>
+                <TableHead className='text-left'>Entry</TableHead>
                 <TableHead className="text-right">Count</TableHead>
                 </TableRow>
             </TableHeader>
@@ -142,18 +141,11 @@ const RecordTable = () => {
                 {entriesByDateSelected.sort((a:any, b: any) => b.time - a.time).map((entry, index) => (
                 <TableRow key={index}>
                     {/* <TableCell className="font-medium"></TableCell> */}
-                    <TableCell>{timestampToDateTime(entry.time)}</TableCell>
+                    <TableCell className='text-left'>{timestampToDateTime(entry.time)}</TableCell>
                     <TableCell className="text-right">{entry.reps}</TableCell>
                 </TableRow>
                 ))}
             </TableBody>
-            <TableFooter>
-                <TableRow>
-                {/* <TableCell colSpan={1} className=' max-w-10'>Total</TableCell> */}
-                <TableCell className="text-center">{entriesByDateSelected.length} Entries</TableCell>
-                <TableCell className="text-right min-w-[100px]">{totals.totalReps} Reps</TableCell>
-                </TableRow>
-            </TableFooter>
         </Table>
     </>
   )

@@ -12,11 +12,31 @@ import {
     SheetTitle,
     SheetTrigger,
   } from "../ui/sheet"
-import { PATHS } from './SideNav/SideNav';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Show } from '../../helpers/functional'
+import { GoHome, GoMortarBoard, GoTrophy, GoTelescope, GoOrganization, GoIssueDraft, GoSignOut, GoLightBulb } from "react-icons/go";
+import { IconType } from 'react-icons/lib';
+
+interface PathItem {
+    name: string;
+    icon: IconType;
+    link: string;
+  }
+
+export const PATHS: PathItem[] = [
+    { name: 'Activity', icon: GoHome, link: '/activity' },
+    { name: 'Train', icon: GoLightBulb, link: '/train' },
+    { name: 'Competitors', icon: GoLightBulb, link: '/competitors' },
+    // { name: 'Winners', icon: GiLaurelsTrophy, link: '/group' },
+    // { name: 'History', icon: GoMortarBoard, link: '/history', locked: false },
+    // { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard', locked: false },
+    // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
+    // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
+    { name: 'Profile', icon: GoIssueDraft, link: '/user' },
+    // { name: 'Logout', icon: GoSignOut, link: '' },
+]
 
 export const MobileNav = () => {
     const [isOpen, setIsOpen] = useState(false);

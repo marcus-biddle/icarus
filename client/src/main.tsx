@@ -39,46 +39,46 @@ const router = createBrowserRouter([
         path: '/login',
         element: <NewLogin />,
       },
+      // {
+      //   path: '/sections',
+      //   element: <HomeLevel1 />,
+      // },
+      // {
+      //   path: '/workout',
+      //   element: <Workout />,
+      // },
       {
-        path: '/sections',
-        element: <HomeLevel1 />,
-      },
-      {
-        path: '/workout',
-        element: <Workout />,
-      },
-      {
-        path: '/practice',
+        path: '/train',
         element: <Practice />,
       },
       {
-        path: '/feed',
+        path: '/activity',
         element: <Feed />,
       },
       {
-        path: '/group',
+        path: '/competitors',
         element: <Group />,
       },
-      {
-        path: '/history',
-        element: <History />,
-      },
-      {
-        path: '/history/week',
-        element: <HistoryWeek />,
-      },
-      {
-        path: '/history/year',
-        element: <HistoryYear />,
-      },
-      {
-        path: '/history/month',
-        element: <HistoryMonth />,
-      },
-      {
-        path: '/sections/details/:sectionId',
-        element: <Details />,
-      },
+      // {
+      //   path: '/history',
+      //   element: <History />,
+      // },
+      // {
+      //   path: '/history/week',
+      //   element: <HistoryWeek />,
+      // },
+      // {
+      //   path: '/history/year',
+      //   element: <HistoryYear />,
+      // },
+      // {
+      //   path: '/history/month',
+      //   element: <HistoryMonth />,
+      // },
+      // {
+      //   path: '/sections/details/:sectionId',
+      //   element: <Details />,
+      // },
       {
         path: '/user/:userId',
         element: <Profile />,

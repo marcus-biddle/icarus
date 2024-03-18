@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { GiGorilla, GiLaurelCrown, GiLibertyWing } from "react-icons/gi";
-import { DynamicIcon } from '../components/Icons/DynamicIcon';
-// import { useGoogleAuth } from '../../utilities/hooks/useGoogleAuth';
 import { Show } from '../helpers/functional';
-import { GoHourglass } from "react-icons/go";
 import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../app/store';
-  import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from 'react-hook-form';
 import {
   Card,
   CardContent,
@@ -29,20 +22,18 @@ import { LoginForm } from '../components/Forms/LoginForm';
 
 
 const NewLogin = () => {
-    const [ position, nextPosition ] = useState(0);
     const navigate = useNavigate();
     const creationDate = useSelector((state: RootState) => state.user.currentUser?.creationDate);
 
     useEffect(() => {
     if (creationDate) {
-        navigate('/practice')
+        navigate('/train')
     }
 
     }, [creationDate, location.pathname])
 
   return (
         <div className=' w-full'>
-            <Show when={position === 0}>
                 <div className='w-full flex justify-center'>
                     <Card className=' w-full md:w-[600px] border-none'>
                         <CardHeader>
@@ -86,7 +77,6 @@ const NewLogin = () => {
                         </CardFooter>
                     </Card>
                 </div>
-            </Show>
         </div>
   )
 }

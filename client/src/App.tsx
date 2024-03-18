@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { NavLink, Outlet, redirect, useLoaderData, useLocation, useNavigate, useNavigation } from 'react-router-dom';
-import SideNav, { PATHS } from './components/Navigation/SideNav/SideNav';
+import { Outlet,  useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import SideNav from './components/Navigation/SideNav/SideNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './app/store';
 
@@ -12,11 +12,8 @@ import {
 } from "./components/ui/resizable";
 import { Toaster } from "./components/ui/sonner"
 import { removeUser } from './features/user/userSlice';
-import { CiMenuKebab } from "react-icons/ci";
-import { ExerciseSelection } from './components/ExerciseSelection/ExerciseSelection';
 import { GiGorilla } from "react-icons/gi";
 import { useIsMobile } from './hooks/useIsMobile';
-import { Loader } from './components/Loader/Loader';
 import { MobileNav } from './components/Navigation/MobileNav';
 
 function App() {
@@ -25,10 +22,7 @@ function App() {
   const isMobile = useIsMobile({});
   const creationDate = useSelector((state: RootState) => state?.user.currentUser?.creationDate)
   const user = useSelector((state: RootState) => state?.user.currentUser);
-  const userId = useSelector((state: RootState) => state.user.currentUser?.id);
-  const name = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
   const dispatch = useDispatch();
-  const loading = useSelector((state: RootState) => state.loading.loading);
 
   const [sidebarSize, setSidebarSize] = useState(25);
 
@@ -62,7 +56,6 @@ function App() {
         :
         <>
           <div className=" " style={{ height: 'calc(100vh + 8rem)' }}>
-
             {!location.pathname.includes('user') && 
             <div className=' bg-primary-foreground border text-white rounded-sm flex flex-row-reverse justify-between text-center items-center p-4'>
               {!location.pathname.includes('login')  && <MobileNav />}
@@ -72,7 +65,7 @@ function App() {
                   <GiGorilla className=' w-[50px] h-[50px] text-accent' />
                   <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-5xl">FitWars</h1>
                 </div>
-                : <h1 key={location.pathname.slice(1)} className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize text-primary animate-fadeIn">{location.pathname.slice(1)}</h1>}
+                : <h1 key={location.pathname.slice(1)} className="scroll-m-20 text-3xl font-extrabold tracking-wider capitalize text-primary animate-fadeIn">{location.pathname.slice(1)}</h1>}
               </>
             </div>}
             
@@ -87,25 +80,6 @@ function App() {
         }
         
       </>
-
-      
-      {/* {isMobile && !location.pathname.includes('login') && 
-      <nav className="fixed bottom-0 left-0 right-0 bg-primary-foreground text-white flex justify-around items-center py-3 shadow-2xl w-full">
-            {PATHS.map((path) => (
-                <div key={path.name} className='flex flex-col items-center'>
-                    <NavLink to={path.name === 'Profile' ? `${path.link}/${userId}` : path.link} className={({ isActive }) =>
-                        isActive ? 'flex flex-col items-center my-2  rounded-[--radius] text-primary' 
-                        : 'flex flex-col items-center my-2 hover:bg-muted rounded-[--radius]'
-                        }
-                    >
-                        <path.icon className=' h-[25px] w-[25px] transition-none' />
-                        <p className={`scroll-m-20 font-light tracking-wider transition-all duration-150 ease-in-out`}>{path.name}</p>
-                    </NavLink>
-                </div>
-            ))}
-      </nav>
-      
-      } */}
     </div>
   )
 }

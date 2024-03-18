@@ -14,25 +14,11 @@ import {
 import { getInitials } from '../../../NEWlayouts/Profile';
 import { VscGraph } from "react-icons/vsc";
 import { GiLaurelsTrophy } from "react-icons/gi";
+import { PATHS } from '../MobileNav';
 
-interface PathItem {
-    name: string;
-    icon: IconType;
-    link: string;
-  }
 
-export const PATHS: PathItem[] = [
-    { name: 'Feed', icon: GoHome, link: '/feed' },
-    { name: 'Train', icon: GoLightBulb, link: '/practice' },
-    { name: 'Group', icon: VscGraph, link: '/group' },
-    // { name: 'Winners', icon: GiLaurelsTrophy, link: '/group' },
-    // { name: 'History', icon: GoMortarBoard, link: '/history', locked: false },
-    // { name: 'Leaderboards', icon: GoTrophy, link: 'duo/leaderboard', locked: false },
-    // { name: 'Quests', icon: GoTelescope, link: '/test', locked: true },
-    // { name: 'Shop', icon: GoOrganization, link: '/test', locked: true },
-    { name: 'Profile', icon: GoIssueDraft, link: '/user' },
-    // { name: 'Logout', icon: GoSignOut, link: '' },
-]
+
+
 
 const SideNav = ({size}: {size: number}) => {
     const userId = useSelector((state: RootState) => state.user.currentUser?.id);

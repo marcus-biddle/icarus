@@ -1,5 +1,4 @@
 import React from 'react';
-import { PATHS } from '../SideNav/SideNav';
 import { NavLink } from 'react-router-dom';
 import { DynamicIcon } from '../../Icons/DynamicIcon';
 import {
@@ -7,9 +6,9 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../../../components/ui/avatar"
-import { getInitials } from '../../../NEWlayouts/Profile/Profile';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
+import { PATHS } from '../MobileNav';
 
 const BottomNav = () => {
   const username = useSelector((state: RootState) => state.user.currentUser?.username) || '? ?';
@@ -28,7 +27,7 @@ const BottomNav = () => {
                         ? 
                         <Avatar className=' w-[40px] h-[40px]'>
                             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                            <AvatarFallback>{getInitials(username)}</AvatarFallback>
+                            {/* <AvatarFallback>{getInitials(username)}</AvatarFallback> */}
                         </Avatar> 
                         : 
                         <path.icon className=' h-[40px] w-[40px] transition-none' />

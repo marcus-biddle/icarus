@@ -54,15 +54,13 @@ const Profile = () => {
         return () => clearTimeout(timer)
     }
 
-    useLoader(fetchData);
-
-    if (loading) {
-        return <Loader />
-    }
+    useEffect(() => {
+        fetchData();
+    }, [])
 
     useEffect(() => {
         setProgressBarLength();
-      }, [])
+      }, [userData])
 
   return (
     <div className=' w-full'>

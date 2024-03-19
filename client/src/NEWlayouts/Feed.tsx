@@ -5,6 +5,9 @@ import { RootState } from '../app/store';
 import { convertToLocalTime, formatTimestamp } from '../helpers/date';
 import { Button } from "../components/ui/button"
 import { Separator } from "../components/ui/separator"
+import { startLoading, stopLoading } from '../features/loading/loadingSlice';
+import { Loader } from '../components/Loader/Loader';
+import { Show } from '../helpers/functional';
 
 interface Log {
   _id: string;
@@ -59,6 +62,8 @@ function groupLogsByDay(logs: Log[]): GroupedLogs {
   return grouped;
 }
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const Feed = () => {
     const [ feedData, setFeedData ] = useState<GroupedLogs | null>(null);
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
@@ -84,20 +89,21 @@ export const Feed = () => {
 
   // need to move the function to add eventId filtering
     const fetchData = async () => {
+      dispatch(startLoading())
+      try {
         const res = await logActions.getLogs();
-        console.log(res)
         setFeedData(groupLogsByDay(res));
+      } catch (error) {
+        // Handle any errors here
+        console.error('Error fetching data:', error);
+      } finally {
+        dispatch(stopLoading());
+      }
     }
 
     useEffect(() => {
       fetchData();
     }, []);
-
-    // useLoader(fetchData);
-
-    //   if (loading) {
-    //     return <Loader />
-    // }
 
     useEffect(() => {
       if (feedData !== null) {
@@ -116,6 +122,10 @@ export const Feed = () => {
 
   return (
     <>
+    <Show when={loading}>
+      <Loader />
+    </Show>
+    <Show when={feedData !== null && Object.keys(feedData).length !== 0 && !loading}>
       <div className=' w-full text-right mb-2'>
         <Button disabled={refreshData} variant={"ghost"} onClick={() => handleRefresh()} className=' uppercase text-ring tracking-wide'>Refresh</Button>
       </div>
@@ -149,35 +159,8 @@ export const Feed = () => {
           </ul>
         </div>
       ))}
-        {/* <Show when={feedData.filter(log => log.event === currentEventId).length > 0}>
-          
-            <div ref={containerRef} className="overflow-y-auto" style={{ height: 'calc(100vh - 18rem)' }}>
-                {feedData?.filter(log => log.event === currentEventId).map((log, index) => {
-                  console.log(convertToLocalTime(log.timestamp))
-                    return (
-                        <div className={`border p-4 my-6 rounded-lg w-full ${!visibleItems.includes(index) ? 'opacity-20' : ''} ${(feedData.length - 1) === index ? ' mb-16' : ''} bg-primary-foreground transform transition-transform duration-500 ${isVisible ? 'scale-100' : 'scale-0'}`} key={index}>
-                            <div className='w-full flex flex-col'>
-                                <div className=' flex justify-between'>
-                                    <div className=' text-left'>
-                                        <h4 className="scroll-m-20 text-2xl text-primary font-semibold tracking-tight">{log.username}</h4>
-                                        <p className="text-sm text-muted-foreground">{convertToLocalTime(log.timestamp)}</p>
-                                    </div>
-                                    <div className=''>
-                                        <div className=' text-green-600'>{log.action.toUpperCase()}</div>
-                                        <div>{log.amount} reps</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
-            </div>
-            
-        </Show>
-        <Show when={feedData.filter(log => log.event === currentEventId).length === 0 && !refreshData}>
-            {<p>No one has worked out today!</p>}
-        </Show> */}
-        
+    </Show>
+      
     </>
   )
 }

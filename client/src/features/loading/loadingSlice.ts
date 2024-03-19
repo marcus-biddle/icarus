@@ -14,9 +14,8 @@ const loadingSlice = createSlice({
   name: 'loading',
   initialState,
   reducers: {
-    startLoading: (state: LoadingState, action: PayloadAction<string>) => {
+    startLoading: (state: LoadingState) => {
       state.loading = true;
-      state.lastLoadTimestamp = action.payload;
     },
     stopLoading: (state: LoadingState) => {
       state.loading = false;

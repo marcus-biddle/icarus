@@ -15,6 +15,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../features/user/userSlice';
 import { useLoader } from '../hooks/useLoader';
 import { RootState } from '../app/store';
+import { Show } from '../helpers/functional';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "../components/ui//table"
 
 // export const profileLoader = async({ params }) => {
 //     // await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -37,20 +48,50 @@ import { RootState } from '../app/store';
     return `${month} ${year}`;
   }
 
+  const prepareTableData = (data) => {
+    if (data.length === 0) {
+        return [];
+    }
+    // Get all unique event names
+    const events = data.flatMap(item => item.monthSummary.map(summary => summary.monthName));
+    const uniqueEvents = [...new Set(events)];
+  
+    // Create table data
+    const tableData = uniqueEvents.map(month => {
+      const rowData = {
+        month: month,
+      };
+  
+      data.forEach(item => {
+        item.monthSummary.forEach(summary => {
+          if (summary.monthName === month) {
+            rowData[item.event] = summary.totalCount;
+          }
+        });
+      });
+  
+      return rowData;
+    });
+  
+    return tableData;
+  };
+
 const Profile = () => {
     const loading = useSelector((state: RootState) => state.loading.loading);
     const [progress, setProgress] = useState(0);
-    const [ userData, setUserData ] = useState<any>(null);
-    const dispatch = useDispatch();
+    const [ userData, setUserData ] = useState<any>({});
     const { userId } = useParams();
+    const id = useSelector((state: RootState) => state.user.currentUser?.id)
+    // not a variable. Needs to be in state. Breaks going from profile to profile.
+    const xpSummaries = (id === userId ? useSelector((state: RootState) => state.user.currentUser?.xpSummaries) : userData.xpSummaries);
+    const xpSumTableData: any[] = prepareTableData(xpSummaries ? xpSummaries : []);
+    console.log('xpSum', xpSumTableData)
 
+    console.log('userData', userData)
     const fetchData = async() => {
         const res = await userActions.fetchUser(userId || '');
         setUserData(res);
-    }
-
-    const setProgressBarLength = async () => {
-        const timer = setTimeout(() => setProgress((userData ? userData.levelCompletionRate : 0) * 100), 500)
+        const timer = setTimeout(() => setProgress((res ? res.levelCompletionRate : 0) * 100), 500)
         return () => clearTimeout(timer)
     }
 
@@ -58,61 +99,53 @@ const Profile = () => {
         fetchData();
     }, [])
 
-    useEffect(() => {
-        setProgressBarLength();
-      }, [userData])
-
   return (
-    <div className=' w-full'>
-        {userData && <>
-            <div className=' w-full text-right'>
-                <Button variant="ghost" onClick={() => dispatch(removeUser())}>Logout</Button>
+    <div >
+        <Show when={Object.keys(userData).length === 0}>
+            <Loader />
+        </Show>
+        <Show when={Object.keys(userData).length !== 0}>
+            <div className=' text-left bg-primary-foreground border border-accent rounded-md mb-8 px-4 py-6'>
+                <h1 className="scroll-m-20 text-5xl font-extrabold tracking-tight capitalize">{userData.username}</h1>
+            </div>
+
+            <h1 className="scroll-m-20 text-2xl text-left font-extrabold tracking-tight capitalize text-muted-foreground">Level {userData.level}</h1>
+            <div className='w-full'>
+                <Progress value={progress} className="w-[100%] h-[4px]"  />
+                <p className="text-sm text-muted-foreground text-right">{(userData.levelCompletionRate * 100).toFixed(2)}%</p>
             </div>
             <div className=' flex items-start md:gap-16 gap-8'>
-                <Avatar className=' md:w-40 md:h-40 sm:w-40 sm:h-40 h-32 w-32 text-4xl'>
-                    <AvatarImage src={userData.username === 'mars' ? "https://github.com/shadcn.png" : ''} alt="@shadcn" />
-                    <AvatarFallback>{getInitials(userData.username)}</AvatarFallback>
-                </Avatar>
                 <div className='text-left w-full'>
-                    <div>
+                    {/* <div>
                         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{userData.username}</h1>
-                        {/* <p className="text-sm text-muted-foreground font-normal px-0">Battle Code: 0001</p> */}
-                    </div>
+                    </div> */}
                     
-                    <div className=' flex flex-wrap gap-1 py-4'>
-                        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">Level {userData.level}</code>
-                        <div className='w-full'>
-                            <Progress value={progress} className="w-[100%] h-[4px]"  />
-                            <p className="text-sm text-muted-foreground text-right">{(userData.levelCompletionRate * 100).toFixed(2)}%</p>
-                        </div>
-                    </div>
+                    
                     
                     <small className="text-sm font-medium leading-none">Joined <em className=' italic text-sm'>{formatTimestamp(userData.creationDate)}</em></small>
                 </div>
             </div>
             <Separator className=' my-8' />
-            <div>
-                <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-left mb-4">Statistics</h3>
-                <div className=' flex flex-wrap justify-center gap-8'>
-                    {userData.statistics.map((stat) => {
-                        const metric = stat.eventId === 'running' ? 'miles' : 'reps'
-                        return (
-                            <div key={stat.eventId} className="rounded-[--radius] border px-4 py-2 font-mono text-sm shadow-sm w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
-                                <div className="text-lg text-primary font-semibold capitalize text-left">{stat.eventId}</div>
-                                <ul className="my-6 list-none [&>li]:mt-2 text-left">
-                                    <li className=' flex justify-between'><span className="text-sm text-muted-foreground">Total Count:</span> {stat.weeklyAverage.toFixed(2)} {metric}</li>
-                                    <li className=' flex justify-between'><span className="text-sm text-muted-foreground">Total Active Days:</span> {stat.weeklyAverage.toFixed(2)} {metric}</li>
-                                    <li className=' flex justify-between'><span className="text-sm text-muted-foreground">Weekly average:</span> {stat.weeklyAverage.toFixed(2)} {metric}</li>
-                                    <li className=' flex justify-between'><span className="text-sm text-muted-foreground">Current streak:</span> {stat.currentStreak} days</li>
-                                    <li className=' flex justify-between'><span className="text-sm text-muted-foreground">Months Won:</span> {stat.currentStreak} days</li>
-                                    <li className=' flex justify-between'><span className="text-sm text-muted-foreground">Personal Best:</span> {stat.personalBest} {metric}</li>
-                                </ul>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-        </>}
+            <Table className=' bg-primary-foreground rounded-lg shadow-sm'>
+            {/* <TableCaption>A list of your recent records.</TableCaption> */}
+            <TableHeader className=''>
+                <TableRow>
+                {xpSumTableData.length > 0 && Object.keys(xpSumTableData[0]).map(key => (
+                    <TableHead key={key} className='text-left capitalize'>{key}</TableHead>
+                ))}
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                    {xpSumTableData.length > 0 && xpSumTableData.map((item, index) => (
+                        <TableRow key={index}>
+                            {Object.values(item).map((value: any) => (
+                                <TableCell key={value} className='text-left'>{typeof value === 'number' ? value.toFixed(0) : value}</TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+            </TableBody>
+        </Table>
+        </Show>
     </div>
   )
 }

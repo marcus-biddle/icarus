@@ -25,13 +25,13 @@ export const ExerciseSelection = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("pushups")
 
-  const stats = useSelector((state: RootState) => state.user.currentUser?.statistics);
   const eventIds = useSelector((state: RootState) => state.user.currentUser?.eventIds) || [];
   const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
   const dispatch = useDispatch();
 
   return (
     <div className={' w-full'}>
+      <p className="text-sm text-muted-foreground text-left mb-1 capitalize">Select Event Type</p>
         <Popover open={open} onOpenChange={setOpen} >
             <PopoverTrigger asChild>
             <Button

@@ -55,6 +55,7 @@ import {
 } from "../components/ui/popover"
 import { IoCalendarOutline } from "react-icons/io5";
 import { ExerciseSelection } from '../components/ExerciseSelection/ExerciseSelection';
+import { startLoading } from '../features/loading/loadingSlice';
 
 
 const isDateBetween = (startDate, endDate, targetDate) => {
@@ -70,7 +71,6 @@ const Practice = () => {
     // const [error, setError] = useState('');
     const [ isLoading, setIsLoading ] = useState(false);
     const [ open, setOpen ] = useState(false);
-    // const isMobile = useIsMobile({});
     const dispatch = useDispatch();
     const user = useSelector((state: RootState) => state.user.currentUser);
     const userId = user?.id || '';
@@ -132,34 +132,38 @@ const Practice = () => {
     const highestTotalReps = sortedGroupedEntries.reduce((maxReps, { totalReps }) => (totalReps > maxReps ? totalReps : maxReps), 0).toFixed(0);
     console.log('eventEntries', sortedGroupedEntries)
 
-  const formSchema = z.object({
-    userCount: z.string().min(1),
-  })
-
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      userCount: "",
-    },
-  })
+    const formSchema = z.object({
+      userCount: z.number().positive({
+        message: "User count must be a number greater than 0",
+      }),
+    });
+    
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        userCount: 1, // Set default value as a positive number greater than 0
+      },
+    });
+    
  
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
-    console.log(Number(values.userCount))
-    if (Number(values.userCount)) {
-      dispatch(
-        updateUserEventEntries((Number(values.userCount)))
-      )
-  
-      dispatch(
-        updateUser({ userCount: Number(values.userCount), eventId: currentEventId, userId: userId, username: user?.username })
-      )
+    dispatch(startLoading());
+    console.log(values)
+      try {
+        dispatch(
+          updateUserEventEntries(values.userCount)
+        )
+    
+        dispatch(
+          updateUser({ userCount: values.userCount, eventId: currentEventId, userId: userId, username: user?.username })
+        )
 
-      // we need these to change after everything is confidently updated.
-      setOpen(false);
-      setIsLoading(false);
-
+        
+      } finally {
+        setOpen(false);
+        setIsLoading(false);
+      }
+      
       toast.success("", {
         description:`Successfully Updated! ${ new Date().toDateString()}`,
         classNames: {
@@ -172,18 +176,7 @@ const Practice = () => {
           textAlign: 'center', // Center the text
         },
       })
-    }
   }
-
-  // not sure what this does?
-  // useEffect(() => {
-  //   if (graphs.length === 0 || (graphs[0].graphData.userData.length === 0 && eventEntries.filter(entry => entry.event === currentEventId).length > 0)) {
-  //     console.log('graphs updated')
-  //     dispatch(
-  //       updateGraphs()
-  //     )
-  //   }
-  // }, [graphs, eventEntries, currentEventId])
 
   return (
     <>
@@ -233,7 +226,14 @@ const Practice = () => {
                   <FormItem>
                     {/* <FormLabel>Update Exercise </FormLabel> */}
                     <FormControl>
-                      <Input placeholder={''} {...field} />
+                    <Input
+                      {...field}
+                      type="number" // Set input type to number
+                      onChange={(e) => {
+                        const value = parseInt(e.target.value, 10); // Parse input value as integer
+                        field.onChange(value); // Update form field value
+                      }}
+                    />
                     </FormControl>
                     {/* <FormDescription>
                       Enter the total amount performed for this exercise.
@@ -265,6 +265,7 @@ const Practice = () => {
     {/* <RecordTable /> */}
     <>
         <div className=" ">
+        <p className="text-sm text-muted-foreground text-left mb-1 capitalize">Select a date or date Range:</p>
             <Popover>
                 <PopoverTrigger asChild>
                 <Button

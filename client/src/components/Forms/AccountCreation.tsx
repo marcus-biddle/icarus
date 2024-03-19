@@ -23,24 +23,30 @@ const formSchema = z.object({
     username: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }).max(10, {
-        message: "Username can be max 10 characters.",
+      message: "Username can be max 10 characters.",
+    }).refine((username) => {
+      // Regular expression to allow only letters, numbers, and underscores
+      const validUsernameRegex = /^[a-zA-Z0-9_]+$/;
+      return validUsernameRegex.test(username);
+    }, {
+      message: "Username can only contain letters, numbers, and underscores.",
     }),
     password: z.string().min(5, {
-        message: "Password must be at least 5 characters"
+      message: "Password must be at least 5 characters"
     }).refine((password) => {
-        const hasUppercase = /[A-Z]/.test(password);
-        const hasLowercase = /[a-z]/.test(password);
-        const hasNumber = /[0-9]/.test(password);
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-        return hasUppercase && hasLowercase && hasNumber && hasSpecialChar;
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasLowercase = /[a-z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  
+      return hasUppercase && hasLowercase && hasNumber && hasSpecialChar;
     }, {
-        message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      message: "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
     }),
     email: z.string().email({
-        message: "Invalid email address format",
+      message: "Invalid email address format",
     }),
-  })
+  });
 
 export const AccountCreation = () => {
     const dispatch = useDispatch();

@@ -697,11 +697,11 @@ const createUser = async (req, res) => {
     const count = req.body.count;
     const eventId = req.body.eventId;
     const userId = req.body.userId;
-    // get streak and average (put average into redux) from user
+    console.log('UPDATESTAT', count, eventId, userId)
 
     if (!count || !eventId || !userId) return res.status(400).json({ error: 'missing req body variables.' });
 
-    const user = await User.findOne({ id: userId });
+    let user = await User.findOne({ id: userId });
     if (!user) return res.status(400).json({ error: 'no user found.' });
 
     try {
@@ -716,7 +716,7 @@ const createUser = async (req, res) => {
       if (statsIndex === -1) return res.status(400).json({ error: `no index found. looking for ${eventId}` });
 
       const currentPersonalBest = user.statistics[statsIndex].personalBest;
-      const currentStreak = user.streaks[streakIndex].streakLength || 1;
+      const currentStreak =  1;
 
       const best = currentPersonalBest > count ? currentPersonalBest : count
       
@@ -726,7 +726,7 @@ const createUser = async (req, res) => {
       const weekCount = user.xpSummaries[summaryIndex].monthSummary[monthIndex].weeks[weekIndex].count || 0;
       const weeklyAverage = weekCount === 0 ? 0 : weekCount / 7;
 
-      const updatedUser = await User.findOneAndUpdate(
+      let updatedUser = await User.findOneAndUpdate(
         {
           id: userId,
           'statistics.eventId': eventId
@@ -747,6 +747,7 @@ const createUser = async (req, res) => {
       return res.status(201).json(updatedUser);
 
     } catch (error) {
+      console.log(error.message)
       res.status(500).json({ error: error.message });
     }
   }

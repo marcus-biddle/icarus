@@ -119,13 +119,15 @@ const updateMonthlyLeaderboard = async (req, res) => {
   const eventCount = req.body.eventCount;
   const { month, year } = getCurrentMonthYear();
 
+  console.log('UPDATLEAD', eventCount)
+
   if (!eventCount || !eventId || !userId) return res.status(400).json({ error: 'missing information.' }); 
 
   const foundUser = await User.findOne({ id: userId }).lean().exec();
   if (!foundUser) return res.status(400).json({ error: 'user not found.' }); 
 
   try {
-    const leaderboardEntry = await MonthlyLeaderboard.findOne({
+    let leaderboardEntry = await MonthlyLeaderboard.findOne({
       userId: foundUser._id,
       eventId: eventId,
       month: month,

@@ -80,24 +80,29 @@ const Profile = () => {
     const loading = useSelector((state: RootState) => state.loading.loading);
     const [progress, setProgress] = useState(0);
     const [ userData, setUserData ] = useState<any>({});
+    const [ xpSummaries, setXpSummaries ] = useState<any[]>([])
     const { userId } = useParams();
     const id = useSelector((state: RootState) => state.user.currentUser?.id)
-    // not a variable. Needs to be in state. Breaks going from profile to profile.
-    const xpSummaries = (id === userId ? useSelector((state: RootState) => state.user.currentUser?.xpSummaries) : userData.xpSummaries);
+    const userXpSum = useSelector((state: RootState) => state.user.currentUser?.xpSummaries) || [];
     const xpSumTableData: any[] = prepareTableData(xpSummaries ? xpSummaries : []);
     console.log('xpSum', xpSumTableData)
-
+    
     console.log('userData', userData)
     const fetchData = async() => {
         const res = await userActions.fetchUser(userId || '');
         setUserData(res);
+        if (userId === id) {
+            setXpSummaries(userXpSum);
+        } else if (userId !== id) {
+            setXpSummaries(res.xpSummaries)
+        }
         const timer = setTimeout(() => setProgress((res ? res.levelCompletionRate : 0) * 100), 500)
         return () => clearTimeout(timer)
     }
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [userId])
 
   return (
     <div >

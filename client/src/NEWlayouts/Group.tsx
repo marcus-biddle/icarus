@@ -130,31 +130,32 @@ export const Group = () => {
       </div>} */}
       {(page === 'table' || page === 'graph') && 
       <>
+      <p className="text-sm text-muted-foreground text-left mb-1 capitalize">Select a date or date Range:</p>
         <Popover>
             <PopoverTrigger asChild>
-            <Button
-                id="date"
-                variant={"outline"}
-                className={cn(
-                "w-[300px] justify-start text-left font-normal",
-                !date && "text-muted-foreground"
-                )}
-            >
-                {date?.from ? (
-                date.to ? (
-                    <>
-                    {format(date.from, "LLL dd, y")} -{" "}
-                    {format(date.to, "LLL dd, y")}
-                    </>
-                ) : (
-                    format(date.from, "LLL dd, y")
-                )
-                ) : (
-                <span>Pick a date</span>
-                )}
-            </Button>
+                <Button
+                    id="date"
+                    variant={"secondary"}
+                    className={cn(
+                    "w-full justify-start text-left font-normal mb-8 shadow-md",
+                    !date && "text-muted-foreground"
+                    )}
+                >
+                  {date?.from ? (
+                  date.to ? (
+                      <>
+                      {format(date.from, "LLL dd, y")} -{" "}
+                      {format(date.to, "LLL dd, y")}
+                      </>
+                  ) : (
+                      format(date.from, "LLL dd, y")
+                  )
+                  ) : (
+                  <span>Pick a date</span>
+                  )}
+                </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent className="w-full p-0" align="start">
             <Calendar
                 initialFocus
                 mode="range"

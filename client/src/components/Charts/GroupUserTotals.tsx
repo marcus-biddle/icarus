@@ -115,9 +115,9 @@ export const GroupUserTotal = ({ date, data, labels }) => {
     // console.log(labels)
     const graphData: any[] = [];
 
-    console.log(data)
+    console.log('graph',data)
     data.map((user: any) => {
-        if (user.eventEntries.length > 0) {
+        if (user.eventEntries.length > 0 && user.eventEntries.findIndex(entry => entry.event === currentEventId) !== -1) {
             graphData.push({
                 label: user.username,
                 data: labels.map((label, index) => {

@@ -1,5 +1,5 @@
 import { RootState } from '@/app/store';
-import { startLoading, stopLoading } from '@/features/loading/loadingSlice';
+import { stopLoading } from '@/features/loading/loadingSlice';
 import { isOlderThan7Minutes } from '@/helpers/date';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,8 +13,8 @@ export const useLoader = (fetchData: () => Promise<void>) => {
         const fetchDataWithLoading = async () => {
             try {
                 if (isOlderThan7Minutes(loadingTimestamp)) {
-                    const newTimestamp: string = new Date().toISOString();
-                    dispatch(startLoading(newTimestamp));
+                    // const newTimestamp: string = new Date().toISOString();
+                    // dispatch(startLoading(newTimestamp));
                 }
                 await fetchData();
             } finally {

@@ -66,11 +66,8 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const Feed = () => {
     const [ feedData, setFeedData ] = useState<GroupedLogs | null>(null);
-    const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId);
     const dispatch = useDispatch();
     const loading = useSelector((state: RootState) => state.loading.loading);
-    const containerRef = useRef<HTMLDivElement>(null);
-    // const [visibleItems, setVisibleItems] = useState<number[]>([]);
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [ refreshData, setRefreshData ] = useState<boolean>(false);
 
@@ -84,10 +81,9 @@ export const Feed = () => {
       // Enable the button after 5 seconds
       setTimeout(() => {
           setRefreshData(false);
-      }, 3000); // 5 seconds in milliseconds
+      }, 3000); 
   };
 
-  // need to move the function to add eventId filtering
     const fetchData = async () => {
       dispatch(startLoading())
       try {
@@ -116,9 +112,6 @@ export const Feed = () => {
       }
 
     }, [feedData])
-
-    console.log('isVisible', isVisible, feedData)
-    
 
   return (
     <>

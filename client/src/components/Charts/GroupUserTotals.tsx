@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,19 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-// import { CalendarIcon } from "@radix-ui/react-icons"
-import { addDays, addMonths, endOfMonth, format, parse, startOfMonth } from "date-fns"
-import { DateRange } from "react-day-picker"
- 
-import { cn } from "../../lib/utils"
-import { Button } from "../../components/ui/button"
-import { Calendar } from "../../components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../../components/ui/popover"
-import { userActions } from '../../api/users';
+
 import { useIsMobile } from '../../hooks/useIsMobile';
 
 ChartJS.register(
@@ -48,36 +36,6 @@ function getRandomColor() {
   
     return color;
   }
-
-  
-
-
-
-function groupDataByLabels(data: any[], labels: string[], event: string): { label: string, totalReps: number }[] {
-    const groupedData: { [key: string]: number } = {};
-  
-    data.filter(entry => entry.event === event).forEach(entry => {
-      const entryDate = new Date(entry.time);
-      const label = labels.find(label => {
-        const labelDate = parse(label, 'MMM d', new Date());
-        return entryDate.getTime() === labelDate.getTime();
-      });
-  
-      if (label) {
-        groupedData[label] = (groupedData[label] || 0) + entry.totalReps;
-      }
-    });
-  
-    // Transform groupedData into an array of objects with label and totalReps
-    const result = labels.map(label => ({
-      label,
-      totalReps: groupedData[label] || 0 // If no corresponding entry, totalReps is 0
-    }));
-  
-    return result;
-  }
-
-  
 
 export function formatDateFromTimestamp(timestamp) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

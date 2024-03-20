@@ -55,7 +55,7 @@ import {
 } from "../components/ui/popover"
 import { IoCalendarOutline } from "react-icons/io5";
 import { ExerciseSelection } from '../components/ExerciseSelection/ExerciseSelection';
-import { startLoading } from '../features/loading/loadingSlice';
+import { startLoading, stopLoading } from '../features/loading/loadingSlice';
 
 
 const isDateBetween = (startDate, endDate, targetDate) => {
@@ -72,6 +72,7 @@ const Practice = () => {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ open, setOpen ] = useState(false);
     const dispatch = useDispatch();
+    const loading = useSelector((state: RootState) => state.loading.loading);
     const user = useSelector((state: RootState) => state.user.currentUser);
     const userId = user?.id || '';
     const currentEventId = useSelector((state: RootState) => state.user.currentUser?.currentEventId) || '';
@@ -161,7 +162,7 @@ const Practice = () => {
         
       } finally {
         setOpen(false);
-        setIsLoading(false);
+        dispatch(stopLoading());
       }
       
       toast.success("", {
@@ -248,8 +249,8 @@ const Practice = () => {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit" disabled={isLoading} onClick={form.handleSubmit(onSubmit)}>
-              {isLoading ? 
+            <Button variant={`${loading ? 'secondary' : 'default'}`} type="submit" disabled={loading} onClick={form.handleSubmit(onSubmit)}>
+              {loading ? 
                 (
                   <span className="flex items-center pl-3">
                       <FaSpinner className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
@@ -262,7 +263,6 @@ const Practice = () => {
         </SheetFooter>
       </SheetContent>
     </Sheet>
-    {/* <RecordTable /> */}
     <>
         <div className=" ">
         <p className="text-sm text-muted-foreground text-left mb-1 capitalize">Select a date or date Range:</p>

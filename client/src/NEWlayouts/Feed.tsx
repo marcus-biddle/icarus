@@ -8,6 +8,7 @@ import { Separator } from "../components/ui/separator"
 import { startLoading, stopLoading } from '../features/loading/loadingSlice';
 import { Loader } from '../components/Loader/Loader';
 import { Show } from '../helpers/functional';
+import { SlArrowRight } from "react-icons/sl";
 
 interface Log {
   _id: string;
@@ -124,26 +125,27 @@ export const Feed = () => {
       </div>
       {feedData && Object.entries(feedData).map(([date, logsInDay]) => (
         <div key={date}>
-          <div className=' relative'>
+          <div className=' relative my-10'>
             <h4 className=" min-w-24 text-md text-left font-medium  leading-none absolute bottom-[-8px] left-0 bg-background">{date}</h4>
             <Separator />
           </div>
           
-          <ul className={`border p-4 my-6 rounded-lg w-full bg-primary-foreground transform transition-transform duration-200 ${isVisible ? 'scale-100' : 'scale-0'}`}>
+          <ul className={`transform transition-transform duration-200 ${isVisible ? 'scale-100' : 'scale-0'}`}>
             {logsInDay.map((log, index) => (
-                <li className={`border py-2 px-4 my-4 rounded-lg w-full bg-background transform transition-transform duration-500 ${isVisible ? 'scale-100' : 'scale-0'}`} key={log._id}>
-                  <div className='w-full flex flex-col h-full'>
+                <li className='border bg-secondary my-4 rounded-lg flex' key={log._id}>
+                  <div className=' min-w-[25%] bg-primary-foreground rounded-tl-lg rounded-bl-lg flex flex-col items-center text-center justify-center'>
+                    <p className=' text-3xl font-mono font-extrabold'>{log.amount}</p>
+                    <p className=' text-muted-foreground'>{log.event === 'running' ? 'miles' : 'reps'}</p>
+                  </div>
+                  <div className='w-full flex flex-col h-full ml-4'>
                       <div className=' flex justify-between h-full'>
                           <div className=' text-left h-full'>
-                            <div className=''>
                               <h4 className="scroll-m-20 text-2xl text-primary font-semibold font-mono tracking-tight">{log.username}</h4> 
-                              <span className='text-md text-muted-foreground'>{log.event}</span>
-                            </div>
-                            <p className="text-sm text-muted font-mono">{convertToLocalTime(log.timestamp)}</p>
+                              <span className='text-md text-muted-foreground capitalize italic'>Event: {log.event}</span>
+                            <p className="text-sm text-muted-foreground font-mono">{convertToLocalTime(log.timestamp)}</p>
                           </div>
-                          <div className=' h-[75px] items-center flex flex-col justify-around'>
-                              <div className=' text-green-600 font-mono'>{log.action.toUpperCase()}</div>
-                              <div className='font-mono'>{log.amount} reps</div>
+                          <div className=' min-w-[20%] border border-l-primary-foreground my-2 flex justify-center items-center'>
+                              <SlArrowRight className=' text-muted-foreground h-6 w-6' />
                           </div>
                       </div>
                   </div>
